@@ -1,4 +1,7 @@
 import {bootstrap}    from 'angular2/platform/browser';
-import {AppComponent} from './app.component';
+import {HTTP_PROVIDERS} from 'angular2/http';
+import {MessagePanelComponent} from './message-panel.component';
+import {MessageFormComponent} from './message-form.component';
 
-bootstrap(AppComponent);
+bootstrap(MessagePanelComponent);
+bootstrap(MessageFormComponent, [HTTP_PROVIDERS]);

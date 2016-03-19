@@ -1,0 +1,10 @@
+<form>
+  <div class="row">
+    <div class="col-sm-10">
+      <input type="text" class="form-control" placeholder="Write a message..." #message required>
+    </div>
+    <div class="col-sm-2">
+      <button (click)="sendMessage(message.value)" class="btn btn-success">Send</button>
+    </div>
+  </div>
+</form>
