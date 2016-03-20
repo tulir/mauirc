@@ -1,35 +1,63 @@
 var socket = null
 var connected = false
+var authfail = false
 var gethistory = true
 
+var email = null
+var password = null
+
+function auth(success) {
+  if (!success) {
+    $("#error").loadTemplate($("#template-error"), {
+      message: "<b>Disconnected: Invalid username or password</b>"
+    })
+    authfail = true
+    connected = false
+  } else {
+    console.log("Connected and authenticated!")
+    $("#container").loadTemplate($("#template-main"), {})
+
+    $("#messages").loadTemplate($("#template-success"), {
+      message: "<b>Connected to server.<b>"
+    }, {append: true})
+    scrollDown()
+
+    $('#message-send').removeAttr('disabled')
+    $('#message-text').removeAttr('disabled')
+
+    connected = true
+
+    if (gethistory) {
+      history(email, password, 1024)
+      gethistory = false
+    }
+  }
+}
+
 function connect() {
+  authfail = false
   console.log("Connecting to socket...")
   socket = new WebSocket('ws://127.0.0.1/socket');
 
   socket.onopen = function() {
-    if (!connected) {
-      console.log("Connected!")
-
-      $("#messages").loadTemplate($("#template-success"), {
-        message: "<b>Connected to server.<b>"
-      }, {append: true})
-      scrollDown()
-
-      $('#message-send').removeAttr('disabled')
-      $('#message-text').removeAttr('disabled')
-
-      connected = true
-    }
-
-    if (gethistory) {
-      history(1024)
-      gethistory = false
-    }
+    setTimeout(function() {
+        socket.send(
+          JSON.stringify({
+            email: $("#email").val(),
+            password: $("#password").val()
+          })
+        )
+      }, 500);
   };
-
+  email = $("#email").val()
+  password = $("#password").val()
   socket.onmessage = function (evt) {
     var data = JSON.parse(evt.data)
-    receive(data.network, data.channel, data.timestamp, data.sender, data.command, data.message)
+    if (data.auth) {
+      auth(data.success)
+    } else {
+      receive(data.network, data.channel, data.timestamp, data.sender, data.command, data.message)
+    }
   };
 
   socket.onclose = function() {
@@ -46,19 +74,27 @@ function connect() {
       console.log("Disconnected!")
     }
 
-    setTimeout(function() {
-      connect();
-    }, 5000)
+    if (!authfail) {
+      setTimeout(function() {
+        connect();
+      }, 5000)
+    }
   };
 }
 
-function history(n){
+function history(email, password, n){
+  payload = {
+    email: email,
+    password: password,
+    n: n
+  }
   $.ajax({
-    type: "GET",
-    url: "/history?n=" + n,
+    type: "POST",
+    url: "/history",
+    data: JSON.stringify(payload),
     contentType: "application/json; charset=utf-8",
+    dataType: "json",
     success: function(data){
-      data = JSON.parse(data)
       data.reverse().forEach(function(val, i, arr) {
         receive(val.network, val.channel, val.timestamp, val.sender, val.command, val.message)
       })
@@ -114,6 +150,7 @@ function send(){
     switch(command) {
       case "me":
         var payload = {
+          network: "pvlnet",
           channel: "#mau",
           command: "action",
           message: args
@@ -126,6 +163,7 @@ function send(){
     }
   } else {
     var payload = {
+      network: "pvlnet",
       channel: "#mau",
       command: "privmsg",
       message: msg
@@ -144,4 +182,5 @@ function send(){
   }
 }
 
-connect();
+$("email").val("mauircd@maunium.net")
+$("password").val("opsalsasana123")

@@ -55,18 +55,20 @@
     right: 0.2%;
 }
 
-.messagebox {
+.textfield {
     padding: .375rem 2%;
     font-size: 1rem;
     background-color: #EEEEEE;
     border: 1px solid #9A9A9A;
     border-radius: .25rem;
+}
 
+.messagebox {
     width: 80%;
     float: left;
 }
 
-.messagesend {
+.btn {
     padding: .375rem 2%;
     font-size: 1rem;
     font-weight: bold;
@@ -80,7 +82,9 @@
     user-select: none;
     border: none;
     border-radius: .25rem;
+}
 
+.messagesend {
     color: #FFFFFF;
     background-color: #50D367;
 
