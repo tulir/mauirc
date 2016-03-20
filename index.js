@@ -74,11 +74,17 @@ function history(n){
 
 function receive(network, channel, timestamp, sender, command, message){
   if (command == "privmsg") {
-    $("#messages").loadTemplate("message.html", {
+    $("#messages").loadTemplate($("#template-message"), {
       sender: sender,
-      date: moment(timestamp * 1000).format("HH:mm:ss DD.MM.YYYY"),
+      date: moment(timestamp * 1000).format("HH:mm:ss"),
       message: message
-    }, {append: true})
+    }, {append: true, isFile: false})
+  } else if (command == "action") {
+    $("#messages").loadTemplate($("#template-action"), {
+      sender: sender,
+      date: moment(timestamp * 1000).format("HH:mm:ss"),
+      message: message
+    }, {append: true, isFile: false})
   }
   scrollDown()
 }
@@ -92,16 +98,43 @@ function send(){
     console.log("Tried to send message without connection!")
     return
   }
-  var message = JSON.stringify({
-    channel: "#mau",
-    command: "privmsg",
-    message: $("#message-text").val()
-  })
-  if (message.length > 1024) {
-    alert("Message too long!")
+
+  var msg = $("#message-text").val()
+
+  if (msg.startsWith("/") && msg.indexOf(' ') > 0) {
+    command = msg.substr(1,msg.indexOf(' ')-1);
+    args = msg.substr(msg.indexOf(' ')+1);
+
+    switch(command) {
+      case "me":
+        var payload = {
+          channel: "#mau",
+          command: "action",
+          message: args
+        }
+        break;
+      default:
+        $("#messages").loadTemplate($("#template-error"), {
+          message: "Unknown command: " + command
+        }, {append: true})
+    }
   } else {
-    socket.send(message)
-    $("#message-text").val("")
+    var payload = {
+      channel: "#mau",
+      command: "privmsg",
+      message: msg
+    }
+  }
+
+  if (payload != null) {
+    var content = JSON.stringify(payload)
+
+    if (content.length > 1024) {
+      alert("Message too long!")
+    } else {
+      socket.send(content)
+      $("#message-text").val("")
+    }
   }
 }
 

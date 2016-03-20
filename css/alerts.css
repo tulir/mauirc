@@ -1,0 +1,19 @@
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    width: 60%;
+}
+
+.alert-success {
+    color: #44A944;
+    background-color: #DEF2DE;
+    border-color: #CCEBCC;
+}
+
+.alert-error {
+    color: #A94444;
+    background-color: #F2DEDE;
+    border-color: #EBCCCC;
+}

@@ -1,37 +1,3 @@
-.message {
-    position: relative;
-    display: inline-block;
-    margin-bottom: .75rem;
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: .25rem;
-
-    min-width: 40%;
-    width: auto;
-    max-width: 80%;
-}
-
-.message-sender {
-    float: left;
-    font-weight: bold;
-}
-
-.message-date {
-    float: right;
-}
-
-.message-text {
-    word-wrap: break-word;
-}
-
-.input {
-    position: fixed;
-    height: 10vh;
-    width: 70vw;
-    bottom: 0;
-    right: 0;
-}
-
 .messages {
     position: fixed;
     height: 90vh;
@@ -41,14 +7,59 @@
     right: 0;
 }
 
+.message {
+    position: relative;
+    display: inline-block;
+    margin-bottom: .75rem;
+    background-color: #EEEEEE;
+    border-radius: .25rem;
+
+    min-width: 30%;
+    width: auto;
+    max-width: 70%;
+    padding: .375em .75em;
+}
+
+.message-date {
+    float: right;
+}
+
+.message-sender {
+    float: left;
+    font-weight: bold;
+}
+
+.message-text {
+    word-wrap: break-word;
+}
+
+.action {
+    float: left;
+}
+
+.action-text {
+    word-wrap: break-word;
+    display: inline;
+}
+
+.action-sender {
+    font-weight: bold;
+    display: inline;
+}
+
+.input {
+    position: fixed;
+    height: 10vh;
+    width: 70vw;
+    bottom: 0;
+    right: 0.2%;
+}
+
 .messagebox {
-    padding: .375rem .75rem;
+    padding: .375rem 2%;
     font-size: 1rem;
-    line-height: 1.5;
-    color: #55595c;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
+    background-color: #EEEEEE;
+    border: 1px solid #9A9A9A;
     border-radius: .25rem;
 
     width: 80%;
@@ -56,10 +67,9 @@
 }
 
 .messagesend {
-    padding: .375rem 1rem;
+    padding: .375rem 2%;
     font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
+    font-weight: bold;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
@@ -71,9 +81,8 @@
     border: none;
     border-radius: .25rem;
 
-    color: #fff;
-    background-color: #5cb85c;
-    border-color: #5cb85c;
+    color: #FFFFFF;
+    background-color: #50D367;
 
     width: 15%;
     float: right;
