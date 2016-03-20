@@ -1,16 +1,30 @@
 var socket = null
 var connected = false
+var gethistory = true
 
 function connect() {
   console.log("Connecting to socket...")
   socket = new WebSocket('ws://127.0.0.1/socket');
 
   socket.onopen = function() {
-    console.log("Connected!")
-    $("#nocon").addClass("hidden-xs-up")
-    $('#message-send').removeAttr('disabled')
-    $('#message-text').removeAttr('disabled')
-    connected = true
+    if (!connected) {
+      console.log("Connected!")
+
+      $("#messages").loadTemplate($("#template-success"), {
+        message: "<b>Connected to server.<b>"
+      }, {append: true})
+      scrollDown()
+
+      $('#message-send').removeAttr('disabled')
+      $('#message-text').removeAttr('disabled')
+
+      connected = true
+    }
+
+    if (gethistory) {
+      history(1024)
+      gethistory = false
+    }
   };
 
   socket.onmessage = function (evt) {
@@ -19,15 +33,22 @@ function connect() {
   };
 
   socket.onclose = function() {
-    connected = false
-    $("#nocon").removeClass("hidden-xs-up")
-    $('#message-send').attr('disabled', true)
-    $('#message-text').attr('disabled', true)
+    if (connected) {
+      connected = false
+
+      $("#messages").loadTemplate($("#template-error"), {
+        message: "<b>Disconnected from server!</b>"
+      }, {append: true})
+      scrollDown()
+      $('#message-send').attr('disabled', true)
+      $('#message-text').attr('disabled', true)
+
+      console.log("Disconnected!")
+    }
 
     setTimeout(function() {
       connect();
     }, 5000)
-    console.log("Disconnected!")
   };
 }
 
@@ -41,6 +62,7 @@ function history(n){
       data.reverse().forEach(function(val, i, arr) {
         receive(val.network, val.channel, val.timestamp, val.sender, val.command, val.message)
       })
+      scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(jqXHR)
@@ -56,8 +78,13 @@ function receive(network, channel, timestamp, sender, command, message){
       sender: sender,
       date: moment(timestamp * 1000).format("HH:mm:ss DD.MM.YYYY"),
       message: message
-    }, {append: true, elemPerPage: 20})
+    }, {append: true})
   }
+  scrollDown()
+}
+
+function scrollDown(){
+  $("#messages").scrollTop($("#messages")[0].scrollHeight);
 }
 
 function send(){
@@ -70,7 +97,7 @@ function send(){
     command: "privmsg",
     message: $("#message-text").val()
   })
-  if (message.length > 512) {
+  if (message.length > 1024) {
     alert("Message too long!")
   } else {
     socket.send(message)
@@ -78,5 +105,4 @@ function send(){
   }
 }
 
-history(10)
 connect();

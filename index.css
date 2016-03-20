@@ -9,3 +9,20 @@
 .message-date {
     float: right;
 }
+
+.channels {
+    position: fixed;
+}
+
+.messages {
+    position: fixed;
+    height: 80vh;
+    width: 50vw;
+    overflow-y: scroll;
+}
+
+.input {
+    position: fixed;
+    height: 20vh;
+    bottom: 0;
+}
