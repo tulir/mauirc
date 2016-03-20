@@ -1,0 +1,11 @@
+.inline {
+    display: inline-block;
+}
+
+.message-sender {
+    float: left;
+}
+
+.message-date {
+    float: right;
+}

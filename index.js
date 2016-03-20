@@ -10,7 +10,8 @@ socket.onopen = function() {
 };
 
 socket.onmessage = function (evt) {
-  console.log(evt.data)
+  evt.data = JSON.parse(evt.data)
+  receive(evt.data.network, evt.data.channel, evt.data.timestamp, evt.data.sender, evt.data.command, evt.data.message)
 };
 
 socket.onclose = function() {
@@ -19,6 +20,37 @@ socket.onclose = function() {
   $('#message-send').attr('disabled', true)
   $('#message-text').attr('disabled', true)
 };
+
+function history(n){
+  $.ajax({
+    type: "GET",
+    url: "/history?n=" + n,
+    contentType: "application/json; charset=utf-8",
+    success: function(data){
+      data = JSON.parse(data)
+      for (var i = data.length + 1; i > 0; i++)
+      data.forEach(function(val, i, array) {
+        receive(data[i].network, data[i].channel, data[i].timestamp, data[i].sender, data[i].command, data[i].message)
+      })
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR)
+      console.log(textStatus)
+      console.log(errorThrown)
+    }
+  });
+}
+
+function receive(network, channel, timestamp, sender, command, message){
+  if (command == "privmsg") {
+    console.log(moment(timestamp * 1000).format("HH:mm DD.MM.YYYY") + " || " + channel + "@" + network + " || <" + sender + "> " + message);
+    $("#messages").loadTemplate("message.html", {
+      sender: sender,
+      date: moment(timestamp * 1000).format("HH:mm:ss DD.MM.YYYY"),
+      message: message
+    }, {append: true, elemPerPage: 20})
+  }
+}
 
 function send(){
   if (!connected) {
@@ -37,3 +69,5 @@ function send(){
     $("#message-text").val("")
   }
 }
+
+history(10)
