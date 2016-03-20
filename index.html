@@ -7,7 +7,6 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Raleway:200,400,700' rel='stylesheet' type='text/css'>
-  <!--<link rel="stylesheet" href="styles.css">-->
 </head>
 
 <body>
@@ -20,6 +19,8 @@
         </div>
       </div>
       <div class="col-sm-8">
+        <div class="alert alert-danger" role="alert" id="nocon"><center><b>Not connected to mauIRCd!</b></center></div>
+
         <div id="messages">
           <div class="alert alert-info" role="alert"><center><b>TODO: Messages</b></center></div>
         </div>
@@ -30,7 +31,7 @@
               <input type="text" class="form-control" id="message-text" placeholder="Write a message...">
             </div>
             <div class="col-sm-2">
-              <button class="btn btn-success" type="submit" onClick="send()">Send</button>
+              <button class="btn btn-success" type="submit" id="message-send" onClick="send()">Send</button>
             </div>
           </div>
         </form>
@@ -40,6 +41,7 @@
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.loadtemplate/1/jquery.loadTemplate.min.js"></script>
   <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
