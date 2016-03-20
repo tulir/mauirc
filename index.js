@@ -85,6 +85,13 @@ function receive(network, channel, timestamp, sender, command, message){
       date: moment(timestamp * 1000).format("HH:mm:ss"),
       message: message
     }, {append: true, isFile: false})
+  } else if (command == "join" || command == "part") {
+    $("#messages").loadTemplate($("#template-joinpart"), {
+      user: sender,
+      date: moment(timestamp * 1000).format("HH:mm:ss"),
+      joinpart: command == "join" ? "joined " : "left ",
+      message: message
+    }, {append: true, isFile: false})
   }
   scrollDown()
 }
