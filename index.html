@@ -5,50 +5,41 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">-->
   <link href='https://fonts.googleapis.com/css?family=Raleway:200,400,700' rel='stylesheet' type='text/css'>
-  <link href="/index.css" rel="stylesheet" type="text/css">
+  <link href="/css/text.css" rel="stylesheet" type="text/css">
+  <link href="/css/alert.css" rel="stylesheet" type="text/css">
+  <link href="/css/messages.css" rel="stylesheet" type="text/css">
+  <link href="/css/channels.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
   <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="channels" id="channels">
-          <br><br><br>
-          <div class="alert alert-info" role="alert"><center><b>TODO: Channel list</b></center></div>
-        </div>
-      </div>
-      <div class="col-sm-8">
-        <div class="messages" id="messages">
-        </div>
+    <div class="channels" id="channels">
+      <br><br><br>
+      <div class="alert alert-info" role="alert"><center><b>TODO: Channel list</b></center></div>
+    </div>
+    <div class="messages" id="messages">
+    </div>
 
-        <div class="input" id="input">
-          <form action="#" id="message-form">
-            <div class="row">
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="message-text" placeholder="Write a message...">
-              </div>
-              <div class="col-sm-2">
-                <button class="btn btn-success" type="submit" id="message-send" onClick="send()">Send</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div class="input" id="input">
+      <form action="#" id="message-form">
+        <input type="text" class="form-control messagebox" id="message-text" placeholder="Write a message...">
+        <button class="btn btn-success messagesend" type="submit" id="message-send" onClick="send()">Send</button>
+      </form>
     </div>
   </div>
 
   <script type="text/html" id="template-error">
-    <div class="alert alert-danger" role="alert" data-content="message"></div>
+    <center><div class="alert alert-error" role="alert" data-content="message"></div></center>
   </script>
 
   <script type="text/html" id="template-success">
-    <div class="alert alert-success" role="alert" data-content="message"></div>
+    <center><div class="alert alert-success" role="alert" data-content="message"></div></center>
   </script>
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+  <!--<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>-->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/2/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.loadtemplate/1/jquery.loadTemplate.min.js"></script>
   <script type="text/javascript" src="index.js"></script>

@@ -1,0 +1,23 @@
+body {
+    font-family: "Raleway", "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #212121;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 16px;
+}
