@@ -1,8 +1,11 @@
 var socket = null
 var connected = false
+var authfail = false
+var msgcontainer = false
 var gethistory = true
 
 function auth() {
+  authfail = false
   payload = {
     email: $("#email").val(),
     password: $("#password").val()
@@ -18,6 +21,7 @@ function auth() {
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log("Authentication failed!")
+      authfail = true
       console.log(jqXHR)
       console.log(textStatus)
       console.log(errorThrown)
@@ -26,16 +30,22 @@ function auth() {
 }
 
 function checkAuth(){
+  authfail = false
   $.ajax({
     type: "GET",
     url: "/authcheck",
     success: function(data){
       if (data == "true") {
         connect()
+      } else {
+        authfail = true
+        $("#container").loadTemplate($("#template-login"), {})
+        msgcontainer = false
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log("Auth check failed!")
+      authfail = true
       console.log(jqXHR)
       console.log(textStatus)
       console.log(errorThrown)
@@ -48,24 +58,25 @@ function connect() {
   socket = new WebSocket('ws://127.0.0.1/socket');
 
   socket.onopen = function() {
-    if (!connected) {
+    if (!msgcontainer) {
       $("#container").loadTemplate($("#template-main"), {})
+      msgcontainer = true
+    }
 
-      $("#messages").loadTemplate($("#template-success"), {
-        message: "<b>Connected to server.<b>"
-      }, {append: true})
-      scrollDown()
+    $("#messages").loadTemplate($("#template-success"), {
+      message: "<b>Connected to server.<b>"
+    }, {append: true})
+    scrollDown()
 
-      $('#message-send').removeAttr('disabled')
-      $('#message-text').removeAttr('disabled')
+    $('#message-send').removeAttr('disabled')
+    $('#message-text').removeAttr('disabled')
 
-      console.log("Connected!")
-      connected = true
+    console.log("Connected!")
+    connected = true
 
-      if (gethistory) {
-        history(1024)
-        gethistory = false
-      }
+    if (gethistory) {
+      history(1024)
+      gethistory = false
     }
   };
 
@@ -86,7 +97,8 @@ function connect() {
       $('#message-text').attr('disabled', true)
 
       console.log("Disconnected!")
-
+    }
+    if (!authfail) {
       setTimeout(function() {
         connect();
       }, 5000)
