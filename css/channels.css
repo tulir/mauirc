@@ -4,3 +4,12 @@
     position: fixed;
     left: 0;
 }
+
+.channel-switcher {
+    width: 100%;
+}
+
+.new-messages {
+    background-color: #50D367;
+    color: #FFFFFF;
+}

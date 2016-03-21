@@ -123,27 +123,66 @@ function history(n){
   });
 }
 
+function getActiveChannel(){
+  let active = $(".channel-messages:visible")
+  if (active.length) {
+    let id = active.attr('id')
+    if (id.length > 5) {
+      return id.substring(5, id.length)
+    }
+  }
+  return ""
+}
+
+function switchTo(channel) {
+  console.log("Switching to " + channel)
+  $(".channel-messages:visible").attr("hidden", true)
+  var newChan = $("#chan-" + channel.replace("#", "\\#"))
+  newChan.removeAttr("hidden")
+  $("#switchto-" + channel.replace("#", "\\#")).removeClass("new-messages")
+  scrollDown()
+}
+
 function receive(network, channel, timestamp, sender, command, message){
+  var chanObj = $("#chan-" + channel.replace("#", "\\#"))
+  if (chanObj.length == 0) {
+    console.log(chanObj)
+    //console.log("Creating channel objects for " + channel)
+    $("#messages").loadTemplate($("#template-channel-messages"), {
+      channel: "chan-" + channel
+    }, {append: true, isFile: false, async: false})
+    $("#channels").loadTemplate($("#template-channel-switcher"), {
+      channel: "switchto-" + channel,
+      channelname: channel,
+      onclick: "switchTo('" + channel + "')"
+    }, {append: true, isFile: false, async: false})
+    chanObj = $("#chan-" + channel.replace("#", "\\#"))
+  }
   if (command == "privmsg") {
-    $("#messages").loadTemplate($("#template-message"), {
+    chanObj.loadTemplate($("#template-message"), {
       sender: sender,
       date: moment(timestamp * 1000).format("HH:mm:ss"),
       message: message
-    }, {append: true, isFile: false})
+    }, {append: true, isFile: false, async: false})
   } else if (command == "action") {
-    $("#messages").loadTemplate($("#template-action"), {
+    chanObj.loadTemplate($("#template-action"), {
       sender: sender,
       date: moment(timestamp * 1000).format("HH:mm:ss"),
       message: message
-    }, {append: true, isFile: false})
+    }, {append: true, isFile: false, async: false})
   } else if (command == "join" || command == "part") {
-    $("#messages").loadTemplate($("#template-joinpart"), {
+    chanObj.loadTemplate($("#template-joinpart"), {
       sender: sender,
       date: moment(timestamp * 1000).format("HH:mm:ss"),
       message: (command == "join" ? "joined " : "left: ") + message
-    }, {append: true, isFile: false})
+    }, {append: true, isFile: false, async: false})
   }
-  scrollDown()
+
+  if (chanObj.attr("hidden") !== undefined){
+    $("#switchto-" + channel.replace("#", "\\#")).addClass("new-messages")
+  } else {
+    scrollDown()
+  }
 }
 
 function scrollDown(){
@@ -171,7 +210,7 @@ function send(){
     case "me":
       var payload = {
         network: "pvlnet",
-        channel: "#mau",
+        channel: getActiveChannel(),
         command: "action",
         message: args.join(" ")
       }
@@ -200,7 +239,7 @@ function send(){
   } else {
     var payload = {
       network: "pvlnet",
-      channel: "#mau",
+      channel: getActiveChannel(),
       command: "privmsg",
       message: msg
     }

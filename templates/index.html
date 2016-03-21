@@ -25,3 +25,11 @@
 <script type="text/html" id="template-main">
   <!--# include file="/templates/main.html" -->
 </script>
+
+<script type="text/html" id="template-channel-messages">
+  <div class="channel-messages" data-id="channel" hidden="true"></div>
+</script>
+
+<script type="text/html" id="template-channel-switcher">
+  <button class="btn channel-switcher" type="button" data-content="channelname" data-id="channel" data-template-bind='[{"attribute": "onClick", "value": "onclick"}]'></button><br>
+</script>
