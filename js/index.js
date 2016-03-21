@@ -106,17 +106,19 @@ function history(n){
   $.ajax({
     type: "GET",
     url: "/history?n=" + n,
+    dataType: "json",
     success: function(data){
-      data = JSON.parse(data)
       data.reverse().forEach(function(val, i, arr) {
         receive(val.network, val.channel, val.timestamp, val.sender, val.command, val.message)
       })
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
+      $("#messages").loadTemplate($("#template-error"), {
+        message: "Failed to fetch history: " + textStatus
+      }, {append: true})
+      scrollDown()
       console.log(jqXHR)
-      console.log(textStatus)
-      console.log(errorThrown)
     }
   });
 }
