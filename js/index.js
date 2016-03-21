@@ -159,12 +159,12 @@ function send(){
   var msg = $("#message-text").val()
 
   if (msg.startsWith("/")) {
-    if (msg.indexOf(' ') > 0) {
-      var command = msg.substr(1,msg.indexOf(' ')-1)
-      var args = msg.substr(msg.indexOf(' ')+1)
+    var args = msg.split(" ")
+    command = args[0].substring(1, args[0].length)
+    if (args.length > 1) {
+      args = args.slice(1, args.length)
     } else {
-      var command = msg.substr(1,msg.length)
-      var args = ""
+      args = []
     }
 
     switch(command) {
@@ -173,9 +173,23 @@ function send(){
           network: "pvlnet",
           channel: "#mau",
           command: "action",
-          message: args
+          message: args.join(" ")
         }
-        break;
+        break
+      case "msg":
+      case "message":
+      case "query":
+      case "q":
+      case "privmsg":
+        if (args.length > 1) {
+          var payload = {
+            network: "pvlnet",
+            channel: args[0],
+            command: "privmsg",
+            message: args.slice(1, args.length).join(" ")
+          }
+          break
+        }
       default:
         $("#messages").loadTemplate($("#template-error"), {
           message: "Unknown command: " + command
