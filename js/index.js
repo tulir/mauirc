@@ -67,6 +67,7 @@ function connect() {
       }, {append: true, isFile: false, async: false})
 
       $("#status-messages").removeAttr("hidden")
+      $("#status-enter").addClass("active")
 
       msgcontainer = true
     }
@@ -155,10 +156,11 @@ function getActiveChannelObj(){
 function switchTo(channel) {
   console.log("Switching to channel " + channel)
   getActiveChannelObj().attr("hidden", true)
+  $(".channel-switcher.active").removeClass("active")
 
   if (channel == "*mauirc") {
-    var newChan = $("#status-messages")
-    newChan.removeAttr("hidden")
+    $("#status-messages").removeAttr("hidden")
+    $("#status-enter").addClass("active")
     $("#status-enter").removeClass("new-messages")
     scrollDown()
     return
@@ -166,7 +168,9 @@ function switchTo(channel) {
 
   var newChan = $("#chan-" + channel.replace("#", "\\#"))
   newChan.removeAttr("hidden")
-  $("#switchto-" + channel.replace("#", "\\#")).removeClass("new-messages")
+  var newChanSwitcher = $("#switchto-" + channel.replace("#", "\\#"))
+  newChanSwitcher.removeClass("new-messages")
+  newChanSwitcher.addClass("active")
   scrollDown()
 }
 

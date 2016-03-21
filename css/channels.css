@@ -10,6 +10,11 @@
 }
 
 .new-messages {
+    background-color: #47B9D7;
+    color: #FFFFFF;
+}
+
+.active {
     background-color: #50D367;
     color: #FFFFFF;
 }
