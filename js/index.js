@@ -229,6 +229,27 @@ function send(){
         }
         break
       }
+    case "join":
+      if (args.length > 0) {
+        var payload = {
+          network: "pvlnet",
+          channel: args[0],
+          command: "join",
+          message: "Joining"
+        }
+        break
+      }
+    case "part":
+    case "leave":
+    case "quit":
+    case "exit":
+      var payload = {
+        network: "pvlnet",
+        channel: args.length > 0 ? args[0] : getActiveChannel(),
+        command: "part",
+        message: "Leaving"
+      }
+      break
     default:
       $("#messages").loadTemplate($("#template-error"), {
         message: "Unknown command: " + command
