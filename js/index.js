@@ -158,9 +158,14 @@ function send(){
 
   var msg = $("#message-text").val()
 
-  if (msg.startsWith("/") && msg.indexOf(' ') > 0) {
-    command = msg.substr(1,msg.indexOf(' ')-1);
-    args = msg.substr(msg.indexOf(' ')+1);
+  if (msg.startsWith("/")) {
+    if (msg.indexOf(' ') > 0) {
+      var command = msg.substr(1,msg.indexOf(' ')-1)
+      var args = msg.substr(msg.indexOf(' ')+1)
+    } else {
+      var command = msg.substr(1,msg.length)
+      var args = ""
+    }
 
     switch(command) {
       case "me":
@@ -175,6 +180,8 @@ function send(){
         $("#messages").loadTemplate($("#template-error"), {
           message: "Unknown command: " + command
         }, {append: true})
+        scrollDown();
+        $("#message-text").val("")
     }
   } else {
     var payload = {
@@ -189,7 +196,10 @@ function send(){
     var content = JSON.stringify(payload)
 
     if (content.length > 1024) {
-      alert("Message too long!")
+      $("#messages").loadTemplate($("#template-error"), {
+        message: "Message too long!"
+      }, {append: true})
+      scrollDown();
     } else {
       socket.send(content)
       $("#message-text").val("")
