@@ -4,8 +4,6 @@ var authfail = false
 var msgcontainer = false
 var gethistory = true
 
-$("#container").loadTemplate($("#template-login"), {})
-
 function auth() {
   authfail = false
   payload = {
@@ -22,11 +20,8 @@ function auth() {
       connect()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Authentication failed!")
+      console.log("Authentication failed: " + textStatus)
       authfail = true
-      console.log(jqXHR)
-      console.log(textStatus)
-      console.log(errorThrown)
     }
   });
 }
@@ -46,11 +41,10 @@ function checkAuth(){
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Auth check failed!")
+      console.log("Auth check failed: " + textStatus)
       authfail = true
+      $("#container").loadTemplate($("#template-login"), {})
       console.log(jqXHR)
-      console.log(textStatus)
-      console.log(errorThrown)
     }
   });
 }
