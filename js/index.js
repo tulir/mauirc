@@ -4,6 +4,8 @@ var authfail = false
 var msgcontainer = false
 var gethistory = true
 
+$("#container").loadTemplate($("#template-login"), {})
+
 function auth() {
   authfail = false
   payload = {
