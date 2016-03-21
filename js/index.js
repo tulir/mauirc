@@ -92,6 +92,7 @@ function connect() {
 
       $("#status-messages").removeAttr("hidden")
       $("#status-enter").addClass("active")
+      $("#message-text").focus()
 
       history(1024)
       msgcontainer = true
@@ -193,6 +194,7 @@ function switchTo(channel) {
   newChanSwitcher.removeClass("new-messages")
   newChanSwitcher.addClass("active")
   scrollDown()
+  $("#message-text").focus()
 }
 
 function receive(network, channel, timestamp, sender, command, message, isNew){
