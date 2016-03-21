@@ -2,7 +2,6 @@ var socket = null
 var connected = false
 var authfail = false
 var msgcontainer = false
-var gethistory = true
 
 function auth() {
   authfail = false
@@ -49,6 +48,31 @@ function checkAuth(){
   });
 }
 
+function reconnect(){
+  $.ajax({
+    type: "GET",
+    url: "/authcheck",
+    success: function(data){
+      if (data == "true") {
+        connect()
+      } else {
+        authfail = true
+        $("#container").loadTemplate($("#template-login"), {})
+        msgcontainer = false
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      if(jqXHR.status == 401) {
+        authfail = true
+        $("#container").loadTemplate($("#template-login"), {})
+        msgcontainer = false
+      } else {
+        setTimeout(reconnect, 5000)
+      }
+    }
+  });
+}
+
 function connect() {
   console.log("Connecting to socket...")
   socket = new WebSocket('ws://127.0.0.1/socket');
@@ -69,6 +93,7 @@ function connect() {
       $("#status-messages").removeAttr("hidden")
       $("#status-enter").addClass("active")
 
+      history(1024)
       msgcontainer = true
     }
 
@@ -79,19 +104,17 @@ function connect() {
 
     console.log("Connected!")
     connected = true
-
-    if (gethistory) {
-      history(1024)
-      gethistory = false
-    }
   };
 
   socket.onmessage = function (evt) {
     var data = JSON.parse(evt.data)
-    receive(data.network, data.channel, data.timestamp, data.sender, data.command, data.message)
+    receive(data.network, data.channel, data.timestamp, data.sender, data.command, data.message, true)
   };
 
-  socket.onclose = function() {
+  socket.onclose = function(evt) {
+    if (evt.wasClean) {
+      return
+    }
     if (connected) {
       connected = false
 
@@ -103,9 +126,7 @@ function connect() {
       console.log("Disconnected!")
     }
     if (!authfail) {
-      setTimeout(function() {
-        connect();
-      }, 5000)
+      setTimeout(reconnect, 2500)
     }
   };
 }
@@ -126,7 +147,7 @@ function history(n){
     dataType: "json",
     success: function(data){
       data.reverse().forEach(function(val, i, arr) {
-        receive(val.network, val.channel, val.timestamp, val.sender, val.command, val.message)
+        receive(val.network, val.channel, val.timestamp, val.sender, val.command, val.message, false)
       })
       scrollDown()
     },
@@ -174,7 +195,7 @@ function switchTo(channel) {
   scrollDown()
 }
 
-function receive(network, channel, timestamp, sender, command, message){
+function receive(network, channel, timestamp, sender, command, message, isNew){
   var chanObj = $("#chan-" + channel.replace("#", "\\#"))
   if (chanObj.length == 0) {
     $("#messages").loadTemplate($("#template-channel-messages"), {
@@ -208,7 +229,7 @@ function receive(network, channel, timestamp, sender, command, message){
     }, {append: true, isFile: false, async: false})
   }
 
-  if (chanObj.attr("hidden") !== undefined){
+  if (chanObj.attr("hidden") !== undefined && isNew){
     $("#switchto-" + channel.replace("#", "\\#")).addClass("new-messages")
   } else {
     scrollDown()
