@@ -168,34 +168,34 @@ function send(){
     }
 
     switch(command) {
-      case "me":
+    case "me":
+      var payload = {
+        network: "pvlnet",
+        channel: "#mau",
+        command: "action",
+        message: args.join(" ")
+      }
+      break
+    case "msg":
+    case "message":
+    case "query":
+    case "q":
+    case "privmsg":
+      if (args.length > 1) {
         var payload = {
           network: "pvlnet",
-          channel: "#mau",
-          command: "action",
-          message: args.join(" ")
+          channel: args[0],
+          command: "privmsg",
+          message: args.slice(1, args.length).join(" ")
         }
         break
-      case "msg":
-      case "message":
-      case "query":
-      case "q":
-      case "privmsg":
-        if (args.length > 1) {
-          var payload = {
-            network: "pvlnet",
-            channel: args[0],
-            command: "privmsg",
-            message: args.slice(1, args.length).join(" ")
-          }
-          break
-        }
-      default:
-        $("#messages").loadTemplate($("#template-error"), {
-          message: "Unknown command: " + command
-        }, {append: true})
-        scrollDown();
-        $("#message-text").val("")
+      }
+    default:
+      $("#messages").loadTemplate($("#template-error"), {
+        message: "Unknown command: " + command
+      }, {append: true})
+      scrollDown();
+      $("#message-text").val("")
     }
   } else {
     var payload = {
