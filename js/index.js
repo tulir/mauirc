@@ -1,63 +1,77 @@
 var socket = null
 var connected = false
-var authfail = false
 var gethistory = true
 
-var email = null
-var password = null
-
-function auth(success) {
-  if (!success) {
-    $("#error").loadTemplate($("#template-error"), {
-      message: "<b>Disconnected: Invalid username or password</b>"
-    })
-    authfail = true
-    connected = false
-  } else {
-    console.log("Connected and authenticated!")
-    $("#container").loadTemplate($("#template-main"), {})
-
-    $("#messages").loadTemplate($("#template-success"), {
-      message: "<b>Connected to server.<b>"
-    }, {append: true})
-    scrollDown()
-
-    $('#message-send').removeAttr('disabled')
-    $('#message-text').removeAttr('disabled')
-
-    connected = true
-
-    if (gethistory) {
-      history(email, password, 1024)
-      gethistory = false
-    }
+function auth() {
+  payload = {
+    email: $("#email").val(),
+    password: $("#password").val()
   }
+  $.ajax({
+    type: "POST",
+    url: "/auth",
+    data: JSON.stringify(payload),
+    contentType: "application/json; charset=utf-8",
+    success: function(data){
+      console.log("Successfully authenticated!")
+      connect()
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log("Authentication failed!")
+      console.log(jqXHR)
+      console.log(textStatus)
+      console.log(errorThrown)
+    }
+  });
+}
+
+function checkAuth(){
+  $.ajax({
+    type: "GET",
+    url: "/authcheck",
+    success: function(data){
+      if (data == "true") {
+        connect()
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log("Auth check failed!")
+      console.log(jqXHR)
+      console.log(textStatus)
+      console.log(errorThrown)
+    }
+  });
 }
 
 function connect() {
-  authfail = false
   console.log("Connecting to socket...")
   socket = new WebSocket('ws://127.0.0.1/socket');
 
   socket.onopen = function() {
-    setTimeout(function() {
-        socket.send(
-          JSON.stringify({
-            email: $("#email").val(),
-            password: $("#password").val()
-          })
-        )
-      }, 500);
+    if (!connected) {
+      $("#container").loadTemplate($("#template-main"), {})
+
+      $("#messages").loadTemplate($("#template-success"), {
+        message: "<b>Connected to server.<b>"
+      }, {append: true})
+      scrollDown()
+
+      $('#message-send').removeAttr('disabled')
+      $('#message-text').removeAttr('disabled')
+
+      console.log("Connected!")
+      connected = true
+
+      if (gethistory) {
+        history(1024)
+        gethistory = false
+      }
+    }
   };
-  email = $("#email").val()
-  password = $("#password").val()
+
   socket.onmessage = function (evt) {
     var data = JSON.parse(evt.data)
-    if (data.auth) {
-      auth(data.success)
-    } else {
-      receive(data.network, data.channel, data.timestamp, data.sender, data.command, data.message)
-    }
+    receive(data.network, data.channel, data.timestamp, data.sender, data.command, data.message)
   };
 
   socket.onclose = function() {
@@ -72,9 +86,7 @@ function connect() {
       $('#message-text').attr('disabled', true)
 
       console.log("Disconnected!")
-    }
 
-    if (!authfail) {
       setTimeout(function() {
         connect();
       }, 5000)
@@ -82,19 +94,12 @@ function connect() {
   };
 }
 
-function history(email, password, n){
-  payload = {
-    email: email,
-    password: password,
-    n: n
-  }
+function history(n){
   $.ajax({
-    type: "POST",
-    url: "/history",
-    data: JSON.stringify(payload),
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
+    type: "GET",
+    url: "/history?n=" + n,
     success: function(data){
+      data = JSON.parse(data)
       data.reverse().forEach(function(val, i, arr) {
         receive(val.network, val.channel, val.timestamp, val.sender, val.command, val.message)
       })
@@ -182,5 +187,4 @@ function send(){
   }
 }
 
-$("email").val("mauircd@maunium.net")
-$("password").val("opsalsasana123")
+checkAuth()
