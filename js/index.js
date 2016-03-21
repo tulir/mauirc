@@ -56,13 +56,22 @@ function connect() {
   socket.onopen = function() {
     if (!msgcontainer) {
       $("#container").loadTemplate($("#template-main"), {})
+
+      $("#messages").loadTemplate($("#template-channel-messages"), {
+        channel: "status-messages"
+      }, {append: true, isFile: false, async: false})
+      $("#channels").loadTemplate($("#template-channel-switcher"), {
+        channel: "status-enter",
+        channelname: "MauIRC Status",
+        onclick: "switchTo('*mauirc')"
+      }, {append: true, isFile: false, async: false})
+
+      $("#status-messages").removeAttr("hidden")
+
       msgcontainer = true
     }
 
-    $("#messages").loadTemplate($("#template-success"), {
-      message: "<b>Connected to server.<b>"
-    }, {append: true})
-    scrollDown()
+    showAlert("success", "<b>Connected to server.<b>")
 
     $('#message-send').removeAttr('disabled')
     $('#message-text').removeAttr('disabled')
@@ -85,9 +94,7 @@ function connect() {
     if (connected) {
       connected = false
 
-      $("#messages").loadTemplate($("#template-error"), {
-        message: "<b>Disconnected from server!</b>"
-      }, {append: true})
+      showAlert("error", "<b>Disconnected from server!</b>")
       scrollDown()
       $('#message-send').attr('disabled', true)
       $('#message-text').attr('disabled', true)
@@ -102,6 +109,15 @@ function connect() {
   };
 }
 
+function showAlert(type, message) {
+  $("#status-messages").loadTemplate($("#template-" + type), {
+    message: message
+  }, {append: true})
+  if($("#status-messages").attr('hidden')) {
+    $("#status-enter").addClass("new-messages")
+  }
+}
+
 function history(n){
   $.ajax({
     type: "GET",
@@ -114,9 +130,7 @@ function history(n){
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      $("#messages").loadTemplate($("#template-error"), {
-        message: "Failed to fetch history: " + textStatus
-      }, {append: true})
+      showAlert("error", "Failed to fetch history: " + textStatus + " " + errorThrown)
       scrollDown()
       console.log(jqXHR)
     }
@@ -134,9 +148,22 @@ function getActiveChannel(){
   return ""
 }
 
+function getActiveChannelObj(){
+  return $(".channel-messages:visible")
+}
+
 function switchTo(channel) {
-  console.log("Switching to " + channel)
-  $(".channel-messages:visible").attr("hidden", true)
+  console.log("Switching to channel " + channel)
+  getActiveChannelObj().attr("hidden", true)
+
+  if (channel == "*mauirc") {
+    var newChan = $("#status-messages")
+    newChan.removeAttr("hidden")
+    $("#status-enter").removeClass("new-messages")
+    scrollDown()
+    return
+  }
+
   var newChan = $("#chan-" + channel.replace("#", "\\#"))
   newChan.removeAttr("hidden")
   $("#switchto-" + channel.replace("#", "\\#")).removeClass("new-messages")
@@ -146,8 +173,6 @@ function switchTo(channel) {
 function receive(network, channel, timestamp, sender, command, message){
   var chanObj = $("#chan-" + channel.replace("#", "\\#"))
   if (chanObj.length == 0) {
-    console.log(chanObj)
-    //console.log("Creating channel objects for " + channel)
     $("#messages").loadTemplate($("#template-channel-messages"), {
       channel: "chan-" + channel
     }, {append: true, isFile: false, async: false})
@@ -156,6 +181,7 @@ function receive(network, channel, timestamp, sender, command, message){
       channelname: channel,
       onclick: "switchTo('" + channel + "')"
     }, {append: true, isFile: false, async: false})
+
     chanObj = $("#chan-" + channel.replace("#", "\\#"))
   }
   if (command == "privmsg") {
@@ -251,7 +277,7 @@ function send(){
       }
       break
     default:
-      $("#messages").loadTemplate($("#template-error"), {
+      getActiveChannelObj().loadTemplate($("#template-error"), {
         message: "Unknown command: " + command
       }, {append: true})
       scrollDown();
@@ -270,7 +296,7 @@ function send(){
     var content = JSON.stringify(payload)
 
     if (content.length > 1024) {
-      $("#messages").loadTemplate($("#template-error"), {
+      getActiveChannelObj().loadTemplate($("#template-error"), {
         message: "Message too long!"
       }, {append: true})
       scrollDown();
