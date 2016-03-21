@@ -20,6 +20,11 @@
     padding: .375em .75em;
 }
 
+.joinpart {
+    background-color: #E6E6E6;
+    color: #9A9A9A;
+}
+
 .message-date {
     float: right;
 }
