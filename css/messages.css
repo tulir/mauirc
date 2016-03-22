@@ -1,10 +1,43 @@
 .messages {
     position: fixed;
-    height: 90vh;
-    width: 70vw;
+    height: 80vh;
+    width: 100vw;
     overflow-y: scroll;
-    top: 0;
+    top: 10vh;
     right: 0;
+}
+
+.navigation {
+    position: fixed;
+    height: 10vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+}
+
+.navigation-btn {
+    position: relative;
+    width: 100%;
+}
+
+.input {
+    position: fixed;
+    height: 10vh;
+    width: 99vw;
+    bottom: 0;
+    right: 0.2%;
+}
+
+@media (min-width: 750px) {
+    .messages {
+        width: 69vw;
+        height: 90vh;
+        top: 0;
+    }
+
+    .input {
+        width: 69vw;
+    }
 }
 
 .message {
@@ -50,14 +83,6 @@
 .action-sender {
     font-weight: bold;
     display: inline;
-}
-
-.input {
-    position: fixed;
-    height: 10vh;
-    width: 70vw;
-    bottom: 0;
-    right: 0.2%;
 }
 
 .textfield {
