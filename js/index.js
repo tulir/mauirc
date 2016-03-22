@@ -189,16 +189,16 @@ function switchTo(channel) {
     return
   }
 
-  var newChan = $("#chan-" + channel.replace("#", "\\#"))
+  var newChan = $("#chan-" + channelFilter(channel))
   newChan.removeAttr("hidden")
-  var newChanSwitcher = $("#switchto-" + channel.replace("#", "\\#"))
+  var newChanSwitcher = $("#switchto-" + channelFilter(channel))
   newChanSwitcher.removeClass("new-messages")
   newChanSwitcher.addClass("active")
   scrollDown()
 }
 
 function receive(network, channel, timestamp, sender, command, message, isNew){
-  var chanObj = $("#chan-" + channel.replace("#", "\\#"))
+  var chanObj = $("#chan-" + channelFilter(channel))
   if (chanObj.length == 0) {
     $("#messages").loadTemplate($("#template-channel-messages"), {
       channel: "chan-" + channel
@@ -209,7 +209,7 @@ function receive(network, channel, timestamp, sender, command, message, isNew){
       onclick: "switchTo('" + channel + "')"
     }, {append: true, isFile: false, async: false})
 
-    chanObj = $("#chan-" + channel.replace("#", "\\#"))
+    chanObj = $("#chan-" + channelFilter(channel))
   }
 
   if (command == "privmsg") {
@@ -232,10 +232,14 @@ function receive(network, channel, timestamp, sender, command, message, isNew){
   }
 
   if (chanObj.attr("hidden") !== undefined && isNew){
-    $("#switchto-" + channel.replace("#", "\\#")).addClass("new-messages")
+    $("#switchto-" + channelFilter(channel)).addClass("new-messages")
   } else {
     scrollDown()
   }
+}
+
+function channelFilter(channel) {
+  return channel.replace("#", "\\#").toLowerCase()
 }
 
 function scrollDown(){
