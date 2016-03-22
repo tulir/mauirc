@@ -227,7 +227,7 @@ function receive(network, channel, timestamp, sender, command, message, isNew){
     message: message
   }, {append: true, isFile: false, async: false})
 
-  if ((!document.hasFocus() || chanObj.attr("hidden") !== undefined) && isNew) {
+  if (!document.hasFocus() && isNew) {
     notify(sender, message)
   }
 
