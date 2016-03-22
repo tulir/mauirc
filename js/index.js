@@ -164,7 +164,9 @@ function getActiveChannel(){
   let active = $(".channel-messages:visible")
   if (active.length) {
     let id = active.attr('id')
-    if (id.length > 5) {
+    if (id == "status-messages") {
+      return "*mauirc"
+    } else if (id.length > 5) {
       return id.substring(5, id.length)
     }
   }
@@ -198,18 +200,22 @@ function switchTo(channel) {
 }
 
 function receive(network, channel, timestamp, sender, command, message, isNew){
-  var chanObj = $("#chan-" + channelFilter(channel))
-  if (chanObj.length == 0) {
-    $("#messages").loadTemplate($("#template-channel-messages"), {
-      channel: "chan-" + channel
-    }, {append: true, isFile: false, async: false})
-    $("#channels").loadTemplate($("#template-channel-switcher"), {
-      channel: "switchto-" + channel,
-      channelname: channel,
-      onclick: "switchTo('" + channel + "')"
-    }, {append: true, isFile: false, async: false})
+  if (channel == "*mauirc") {
+    var chanObj = $("#status-messages")
+  } else {
+    var chanObj = $("#chan-" + channelFilter(channel))
+    if (chanObj.length == 0) {
+      $("#messages").loadTemplate($("#template-channel-messages"), {
+        channel: "chan-" + channel.toLowerCase()
+      }, {append: true, isFile: false, async: false})
+      $("#channels").loadTemplate($("#template-channel-switcher"), {
+        channel: "switchto-" + channel.toLowerCase(),
+        channelname: channel,
+        onclick: "switchTo('" + channel.toLowerCase() + "')"
+      }, {append: true, isFile: false, async: false})
 
-    chanObj = $("#chan-" + channelFilter(channel))
+      chanObj = $("#chan-" + channelFilter(channel))
+    }
   }
 
   if (command == "privmsg") {
