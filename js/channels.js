@@ -1,7 +1,7 @@
 function getActiveChannel(){
-  let active = $(".channel-messages:visible")
+  var active = $(".channel-messages:visible")
   if (active.length) {
-    let id = active.attr('id')
+    var id = active.attr('id')
     if (id == "status-messages") {
       return "*mauirc"
     } else if (id.length > 5) {

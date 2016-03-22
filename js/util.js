@@ -13,6 +13,6 @@ function scrollDown(){
 
 function notify(user, message) {
   if (Notification.permission === "granted") {
-    var n = new Notification(user,{body: message});
+    new Notification(user,{body: message});
   }
 }
