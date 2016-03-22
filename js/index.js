@@ -180,7 +180,7 @@ function switchTo(channel) {
   getActiveChannelObj().attr("hidden", true)
   $(".channel-switcher.active").removeClass("active")
   $("#message-text").focus()
-  
+
   if (channel == "*mauirc") {
     $("#status-messages").removeAttr("hidden")
     $("#status-enter").addClass("active")
@@ -211,24 +211,24 @@ function receive(network, channel, timestamp, sender, command, message, isNew){
 
     chanObj = $("#chan-" + channel.replace("#", "\\#"))
   }
+
   if (command == "privmsg") {
-    chanObj.loadTemplate($("#template-message"), {
-      sender: sender,
-      date: moment(timestamp * 1000).format("HH:mm:ss"),
-      message: message
-    }, {append: true, isFile: false, async: false})
+    template = "message"
   } else if (command == "action") {
-    chanObj.loadTemplate($("#template-action"), {
-      sender: sender,
-      date: moment(timestamp * 1000).format("HH:mm:ss"),
-      message: message
-    }, {append: true, isFile: false, async: false})
+    template = "action"
   } else if (command == "join" || command == "part") {
-    chanObj.loadTemplate($("#template-joinpart"), {
-      sender: sender,
-      date: moment(timestamp * 1000).format("HH:mm:ss"),
-      message: (command == "join" ? "joined " : "left: ") + message
-    }, {append: true, isFile: false, async: false})
+    template = "joinpart"
+    message = (command == "join" ? "joined " : "left: ") + message
+  }
+
+  chanObj.loadTemplate($("#template-" + template), {
+    sender: sender,
+    date: moment(timestamp * 1000).format("HH:mm:ss"),
+    message: message
+  }, {append: true, isFile: false, async: false})
+
+  if ((!document.hasFocus() || chanObj.attr("hidden") !== undefined) && isNew) {
+    notify(sender, message)
   }
 
   if (chanObj.attr("hidden") !== undefined && isNew){
@@ -334,4 +334,12 @@ function send(){
   }
 }
 
+function notify(user, message) {
+  if (Notification.permission === "granted") {
+    var n = new Notification(user,{body: message});
+  }
+}
+
 checkAuth()
+
+Notification.requestPermission()
