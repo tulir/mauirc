@@ -75,7 +75,7 @@ function reconnect(){
 
 function connect() {
   console.log("Connecting to socket...")
-  socket = new WebSocket('ws://127.0.0.1/socket');
+  socket = new WebSocket('ws://' + window.location.host + '/socket');
 
   socket.onopen = function() {
     if (!msgcontainer) {
