@@ -2,7 +2,8 @@
     height: 100vh;
     width: 30vw;
     position: fixed;
-    left: 0;
+    left: 0.2%;
+    top: 0.2%;
 }
 
 .channel-switcher {

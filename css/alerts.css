@@ -3,8 +3,22 @@
     margin-bottom: 1rem;
     border: 1px solid transparent;
     border-radius: .25rem;
-    width: 60%;
+    width: 90%;
 }
+
+@media (min-width: 400px) {}
+
+@media (min-width: 550px) {}
+
+@media (min-width: 750px) {
+    .alert {
+        width: 60%;
+    }
+}
+
+@media (min-width: 1000px) {}
+
+@media (min-width: 1200px) {}
 
 .alert-success {
     color: #44A944;
