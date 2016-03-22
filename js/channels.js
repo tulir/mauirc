@@ -1,5 +1,5 @@
 function getActiveChannel(){
-  var active = $(".channel-selector.active")
+  var active = $(".channel-switcher.active")
   if (active.length) {
     var id = active.text()
     if (id == "MauIRC Status") return "*mauirc"
