@@ -179,7 +179,8 @@ function switchTo(channel) {
   console.log("Switching to channel " + channel)
   getActiveChannelObj().attr("hidden", true)
   $(".channel-switcher.active").removeClass("active")
-
+  $("#message-text").focus()
+  
   if (channel == "*mauirc") {
     $("#status-messages").removeAttr("hidden")
     $("#status-enter").addClass("active")
@@ -194,7 +195,6 @@ function switchTo(channel) {
   newChanSwitcher.removeClass("new-messages")
   newChanSwitcher.addClass("active")
   scrollDown()
-  $("#message-text").focus()
 }
 
 function receive(network, channel, timestamp, sender, command, message, isNew){
