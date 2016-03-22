@@ -1,12 +1,9 @@
 function getActiveChannel(){
   var active = $(".channel-messages:visible")
   if (active.length) {
-    var id = active.attr('id')
-    if (id == "status-messages") {
-      return "*mauirc"
-    } else if (id.length > 5) {
-      return id.substring(5, id.length)
-    }
+    var id = active.text()
+    if (id == "MauIRC Status") return "*mauirc"
+    else return id
   }
   return ""
 }
