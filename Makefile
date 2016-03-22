@@ -1,4 +1,6 @@
 minify: minify-js minify-css
+	mv index.html index.max.html
+	mv index.min.html index.html
 
 pack-js:
 	cat \
@@ -29,3 +31,5 @@ minify-js: pack-js
 
 clean:
 	rm -f index.min.js index.js index.min.css index.css
+	mv index.html index.min.html
+	mv index.max.html index.html
