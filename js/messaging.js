@@ -121,7 +121,7 @@ function receive(network, channel, timestamp, sender, command, message, isNew){
   chanObj.loadTemplate($("#template-" + template), {
     sender: sender,
     date: moment(timestamp * 1000).format("HH:mm:ss"),
-    message: linkifyHtml(escapeTag(message))
+    message: linkifyHtml(escapeHtml(message))
   }, {append: true, isFile: false, async: false})
 
   if (!document.hasFocus() && isNew) {
