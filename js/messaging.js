@@ -90,7 +90,7 @@ function send(){
   }
 }
 
-function receive(network, channel, timestamp, sender, command, message, isNew){
+function receive(id, network, channel, timestamp, sender, command, message, isNew){
   if (channel == "*mauirc") {
     var chanObj = $("#status-messages")
   } else {
@@ -121,6 +121,7 @@ function receive(network, channel, timestamp, sender, command, message, isNew){
   chanObj.loadTemplate($("#template-" + template), {
     sender: sender,
     date: moment(timestamp * 1000).format("HH:mm:ss"),
+    id: "msg-" + id,
     message: linkifyHtml(escapeHtml(message))
   }, {append: true, isFile: false, async: false})
 

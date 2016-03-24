@@ -34,7 +34,7 @@ function connect() {
 
   socket.onmessage = function (evt) {
     var data = JSON.parse(evt.data)
-    receive(data.network, data.channel, data.timestamp, data.sender, data.command, data.message, true)
+    receive(data.id, data.network, data.channel, data.timestamp, data.sender, data.command, data.message, true)
   };
 
   socket.onclose = function(evt) {
@@ -89,7 +89,7 @@ function history(n){
     dataType: "json",
     success: function(data){
       data.reverse().forEach(function(val, i, arr) {
-        receive(val.network, val.channel, val.timestamp, val.sender, val.command, val.message, false)
+        receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, false)
       })
       scrollDown()
     },
