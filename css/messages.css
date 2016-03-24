@@ -38,6 +38,10 @@
     .input {
         width: 69vw;
     }
+
+    .navigation {
+        display: none;
+    }
 }
 
 .message {
