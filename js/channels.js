@@ -12,6 +12,16 @@ function getActiveChannelObj(){
   return $(".channel-messages:visible")
 }
 
+function switchView() {
+  if ($("#channels").hasClass("hidden-tablet-down")) {
+    $("#messages").addClass("hidden-tablet-down")
+    $("#channels").removeClass("hidden-tablet-down")
+  } else {
+    $("#messages").removeClass("hidden-tablet-down")
+    $("#channels").addClass("hidden-tablet-down")
+  }
+}
+
 function switchTo(channel) {
   console.log("Switching to channel " + channel)
   getActiveChannelObj().attr("hidden", true)
