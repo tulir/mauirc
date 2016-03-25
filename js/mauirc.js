@@ -1,7 +1,7 @@
 function connect() {
   console.log("Connecting to socket...")
-  socket = new WebSocket('ws://' + window.location.host + '/socket');
-
+  socket = new WebSocket(websocketPath);
+  
   socket.onopen = function() {
     if (!msgcontainer) {
       $("#container").loadTemplate($("#template-main"), {})
