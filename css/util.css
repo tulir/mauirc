@@ -34,3 +34,11 @@
     border: 1px solid #9A9A9A;
     border-radius: .25rem;
 }
+
+.left-arrow {
+    float: left;
+}
+
+.right-arrow {
+    float: right;
+}
