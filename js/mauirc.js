@@ -1,18 +1,18 @@
 function connect() {
   console.log("Connecting to socket...")
   socket = new WebSocket(websocketPath);
-  
+
   socket.onopen = function() {
     if (!msgcontainer) {
       $("#container").loadTemplate($("#template-main"), {})
 
-      $("#messages").loadTemplate($("#template-channel-messages"), {
+      $("#messages").loadTemplate($("#template-channel"), {
         channel: "status-messages"
       }, {append: true, isFile: false, async: false})
-      $("#channels").loadTemplate($("#template-channel-switcher"), {
+      $("#networks").loadTemplate($("#template-channel-switcher"), {
         channel: "status-enter",
         channelname: "MauIRC Status",
-        onclick: "switchTo('*mauirc')"
+        onclick: "switchTo('', 'MauIRC Status')"
       }, {append: true, isFile: false, async: false})
 
       $("#status-messages").removeAttr("hidden")
@@ -34,7 +34,12 @@ function connect() {
 
   socket.onmessage = function (evt) {
     var data = JSON.parse(evt.data)
-    receive(data.id, data.network, data.channel, data.timestamp, data.sender, data.command, data.message, true)
+    if (data.type == "message") {
+      receive(data.object.id, data.object.network, data.object.channel, data.object.timestamp,
+        data.object.sender, data.object.command, data.object.message, true)
+    } else if (data.type == "cmdresponse") {
+      receiveCmdResponse(data.object.message)
+    }
   };
 
   socket.onclose = function(evt) {

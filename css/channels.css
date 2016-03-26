@@ -1,4 +1,4 @@
-.channels {
+.networks {
     height: 100vh;
     width: 30vw;
     position: fixed;
@@ -10,9 +10,28 @@
     width: 100%;
 }
 
+.network-switcher > .channel-switcher {
+    width: 80%;
+}
+
+.network-switcher {
+    text-align: right;
+}
+
+.network-switcher-name {
+    text-align: left;
+    padding: .375rem 2%;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
 .new-messages {
     background-color: #47B9D7;
     color: #FFFFFF;
+}
+
+.network-switcher {
+    background-color: #2299FF;
 }
 
 .active {
