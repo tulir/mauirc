@@ -12,7 +12,7 @@ function connect() {
       $("#networks").loadTemplate($("#template-channel-switcher"), {
         channel: "status-enter",
         channelname: "MauIRC Status",
-        onclick: "switchTo('', 'MauIRC Status')"
+        onclick: "switchTo('MauIRC Status', 'MauIRC Status')"
       }, {append: true, isFile: false, async: false})
 
       $("#status-messages").removeAttr("hidden")
@@ -41,8 +41,10 @@ function connect() {
       receiveCmdResponse(data.object.message)
     } else if (data.type == "chandata") {
       console.log("Received channel data")
-      console.log(data.object)
-      channelData[data.object.name] = data.object
+      if (channelData[data.object.network] === undefined) {
+        channelData[data.object.network] = {}
+      }
+      channelData[data.object.network][data.object.name] = data.object
     }
   };
 

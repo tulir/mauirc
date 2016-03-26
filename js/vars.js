@@ -5,10 +5,12 @@ var msgcontainer = false
 var channelData = {}
 
 channelData["MauIRC Status"] = {
-  userlist: [],
-  topic: "MauIRC status messages",
-  topicsetby: "tulir293",
-  topicsetat: 1
+  "MauIRC Status": {
+    userlist: [],
+    topic: "MauIRC status messages",
+    topicsetby: "tulir293",
+    topicsetat: 1
+  }
 }
 
 var websocketPath = 'wss://' + window.location.host + '/socket'

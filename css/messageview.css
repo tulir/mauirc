@@ -1,0 +1,63 @@
+.messages {
+    position: fixed;
+    width: auto;
+    height: auto;
+    overflow-y: scroll;
+    top: 2.65rem;
+    bottom: 2.65rem;
+    right: 0;
+    left: 0;
+}
+
+.titlebar {
+    position: fixed;
+    height: 2.4rem;
+    width: 100%;
+    top: 0.25rem;
+    right: 0.25rem;
+}
+
+.view-switch-btn {
+    position: relative;
+    width: 100%;
+    background-color: inherit;
+}
+
+.input {
+    position: fixed;
+    height: 2.4rem;
+    width: 100%;
+    bottom: 0.25rem;
+    right: 0.25rem;
+}
+
+@media (min-width: 750px) {
+    .messages {
+        left: 26%;
+    }
+
+    .input {
+        width: 74%;
+    }
+
+    .titlebar {
+        width: 74%;
+    }
+
+    .view-switch-btn {
+        cursor: default;
+    }
+}
+
+.messagebox {
+    width: 80%;
+    float: left;
+}
+
+.messagesend {
+    color: #FFFFFF;
+    background-color: #50D367;
+
+    width: 15%;
+    float: right;
+}

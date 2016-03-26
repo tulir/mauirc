@@ -42,8 +42,11 @@ function switchTo(network, channel) {
   $("#message-text").focus()
 
   var title = channel
-  if (channelData[channel] !== undefined && channelData[channel].topic !== undefined && channelData[channel].topic.length > 0) {
-    title = channelData[channel].topic
+  if (channelData[network] !== undefined &&
+    channelData[network][channel] !== undefined &&
+    channelData[network][channel].topic !== undefined &&
+    channelData[network][channel].topic.length > 0) {
+    title = channelData[network][channel].topic
   }
   $("#title").text(title)
 
