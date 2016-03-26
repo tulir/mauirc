@@ -24,6 +24,12 @@
     right: inherit;
 }
 
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .view-switch-btn {
     position: relative;
     width: 100%;
@@ -43,7 +49,7 @@
     .messaging {
         left: 26%;
     }
-    
+
     .input {
         left: auto;
         width: 74%;
