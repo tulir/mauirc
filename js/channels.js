@@ -41,6 +41,17 @@ function switchTo(network, channel) {
   $(".network-switcher.activenet").removeClass("activenet")
   $("#message-text").focus()
 
+  var title = channel
+  if (channelData[channel] !== undefined && channelData[channel].topic !== undefined && channelData[channel].topic.length > 0) {
+    title = channelData[channel].topic
+  }
+  $("#title").text(title)
+
+  if ($("#messages").hasClass("hidden-tablet-down")) {
+    $("#networks").addClass("hidden-tablet-down")
+    $("#messages").removeClass("hidden-tablet-down")
+  }
+
   if (channel == "MauIRC Status") {
     $("#status-messages").removeAttr("hidden")
     $("#status-enter").addClass("active")

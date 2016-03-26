@@ -108,8 +108,7 @@ function statusCommand() {
   } else {
     args = []
   }
-  console.log(command)
-  console.log(args)
+  
   switch(command) {
   case "clearbuffer":
     if (args.length > 1) {

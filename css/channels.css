@@ -1,9 +1,18 @@
 .networks {
-    height: 100vh;
-    width: 30vw;
+    height: auto;
+    width: auto;
     position: fixed;
-    left: 0.2%;
-    top: 0.2%;
+    left: 0.25rem;
+    right: 0.25rem;
+    top: 2.65rem;
+    bottom: 0.25rem;
+}
+
+@media (min-width: 750px) {
+    .networks {
+        right: 75%;
+        top: 0.25rem;
+    }
 }
 
 .channel-switcher {

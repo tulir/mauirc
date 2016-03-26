@@ -39,6 +39,10 @@ function connect() {
         data.object.sender, data.object.command, data.object.message, true)
     } else if (data.type == "cmdresponse") {
       receiveCmdResponse(data.object.message)
+    } else if (data.type == "chandata") {
+      console.log("Received channel data")
+      console.log(data.object)
+      channelData[data.object.name] = data.object
     }
   };
 

@@ -1,46 +1,47 @@
 .messages {
     position: fixed;
-    height: 80vh;
-    width: 100vw;
+    width: auto;
+    height: auto;
     overflow-y: scroll;
-    top: 10vh;
+    top: 2.65rem;
+    bottom: 2.65rem;
     right: 0;
-}
-
-.navigation {
-    position: fixed;
-    height: 10vh;
-    width: 100vw;
-    top: 0;
     left: 0;
 }
 
-.navigation-btn {
+.titlebar {
+    position: fixed;
+    height: 2.4rem;
+    width: 100%;
+    top: 0.25rem;
+    right: 0.25rem;
+}
+
+.view-switch-btn {
     position: relative;
     width: 100%;
+    background-color: inherit;
 }
 
 .input {
     position: fixed;
-    height: 10vh;
-    width: 99vw;
-    bottom: 0;
-    right: 0.2%;
+    height: 2.4rem;
+    width: 100%;
+    bottom: 0.25rem;
+    right: 0.25rem;
 }
 
 @media (min-width: 750px) {
     .messages {
-        width: 69vw;
-        height: 90vh;
-        top: 0;
+        left: 26%;
     }
 
     .input {
-        width: 69vw;
+        width: 74%;
     }
 
-    .navigation {
-        display: none;
+    .titlebar {
+        width: 74%;
     }
 }
 
