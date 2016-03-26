@@ -7,7 +7,7 @@ function getActiveChannel() {
 }
 
 function getActiveNetwork() {
-  var active = $(".network-switcher.activenet")
+  var active = $(".network-switcher.activenet > .network-switcher-name")
   if (active.length) {
     return active.text().trim()
   }
