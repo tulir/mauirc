@@ -6,6 +6,7 @@
     right: 0.25rem;
     top: 0.25rem;
     bottom: 0.25rem;
+    overflow-y: scroll;
 }
 
 @media (min-width: 750px) {
