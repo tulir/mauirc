@@ -1,20 +1,23 @@
-<div class="titlebar" id="titlebar">
-  <button class="btn view-switch-btn" type="submit" id="switch-view" onClick="switchView()">
-    <div class="left-arrow hidden-tablet-up">
-      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-        <path fill="#000000" d="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z" />
-      </svg>
-    </div>
-    <span class="title" id="title">MauIRC status messages</span>
-  </button>
-</div>
-
 <div class="networks hidden-tablet-down" id="networks"></div>
-<div class="messages" id="messages"></div>
 
-<div class="input" id="input">
-  <form action="#" id="message-form">
-    <input type="text" class="textfield messagebox" id="message-text" autocomplete="off" placeholder="Write a message...">
-    <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
-  </form>
+<div class="messaging" id="messaging">
+  <div class="titlebar" id="titlebar">
+    <button class="btn view-switch-btn" type="submit" id="switch-view" onClick="switchView()">
+      <div class="left-arrow hidden-tablet-up">
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+          <path fill="#000000" d="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z" />
+        </svg>
+      </div>
+      <span class="title" id="title">MauIRC status messages</span>
+    </button>
+  </div>
+
+  <div class="messages" id="messages"></div>
+
+  <div class="input" id="input">
+    <form action="#" id="message-form">
+      <input type="text" class="textfield messagebox" id="message-text" autocomplete="off" placeholder="Write a message...">
+      <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
+    </form>
+  </div>
 </div>

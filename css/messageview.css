@@ -1,3 +1,10 @@
+.messaging {
+    right: 0.25rem;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    left: 0.25rem;
+}
+
 .messages {
     position: fixed;
     width: auto;
@@ -5,16 +12,16 @@
     overflow-y: scroll;
     top: 2.65rem;
     bottom: 2.65rem;
-    right: 0;
-    left: 0;
+    right: inherit;
+    left: inherit;
 }
 
 .titlebar {
     position: fixed;
     height: 2.4rem;
     width: 100%;
-    top: 0.25rem;
-    right: 0.25rem;
+    top: inherit;
+    right: inherit;
 }
 
 .view-switch-btn {
@@ -27,16 +34,16 @@
     position: fixed;
     height: 2.4rem;
     width: auto;
-    bottom: 0.25rem;
-    right: 0.25rem;
-    left: 0.25rem;
+    bottom: inherit;
+    right: inherit;
+    left: inherit;
 }
 
 @media (min-width: 750px) {
-    .messages {
+    .messaging {
         left: 26%;
     }
-
+    
     .input {
         left: auto;
         width: 74%;

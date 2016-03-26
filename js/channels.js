@@ -24,14 +24,10 @@ function getActiveNetworkObj(){
 
 function switchView() {
   if ($("#networks").hasClass("hidden-tablet-down")) {
-    $("#messages").addClass("hidden-tablet-down")
-    $("#input").addClass("hidden-tablet-down")
-    $("#titlebar").addClass("hidden-tablet-down")
+    $("#messaging").addClass("hidden-tablet-down")
     $("#networks").removeClass("hidden-tablet-down")
   } else {
-    $("#messages").removeClass("hidden-tablet-down")
-    $("#input").removeClass("hidden-tablet-down")
-    $("#titlebar").removeClass("hidden-tablet-down")
+    $("#messaging").removeClass("hidden-tablet-down")
     $("#networks").addClass("hidden-tablet-down")
   }
 }
@@ -54,7 +50,7 @@ function switchTo(network, channel) {
   }
   $("#title").text(title)
 
-  if ($("#messages").hasClass("hidden-tablet-down")) {
+  if ($("#messaging").hasClass("hidden-tablet-down")) {
     switchView()
   }
 
