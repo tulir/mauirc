@@ -26,9 +26,10 @@
 .input {
     position: fixed;
     height: 2.4rem;
-    width: 100%;
+    width: auto;
     bottom: 0.25rem;
     right: 0.25rem;
+    left: 0.25rem;
 }
 
 @media (min-width: 750px) {
@@ -37,6 +38,7 @@
     }
 
     .input {
+        left: auto;
         width: 74%;
     }
 
