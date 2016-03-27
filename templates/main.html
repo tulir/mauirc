@@ -14,10 +14,8 @@
 
   <div class="messages" id="messages"></div>
 
-  <div class="input" id="input">
-    <form action="#" id="message-form">
-      <input type="text" class="textfield messagebox" id="message-text" autocomplete="off" placeholder="Write a message...">
-      <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
-    </form>
+  <div class="messagebox-wrapper">
+    <input class="messagebox" type="text" id="message-text" autocomplete="off" placeholder="Write a message...">
   </div>
+  <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
 </div>

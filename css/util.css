@@ -12,7 +12,7 @@
 
 
 .btn {
-    padding: .375rem 2%;
+    padding: .375rem 1rem;
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
@@ -24,14 +24,6 @@
     -ms-user-select: none;
     user-select: none;
     border: none;
-    border-radius: .25rem;
-}
-
-.textfield {
-    padding: .375rem 2%;
-    font-size: 1rem;
-    background-color: #EEEEEE;
-    border: 1px solid #9A9A9A;
     border-radius: .25rem;
 }
 

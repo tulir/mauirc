@@ -8,8 +8,28 @@
 
     min-width: 30%;
     width: auto;
-    max-width: 70%;
+    max-width: 80%;
     padding: .375em .75em;
+}
+
+@media (min-width: 1000px) {
+    .message {
+        min-width: 25%;
+        max-width: 70%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .message {
+        min-width: 20%;
+        max-width: 60%;
+    }
+}
+
+@media (min-width: 1500px) {
+    .message {
+        min-width: 15%;
+    }
 }
 
 .message-wrapper {

@@ -24,6 +24,105 @@
     right: inherit;
 }
 
+.messagebox-wrapper {
+    position: fixed;
+    left: inherit;
+    right: 5.5rem;
+    bottom: 0.25rem;
+
+    padding: .375rem 1rem;
+    border: 1px solid #9A9A9A;
+    border-radius: .25rem;
+    background-color: #EEEEEE;
+}
+
+
+.messagebox {
+    font-size: 1rem;
+    background-color: #EEEEEE;
+    border: none;
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.messagesend {
+    color: #FFFFFF;
+    background-color: #50D367;
+    border: 1px solid #50D367;
+
+    position: fixed;
+    width: 5rem;
+    right: 0.25rem;
+    bottom: 0.25rem;
+}
+
+@media (min-width: 750px) {
+    .messaging {
+        left: 11rem;
+    }
+
+    .messagesend {
+        width: 7rem;
+    }
+
+    .messagebox-wrapper {
+        right: 7.5rem;
+    }
+
+    .titlebar {
+        left: inherit;
+        width: auto;
+    }
+
+    .view-switch-btn {
+        cursor: default;
+    }
+}
+
+@media (min-width: 1000px) {
+    .messaging {
+        left: 14rem;
+    }
+
+    .messagesend {
+        width: 9rem;
+    }
+
+    .messagebox-wrapper {
+        right: 9.5rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .messaging {
+        left: 17rem;
+    }
+
+    .messagesend {
+        width: 11rem;
+    }
+
+    .messagebox-wrapper {
+        right: 11.5rem;
+    }
+}
+
+@media (min-width: 1500px) {
+    .messaging {
+        left: 20rem;
+    }
+
+    .messagesend {
+        width: 13rem;
+    }
+
+    .messagebox-wrapper {
+        right: 13.5rem;
+    }
+}
+
 .title {
     white-space: nowrap;
     overflow: hidden;
@@ -34,45 +133,4 @@
     position: relative;
     width: 100%;
     background-color: inherit;
-}
-
-.input {
-    position: fixed;
-    height: 2.4rem;
-    width: auto;
-    bottom: inherit;
-    right: inherit;
-    left: inherit;
-}
-
-@media (min-width: 750px) {
-    .messaging {
-        left: 26%;
-    }
-
-    .input {
-        left: auto;
-        width: 74%;
-    }
-
-    .titlebar {
-        width: 74%;
-    }
-
-    .view-switch-btn {
-        cursor: default;
-    }
-}
-
-.messagebox {
-    width: 80%;
-    float: left;
-}
-
-.messagesend {
-    color: #FFFFFF;
-    background-color: #50D367;
-
-    width: 15%;
-    float: right;
 }

@@ -11,9 +11,28 @@
 
 @media (min-width: 750px) {
     .networks {
-        right: 75%;
+        width: 10.5rem;
     }
 }
+
+@media (min-width: 1000px) {
+    .networks {
+        width: 13.5rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .networks {
+        width: 16.5rem;
+    }
+}
+
+@media (min-width: 1500px) {
+    .networks {
+        width: 19.5rem;
+    }
+}
+
 
 .channel-switcher {
     width: 100%;
@@ -27,7 +46,7 @@
 }
 
 .network-switcher-name {
-    padding: .375rem 2%;
+    padding: .375rem 0.2rem;
     font-size: 1.5rem;
     font-weight: bold;
 }
