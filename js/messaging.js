@@ -174,27 +174,13 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
   network = network.toLowerCase()
   var netObj = $("#net-" + network)
   if (netObj.length == 0) {
-    $("#messages").loadTemplate($("#template-network"), {
-      network: "net-" + network
-    }, {append: true, isFile: false, async: false})
-    $("#networks").loadTemplate($("#template-network-switcher"), {
-      network: "switchnet-" + network,
-      networkname: network,
-      networkbtns: "chanswitchers-" + network
-    }, {append: true, isFile: false, async: false})
+    openNetwork(network)
     netObj = $("#net-" + network)
   }
 
   var chanObj = netObj.find("#chan-" + channelFilter(channel))
   if (chanObj.length == 0) {
-    $("#net-" + network).loadTemplate($("#template-channel"), {
-      channel: "chan-" + channel.toLowerCase()
-    }, {append: true, isFile: false, async: false})
-    $("#chanswitchers-" + network).loadTemplate($("#template-channel-switcher"), {
-      channel: "switchto-" + channel.toLowerCase(),
-      channelname: channel,
-      onclick: "switchTo('" + network + "', '" + channel.toLowerCase() + "')"
-    }, {append: true, isFile: false, async: false})
+    openChannel(network, channel)
     chanObj = netObj.find("#chan-" + channelFilter(channel))
   }
 

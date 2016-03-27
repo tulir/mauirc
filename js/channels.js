@@ -22,6 +22,30 @@ function getActiveNetworkObj(){
   return $(".network-container:not(.hidden)")
 }
 
+function openNetwork(network) {
+  network = network.toLowerCase()
+  $("#messages").loadTemplate($("#template-network"), {
+    network: "net-" + network
+  }, {append: true, isFile: false, async: false})
+  $("#networks").loadTemplate($("#template-network-switcher"), {
+    network: "switchnet-" + network,
+    networkname: network,
+    networkbtns: "chanswitchers-" + network
+  }, {append: true, isFile: false, async: false})
+}
+
+function openChannel(network, channel) {
+  network = network.toLowerCase()
+  $("#net-" + network).loadTemplate($("#template-channel"), {
+    channel: "chan-" + channel.toLowerCase()
+  }, {append: true, isFile: false, async: false})
+  $("#chanswitchers-" + network).loadTemplate($("#template-channel-switcher"), {
+    channel: "switchto-" + channel.toLowerCase(),
+    channelname: channel,
+    onclick: "switchTo('" + network + "', '" + channel.toLowerCase() + "')"
+  }, {append: true, isFile: false, async: false})
+}
+
 function switchView() {
   if ($("#networks").hasClass("hidden-tablet-down")) {
     $("#messaging").addClass("hidden-tablet-down")
