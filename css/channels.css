@@ -19,16 +19,14 @@
     width: 100%;
 }
 
-.network-switcher > .channel-switcher {
+.network-switcher-buttons {
     width: 80%;
-}
-
-.network-switcher {
-    text-align: right;
+    float: right;
+    background-color: #D6D6D6;
+    border-radius: .25rem;
 }
 
 .network-switcher-name {
-    text-align: left;
     padding: .375rem 2%;
     font-size: 1.5rem;
     font-weight: bold;

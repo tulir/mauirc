@@ -108,7 +108,7 @@ function statusCommand() {
   } else {
     args = []
   }
-  
+
   switch(command) {
   case "clearbuffer":
     if (args.length > 1) {
@@ -179,7 +179,8 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
     }, {append: true, isFile: false, async: false})
     $("#networks").loadTemplate($("#template-network-switcher"), {
       network: "switchnet-" + network,
-      networkname: network
+      networkname: network,
+      networkbtns: "chanswitchers-" + network
     }, {append: true, isFile: false, async: false})
     netObj = $("#net-" + network)
   }
@@ -189,7 +190,7 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
     $("#net-" + network).loadTemplate($("#template-channel"), {
       channel: "chan-" + channel.toLowerCase()
     }, {append: true, isFile: false, async: false})
-    $("#switchnet-" + network).loadTemplate($("#template-channel-switcher"), {
+    $("#chanswitchers-" + network).loadTemplate($("#template-channel-switcher"), {
       channel: "switchto-" + channel.toLowerCase(),
       channelname: channel,
       onclick: "switchTo('" + network + "', '" + channel.toLowerCase() + "')"
