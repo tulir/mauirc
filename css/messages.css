@@ -2,7 +2,7 @@
     position: relative;
     display: inline-block;
     margin-bottom: .75rem;
-    background-color: #EEEEEE;
+    background-color: #FAFAFA;
     border-radius: .25rem;
 
     min-width: 30%;
@@ -12,7 +12,7 @@
 }
 
 .joinpart {
-    background-color: #E6E6E6;
+    background-color: #EBEBEB;
     color: #9A9A9A;
 }
 
