@@ -113,6 +113,7 @@ function statusCommand() {
   case "open":
     if (args.length > 1) {
       openChannel(args[0], args[1])
+      $("#message-text").val("")
       return
     }
   case "clearbuffer":
