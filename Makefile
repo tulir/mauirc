@@ -4,6 +4,9 @@ minify: minify-js minify-css
 
 pack-js:
 	cat \
+		./js/lib/linkify.min.js \
+		./js/lib/linkify-html.min.js \
+		./js/lib/linkify-jquery.min.js \
 		./js/vars.js \
 	    ./js/util.js \
 	    ./js/channels.js \
@@ -18,6 +21,7 @@ pack-css:
 	    ./css/text.css \
 	    ./css/alerts.css \
 	    ./css/messages.css \
+	    ./css/messageview.css \
 	    ./css/channels.css \
 		> ./index.css
 
