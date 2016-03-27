@@ -35,8 +35,14 @@ function openNetwork(network) {
 }
 
 function openChannel(network, channel) {
+  var netObj = $("#net-" + network)
+  if (netObj.length == 0) {
+    openNetwork(network)
+    netObj = $("#net-" + network)
+  }
+
   network = network.toLowerCase()
-  $("#net-" + network).loadTemplate($("#template-channel"), {
+  netObj.loadTemplate($("#template-channel"), {
     channel: "chan-" + channel.toLowerCase()
   }, {append: true, isFile: false, async: false})
   $("#chanswitchers-" + network).loadTemplate($("#template-channel-switcher"), {
