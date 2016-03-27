@@ -106,5 +106,5 @@ function switchTo(network, channel) {
 }
 
 function channelFilter(channel) {
-  return channel.replace("#", "\\#").toLowerCase()
+  return channel.replace("#", "\\#").replace("*", "\\*").replace(".", "\\.").toLowerCase()
 }
