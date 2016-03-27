@@ -1,4 +1,5 @@
 .message {
+    text-align: left;
     position: relative;
     display: inline-block;
     margin-bottom: .75rem;
@@ -11,6 +12,14 @@
     padding: .375em .75em;
 }
 
+.message-wrapper {
+    margin-right: 0.25em;
+}
+
+.own-message {
+    text-align: right;
+}
+
 .joinpart {
     background-color: #EBEBEB;
     color: #9A9A9A;
@@ -18,14 +27,16 @@
 
 .message-date {
     float: right;
+    font-size: 0.7rem;
+    color: #9A9A9A;
 }
 
 .message-sender {
-    float: left;
     font-weight: bold;
 }
 
 .message-text {
+    float: left;
     word-wrap: break-word;
 }
 
