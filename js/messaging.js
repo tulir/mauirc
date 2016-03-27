@@ -110,6 +110,11 @@ function statusCommand() {
   }
 
   switch(command) {
+  case "open":
+    if (args.length > 1) {
+      openChannel(args[0], args[1])
+      return
+    }
   case "clearbuffer":
     if (args.length > 1) {
       var payload = {
