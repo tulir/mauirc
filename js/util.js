@@ -2,7 +2,7 @@ function showAlert(type, message) {
   $("#status-messages").loadTemplate($("#template-" + type), {
     message: message
   }, {append: true})
-  if($("#status-messages").attr('hidden')) {
+  if($("#status-messages").hasClass('hidden')) {
     $("#status-enter").addClass("new-messages")
   }
 }

@@ -15,7 +15,7 @@ function connect() {
         onclick: "switchTo('MauIRC Status', 'MauIRC Status')"
       }, {append: true, isFile: false, async: false})
 
-      $("#status-messages").removeAttr("hidden")
+      $("#status-messages").removeClass("hidden")
       $("#status-enter").addClass("active")
       $("#message-text").focus()
 

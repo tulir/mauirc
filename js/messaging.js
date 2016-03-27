@@ -163,7 +163,7 @@ function receiveCmdResponse(message) {
     notify(sender, message)
   }
 
-  if (statusMsgs.attr("hidden") !== undefined){
+  if (statusMsgs.hasClass("hidden")){
     $("#status-enter").addClass("new-messages")
   } else {
     scrollDown()
@@ -218,7 +218,7 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
     notify(sender, message)
   }
 
-  if (chanObj.attr("hidden") !== undefined && isNew){
+  if (chanObj.hasClass("hidden") && isNew){
     $("#switchto-" + channelFilter(channel)).addClass("new-messages")
   } else {
     scrollDown()

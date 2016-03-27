@@ -15,11 +15,11 @@ function getActiveNetwork() {
 }
 
 function getActiveChannelObj() {
-  return $(".channel-container:visible")
+  return $(".channel-container:not(.hidden)")
 }
 
 function getActiveNetworkObj(){
-  return $(".network-container:visible")
+  return $(".network-container:not(.hidden)")
 }
 
 function switchView() {
@@ -35,8 +35,8 @@ function switchView() {
 function switchTo(network, channel) {
   network = network.toLowerCase()
   console.log("Switching to channel " + channel + " @ " + network)
-  getActiveChannelObj().attr("hidden", true)
-  getActiveNetworkObj().attr("hidden", true)
+  getActiveChannelObj().addClass("hidden")
+  getActiveNetworkObj().addClass("hidden")
   $(".channel-switcher.active").removeClass("active")
   $(".network-switcher.activenet").removeClass("activenet")
   $("#message-text").focus()
@@ -55,16 +55,18 @@ function switchTo(network, channel) {
   }
 
   if (channel == "MauIRC Status") {
-    $("#status-messages").removeAttr("hidden")
+    $("#status-messages").removeClass("hidden")
     $("#status-enter").addClass("active")
     $("#status-enter").removeClass("new-messages")
     scrollDown()
     return
   }
 
-  $("#net-" + network).removeAttr("hidden")
   $("#switchnet-" + network).addClass("activenet")
-  $("#chan-" + channelFilter(channel)).removeAttr("hidden")
+  var netObj = $("#net-" + network)
+  var chanObj = netObj.find("#chan-" + channelFilter(channel))
+  netObj.removeClass("hidden")
+  chanObj.removeClass("hidden")
 
   var newChanSwitcher = $("#switchto-" + channelFilter(channel))
   newChanSwitcher.removeClass("new-messages")
