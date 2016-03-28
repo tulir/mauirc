@@ -16,7 +16,7 @@ function connect() {
       }, {append: true, isFile: false, async: false})
 
       switchTo('MauIRC Status', 'MauIRC Status')
-      
+
       history(1024)
       msgcontainer = true
     }
@@ -43,6 +43,7 @@ function connect() {
         channelData[data.object.network] = {}
       }
       channelData[data.object.network][data.object.name] = data.object
+      updateUserList()
     } else if (data.type == "nickchange") {
       console.log("Nick changed to " + data.object.nick + " on " + data.object.network)
       if (channelData[data.object.network] === undefined) {
