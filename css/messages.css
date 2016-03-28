@@ -40,7 +40,7 @@
     text-align: right;
 }
 
-.joinpart {
+.joinpart, .nickchange {
     background-color: #EBEBEB;
     color: #9A9A9A;
 }
