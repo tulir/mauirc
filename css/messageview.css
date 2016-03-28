@@ -37,7 +37,6 @@
     background-color: #EEEEEE;
 }
 
-
 .messagebox {
     font-size: 1rem;
     font-family: inherit;
@@ -71,6 +70,10 @@
     }
 
     .messagebox-wrapper {
+        right: 16.5rem;
+    }
+
+    .messaging-userlisthidden > .messagebox-wrapper {
         right: 7.5rem;
     }
 
@@ -95,6 +98,10 @@
     }
 
     .messagebox-wrapper {
+        right: 19.5rem;
+    }
+
+    .messaging-userlisthidden > .messagebox-wrapper {
         right: 9.5rem;
     }
 }
@@ -110,6 +117,10 @@
     }
 
     .messagebox-wrapper {
+        right: 22.5rem;
+    }
+
+    .messaging-userlisthidden > .messagebox-wrapper {
         right: 11.5rem;
     }
 }
@@ -125,6 +136,10 @@
     }
 
     .messagebox-wrapper {
+        right: 25.5rem;
+    }
+
+    .messaging-userlisthidden > .messagebox-wrapper {
         right: 13.5rem;
     }
 }
