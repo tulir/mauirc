@@ -15,7 +15,7 @@
   <div class="messages" id="messages"></div>
 
   <div class="messagebox-wrapper">
-    <input class="messagebox" type="text" id="message-text" autocomplete="off" placeholder="Write a message...">
+    <input class="messagebox" type="text" id="message-text" autocomplete="off" placeholder="Write a message..."  onkeydown="if (event.keyCode === 13) {send()}">
   </div>
   <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
 </div>
