@@ -5,6 +5,9 @@ function send(){
   }
 
   var msg = $("#message-text").val()
+  if (msg.length == 0) {
+    return
+  }
 
   if (getActiveChannel() == "MauIRC Status") {
     statusCommand()
