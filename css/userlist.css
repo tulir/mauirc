@@ -11,6 +11,7 @@
 
 @media (min-width: 750px) {
     .userlist {
+        left: auto;
         width: 8.5rem;
     }
 }

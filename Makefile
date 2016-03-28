@@ -24,6 +24,7 @@ pack-css:
 	    ./css/messages.css \
 	    ./css/messageview.css \
 	    ./css/channels.css \
+	    ./css/userlist.css \
 		> ./index.css
 
 pack: pack-js pack-css
