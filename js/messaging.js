@@ -217,13 +217,18 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
     chanObj = netObj.find("#chan-" + channelFilter(channel))
   }
 
+  var shouldEscapeHtml = true
   if (command == "privmsg") {
     template = "message"
   } else if (command == "action") {
     template = "action"
-  } else if (command == "join" || command == "part") {
+  } else if (command == "join" || command == "part" || command == "quit") {
     template = "joinpart"
     message = (command == "join" ? "joined " : "left: ") + message
+  } else if (command == "nick") {
+    template = "nickchange"
+    shouldEscapeHtml = false
+    message = "is now known as <b>" + message + "</b>"
   }
 
   chanObj.loadTemplate($("#template-" + template), {
@@ -231,7 +236,7 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
     date: moment(timestamp * 1000).format("HH:mm:ss"),
     id: "msg-" + id,
     wrapid: "msgwrap-" + id,
-    message: linkifyHtml(escapeHtml(message))
+    message: linkifyHtml(shouldEscapeHtml ? escapeHtml(message) : message)
   }, {append: true, isFile: false, async: false})
 
   if (channelData[network] !== undefined && sender == channelData[network]["*nick"]) {
