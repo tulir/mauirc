@@ -12,6 +12,12 @@
     }
 }
 
+@media (min-width: 1500px) {
+    .alert {
+        width: 45%;
+    }
+}
+
 .alert-success {
     color: #44A944;
     background-color: #DEF2DE;
