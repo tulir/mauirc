@@ -25,11 +25,18 @@
     right: inherit;
 }
 
+.messageform {
+    position: fixed;
+    left: inherit;
+    right: inherit;
+    bottom: 0.25rem;
+}
+
 .messagebox-wrapper {
     position: fixed;
     left: inherit;
     right: 5.5rem;
-    bottom: 0.25rem;
+    bottom: inherit;
 
     padding: .375rem 1rem;
     border: 1px solid #9A9A9A;
@@ -73,7 +80,7 @@
         right: 16.5rem;
     }
 
-    .messaging-userlisthidden > .messagebox-wrapper {
+    .messaging-userlisthidden > .messageform > .messagebox-wrapper {
         right: 7.5rem;
     }
 
@@ -101,7 +108,7 @@
         right: 19.5rem;
     }
 
-    .messaging-userlisthidden > .messagebox-wrapper {
+    .messaging-userlisthidden > .messageform > .messagebox-wrapper {
         right: 9.5rem;
     }
 }
@@ -120,7 +127,7 @@
         right: 22.5rem;
     }
 
-    .messaging-userlisthidden > .messagebox-wrapper {
+    .messaging-userlisthidden > .messageform > .messagebox-wrapper {
         right: 11.5rem;
     }
 }
@@ -139,7 +146,7 @@
         right: 25.5rem;
     }
 
-    .messaging-userlisthidden > .messagebox-wrapper {
+    .messaging-userlisthidden > .messageform > .messagebox-wrapper {
         right: 13.5rem;
     }
 }

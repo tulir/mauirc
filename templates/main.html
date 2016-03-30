@@ -14,10 +14,12 @@
 
   <div class="messages" id="messages"></div>
 
-  <div class="messagebox-wrapper">
-    <input class="messagebox" type="text" id="message-text" autocomplete="off" placeholder="Write a message..."  onkeydown="if (event.keyCode === 13) {send()}">
-  </div>
-  <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
+  <form action="#" class="messageform">
+    <div class="messagebox-wrapper">
+      <input class="messagebox" type="text" id="message-text" autocomplete="off" placeholder="Write a message...">
+    </div>
+    <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
+  </form>
 </div>
 
 <div class="userlist hidden-tablet-down" id="userlist"></div>
