@@ -53,6 +53,10 @@ function connect() {
         fixOwnMessages(data.object.network, data.object.nick)
       }
       channelData[data.object.network]["*nick"] = data.object.nick
+    } else if (data.type == "netlist") {
+      data.object.forEach(function(val, i, arr){
+        openNetwork(val)
+      })
     }
   };
 
