@@ -22,6 +22,50 @@ function getActiveNetworkObj(){
   return $(".network-container:not(.hidden)")
 }
 
+function newChannel(network) {
+  network = network.toLowerCase()
+
+  var oldAdder = $("#channel-adder-" + network)
+  if (oldAdder.length != 0) {
+    oldAdder.focus()
+    return
+  }
+
+  $("#chanswitchers-" + network).loadTemplate($("#template-channel-adder"), {
+    id: "channel-adder-" + network,
+    wrapid: "channel-adder-wrapper-" + network,
+    finish: "if (event.keyCode == 13) { finishNewChannel('" + network + "') }"
+  }, {append: true, isFile: false, async: false})
+  $("#channel-adder-" + network).focus()
+}
+
+function finishNewChannel(network) {
+  var adder = $("#channel-adder-" + network)
+  if (adder.length == 0) {
+    return
+  }
+
+  var name = adder.val().trim()
+  $("#channel-adder-wrapper-" + network).remove()
+
+  if (name.length == 0) {
+    return
+  }
+
+  if (name.startsWith("#")) {
+    socket.send(JSON.stringify({
+      type: "message",
+      network: network,
+      channel: name,
+      command: "join",
+      message: "Joining"
+    }))
+  }
+
+  openChannel(network, name)
+  switchTo(network, name)
+}
+
 function openNetwork(network) {
   network = network.toLowerCase()
   $("#messages").loadTemplate($("#template-network"), {
@@ -30,18 +74,19 @@ function openNetwork(network) {
   $("#networks").loadTemplate($("#template-network-switcher"), {
     network: "switchnet-" + network,
     networkname: network,
+    openchannel: "newChannel('" + network + "')",
     networkbtns: "chanswitchers-" + network
   }, {append: true, isFile: false, async: false})
 }
 
 function openChannel(network, channel) {
+  network = network.toLowerCase()
   var netObj = $("#net-" + network)
   if (netObj.length == 0) {
     openNetwork(network)
     netObj = $("#net-" + network)
   }
 
-  network = network.toLowerCase()
   netObj.loadTemplate($("#template-channel"), {
     channel: "chan-" + channel.toLowerCase()
   }, {append: true, isFile: false, async: false})

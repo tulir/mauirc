@@ -38,6 +38,24 @@
     width: 100%;
 }
 
+.channel-adder {
+    width: 100%;
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: #FAFAFA;
+    border: none;
+    border-radius: .25rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.channel-adder-wrapper {
+    padding: .375rem 1rem;
+    border: none;
+    border-radius: .25rem;
+    background-color: #D6D6D6;
+}
+
 .network-switcher-buttons {
     width: 80%;
     float: right;
@@ -49,6 +67,17 @@
     padding: .375rem 0.2rem;
     font-size: 1.5rem;
     font-weight: bold;
+    float: left;
+}
+
+.network-switcher-open {
+    float: right;
+}
+
+@media (max-width: 1199px) and (min-width: 750px) {
+    .network-switcher-open-text-long {
+        display: none;
+    }
 }
 
 .new-messages {
