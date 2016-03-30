@@ -36,7 +36,9 @@ function newChannel(network) {
     wrapid: "channel-adder-wrapper-" + network,
     finish: "if (event.keyCode == 13) { finishNewChannel('" + network + "') }"
   }, {append: true, isFile: false, async: false})
-  $("#channel-adder-" + network).focus()
+  var adder = $("#channel-adder-" + network)
+  adder.focus()
+  adder.autocomplete({lookup: channelData[network]["*list"]})
 }
 
 function finishNewChannel(network) {
