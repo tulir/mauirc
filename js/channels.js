@@ -68,6 +68,10 @@ function finishNewChannel(network) {
 
 function openNetwork(network) {
   network = network.toLowerCase()
+  if ($("#net-" + network).length != 0) {
+    return
+  }
+
   $("#messages").loadTemplate($("#template-network"), {
     network: "net-" + network
   }, {append: true, isFile: false, async: false})
@@ -85,6 +89,10 @@ function openChannel(network, channel) {
   if (netObj.length == 0) {
     openNetwork(network)
     netObj = $("#net-" + network)
+  }
+
+  if (netObj.find("#chan-" + channelFilter(channel)).length != 0) {
+    return
   }
 
   netObj.loadTemplate($("#template-channel"), {
