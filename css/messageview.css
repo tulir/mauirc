@@ -41,13 +41,13 @@
     padding: .375rem 1rem;
     border: 1px solid #9A9A9A;
     border-radius: .25rem;
-    background-color: #EEEEEE;
+    background-color: #FAFAFA;
 }
 
 .messagebox {
     font-size: 1rem;
     font-family: inherit;
-    background-color: #EEEEEE;
+    background-color: #FAFAFA;
     border: none;
 
     position: relative;
