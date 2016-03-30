@@ -44,6 +44,11 @@ function connect() {
       }
       channelData[data.object.network][data.object.name] = data.object
       updateUserList()
+    } else if (data.type == "chanlist") {
+      console.log("Received channel list of " + data.object.network)
+      data.object.forEach(function(key, val, map){
+        channelData[data.object.network]["*list"].push(key)
+      })
     } else if (data.type == "nickchange") {
       console.log("Nick changed to " + data.object.nick + " on " + data.object.network)
       if (channelData[data.object.network] === undefined) {
