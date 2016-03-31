@@ -14,7 +14,8 @@ function auth() {
       connect()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Authentication failed: " + textStatus)
+      console.log("Authentication failed: " + textStatus + " " + errorThrown)
+      console.log(jqXHR)
       authfail = true
     }
   });

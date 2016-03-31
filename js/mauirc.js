@@ -26,7 +26,6 @@ function connect() {
     $('#message-send').removeAttr('disabled')
     $('#message-text').removeAttr('disabled')
 
-    console.log("Connected!")
     connected = true
   };
 
@@ -89,8 +88,6 @@ function connect() {
       scrollDown()
       $('#message-send').attr('disabled', true)
       $('#message-text').attr('disabled', true)
-
-      console.log("Disconnected!")
     }
     if (!authfail) {
       setTimeout(reconnect, 2500)
