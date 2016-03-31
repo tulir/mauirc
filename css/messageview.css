@@ -58,7 +58,8 @@
 .messagesend {
     color: #FFFFFF;
     background-color: #50D367;
-    border: 1px solid #50D367;
+    border-top: 1px solid #50D367;
+    border-bottom: 1px solid #50D367;
 
     position: absolute;
     width: 5rem;
