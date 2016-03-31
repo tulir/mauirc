@@ -30,3 +30,10 @@ function escapeTag(tag) {
 function escapeHtml(str) {
     return str.replace(/[&<>]/g, escapeTag);
 }
+
+String.prototype.escapeRegex = function(str) {
+    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+}
+String.prototype.replaceAll = function(search, replacement) {
+    return this.replace(new RegExp(this.escapeRegex(search), 'g'), replacement);
+};

@@ -37,7 +37,6 @@ function newChannel(network) {
     finish: "if (event.keyCode === 13) { finishNewChannel('" + network + "') }"
   }, {append: true, isFile: false, async: false})
   var adder = $("#channel-adder-" + network)
-  adder.focus()
   adder.easyAutocomplete({
     data: channelData[network]["*list"],
   	list: {
@@ -47,6 +46,7 @@ function newChannel(network) {
   		}
   	}
   });
+  adder.focus()
 }
 
 function finishNewChannel(network) {
@@ -171,5 +171,5 @@ function switchTo(network, channel) {
 }
 
 function channelFilter(channel) {
-  return channel.replace("#", "\\#").replace("*", "\\*").replace(".", "\\.").toLowerCase()
+  return channel.replaceAll("#", "\\#").replaceAll("*", "\\*").replaceAll(".", "\\.").toLowerCase()
 }
