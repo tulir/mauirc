@@ -32,23 +32,29 @@ function connect() {
 
   socket.onmessage = function (evt) {
     var data = JSON.parse(evt.data)
-    if (data.type == "message") {
+    if (data.type === "message") {
       receive(data.object.id, data.object.network, data.object.channel, data.object.timestamp,
         data.object.sender, data.object.command, data.object.message, true)
-    } else if (data.type == "cmdresponse") {
+    } else if (data.type === "cmdresponse") {
       receiveCmdResponse(data.object.message)
-    } else if (data.type == "chandata") {
-      console.log("Received channel data for " + data.object.name + " @ " + data.object.network)
+    } else if (data.type === "chandata") {
       if (channelData[data.object.network] === undefined) {
         channelData[data.object.network] = {}
       }
+      if (channelData[data.object.network]["*list"] === undefined) {
+        channelData[data.object.network]["*list"] = []
+      }
+
       channelData[data.object.network][data.object.name] = data.object
-      updateUserList()
-    } else if (data.type == "chanlist") {
-      console.log(data)
-      console.log("Received channel list of " + data.object.network)
-      channelData[data.object.network]["*list"] = data.object.list
-    } else if (data.type == "nickchange") {
+
+      if ($.inArray(data.object.name, channelData[data.object.network]["*list"]) === -1) {
+        channelData[data.object.network]["*list"].push(data.object.name)
+      }
+
+      if (data.object.userlist !== undefined) {
+        updateUserList()
+      }
+    } else if (data.type === "nickchange") {
       console.log("Nick changed to " + data.object.nick + " on " + data.object.network)
       if (channelData[data.object.network] === undefined) {
         channelData[data.object.network] = {}
@@ -57,7 +63,7 @@ function connect() {
         fixOwnMessages(data.object.network, data.object.nick)
       }
       channelData[data.object.network]["*nick"] = data.object.nick
-    } else if (data.type == "netlist") {
+    } else if (data.type === "netlist") {
       data.object.forEach(function(val, i, arr){
         openNetwork(val)
       })
@@ -89,7 +95,7 @@ function reconnect(){
     type: "GET",
     url: "/authcheck",
     success: function(data){
-      if (data == "true") {
+      if (data === "true") {
         connect()
       } else {
         authfail = true
@@ -98,7 +104,7 @@ function reconnect(){
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      if(jqXHR.status == 401) {
+      if(jqXHR.status === 401) {
         authfail = true
         $("#container").loadTemplate($("#template-login"), {})
         msgcontainer = false

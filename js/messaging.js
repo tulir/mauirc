@@ -5,11 +5,11 @@ function send(){
   }
 
   var msg = $("#message-text").val()
-  if (msg.length == 0) {
+  if (msg.length === 0) {
     return
   }
 
-  if (getActiveChannel() == "MauIRC Status") {
+  if (getActiveChannel() === "MauIRC Status") {
     statusCommand()
     return
   }
@@ -88,7 +88,7 @@ function send(){
     }
   }
 
-  if (payload != null) {
+  if (payload !== undefined) {
     var content = JSON.stringify(payload)
 
     if (content.length > 1024) {
@@ -188,14 +188,14 @@ function fixOwnMessages(network, nick) {
 
     let msg = $(this).find(".message")
     let act = msg.find(".action")
-    if (act.length != 0) {
+    if (act.length !== 0) {
       let sender = act.find(".action-sender")
-      if (sender.text() == nick) {
+      if (sender.text() === nick) {
         $(this).addClass("own-message")
       }
     } else {
       let sender = msg.find(".message-sender")
-      if (sender.length != 0 && sender.text() == nick) {
+      if (sender.length !== 0 && sender.text() === nick) {
         sender.remove()
         $(this).addClass("own-message")
       }
@@ -206,26 +206,26 @@ function fixOwnMessages(network, nick) {
 function receive(id, network, channel, timestamp, sender, command, message, isNew) {
   network = network.toLowerCase()
   var netObj = $("#net-" + network)
-  if (netObj.length == 0) {
+  if (netObj.length === 0) {
     openNetwork(network)
     netObj = $("#net-" + network)
   }
 
   var chanObj = netObj.find("#chan-" + channelFilter(channel))
-  if (chanObj.length == 0) {
+  if (chanObj.length === 0) {
     openChannel(network, channel)
     chanObj = netObj.find("#chan-" + channelFilter(channel))
   }
 
   var shouldEscapeHtml = true
-  if (command == "privmsg") {
+  if (command === "privmsg") {
     template = "message"
-  } else if (command == "action") {
+  } else if (command === "action") {
     template = "action"
-  } else if (command == "join" || command == "part" || command == "quit") {
+  } else if (command === "join" || command === "part" || command === "quit") {
     template = "joinpart"
-    message = (command == "join" ? "joined " : "left: ") + message
-  } else if (command == "nick") {
+    message = (command === "join" ? "joined " : "left: ") + message
+  } else if (command === "nick") {
     template = "nickchange"
     shouldEscapeHtml = false
     message = "is now known as <b>" + message + "</b>"
@@ -239,7 +239,7 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
     message: linkifyHtml(shouldEscapeHtml ? escapeHtml(message) : message)
   }, {append: true, isFile: false, async: false})
 
-  if (channelData[network] !== undefined && sender == channelData[network]["*nick"]) {
+  if (channelData[network] !== undefined && sender === channelData[network]["*nick"]) {
     $("#msgwrap-" + id).addClass("own-message")
     $("#msg-" + id + " > .message-sender").remove()
   }

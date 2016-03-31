@@ -1,5 +1,6 @@
 function updateUserList(){
-  if (channelData[getActiveNetwork()] !== undefined && channelData[getActiveNetwork()][getActiveChannel()] !== undefined) {
+  if (channelData[getActiveNetwork()] !== undefined && channelData[getActiveNetwork()][getActiveChannel()] !== undefined
+    && channelData[getActiveNetwork()][getActiveChannel()].userlist !== undefined) {
     if (isUserListHidden() && !wasUserListHiddenManually()) toggleUserList(false)
 
     $("#userlist").text("")

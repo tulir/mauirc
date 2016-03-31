@@ -14,6 +14,6 @@ channelData["MauIRC Status"] = {
 }
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
-if (window.location.protocol != "https:") {
+if (window.location.protocol !== "https:") {
   websocketPath = 'ws://' + window.location.host + '/socket'
 }

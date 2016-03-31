@@ -26,7 +26,7 @@ function newChannel(network) {
   network = network.toLowerCase()
 
   var oldAdder = $("#channel-adder-" + network)
-  if (oldAdder.length != 0) {
+  if (oldAdder.length !== 0) {
     oldAdder.focus()
     return
   }
@@ -34,11 +34,10 @@ function newChannel(network) {
   $("#chanswitchers-" + network).loadTemplate($("#template-channel-adder"), {
     id: "channel-adder-" + network,
     wrapid: "channel-adder-wrapper-" + network,
-    finish: "if (event.keyCode == 13) { finishNewChannel('" + network + "') }"
+    finish: "if (event.keyCode === 13) { finishNewChannel('" + network + "') }"
   }, {append: true, isFile: false, async: false})
   var adder = $("#channel-adder-" + network)
   adder.focus()
-
   adder.easyAutocomplete({
     data: channelData[network]["*list"],
   	list: {
@@ -52,14 +51,14 @@ function newChannel(network) {
 
 function finishNewChannel(network) {
   var adder = $("#channel-adder-" + network)
-  if (adder.length == 0) {
+  if (adder.length === 0) {
     return
   }
 
   var name = adder.val().trim()
   $("#channel-adder-wrapper-" + network).remove()
 
-  if (name.length == 0) {
+  if (name.length === 0) {
     return
   }
 
@@ -79,7 +78,7 @@ function finishNewChannel(network) {
 
 function openNetwork(network) {
   network = network.toLowerCase()
-  if ($("#net-" + network).length != 0) {
+  if ($("#net-" + network).length !== 0) {
     return
   }
 
@@ -97,12 +96,12 @@ function openNetwork(network) {
 function openChannel(network, channel) {
   network = network.toLowerCase()
   var netObj = $("#net-" + network)
-  if (netObj.length == 0) {
+  if (netObj.length === 0) {
     openNetwork(network)
     netObj = $("#net-" + network)
   }
 
-  if (netObj.find("#chan-" + channelFilter(channel)).length != 0) {
+  if (netObj.find("#chan-" + channelFilter(channel)).length !== 0) {
     return
   }
 
@@ -148,7 +147,7 @@ function switchTo(network, channel) {
     switchView()
   }
 
-  if (channel == "MauIRC Status") {
+  if (channel === "MauIRC Status") {
     $("#status-messages").removeClass("hidden")
     $("#status-enter").addClass("active")
     $("#status-enter").removeClass("new-messages")

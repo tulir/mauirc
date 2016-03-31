@@ -26,7 +26,7 @@ function checkAuth(){
     type: "GET",
     url: "/authcheck",
     success: function(data){
-      if (data == "true") {
+      if (data === "true") {
         connect()
       } else {
         authfail = true
