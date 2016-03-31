@@ -1,3 +1,19 @@
+// mauIRC - The original mauIRC web frontend
+// Copyright (C) 2016 Tulir Asokan
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 function connect() {
   console.log("Connecting to socket...")
   socket = new WebSocket(websocketPath);
@@ -53,8 +69,8 @@ function connect() {
       if (data.object.userlist !== null) {
         data.object.userlistplain = []
         data.object.userlist.forEach(function(val, i, arr) {
-          let char = val.charAt(0)
-          if (char === "~" || char === "&" || char === "@" || char === "%" || char === "+") {
+          var ch = val.charAt(0)
+          if (ch === "~" || ch === "&" || ch === "@" || ch === "%" || ch === "+") {
             val = val.substring(1)
           }
           data.object.userlistplain.push(val)
