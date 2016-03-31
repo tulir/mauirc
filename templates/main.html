@@ -16,7 +16,7 @@
 
   <form action="#" class="messageform">
     <div class="messagebox-wrapper">
-      <input class="messagebox" type="text" id="message-text" autocomplete="off" placeholder="Write a message...">
+      <input class="messagebox" type="text" id="message-text" autocomplete="off" onKeyDown="if (event.keyCode === 9) {userAutocomplete(); event.preventDefault()}" placeholder="Write a message...">
     </div>
     <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
   </form>
