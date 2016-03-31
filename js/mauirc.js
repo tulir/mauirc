@@ -52,6 +52,14 @@ function connect() {
       }
 
       if (data.object.userlist !== undefined) {
+        data.object.userlistplain = []
+        data.object.userlist.forEach(function(val, i, arr) {
+          let char = val.charAt(0)
+          if (char === "~" || char === "&" || char === "@" || char === "%" || char === "+") {
+            val = val.substring(1)
+          }
+          data.object.userlistplain.push(val)
+        })
         updateUserList()
       }
     } else if (data.type === "nickchange") {
