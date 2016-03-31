@@ -44,6 +44,10 @@ function connect() {
       }
       channelData[data.object.network][data.object.name] = data.object
       updateUserList()
+    } else if (data.type == "chanlist") {
+      console.log(data)
+      console.log("Received channel list of " + data.object.network)
+      channelData[data.object.network]["*list"] = data.object.list
     } else if (data.type == "nickchange") {
       console.log("Nick changed to " + data.object.nick + " on " + data.object.network)
       if (channelData[data.object.network] === undefined) {
@@ -53,6 +57,10 @@ function connect() {
         fixOwnMessages(data.object.network, data.object.nick)
       }
       channelData[data.object.network]["*nick"] = data.object.nick
+    } else if (data.type == "netlist") {
+      data.object.forEach(function(val, i, arr){
+        openNetwork(val)
+      })
     }
   };
 
