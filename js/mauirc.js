@@ -51,7 +51,7 @@ function connect() {
         channelData[data.object.network]["*list"].push(data.object.name)
       }
 
-      if (data.object.userlist !== undefined) {
+      if (data.object.userlist !== null) {
         data.object.userlistplain = []
         data.object.userlist.forEach(function(val, i, arr) {
           let char = val.charAt(0)
