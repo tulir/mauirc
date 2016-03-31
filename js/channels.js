@@ -38,7 +38,16 @@ function newChannel(network) {
   }, {append: true, isFile: false, async: false})
   var adder = $("#channel-adder-" + network)
   adder.focus()
-  adder.autocomplete({lookup: channelData[network]["*list"]})
+
+  adder.easyAutocomplete({
+    data: channelData[network]["*list"],
+  	list: {
+  		maxNumberOfElements: 10,
+  		match: {
+  			enabled: true
+  		}
+  	}
+  });
 }
 
 function finishNewChannel(network) {
