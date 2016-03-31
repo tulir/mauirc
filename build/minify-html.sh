@@ -34,4 +34,4 @@ if [ ! -f index.max.html ]; then
     mv index.html index.max.html
 fi
 
-cat index-min.html | htmlminify > index.html
+cat index-min.html | html-minifier --html-5 --collapse-boolean-attributes --collapse-inline-tag-whitespace --collapse-whitespace --remove-attribute-quotes --remove-redundant-attributes --remove-script-type-attributes --remove-style-link-type-attributes > index.html
