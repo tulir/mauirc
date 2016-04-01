@@ -87,15 +87,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: bold;
 }
 
-.open-user-list, .open-network-list, .settings-open {
+.open-network-list, .settings-open, .open-user-list, .close-user-list {
     background-color: inherit;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    position: absolute;
 }
 
-.open-user-list, .settings-open {
-    float: right;
+.open-network-list {
+    left: 0;
+}
+
+.settings-open {
+    right: 0;
+}
+
+.open-user-list {
+    right: 32px;
+    width: auto;
+}
+
+.open-user-list-small {
+    right: 0;
+}
+
+.close-user-list {
+    left: 0;
+    width: auto;
 }
 
 .open-network-list {
@@ -103,12 +119,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .title {
+    position: absolute;
+    left: 8.5rem;
+    right: 6.625rem;
+    top: 1.05rem;
+    transform: translateY(-50%);
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    position: relative;
-    top: 25%;
-    transform: translateY(-50%);
 }
 
 @media (min-width: 750px) {
@@ -128,6 +147,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .titlebar {
         left: inherit;
         width: auto;
+    }
+
+    .title {
+        left: .25rem;
+        right: 7rem;
     }
 
     .view-switch-btn {
