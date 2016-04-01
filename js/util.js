@@ -33,6 +33,10 @@ function notify(user, message) {
   }
 }
 
+function isEmpty(object) {
+  return object === null || object === undefined || object.length === 0
+}
+
 var tagsToEscape = {
     '&': '&amp;',
     '<': '&lt;',

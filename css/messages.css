@@ -95,3 +95,48 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: bold;
     display: inline;
 }
+
+.message-preview {
+    margin-top: 0.25rem;
+}
+
+.preview-info {
+    float: left;
+}
+
+.preview-sitename {
+    font-weight: normal;
+    font-size: 1em;
+    color: #9A9A9A;
+}
+
+.preview-title {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.preview-description {
+    font-size: 1em;
+}
+
+.preview-image {
+    width: 8rem;
+    height: 8rem;
+    float: right;
+}
+
+.preview-full-size {
+    margin: 0;
+    float: left;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
+
+.preview-modal {
+    width: auto;
+    height: auto;
+    max-width: 95%;
+    max-height: 95%;
+    display: none;
+}

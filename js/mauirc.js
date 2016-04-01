@@ -49,7 +49,7 @@ function connect() {
     var data = JSON.parse(evt.data)
     if (data.type === "message") {
       receive(data.object.id, data.object.network, data.object.channel, data.object.timestamp,
-        data.object.sender, data.object.command, data.object.message, true)
+        data.object.sender, data.object.command, data.object.message, data.object.preview, true)
     } else if (data.type === "cmdresponse") {
       receiveCmdResponse(data.object.message)
     } else if (data.type === "chandata") {
@@ -143,7 +143,7 @@ function history(n){
     dataType: "json",
     success: function(data){
       data.reverse().forEach(function(val, i, arr) {
-        receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, false)
+        receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.preview, false)
       })
       for (var key in channelData) {
         if (!channelData.hasOwnProperty(key)) continue;

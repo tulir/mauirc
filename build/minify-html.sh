@@ -26,6 +26,9 @@ minifyappend joinpart
 minifyappend login
 minifyappend main
 minifyappend message
+minifyappend message-preview-both
+minifyappend message-preview-image
+minifyappend message-preview-text
 minifyappend network-switcher
 minifyappend nickchange
 cat "templates/misc.html" | htmlminify >> templates.min.html

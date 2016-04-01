@@ -219,14 +219,13 @@ function fixOwnMessages(network, nick) {
   });
 }
 
-function receive(id, network, channel, timestamp, sender, command, message, isNew) {
+function receive(id, network, channel, timestamp, sender, command, message, preview, isNew) {
   network = network.toLowerCase()
   var netObj = $("#net-" + network)
   if (netObj.length === 0) {
     openNetwork(network)
     netObj = $("#net-" + network)
   }
-
   var chanObj = netObj.find("#chan-" + channelFilter(channel))
   if (chanObj.length === 0) {
     openChannel(network, channel)
@@ -260,6 +259,27 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
     $("#msg-" + id + " > .message-sender").remove()
   }
 
+  if (preview !== null) {
+    if (!isEmpty(preview.image) && !isEmpty(preview.text)) {
+      var pwTemplate = "both"
+    } else if (!isEmpty(preview.image)) {
+      var pwTemplate = "image"
+    } else if (!isEmpty(preview.text)) {
+      var pwTemplate = "text"
+    }
+    if (pwTemplate !== undefined) {
+      var a = $("#msg-" + id).loadTemplate($("#template-message-preview-" + pwTemplate), {
+        title: preview.text !== undefined ? preview.text.title : "",
+        description: preview.text !== undefined ? preview.text.title !== preview.text.description ? preview.text.description.replaceAll("\n", "<br>") : "" : "",
+        sitename: preview.text !== undefined ? preview.text.sitename : "",
+        image: preview.image !== undefined ? preview.image.url : "",
+        modalopen: "modalOpen('" + id + "')"
+      }, {append: true, isFile: false, async: false})
+      if (pwTemplate === "image") console.log(preview.image.url)
+      if (pwTemplate === "image") console.log(a)
+    }
+  }
+
   if (!document.hasFocus() && isNew) {
     notify(sender, message)
   }
@@ -269,4 +289,14 @@ function receive(id, network, channel, timestamp, sender, command, message, isNe
   } else {
     scrollDown()
   }
+}
+
+function modalOpen(id) {
+  var preview = $("#msg-" + id + " > .message-preview")
+
+  preview.append(
+    '<img class="preview-modal" src="' + preview.find(".preview-image-link > .preview-image").attr("src") + '" alt="Full-sized Image"/>'
+  )
+
+  preview.find(".preview-modal").modal({fadeDuration: 100})
 }
