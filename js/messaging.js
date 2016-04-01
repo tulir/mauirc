@@ -59,6 +59,17 @@ function send(){
         message: args.join(" ")
       }
       break
+    case "nick":
+    case "name":
+    case "nickname":
+      var payload = {
+        type: "message",
+        network: getActiveNetwork(),
+        channel: getActiveChannel(),
+        command: "nick",
+        message: args.join(" ")
+      }
+      break
     case "msg":
     case "message":
     case "query":
@@ -258,7 +269,7 @@ function receive(id, network, channel, timestamp, sender, command, message, prev
     templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
     templateData.class = "joinpart"
   } else if (command === "nick") {
-    templateData.message = "is now known as <b>" + message + "</b>"
+    templateData.message = " is now known as <b>" + message + "</b>"
     templateData.class = "nick"
   } else if (command == "topic") {
     templateData.message = "changed the topic to " + message
