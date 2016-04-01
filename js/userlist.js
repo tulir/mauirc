@@ -25,11 +25,13 @@ function updateUserList(){
       $("#userlist-list").append('<a class="pm-link" href="#" onClick="openPM(\'' + getActiveNetwork() + '\', \'' + ch.userlistplain[i] + '\')">' + val + '</a><br>')
     })
     $("#open-user-list").removeClass("hidden-tablet-down")
+    $("#open-settings").addClass("hidden-tablet-down")
     return
   }
 
   if (!isUserListHidden()) toggleUserList(false)
   $("#open-user-list").addClass("hidden-tablet-down")
+  $("#open-settings").removeClass("hidden-tablet-down")
 }
 
 function isUserListHidden() {
