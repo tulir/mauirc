@@ -216,31 +216,7 @@ function receiveCmdResponse(message) {
   }
 }
 
-function fixOwnMessages(network, nick) {
-  console.log("Fixing message alignment...")
-  $('#net-' + network + ' > .channel-container > .message-wrapper').each(function(i, obj) {
-    if ($(this).hasClass("own-message")) {
-      return
-    }
-
-    var msg = $(this).find(".message")
-    var act = msg.find(".action-data")
-    if (act.length !== 0) {
-      var sender = act.find(".action-sender")
-      if (sender.text() === nick) {
-        $(this).addClass("own-message")
-      }
-    } else {
-      var sender = msg.find(".message-sender")
-      if (sender.length !== 0 && sender.text() === nick) {
-        sender.remove()
-        $(this).addClass("own-message")
-      }
-    }
-  });
-}
-
-function receive(id, network, channel, timestamp, sender, command, message, preview, isNew) {
+function receive(id, network, channel, timestamp, sender, command, message, ownmsg, preview, isNew) {
   network = network.toLowerCase()
   var netObj = $("#net-" + network)
   if (netObj.length === 0) {
@@ -286,7 +262,7 @@ function receive(id, network, channel, timestamp, sender, command, message, prev
 
   chanObj.loadTemplate($("#template-" + template), templateData, {append: true, isFile: false, async: false})
 
-  if (channelData[network] !== undefined && sender === channelData[network]["*nick"]) {
+  if (ownmsg) {
     $("#msgwrap-" + id).addClass("own-message")
     $("#msg-" + id + " > .message-sender").remove()
   }

@@ -49,7 +49,8 @@ function connect() {
     var data = JSON.parse(evt.data)
     if (data.type === "message") {
       receive(data.object.id, data.object.network, data.object.channel, data.object.timestamp,
-        data.object.sender, data.object.command, data.object.message, data.object.preview, true)
+        data.object.sender, data.object.command, data.object.message, data.object.ownmsg,
+        data.object.preview, true)
     } else if (data.type === "cmdresponse") {
       receiveCmdResponse(data.object.message)
     } else if (data.type === "chandata") {
@@ -85,9 +86,6 @@ function connect() {
       console.log("Nick changed to " + data.object.nick + " on " + data.object.network)
       if (channelData[data.object.network] === undefined) {
         channelData[data.object.network] = {}
-      }
-      if (channelData[data.object.network]["*nick"] === undefined) {
-        fixOwnMessages(data.object.network, data.object.nick)
       }
       channelData[data.object.network]["*nick"] = data.object.nick
     } else if (data.type === "netlist") {
@@ -147,15 +145,8 @@ function history(n){
     dataType: "json",
     success: function(data){
       data.reverse().forEach(function(val, i, arr) {
-        receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.preview, false)
+        receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.ownmsg, val.preview, false)
       })
-      for (var key in channelData) {
-        if (!channelData.hasOwnProperty(key)) continue;
-
-        if (channelData[key]["*nick"] !== undefined) {
-          fixOwnMessages(key, channelData[key]["*nick"])
-        }
-      }
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
