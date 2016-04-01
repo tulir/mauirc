@@ -292,11 +292,12 @@ function receive(id, network, channel, timestamp, sender, command, message, prev
 }
 
 function modalOpen(id) {
-  var preview = $("#msg-" + id + " > .message-preview")
-
-  preview.append(
-    '<img class="preview-modal" src="' + preview.find(".preview-image-link > .preview-image").attr("src") + '" alt="Full-sized Image"/>'
-  )
-
-  preview.find(".preview-modal").modal({fadeDuration: 100})
+  $('<img \
+      class="preview-modal" \
+      src="' + $("#msg-" + id + " > .message-preview").find(".preview-image-link > .preview-image").attr("src") + '" \
+      alt="Full-sized Image" \
+    />')
+  .modal({
+    fadeDuration: 100
+  })
 }
