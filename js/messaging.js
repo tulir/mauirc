@@ -275,8 +275,6 @@ function receive(id, network, channel, timestamp, sender, command, message, prev
         image: preview.image !== undefined ? preview.image.url : "",
         modalopen: "modalOpen('" + id + "')"
       }, {append: true, isFile: false, async: false})
-      if (pwTemplate === "image") console.log(preview.image.url)
-      if (pwTemplate === "image") console.log(a)
     }
   }
 
