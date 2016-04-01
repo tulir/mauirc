@@ -9,6 +9,7 @@ cat \
     ./js/channels.js \
     ./js/userlist.js \
     ./js/messaging.js \
+    ./js/settings.js \
     ./js/mauirc.js \
     ./js/auth.js \
     ./js/load.js \
