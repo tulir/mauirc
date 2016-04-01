@@ -52,6 +52,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 }
 
+.pm-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.pm-link:hover {
+    text-decoration: underline;
+}
+
 .channel-switcher {
     width: 100%;
 }

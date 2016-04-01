@@ -20,8 +20,9 @@ function updateUserList(){
     if (isUserListHidden() && !wasUserListHiddenManually()) toggleUserList(false)
 
     $("#userlist-list").text("")
-    channelData[getActiveNetwork()][getActiveChannel()].userlist.forEach(function(val, i, arr){
-      $("#userlist-list").append(val + "<br>")
+    var ch = channelData[getActiveNetwork()][getActiveChannel()]
+    ch.userlist.forEach(function(val, i, arr){
+      $("#userlist-list").append('<a class="pm-link" href="#" onClick="openPM(\'' + getActiveNetwork() + '\', \'' + ch.userlistplain[i] + '\')">' + val + '</a><br>')
     })
     $("#open-user-list").removeClass("hidden-tablet-down")
     return

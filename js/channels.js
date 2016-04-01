@@ -38,6 +38,11 @@ function getActiveNetworkObj(){
   return $(".network-container:not(.hidden)")
 }
 
+function openPM(network, user) {
+  openChannel(network, user)
+  switchTo(network, user)
+}
+
 function newChannel(network) {
   network = network.toLowerCase()
 
