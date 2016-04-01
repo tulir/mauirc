@@ -49,6 +49,16 @@ function send(){
         message: args.join(" ")
       }
       break
+    case "topic":
+    case "title":
+      var payload = {
+        type: "message",
+        network: getActiveNetwork(),
+        channel: getActiveChannel(),
+        command: "topic",
+        message: args.join(" ")
+      }
+      break
     case "msg":
     case "message":
     case "query":
@@ -244,6 +254,9 @@ function receive(id, network, channel, timestamp, sender, command, message, prev
     template = "nickchange"
     shouldEscapeHtml = false
     message = "is now known as <b>" + message + "</b>"
+  } else if (command == "topic") {
+    template = "topic"
+    message = "changed the topic to " + message
   }
 
   chanObj.loadTemplate($("#template-" + template), {

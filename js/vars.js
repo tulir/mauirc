@@ -18,6 +18,7 @@ var socket = null
 var connected = false
 var authfail = false
 var msgcontainer = false
+var titleEditClick = 0
 var channelData = {}
 
 channelData["MauIRC Status"] = {

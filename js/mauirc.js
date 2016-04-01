@@ -62,6 +62,10 @@ function connect() {
 
       channelData[data.object.network][data.object.name] = data.object
 
+      if(getActiveNetwork() === data.object.network && getActiveChannel() === data.object.name) {
+        $("#title").text(data.object.topic)
+      }
+
       if ($.inArray(data.object.name, channelData[data.object.network]["*list"]) === -1) {
         channelData[data.object.network]["*list"].push(data.object.name)
       }

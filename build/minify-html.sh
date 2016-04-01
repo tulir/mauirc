@@ -31,6 +31,7 @@ minifyappend message-preview-image
 minifyappend message-preview-text
 minifyappend network-switcher
 minifyappend nickchange
+minifyappend topic
 cat "templates/misc.html" | htmlminify >> templates.min.html
 
 if [ ! -f index.max.html ]; then
