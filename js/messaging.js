@@ -213,7 +213,7 @@ function fixOwnMessages(network, nick) {
     }
 
     var msg = $(this).find(".message")
-    var act = msg.find(".action")
+    var act = msg.find(".action-data")
     if (act.length !== 0) {
       var sender = act.find(".action-sender")
       if (sender.text() === nick) {
@@ -242,30 +242,38 @@ function receive(id, network, channel, timestamp, sender, command, message, prev
     chanObj = netObj.find("#chan-" + channelFilter(channel))
   }
 
-  var shouldEscapeHtml = true
-  if (command === "privmsg") {
-    template = "message"
-  } else if (command === "action") {
-    template = "action"
-  } else if (command === "join" || command === "part" || command === "quit") {
-    template = "joinpart"
-    message = (command === "join" ? "joined " : "left: ") + message
-  } else if (command === "nick") {
-    template = "nickchange"
-    shouldEscapeHtml = false
-    message = "is now known as <b>" + message + "</b>"
-  } else if (command == "topic") {
-    template = "topic"
-    message = "changed the topic to " + message
-  }
-
-  chanObj.loadTemplate($("#template-" + template), {
+  var templateData = {
     sender: sender,
     date: moment(timestamp * 1000).format("HH:mm:ss"),
     id: "msg-" + id,
     wrapid: "msgwrap-" + id,
-    message: linkifyHtml(shouldEscapeHtml ? escapeHtml(message) : message)
-  }, {append: true, isFile: false, async: false})
+    message: linkifyHtml(escapeHtml(message))
+  }
+
+  var shouldEscapeHtml = true
+  if (command === "action") {
+    templateData.prefix = "<b>★</b> "
+    templateData.class = "action"
+  } else if (command === "join" || command === "part" || command === "quit") {
+    templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
+    templateData.class = "joinpart"
+  } else if (command === "nick") {
+    templateData.message = "is now known as <b>" + message + "</b>"
+    templateData.class = "nick"
+  } else if (command == "topic") {
+    templateData.message = "changed the topic to " + message
+    templateData.class = "topic"
+  } else {
+    var template = "message"
+  }
+
+  templateData.class = "message " + templateData.class
+
+  if (template === undefined) {
+    var template = "action"
+  }
+
+  chanObj.loadTemplate($("#template-" + template), templateData, {append: true, isFile: false, async: false})
 
   if (channelData[network] !== undefined && sender === channelData[network]["*nick"]) {
     $("#msgwrap-" + id).addClass("own-message")

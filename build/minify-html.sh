@@ -22,7 +22,6 @@ echo > templates.min.html
 minifyappend action
 minifyappend channel-adder
 minifyappend channel-switcher
-minifyappend joinpart
 minifyappend login
 minifyappend main
 minifyappend message
@@ -30,8 +29,6 @@ minifyappend message-preview-both
 minifyappend message-preview-image
 minifyappend message-preview-text
 minifyappend network-switcher
-minifyappend nickchange
-minifyappend topic
 cat "templates/misc.html" | htmlminify >> templates.min.html
 
 if [ ! -f index.max.html ]; then
