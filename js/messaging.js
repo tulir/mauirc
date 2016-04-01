@@ -290,12 +290,16 @@ function receive(id, network, channel, timestamp, sender, command, message, prev
 }
 
 function modalOpen(id) {
-  $('<img \
+  $('<img id="modal-' + id + '"\
       class="preview-modal" \
       src="' + $("#msg-" + id + " > .message-preview").find(".preview-image-link > .preview-image").attr("src") + '" \
       alt="Full-sized Image" \
     />')
   .modal({
-    fadeDuration: 100
+    fadeDuration: 100,
+    fadeDelay: 0.8
   })
+  $("#modal-" + id).on($.modal.AFTER_CLOSE, function(event, modal) {
+    $("#modal-" + id).remove()
+  });
 }
