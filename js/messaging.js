@@ -242,7 +242,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     templateData.prefix = "<b>★</b> "
     templateData.class = "action"
   } else if (command === "join" || command === "part" || command === "quit") {
-    templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
+    templateData.message = (command === "join" ? " joined " : " left: ") + templateData.message
     templateData.class = "joinpart"
   } else if (command === "nick") {
     templateData.message = " is now known as <b>" + message + "</b>"
