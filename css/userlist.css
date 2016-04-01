@@ -27,6 +27,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     overflow-y: scroll;
 }
 
+.userlist-bar {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    height: 2.4rem;
+}
+
+.userlist-bar > .open-user-list {
+    float: left;
+}
+
+.userlist-list {
+    top: 2.5rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+}
+
 @media (min-width: 750px) {
     .userlist {
         left: auto;

@@ -19,11 +19,16 @@ function updateUserList(){
     && channelData[getActiveNetwork()][getActiveChannel()].userlist !== undefined) {
     if (isUserListHidden() && !wasUserListHiddenManually()) toggleUserList(false)
 
-    $("#userlist").text("")
+    $("#userlist-list").text("")
     channelData[getActiveNetwork()][getActiveChannel()].userlist.forEach(function(val, i, arr){
-      $("#userlist").append(val + "<br>")
+      $("#userlist-list").append(val + "<br>")
     })
-  } else if (!isUserListHidden()) toggleUserList(false)
+    $("#open-user-list").removeClass("hidden-tablet-down")
+    return
+  }
+
+  if (!isUserListHidden()) toggleUserList(false)
+  $("#open-user-list").addClass("hidden-tablet-down")
 }
 
 function isUserListHidden() {

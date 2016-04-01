@@ -34,15 +34,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     left: inherit;
 }
 
-.titlebar {
-    font-family: inherit;
-    position: fixed;
-    height: 2.4rem;
-    width: 100%;
-    top: inherit;
-    right: inherit;
-}
-
 .messageform {
     position: fixed;
     left: inherit;
@@ -83,6 +74,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     width: 5rem;
     right: 0;
     bottom: 0;
+}
+
+.titlebar {
+    font-family: inherit;
+    position: fixed;
+    height: 2.4rem;
+    width: 100%;
+    top: inherit;
+    right: 0.25rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.open-user-list, .open-network-list, .settings-open {
+    background-color: inherit;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.open-user-list, .settings-open {
+    float: right;
+}
+
+.open-network-list {
+    float: left;
+}
+
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    top: 25%;
+    transform: translateY(-50%);
 }
 
 @media (min-width: 750px) {
@@ -156,16 +182,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .messaging-userlisthidden {
     right: 0.25rem;
-}
-
-.title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.view-switch-btn {
-    position: relative;
-    width: 100%;
-    background-color: inherit;
 }

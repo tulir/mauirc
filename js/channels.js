@@ -131,13 +131,22 @@ function openChannel(network, channel) {
   }, {append: true, isFile: false, async: false})
 }
 
-function switchView() {
-  if ($("#networks").hasClass("hidden-tablet-down")) {
-    $("#messaging").addClass("hidden-tablet-down")
-    $("#networks").removeClass("hidden-tablet-down")
-  } else {
+function switchView(userlist) {
+  if ($("#messaging").hasClass("hidden-tablet-down")) {
+    if ($("#userlist").hasClass("hidden-tablet-down")) {
+      $("#networks").addClass("hidden-tablet-down")
+    } else {
+      $("#userlist").addClass("hidden-tablet-down")
+    }
     $("#messaging").removeClass("hidden-tablet-down")
-    $("#networks").addClass("hidden-tablet-down")
+  } else {
+    if (userlist) {
+      $("#userlist").removeClass("hidden-tablet-down")
+      $("#messaging").addClass("hidden-tablet-down")
+    } else {
+      $("#networks").removeClass("hidden-tablet-down")
+      $("#messaging").addClass("hidden-tablet-down")
+    }
   }
 }
 
@@ -160,7 +169,7 @@ function switchTo(network, channel) {
   $("#title").text(title)
 
   if ($("#messaging").hasClass("hidden-tablet-down")) {
-    switchView()
+    switchView(false)
   }
 
   if (channel === "MauIRC Status") {
