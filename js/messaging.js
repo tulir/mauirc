@@ -230,7 +230,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   var templateData = {
-    sender: sender,
+    sender: sender + " ",
     date: moment(timestamp * 1000).format("HH:mm:ss"),
     id: "msg-" + id,
     wrapid: "msgwrap-" + id,
