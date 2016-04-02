@@ -45,12 +45,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 0;
     position: absolute;
     overflow-y: scroll;
+    font-size: 1.5em;
 }
 
 @media (min-width: 750px) {
     .userlist {
         left: auto;
         width: 8.5rem;
+    }
+
+    .userlist-list {
+        font-size: 1em;
     }
 }
 
