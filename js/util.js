@@ -23,6 +23,21 @@ function showAlert(type, message) {
   }
 }
 
+function sendMessage(payload){
+  if(payload === undefined || payload === null || payload.length === 0) {
+    return false
+  }
+  
+  var content = JSON.stringify(payload)
+
+  if (content.length > 1024) {
+    return false
+  }
+
+  socket.send(content)
+  return true
+}
+
 function scrollDown(){
   $("#messages").scrollTop($("#messages")[0].scrollHeight);
 }

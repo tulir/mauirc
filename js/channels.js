@@ -84,13 +84,13 @@ function finishNewChannel(network) {
   }
 
   if (name.startsWith("#")) {
-    socket.send(JSON.stringify({
+    sendMessage({
       type: "message",
       network: network,
       channel: name,
       command: "join",
       message: "Joining"
-    }))
+    })
   }
 
   openChannel(network, name)
@@ -108,6 +108,7 @@ function openNetwork(network) {
   }, {append: true, isFile: false, async: false})
   $("#networks").loadTemplate($("#template-network-switcher"), {
     network: "switchnet-" + network,
+    brid: "break-net-" + network,
     networkname: network,
     openchannel: "newChannel('" + network + "')",
     networkbtns: "chanswitchers-" + network
@@ -131,9 +132,30 @@ function openChannel(network, channel) {
   }, {append: true, isFile: false, async: false})
   $("#chanswitchers-" + network).loadTemplate($("#template-channel-switcher"), {
     channel: "switchto-" + channel.toLowerCase(),
+    brid: "break-chan-" + channel.toLowerCase(),
     channelname: channel,
     onclick: "switchTo('" + network + "', '" + channel.toLowerCase() + "')"
   }, {append: true, isFile: false, async: false})
+}
+
+function closeChannel(network, channel) {
+  network = network.toLowerCase()
+  var netObj = $("#net-" + network)
+  if (netObj.length === 0) {
+    return
+  }
+
+  var chanObj = netObj.find("#chan-" + channelFilter(channel))
+  if (chanObj.length === 0) {
+    return
+  }
+
+  if (getActiveNetwork() === network && getActiveChannel() == channel) {
+    switchTo("MauIRC Status", "MauIRC Status")
+  }
+  chanObj.remove()
+  $("#chanswitchers-" + network + " > #switchto-" + channelFilter(channel)).remove()
+  $("#chanswitchers-" + network + " > #break-chan-" + channelFilter(channel)).remove()
 }
 
 function switchView(userlist) {

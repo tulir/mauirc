@@ -1,8 +1,9 @@
 <button class="btn btn-leave-settings" type="button" id="leave-settings" onClick="closeSettings()">Close settings</button>
 
 <div class="settings-container channel-settings">
-  <button class="btn btn-part-channel" type="button" id="channel-part" onClick="partChannel()">Part Channel</button>
-  <button class="btn btn-clear-history" type="button" id="channel-clearhistory" onClick="clearHistoryOfChannel()">Clear History</button>
+  <h2>Channel settings - <span id="settings-channel-name"></span></h2>
+  <button class="btn btn-part-channel" type="button" id="channel-part" onClick="snPartChannel()">Part Channel</button>
+  <button class="btn btn-clear-history" type="button" id="channel-clearhistory" onClick="snClearHistory()">Clear History</button>
 
   <label for="channel-notifications">Notifications</label>
   <select id="channel-notifications">

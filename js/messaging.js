@@ -125,18 +125,13 @@ function send(){
     }
   }
 
-  if (payload !== undefined) {
-    var content = JSON.stringify(payload)
-
-    if (content.length > 1024) {
-      getActiveChannelObj().loadTemplate($("#template-error"), {
-        message: "Message too long!"
-      }, {append: true})
-      scrollDown();
-    } else {
-      socket.send(content)
-      $("#message-text").val("")
-    }
+  if (!sendMessage(payload)) {
+    getActiveChannelObj().loadTemplate($("#template-error"), {
+      message: "Message too long!"
+    }, {append: true})
+    scrollDown();
+  } else {
+    $("#message-text").val("")
   }
 }
 
@@ -190,8 +185,7 @@ function statusCommand() {
     }
     break
   }
-  if (payload !== undefined) {
-    socket.send(JSON.stringify(payload))
+  if(sendMessage(payload)) {
     $("#message-text").val("")
   }
 }
