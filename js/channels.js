@@ -199,7 +199,3 @@ function switchTo(network, channel) {
   updateUserList()
   scrollDown()
 }
-
-function channelFilter(channel) {
-  return channel.replaceAll("#", "\\#").replaceAll("*", "\\*").replaceAll(".", "\\.").toLowerCase()
-}

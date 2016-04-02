@@ -37,6 +37,11 @@ function isEmpty(object) {
   return object === null || object === undefined || object.length === 0
 }
 
+function channelFilter(channel) {
+  return channel.replaceAll("#", "\\#").replaceAll("*", "\\*").replaceAll(".", "\\.").toLowerCase()
+}
+
+
 var tagsToEscape = {
     '&': '&amp;',
     '<': '&lt;',
