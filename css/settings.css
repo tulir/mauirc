@@ -16,24 +16,25 @@
 	padding: .375rem 1rem;
 }
 
-.settings-container > button, .settings-container > .button-pair > button {
+.settings-container > button {
 	font-size: 1rem;
 	padding: .375rem 1rem;
 	border-radius: .25rem;
+	background-color: #50D367;
 }
 
-.btn-left {
-	position: absolute;
-	right: 50%;
-	left: 0;
+.settings-container > button:hover {
+	background-color: #47B9D7;
+}
+
+.btn-part-channel {
+	width: 49.5%;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
 
-.btn-right {
-	position: absolute;
-	right: 0;
-	left: 50%;
+.btn-clear-history {
+	width: 49.5%;
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
