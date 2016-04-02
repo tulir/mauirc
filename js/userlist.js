@@ -53,25 +53,3 @@ function toggleUserList(manual) {
     $("#messaging").addClass("messaging-userlisthidden")
   }
 }
-
-function userAutocomplete(){
-  if (channelData[getActiveNetwork()] !== undefined && channelData[getActiveNetwork()][getActiveChannel()] !== undefined &&
-      channelData[getActiveNetwork()][getActiveChannel()].userlistplain !== undefined) {
-    var list = channelData[getActiveNetwork()][getActiveChannel()].userlistplain
-    var messagebox = $("#message-text")
-    var text = messagebox.val().toLowerCase()
-    var index = -1
-    list.forEach(function(val, i, arr){
-      if(val.toLowerCase().startsWith(text)) {
-        if (index !== -1) {
-          index = -2
-        } else {
-          index = i
-        }
-      }
-    })
-    if (index > -1) {
-      messagebox.val(list[index] + ": ")
-    }
-  }
-}

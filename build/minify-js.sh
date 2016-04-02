@@ -7,6 +7,7 @@ cat \
     ./js/vars.js \
     ./js/util.js \
     ./js/channels.js \
+    ./js/autocomplete.js \
     ./js/userlist.js \
     ./js/messaging.js \
     ./js/settings.js \
