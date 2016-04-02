@@ -5,7 +5,7 @@ cat \
     ./css/text.css \
     ./css/alerts.css \
     ./css/login.css \
-    ./css/messages.css \
+    ./css/messagetemplates.css \
     ./css/messageview.css \
     ./css/titlebar.css \
     ./css/channels.css \
