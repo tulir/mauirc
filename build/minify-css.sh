@@ -8,6 +8,7 @@ cat \
     ./css/messagetemplates.css \
     ./css/messageview.css \
     ./css/titlebar.css \
+    ./css/settings.css \
     ./css/channels.css \
     ./css/userlist.css \
     > ./index.css

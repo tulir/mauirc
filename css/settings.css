@@ -1,0 +1,78 @@
+.settings {
+	width: 75%;
+	height: 75%;
+}
+
+.settings-container > input {
+	font-size: 1rem;
+	padding: .375rem 1rem;
+	background-color: #FAFAFA;
+	border-radius: .25rem;
+    border: 1px solid #9A9A9A;
+}
+
+.settings-container > select {
+	font-size: 1rem;
+	padding: .375rem 1rem;
+}
+
+.settings-container > button, .settings-container > .button-pair > button {
+	font-size: 1rem;
+	padding: .375rem 1rem;
+	border-radius: .25rem;
+}
+
+.btn-left {
+	position: absolute;
+	right: 50%;
+	left: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.btn-right {
+	position: absolute;
+	right: 0;
+	left: 50%;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+/*.other-settings {
+	position: absolute;
+	bottom: .5rem;
+	right: .5rem;
+	left: .5rem;
+	height: 2.125rem;
+	border-radius: .25rem;
+	background-color: #50D367;
+	color: #FFFFFF;
+
+	text-align: center;
+}
+
+.network-settings, .mauirc-settings {
+	background-color: inherit;
+	color: inherit;
+	position: absolute;
+	width: 50%;
+	padding: .375rem 0;
+}
+
+.network-settings:hover, .mauirc-settings:hover {
+	background-color: #47B9D7;
+}
+
+.network-settings {
+	right: 50%;
+	left: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.mauirc-settings {
+	right: 0;
+	left: 50%;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}*/

@@ -81,6 +81,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </form>
 </div>
 
-<div id="settings" hidden>
-	<h1>HELLO</h1>
+<div class="settings" id="settings" hidden>
+  <div class="settings-container channel-settings">
+    <button class="btn btn-left" type="button" id="channel-part" onClick="partChannel()">Part Channel</button>
+    <button class="btn btn-right" type="button" id="channel-clearhistory" onClick="clearHistoryOfChannel()">Clear History</button>
+
+    <select id="channel-notifications">
+      <option value="all">All messages</option>
+      <option value="highlight">Highlights only</option>
+      <option value="disabled">Disabled</option>
+    </select>
+  </div>
+
+  <div class="settings-container network-settings">
+    <input id="network-highlights" type="text" autocomplete="off" placeholder="Comma-separated list">
+  </div>
+
+  <div class="settings-container mauirc-settings">
+
+  </div>
 </div>
