@@ -1,12 +1,19 @@
-function openSettings(){
-	if ($("#messaging").hasClass("hidden-tablet-down")) {
-    switchView(false)
+function toggleSettings(){
+	if ($("#settings").hasClass("hidden")) {
+    openSettings()
+  } else {
+    closeSettings()
   }
+}
 
-	$('#settings').modal({
-		fadeDuration: 100,
-		showClose: true
-	})
+function openSettings(){
+  $("#settings").removeClass("hidden")
+  $("#container").addClass("hidden")
+}
+
+function closeSettings(){
+  $("#settings").addClass("hidden")
+  $("#container").removeClass("hidden")
 }
 
 function titleEdit() {

@@ -20,8 +20,8 @@ function connect() {
 
   socket.onopen = function() {
     if (!msgcontainer) {
-      $("#container").loadTemplate($("#template-main"), {})
-
+      $("#container").loadTemplate($("#template-main"), {append: false, isFile: false, async: false})
+      $("#settings").loadTemplate($("#template-settings"), {append: false, isFile: false, async: false})
       $("#messages").loadTemplate($("#template-channel"), {
         channel: "status-messages"
       }, {append: true, isFile: false, async: false})

@@ -80,26 +80,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <button class="btn messagesend" type="submit" id="message-send" onClick="send()">Send</button>
   </form>
 </div>
-
-<div class="settings" id="settings" hidden>
-  <div class="settings-container channel-settings">
-    <button class="btn btn-part-channel" type="button" id="channel-part" onClick="partChannel()">Part Channel</button>
-    <button class="btn btn-clear-history" type="button" id="channel-clearhistory" onClick="clearHistoryOfChannel()">Clear History</button>
-
-    <label for="channel-notifications">Notifications</label>
-    <select id="channel-notifications">
-      <option value="all">All messages</option>
-      <option value="highlight">Highlights only</option>
-      <option value="disabled">Disabled</option>
-    </select>
-  </div>
-
-  <div class="settings-container network-settings">
-    <label for="network-highlights">Highlight Words</label>
-    <input id="network-highlights" type="text" autocomplete="off" placeholder="Comma-separated list">
-  </div>
-
-  <div class="settings-container mauirc-settings">
-    
-  </div>
-</div>

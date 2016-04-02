@@ -24,6 +24,7 @@ minifyappend channel-adder
 minifyappend channel-switcher
 minifyappend login
 minifyappend main
+minifyappend settings
 minifyappend message
 minifyappend message-preview-both
 minifyappend message-preview-image
