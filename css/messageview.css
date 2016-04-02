@@ -76,68 +76,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 0;
 }
 
-.titlebar {
-    font-family: inherit;
-    position: fixed;
-    height: 2.4rem;
-    width: 100%;
-    top: inherit;
-    right: 0.25rem;
-    text-align: center;
-    font-weight: bold;
-}
-
-.open-network-list, .settings-open, .open-user-list, .close-user-list {
-    background-color: inherit;
-    position: absolute;
-}
-
-.open-network-list {
-    left: 0;
-}
-
-.settings-open {
-    right: 0;
-}
-
-.open-user-list {
-    right: 32px;
-    width: auto;
-}
-
-.open-user-list-small {
-    right: 0;
-}
-
-.close-user-list {
-    left: 0;
-    width: auto;
-}
-
-.open-network-list {
-    float: left;
-}
-
-.title {
-    position: absolute;
-    left: 8.5rem;
-    right: 6.625rem;
-    top: 1.05rem;
-    transform: translateY(-50%);
-    text-align: center;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.title-editor {
-    font-size: 1rem;
-    text-align: center;
-    width: 95%;
-    height: 100%;
-}
-
 @media (min-width: 750px) {
     .messaging {
         left: 11rem;
@@ -150,16 +88,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     .messagebox-wrapper {
         right: 7.5rem;
-    }
-
-    .titlebar {
-        left: inherit;
-        width: auto;
-    }
-
-    .title {
-        left: .25rem;
-        right: 3.875rem;
     }
 
     .view-switch-btn {

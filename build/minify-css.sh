@@ -7,6 +7,7 @@ cat \
     ./css/login.css \
     ./css/messages.css \
     ./css/messageview.css \
+    ./css/titlebar.css \
     ./css/channels.css \
     ./css/userlist.css \
     > ./index.css
