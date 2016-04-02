@@ -5,7 +5,6 @@ function openSettings(){
 
 	$('#settings').modal({
 		fadeDuration: 100,
-		clickClose: false,
 		showClose: true
 	})
 }
