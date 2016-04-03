@@ -1,3 +1,10 @@
+.settings { width: 100%; }
+@media (min-width: 550px) { .settings { width: 90%; } }
+@media (min-width: 750px) { .settings { width: 80%; } }
+@media (min-width: 1000px) { .settings { width: 70%; } }
+@media (min-width: 1200px) { .settings { width: 60%; } }
+@media (min-width: 1500px) { .settings { width: 50%; } }
+
 .settings-container > input {
 	font-size: 1rem;
 	padding: .375rem 1rem;
