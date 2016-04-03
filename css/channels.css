@@ -85,20 +85,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .network-switcher-buttons {
     width: 80%;
+    margin-top: 1.5rem;
     float: right;
     background-color: #D6D6D6;
     border-radius: .25rem;
 }
 
 .network-switcher-name {
+    position: absolute;
     padding: .375rem 0.2rem;
     font-size: 1.5rem;
     font-weight: bold;
-    float: left;
+    left: 0;
 }
 
-.network-switcher-open {
-    float: right;
+.network-adder-open {
+    position: absolute;
+    right: 0;
 }
 
 @media (max-width: 1199px) and (min-width: 750px) {
