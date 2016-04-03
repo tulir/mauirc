@@ -23,10 +23,14 @@ function updateSettingsValues(){
   if (chan == "MauIRC Status") {
     $("#channel-part").attr("disabled", true)
     $("#channel-clearhistory").attr("disabled", true)
+		$("#network-settings").addClass("hidden")
   } else {
 		$("#channel-part").removeAttr("disabled")
 		$("#channel-clearhistory").removeAttr("disabled")
+		$("#network-settings").removeClass("hidden")
   }
+
+  $("#settings-network-name").text(getActiveNetwork())
 }
 
 function snClearHistory(){
