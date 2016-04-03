@@ -44,6 +44,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     user-select: none;
     border: none;
     border-radius: .25rem;
+    background-color: #D6D6D6;
+}
+
+.btn:hover {
+    background-color: #BDBDBD;
 }
 
 .left-arrow {
