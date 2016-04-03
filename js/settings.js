@@ -22,8 +22,10 @@ function updateSettingsValues(){
   $("#settings-channel-name").text(chan)
   if (chan == "MauIRC Status") {
     $("#channel-part").attr("disabled", true)
+    $("#channel-clearhistory").attr("disabled", true)
   } else {
-    $("#channel-part").removeAttr("disabled")
+		$("#channel-part").removeAttr("disabled")
+		$("#channel-clearhistory").removeAttr("disabled")
   }
 }
 
