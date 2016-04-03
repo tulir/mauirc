@@ -93,7 +93,6 @@ function connect() {
         openNetwork(val)
       })
     } else if (data.type === "clear") {
-      console.log("Channel " + data.object.channel + "@" + channel.object.network + " cleared")
       closeChannel(data.object.network, data.object.channel)
     } else if (data.type === "delete") {
       $("#msgwrap-" + data.object).remove()
