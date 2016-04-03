@@ -154,14 +154,14 @@ function statusCommand() {
     }
     break
   case "importscript":
-    if (args.length > 3) {
+    if (args.length > 2) {
       var payload = {
         type: "importscript",
         name: args[1],
         url: args[2],
         network: args[0]
       }
-    } else if (args.length > 2) {
+    } else if (args.length > 1) {
       var payload = {
         type: "importscript",
         name: args[0],
