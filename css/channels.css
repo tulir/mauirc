@@ -110,16 +110,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 }
 
-.new-messages {
+.new-messages, .new-messages:hover {
     background-color: #47B9D7;
     color: #FFFFFF;
 }
 
-.active {
+.active, .active:hover {
     background-color: #50D367;
     color: #FFFFFF;
-}
-
-.active:hover {
-    background-color: #50D367;
 }
