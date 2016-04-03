@@ -119,3 +119,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     background-color: #50D367;
     color: #FFFFFF;
 }
+
+.active:hover {
+    background-color: #50D367;
+}
