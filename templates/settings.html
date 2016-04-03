@@ -1,6 +1,6 @@
 <button class="btn btn-leave-settings" type="button" id="leave-settings" onClick="closeSettings()">Close settings</button>
 
-<div class="settings-container channel-settings">
+<div class="settings-container channel-settings" id="channel-settings">
   <h2>Channel settings - <span id="settings-channel-name"></span></h2>
   <button class="btn btn-part-channel" type="button" id="channel-part" onClick="snPartChannel()">Part Channel</button>
   <button class="btn btn-clear-history" type="button" id="channel-clearhistory" onClick="snClearHistory()">Clear History</button>
@@ -13,7 +13,8 @@
   </select>
 </div>
 
-<div class="settings-container network-settings">
+<div class="settings-container network-settings" id="network-settings">
+  <h2>Network settings - <span id="settings-network-name"></span></h2>
   <label for="network-highlights">Highlight Words</label>
   <input id="network-highlights" type="text" autocomplete="off" placeholder="Comma-separated list">
 </div>
