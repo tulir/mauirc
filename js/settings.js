@@ -7,7 +7,7 @@ function toggleSettings(){
 }
 
 function openSettings(){
-  updateSettingsValues()
+  //updateSettingsValues()
   $("#settings").removeClass("hidden")
   $("#container").addClass("hidden")
 }
@@ -17,27 +17,31 @@ function closeSettings(){
   $("#container").removeClass("hidden")
 }
 
-function updateSettingsValues(){
-	updateChanChoices()
+/*function updateSettingsValues(){
+  updateNetChoices()
+  $("#settings-network-list").val(getActiveNetwork())
+
+	updateChanChoices(getActiveChannel())
 	$("#settings-channel-list").val(getActiveChannel())
 
-	updateNetChoices()
-	$("#settings-network-list").val(getActiveNetwork())
-
-	snChanUpdate()
-	snNetUpdate()
+  //snNetUpdate()
+	snChanUpdate(getActiveChannel())
 }
 
-function snChanUpdate(){
-	var chan = $("#settings-channel-list").val()
+function snChanUpdate(chan){
+  if (isEmpty(chan)) {
+    chan = $("#settings-channel-list").val()
+  }
 	if (chan == "MauIRC Status") {
     $("#channel-part").attr("disabled", true)
     $("#channel-clearhistory").attr("disabled", true)
-		$("#network-settings").addClass("hidden")
   } else {
-		$("#channel-part").removeAttr("disabled")
+    if (chan.startsWith("#")) {
+    	$("#channel-part").removeAttr("disabled")
+    } else {
+      $("#channel-part").attr("disabled", true)
+    }
 		$("#channel-clearhistory").removeAttr("disabled")
-		$("#network-settings").removeClass("hidden")
   }
 }
 
@@ -45,13 +49,19 @@ function snNetUpdate(){
 	updateChanChoices()
 }
 
-function updateChanChoices() {
+function updateChanChoices(channel) {
 	var chanListObj = $("#settings-channel-list")
-	$("#settings-channel-list option").remove()
+  chanListObj.empty()
+
+  if (channel === "MauIRC Status") {
+    chanListObj.append("<option value='MauIRC Status'>MauIRC Status</option>")
+    return
+  }
+
 	var chanList = channelData[getActiveNetwork()]
 	for (var key in chanList) {
 		if (chanList.hasOwnProperty(key) && !isEmpty(chanList[key].userlist)) {
-			chanListObj.append("<option value=" + key + ">" + key + "</option>")
+      chanListObj.append("<option value='" + key + "'>" + key + "</option>")
 		}
 	}
 }
@@ -59,12 +69,15 @@ function updateChanChoices() {
 function updateNetChoices(){
 	var netListObj = $("#settings-network-list")
 	$("#settings-network-list option").remove()
+
+  netListObj.html("<option value='MauIRC Status'>MauIRC Status</option>")
+
 	for (var key in channelData) {
 		if (channelData.hasOwnProperty(key)) {
 			netListObj.html("<option value=" + key + ">" + key + "</option>")
 		}
 	}
-}
+}*/
 
 function snClearHistory(){
   sendMessage({
