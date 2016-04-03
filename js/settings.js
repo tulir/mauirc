@@ -29,12 +29,11 @@ function updateSettingsValues(){
 
 function snClearHistory(){
   sendMessage({
-    type: "clearbuffer",
+    type: "clear",
     network: getActiveNetwork(),
     channel: getActiveChannel()
   })
   closeSettings()
-  closeChannel(getActiveNetwork(), getActiveChannel())
 }
 
 function snPartChannel(){
