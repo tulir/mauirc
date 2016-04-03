@@ -1,9 +1,14 @@
-.settings { width: 100%; }
-@media (min-width: 550px) { .settings { width: 90%; } }
-@media (min-width: 750px) { .settings { width: 80%; } }
-@media (min-width: 1000px) { .settings { width: 70%; } }
-@media (min-width: 1200px) { .settings { width: 60%; } }
-@media (min-width: 1500px) { .settings { width: 50%; } }
+.settings {
+	position: fixed;
+	width: auto;
+	overflow: scroll;
+}
+@media (min-width: 550px) { .settings { left: 5%; right: 5%; } }
+@media (min-width: 750px) { .settings { left: 10%; right: 10%; } }
+@media (min-width: 1000px) { .settings { left: 16%; right: 16%; } }
+@media (min-width: 1200px) { .settings { left: 21%; right: 21%; } }
+@media (min-width: 1500px) { .settings { left: 27%; right: 27%; } }
+@media (min-width: 1800px) { .settings { left: 32%; right: 32%; } }
 
 .settings-container > input {
 	font-size: 1rem;
