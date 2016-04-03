@@ -145,25 +145,10 @@ function statusCommand() {
   }
 
   switch(command) {
-  case "open":
-    if (args.length > 1) {
-      openChannel(args[0], args[1])
-      $("#message-text").val("")
-      return
-    }
-  case "clearbuffer":
-    if (args.length > 1) {
-      var payload = {
-        type: "clearbuffer",
-        network: args[0],
-        channel: args[1]
-      }
-    }
-    break
   case "deletemessage":
     if (args.length > 0) {
       var payload = {
-        type: "deletemessage",
+        type: "delete",
         id: args[0],
       }
     }
