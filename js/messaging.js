@@ -216,7 +216,6 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     message: linkifyHtml(escapeHtml(message))
   }
 
-  var shouldEscapeHtml = true
   if (command === "action") {
     templateData.prefix = "<b>★</b> "
     templateData.class = "action"
