@@ -254,7 +254,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
       var pwTemplate = "text"
     }
     if (pwTemplate !== undefined) {
-      var a = $("#msg-" + id).loadTemplate($("#template-message-preview-" + pwTemplate), {
+      $("#msg-" + id).loadTemplate($("#template-message-preview-" + pwTemplate), {
         title: preview.text !== undefined ? preview.text.title : "",
         description: preview.text !== undefined && preview.text.description !== undefined ? preview.text.description.replaceAll("\n", "<br>") : "",
         sitename: preview.text !== undefined ? preview.text.sitename : "",
