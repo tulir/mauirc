@@ -55,15 +55,26 @@ function newChannel(network) {
   $("#chanswitchers-" + network).loadTemplate($("#template-channel-adder"), {
     id: "channel-adder-" + network,
     wrapid: "channel-adder-wrapper-" + network,
-    finish: "if (event.keyCode === 13) { finishNewChannel('" + network + "') } else if (event.keyCode === 27) { cancelNewChannel('" + network + "') }"
+    finish: "if (event.keyCode === 27) { cancelNewChannel('" + network + "') }"
   }, {append: true, isFile: false, async: false})
   var adder = $("#channel-adder-" + network)
   adder.easyAutocomplete({
     data: channelData[network]["*list"],
+    placeholder: "Nick or #channel",
   	list: {
   		maxNumberOfElements: 10,
-  		match: {
-  			enabled: true
+  		match: { enabled: true },
+      sort: {enabled: true },
+      onChooseEvent: function() { finishNewChannel(network) },
+  		showAnimation: {
+  			type: "slide",
+  			time: 400,
+  			callback: function() {}
+  		},
+  		hideAnimation: {
+  			type: "slide",
+  			time: 400,
+  			callback: function() {}
   		}
   	}
   });
