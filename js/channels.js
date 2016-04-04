@@ -23,6 +23,7 @@ function getActiveChannel() {
 }
 
 function getActiveNetwork() {
+  if (getActiveChannel() === "MauIRC Status") return "MauIRC Status"
   var active = $(".network-switcher.activenet > .network-switcher-name")
   if (active.length) {
     return active.text().trim()
