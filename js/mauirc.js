@@ -54,7 +54,7 @@ function connect() {
     } else if (ed.type === "cmdresponse") {
       receiveCmdResponse(ed.object.message)
     } else if (ed.type === "chandata") {
-      var channel = data.getChannel(ed.object.network, ed.object.channel)
+      var channel = data.getChannel(ed.object.network, ed.object.name)
       channel.setTopicFull(ed.object.topic, ed.object.topicsetat, ed.object.topicsetby)
       channel.setUsers(ed.object.userlist)
       channel.setNotificationLevel("all")
