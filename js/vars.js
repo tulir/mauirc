@@ -27,7 +27,8 @@ channelData["MauIRC Status"] = {
     topic: "MauIRC status messages",
     topicsetby: "tulir293",
     topicsetat: 1
-  }
+  },
+  "*nick": "mauIRC"
 }
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
