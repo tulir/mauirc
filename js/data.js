@@ -92,7 +92,7 @@ NetworkStore.prototype.getChannelIfExists = function(name) {
 }
 
 NetworkStore.prototype.channelExists = function(name) {
-  this.chandata.hasOwnProperty(name)
+  return this.chandata.hasOwnProperty(name)
 }
 
 NetworkStore.prototype.getNick = function() {
