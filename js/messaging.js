@@ -244,7 +244,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     $("#msgwrap-" + id).addClass("own-message")
     $("#msg-" + id + " > .message-sender").remove()
   }
-
+  var msgObj = $("#msg-" + id)
   if (preview !== null) {
     if (!isEmpty(preview.image) && !isEmpty(preview.text)) {
       var pwTemplate = "both"
@@ -254,7 +254,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
       var pwTemplate = "text"
     }
     if (pwTemplate !== undefined) {
-      $("#msg-" + id).loadTemplate($("#template-message-preview-" + pwTemplate), {
+      msgObj.loadTemplate($("#template-message-preview-" + pwTemplate), {
         title: preview.text !== undefined ? preview.text.title : "",
         description: preview.text !== undefined && preview.text.description !== undefined ? preview.text.description.replaceAll("\n", "<br>") : "",
         sitename: preview.text !== undefined ? preview.text.sitename : "",
@@ -265,21 +265,40 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   if (isNew) {
+    if(msgObj.hasClass("action")) {
+      var text = msgObj.find(".action-data > .action-text")
+    } else {
+      var text = msgObj.find(".message-text")
+    }
+
+    var matchLen = 0, matchIndex = 0
     var highlight = channelData[network]["*settings"]["highlights"].some(function(val){
-      lcMessage = message.toLowerCase()
+      lcMessage = templateData.message.toLowerCase()
       if(val.startsWith(":")) {
-        if (lcMessage.match(val.slice(1)) !== null) {
+        var match = new RegExp(val.slice(1), "gi").exec(lcMessage)
+        if (match !== null) {
+          matchLen = match[0].length
+          matchIndex = match.index
           return true
         }
-      } else if(lcMessage.indexOf(val) !== -1) {
-        return true
+      } else {
+        var match = lcMessage.indexOf(val.toLowerCase())
+        if(match !== -1) {
+          matchLen = val.length
+          matchIndex = match
+          return true
+        }
       }
       return false
     })
 
     if (highlight) {
-      $("#msg-" + id).addClass("highlight")
+      var hlt = templateData.message
+      hlt = hlt.slice(0, matchIndex) + "<b>" + hlt.slice(matchIndex, matchIndex + matchLen) + "</b>" + hlt.slice(matchIndex + matchLen)
+      msgObj.html(hlt)
+      msgObj.addClass("highlight")
     }
+
     var notifs = channelData[network][channel]["notifications"]
 
     if ((notifs == "all" || (notifs == "highlight" && highlight)) && !document.hasFocus()) {
