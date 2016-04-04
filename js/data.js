@@ -203,14 +203,16 @@ ChannelStore.prototype.getUsersPlain = function() {
 
 ChannelStore.prototype.setUsers = function(users) {
   this.userlist = users
+  var plainlist = []
   users.forEach(function(val, i){
     var ch = val.charAt(0)
     if (ch === "~" || ch === "&" || ch === "@" || ch === "%" || ch === "+") {
-      this.userlistPlain[i] = val.slice(1)
+      plainlist[i] = val.slice(1)
     } else {
-      this.userlistPlain[i] = val
+      plainlist[i] = val
     }
   })
+  this.userlistPlain = plainlist
 }
 
 ChannelStore.prototype.getTopic = function() {
