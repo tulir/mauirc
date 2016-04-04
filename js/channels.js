@@ -60,7 +60,7 @@ function newChannel(network) {
   }, {append: true, isFile: false, async: false})
   var adder = $("#channel-adder-" + network)
   adder.easyAutocomplete({
-    data: channelData[network]["*list"],
+    data: data.getNetwork(network).getChannels(),
     placeholder: "Nick or #channel",
   	list: {
   		maxNumberOfElements: 10,
@@ -203,11 +203,8 @@ function switchTo(network, channel) {
   $("#message-text").focus()
 
   var title = channel
-  if (channelData[network] !== undefined &&
-    channelData[network][channel] !== undefined &&
-    channelData[network][channel].topic !== undefined &&
-    channelData[network][channel].topic.length > 0) {
-    title = channelData[network][channel].topic
+  if (data.channelExists(network, channel)) {
+    title = data.getChannel(network, channel).getTopic()
   }
   $("#title").text(title)
 

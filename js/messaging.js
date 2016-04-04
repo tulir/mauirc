@@ -272,35 +272,23 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
       textObj = msgObj.find(".message-text")
     }
 
-    var matchLen = 0, matchIndex = 0
-    var highlight = channelData[network]["*settings"]["highlights"].some(function(val){
-      lcMessage = templateData.message.toLowerCase()
-      if(val.startsWith(":")) {
-        var match = new RegExp(val.slice(1), "gi").exec(lcMessage)
-        if (match !== null) {
-          matchLen = match[0].length
-          matchIndex = match.index
-          return true
-        }
-      } else {
-        var match = lcMessage.indexOf(val.toLowerCase())
-        if(match !== -1) {
-          matchLen = val.length
-          matchIndex = match
-          return true
-        }
+    var match = null
+    data.getNetwork(network).getHighlights().some(function(val){
+      match = val.matches(templateData.message)
+      if(match !== null) {
+        return true
       }
       return false
     })
 
-    if (highlight) {
+    if (match !== null) {
       var hlt = templateData.message
-      hlt = hlt.slice(0, matchIndex) + "<span class=\"highlighted-text\">" + hlt.slice(matchIndex, matchIndex + matchLen) + "</span>" + hlt.slice(matchIndex + matchLen)
+      hlt = hlt.slice(0, match.index) + "<span class=\"highlighted-text\">" + hlt.slice(match.index, match.index + match.length) + "</span>" + hlt.slice(match.index + match.length)
       textObj.html(hlt)
       msgObj.addClass("highlight")
     }
 
-    var notifs = channelData[network][channel] === undefined ? "all" : channelData[network][channel]["notifications"]
+    var notifs = data.channelExists(network, channel) ? data.getChannel(network, channel).getNotificationLevel() : "all"
 
     if ((notifs == "all" || (notifs == "highlight" && highlight)) && !document.hasFocus()) {
       notify(sender, message)

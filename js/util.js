@@ -27,7 +27,7 @@ function sendMessage(payload){
   if(payload === undefined || payload === null || payload.length === 0) {
     return false
   }
-  
+
   var content = JSON.stringify(payload)
 
   if (content.length > 1024) {
@@ -55,7 +55,6 @@ function isEmpty(object) {
 function channelFilter(channel) {
   return channel.replaceAll("#", "\\#").replaceAll("*", "\\*").replaceAll(".", "\\.").toLowerCase()
 }
-
 
 var tagsToEscape = {
     '&': '&amp;',

@@ -19,22 +19,9 @@ var connected = false
 var authfail = false
 var msgcontainer = false
 var titleEditClick = 0
-var channelData = {}
+var data = new DataStore()
 
-channelData["MauIRC Status"] = {
-  "MauIRC Status": {
-    userlist: [],
-    topic: "MauIRC status messages",
-    topicsetby: "tulir293",
-    topicsetat: 1,
-    notifications: "all"
-  },
-  "*settings": {
-    nick: "mauIRC",
-    highlights: []
-  },
-  "*list": ["MauIRC Status"]
-}
+data.getNetwork("MauIRC Status").getChannel("MauIRC Status").setTopicFull("mauIRC status messages", 1, "all")
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
 if (window.location.protocol !== "https:") {

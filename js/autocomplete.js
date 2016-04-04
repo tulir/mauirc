@@ -19,10 +19,9 @@ function commandAutocomplete(messagebox) {
 }
 
 function userAutocomplete(messagebox) {
-  var list = channelData[getActiveNetwork()][getActiveChannel()].userlistplain
   var text = messagebox.val().toLowerCase()
   var index = -1
-  list.forEach(function(val, i, arr){
+  data.getChannel(getActiveNetwork(), getActiveChannel()).forEach(function(val, i, arr){
     if(val.toLowerCase().startsWith(text)) {
       if (index !== -1) {
         index = -2
@@ -40,8 +39,7 @@ function userAutocomplete(){
   var messagebox = $("#message-text")
   if (messagebox.val().startsWith("/")) {
     commandAutocomplete(messagebox)
-  } else if (channelData[getActiveNetwork()] !== undefined && channelData[getActiveNetwork()][getActiveChannel()] !== undefined &&
-      channelData[getActiveNetwork()][getActiveChannel()].userlistplain !== undefined) {
+  } else if (data.channelExists(getActiveNetwork(), getActiveChannel())) {
     userAutocomplete(messagebox)
   }
 }

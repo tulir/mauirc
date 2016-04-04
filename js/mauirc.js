@@ -54,60 +54,24 @@ function connect() {
     } else if (data.type === "cmdresponse") {
       receiveCmdResponse(data.object.message)
     } else if (data.type === "chandata") {
-      if (channelData[data.object.network] === undefined) {
-        channelData[data.object.network] = {}
-      }
-      if (channelData[data.object.network]["*list"] === undefined) {
-        channelData[data.object.network]["*list"] = []
-      }
-      if (channelData[data.object.network]["*settings"] === undefined) {
-        channelData[data.object.network]["*settings"] = {
-          "nick": "",
-          "highlights": []
-        }
-      }
-      if(isEmpty(data.object.notifications)) data.object.notifications = "all" // TODO replace with backend code
-      channelData[data.object.network][data.object.name] = data.object
+      var channel = data.getChannel(data.object.network, data.object.channel)
+      channel.setTopicFull(data.object.topic, data.object.topicsetat, data.object.topicsetby)
+      channel.setUsers(data.object.userlist)
+      channel.setNotificationLevel("all")
 
       if(getActiveNetwork() === data.object.network && getActiveChannel() === data.object.name) {
         $("#title").text(data.object.topic)
-      }
-
-      if ($.inArray(data.object.name, channelData[data.object.network]["*list"]) === -1) {
-        channelData[data.object.network]["*list"].push(data.object.name)
-      }
-
-      if (data.object.userlist !== null) {
-        data.object.userlistplain = []
-        data.object.userlist.forEach(function(val, i, arr) {
-          var ch = val.charAt(0)
-          if (ch === "~" || ch === "&" || ch === "@" || ch === "%" || ch === "+") {
-            val = val.substring(1)
-          }
-          data.object.userlistplain.push(val)
-        })
         updateUserList()
       }
     } else if (data.type === "nickchange") {
       console.log("Nick changed to " + data.object.nick + " on " + data.object.network)
-      if (channelData[data.object.network] === undefined) {
-        channelData[data.object.network] = {}
-      }
-      if (channelData[data.object.network]["*settings"] === undefined) {
-        channelData[data.object.network]["*settings"] = {
-          "highlights": []
-        }
-      }
-      channelData[data.object.network]["*settings"]["nick"] = data.object.nick
+      data.getNetwork(data.object.network).setNick(data.object.nick)
     } else if (data.type === "netlist") {
       data.object.forEach(function(val, i, arr){
         openNetwork(val)
       })
     } else if (data.type === "chanlist") {
-      if (channelData[data.object.network] === undefined) {
-        channelData[data.object.network] = {}
-      }
-      channelData[data.object.network]["*list"] = data.object.list
+      data.getNetwork(data.object.network).setChannels(data.object.list)
     } else if (data.type === "clear") {
       closeChannel(data.object.network, data.object.channel)
     } else if (data.type === "delete") {
