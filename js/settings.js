@@ -18,7 +18,7 @@ function closeSettings(){
 }
 
 function updateSettingsValues(){
-	$("#network-nickname").val(channelData[getActiveNetwork()]["*nick"])
+	$("#network-nickname").val(channelData[getActiveNetwork()]["*settings"]["nick"])
 }
 
 function snChangeHighlights(){
@@ -53,7 +53,7 @@ function snChangeHighlights(){
     minIndex = 0
   }
 
-  channelData[getActiveNetwork()]["*highlights"] = highlights
+  channelData[getActiveNetwork()]["*settings"]["highlights"] = highlights
 }
 
 function snClearHistory(){

@@ -30,7 +30,8 @@ channelData["MauIRC Status"] = {
   },
   "*settings": {
     "nick": "mauIRC",
-    "*highlights": []
+    "highlights": [],
+    "notifications": 2
   },
   "*list": ["MauIRC Status"]
 }

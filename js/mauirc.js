@@ -60,6 +60,13 @@ function connect() {
       if (channelData[data.object.network]["*list"] === undefined) {
         channelData[data.object.network]["*list"] = []
       }
+      if (channelData[data.object.network]["*settings"] === undefined) {
+        channelData[data.object.network]["*settings"] = {
+          "nick": "",
+          "highlights": [],
+          "notifications": 2
+        }
+      }
 
       channelData[data.object.network][data.object.name] = data.object
 
@@ -87,7 +94,7 @@ function connect() {
       if (channelData[data.object.network] === undefined) {
         channelData[data.object.network] = {}
       }
-      channelData[data.object.network]["*nick"] = data.object.nick
+      channelData[data.object.network]["*settings"]["nick"] = data.object.nick
     } else if (data.type === "netlist") {
       data.object.forEach(function(val, i, arr){
         openNetwork(val)

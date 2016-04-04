@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-align: right;
 }
 
-.highlight {
+.highlight, .highlight > .message-date {
     background-color: #50D367;
     color: #FFFFFF;
 }

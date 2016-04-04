@@ -274,7 +274,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
       scrollDown()
     }
 
-    var highlight = channelData[getActiveNetwork()]["*highlights"].some(function(val){
+    var highlight = channelData[getActiveNetwork()]["*settings"]["highlights"].some(function(val){
       lcMessage = message.toLowerCase()
       if(val.startsWith(":")) {
         if (lcMessage.match(val.slice(1)) !== null) {
