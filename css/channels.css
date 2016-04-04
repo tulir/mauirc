@@ -74,6 +74,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     border-radius: .25rem;
     text-align: center;
     font-weight: bold;
+    box-sizing: border-box;
 }
 
 .channel-adder-wrapper {
