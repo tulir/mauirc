@@ -70,6 +70,10 @@ NetworkStore.prototype.getChannels = function(){
   return this.chanlist
 }
 
+NetworkStore.prototype.setChannels = function(channels) {
+  this.chanlist = channels
+}
+
 NetworkStore.prototype.getChannel = function(name) {
   if (this.chandata.hasOwnProperty(name)) {
     return this.chandata[name]
