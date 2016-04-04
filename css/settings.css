@@ -88,6 +88,16 @@ button.settings-value {
     border: none;
 }
 
+.settings-inputfield {
+	width: 68%;
+}
+
+.settings-inputbutton {
+	width: 30%;
+	margin-left: 2%;
+	padding: .375rem 0;
+}
+
 button:hover.settings-value {
 	background-color: #47B9D7;
 }
