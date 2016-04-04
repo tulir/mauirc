@@ -21,6 +21,10 @@ function updateSettingsValues(){
 	$("#network-nickname").val(channelData[getActiveNetwork()]["*nick"])
 }
 
+function snChangeHighlights(){
+	
+}
+
 function snClearHistory(){
 	if(getActiveChannel() === "MauIRC Status") return
   sendMessage({

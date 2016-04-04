@@ -264,12 +264,31 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     }
   }
 
-  if (!document.hasFocus() && isNew) {
-    notify(sender, message)
-  }
+  if (isNew) {
+    if (!document.hasFocus()) {
+      notify(sender, message)
+    }
+    if (chanObj.hasClass("hidden")) {
+      $("#switchto-" + channelFilter(channel)).addClass("new-messages")
+    } else {
+      scrollDown()
+    }
 
-  if (chanObj.hasClass("hidden") && isNew){
-    $("#switchto-" + channelFilter(channel)).addClass("new-messages")
+    var highlight = channelData[getActiveNetwork()]["*highlights"].some(function(val){
+      lcMessage = message.toLowerCase()
+      if(val.startsWith(":")) {
+        if (lcMessage.match(val) !== null) {
+          return true
+        }
+      } else if(lcMessage.indexOf(val) !== -1) {
+        return true
+      }
+      return false
+    })
+
+    if (highlight) {
+      $("#msg-" + id).addClass("highlight")
+    }
   } else {
     scrollDown()
   }
