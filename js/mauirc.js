@@ -54,13 +54,13 @@ function connect() {
     } else if (data.type === "cmdresponse") {
       receiveCmdResponse(data.object.message)
     } else if (data.type === "chandata") {
-      if (isEmpty(channelData[data.object.network])) {
+      if (channelData[data.object.network] === undefined) {
         channelData[data.object.network] = {}
       }
-      if (isEmpty(channelData[data.object.network]["*list"])) {
+      if (channelData[data.object.network]["*list"] === undefined) {
         channelData[data.object.network]["*list"] = []
       }
-      if (isEmpty(channelData[data.object.network]["*settings"])) {
+      if (channelData[data.object.network]["*settings"] === undefined) {
         channelData[data.object.network]["*settings"] = {
           "nick": "",
           "highlights": []
@@ -99,6 +99,7 @@ function connect() {
         openNetwork(val)
       })
     } else if (data.type === "chanlist") {
+      console.log(data.object)
       if (channelData[data.object.network] === undefined) {
         channelData[data.object.network] = {}
       }
