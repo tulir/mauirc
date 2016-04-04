@@ -17,7 +17,21 @@ function closeSettings(){
   $("#container").removeClass("hidden")
 }
 
-function snNickChange(){
+function updateSettingsValues(){
+	$("#network-nickname").val(channelData[getActiveNetwork()]["*nick"])
+}
+
+function snClearHistory(){
+	if(getActiveChannel() === "MauIRC Status") return
+  sendMessage({
+    type: "clear",
+    network: getActiveNetwork(),
+    channel: getActiveChannel()
+  })
+  closeSettings()
+}
+
+function snChangeNick(){
 	if(getActiveChannel() === "MauIRC Status") return
 	var nick = $("#network-nickname")
 	if (nick.length === 0 || nick.val().trim().length === 0) {
@@ -32,25 +46,6 @@ function snNickChange(){
 		message: nick.val().trim()
 	})
 	closeSettings()
-}
-
-function updateSettingsValues(){
-	$("#network-nickname").val(channelData[getActiveNetwork()]["*nick"])
-  /*updateNetChoices()
-  $("#settings-network-list").val(getActiveNetwork())
-
-	updateChanChoices(getActiveChannel())
-	$("#settings-channel-list").val(getActiveChannel())*/
-}
-
-function snClearHistory(){
-	if(getActiveChannel() === "MauIRC Status") return
-  sendMessage({
-    type: "clear",
-    network: getActiveNetwork(),
-    channel: getActiveChannel()
-  })
-  closeSettings()
 }
 
 function snPartChannel(){
