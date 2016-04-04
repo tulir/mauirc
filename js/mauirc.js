@@ -104,7 +104,6 @@ function connect() {
         openNetwork(val)
       })
     } else if (data.type === "chanlist") {
-      console.log(data.object)
       if (channelData[data.object.network] === undefined) {
         channelData[data.object.network] = {}
       }
