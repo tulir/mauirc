@@ -4,6 +4,7 @@ cat \
     ./js/lib/linkify.min.js \
     ./js/lib/linkify-html.min.js \
     ./js/lib/linkify-jquery.min.js \
+    ./js/data.js \
     ./js/vars.js \
     ./js/util.js \
     ./js/channels.js \
