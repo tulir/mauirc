@@ -92,6 +92,11 @@ function connect() {
       data.object.forEach(function(val, i, arr){
         openNetwork(val)
       })
+    } else if (data.type === "chanlist") {
+      if (channelData[data.object.network] === undefined) {
+        channelData[data.object.network] = {}
+      }
+      channelData[data.object.network]["*list"] = data.object.list
     } else if (data.type === "clear") {
       closeChannel(data.object.network, data.object.channel)
     } else if (data.type === "delete") {
