@@ -63,6 +63,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     color: #FFFFFF;
 }
 
+.highlighted-text {
+    font-weight: bold;
+}
+
 .joinpart, .nickchange {
     background-color: #EBEBEB;
     color: #9A9A9A;

@@ -295,7 +295,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 
     if (highlight) {
       var hlt = templateData.message
-      hlt = hlt.slice(0, matchIndex) + "<b>" + hlt.slice(matchIndex, matchIndex + matchLen) + "</b>" + hlt.slice(matchIndex + matchLen)
+      hlt = hlt.slice(0, matchIndex) + "<span class=\"highlighted-text\">" + hlt.slice(matchIndex, matchIndex + matchLen) + "</span>" + hlt.slice(matchIndex + matchLen)
       textObj.html(hlt)
       msgObj.addClass("highlight")
     }
