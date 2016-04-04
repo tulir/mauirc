@@ -265,10 +265,11 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   if (isNew) {
+    var textObj = null
     if(msgObj.hasClass("action")) {
-      var text = msgObj.find(".action-data > .action-text")
+      textObj = msgObj.find(".action-data > .action-text")
     } else {
-      var text = msgObj.find(".message-text")
+      textObj = msgObj.find(".message-text")
     }
 
     var matchLen = 0, matchIndex = 0
@@ -295,7 +296,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     if (highlight) {
       var hlt = templateData.message
       hlt = hlt.slice(0, matchIndex) + "<b>" + hlt.slice(matchIndex, matchIndex + matchLen) + "</b>" + hlt.slice(matchIndex + matchLen)
-      msgObj.html(hlt)
+      textObj.html(hlt)
       msgObj.addClass("highlight")
     }
 
