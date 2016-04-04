@@ -300,7 +300,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
       msgObj.addClass("highlight")
     }
 
-    var notifs = channelData[network][channel]["notifications"]
+    var notifs = channelData[network][channel] === undefined ? "all" : channelData[network][channel]["notifications"]
 
     if ((notifs == "all" || (notifs == "highlight" && highlight)) && !document.hasFocus()) {
       notify(sender, message)

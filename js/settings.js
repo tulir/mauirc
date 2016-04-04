@@ -18,6 +18,9 @@ function closeSettings(){
 }
 
 function updateSettingsValues(){
+  if (channelData[getActiveNetwork()] === undefined || channelData[getActiveNetwork()][getActiveChannel()] === undefined) {
+    return
+  }
   $("#channel-notifications").val(channelData[getActiveNetwork()][getActiveChannel()]["notifications"])
 	$("#network-nickname").val(channelData[getActiveNetwork()]["*settings"]["nick"])
   var highlights = ""
