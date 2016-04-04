@@ -46,36 +46,36 @@ function connect() {
   };
 
   socket.onmessage = function (evt) {
-    var data = JSON.parse(evt.data)
-    if (data.type === "message") {
-      receive(data.object.id, data.object.network, data.object.channel, data.object.timestamp,
-        data.object.sender, data.object.command, data.object.message, data.object.ownmsg,
-        data.object.preview, true)
-    } else if (data.type === "cmdresponse") {
-      receiveCmdResponse(data.object.message)
-    } else if (data.type === "chandata") {
-      var channel = data.getChannel(data.object.network, data.object.channel)
-      channel.setTopicFull(data.object.topic, data.object.topicsetat, data.object.topicsetby)
-      channel.setUsers(data.object.userlist)
+    var ed = JSON.parse(evt.data)
+    if (ed.type === "message") {
+      receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
+        ed.object.sender, ed.object.command, ed.object.message, ed.object.ownmsg,
+        ed.object.preview, true)
+    } else if (ed.type === "cmdresponse") {
+      receiveCmdResponse(ed.object.message)
+    } else if (ed.type === "chandata") {
+      var channel = data.getChannel(ed.object.network, ed.object.channel)
+      channel.setTopicFull(ed.object.topic, ed.object.topicsetat, ed.object.topicsetby)
+      channel.setUsers(ed.object.userlist)
       channel.setNotificationLevel("all")
 
-      if(getActiveNetwork() === data.object.network && getActiveChannel() === data.object.name) {
-        $("#title").text(data.object.topic)
+      if(getActiveNetwork() === ed.object.network && getActiveChannel() === ed.object.name) {
+        $("#title").text(ed.object.topic)
         updateUserList()
       }
-    } else if (data.type === "nickchange") {
-      console.log("Nick changed to " + data.object.nick + " on " + data.object.network)
-      data.getNetwork(data.object.network).setNick(data.object.nick)
+    } else if (ed.type === "nickchange") {
+      console.log("Nick changed to " + ed.object.nick + " on " + ed.object.network)
+      data.getNetwork(ed.object.network).setNick(ed.object.nick)
     } else if (data.type === "netlist") {
-      data.object.forEach(function(val, i, arr){
+      ed.object.forEach(function(val, i, arr){
         openNetwork(val)
       })
-    } else if (data.type === "chanlist") {
-      data.getNetwork(data.object.network).setChannels(data.object.list)
-    } else if (data.type === "clear") {
-      closeChannel(data.object.network, data.object.channel)
-    } else if (data.type === "delete") {
-      $("#msgwrap-" + data.object).remove()
+    } else if (ed.type === "chanlist") {
+      data.getNetwork(ed.object.network).setChannels(ed.object.list)
+    } else if (ed.type === "clear") {
+      closeChannel(ed.object.network, ed.object.channel)
+    } else if (ed.type === "delete") {
+      $("#msgwrap-" + ed.object).remove()
     }
   };
 
