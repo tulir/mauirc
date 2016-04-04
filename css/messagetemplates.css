@@ -58,6 +58,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-align: right;
 }
 
+.highlight {
+    background-color: #50D367;
+    color: #FFFFFF;
+}
+
 .joinpart, .nickchange {
     background-color: #EBEBEB;
     color: #9A9A9A;
