@@ -265,7 +265,6 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   if (isNew) {
-
     var highlight = channelData[network]["*settings"]["highlights"].some(function(val){
       lcMessage = message.toLowerCase()
       if(val.startsWith(":")) {
@@ -283,11 +282,11 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     }
     var notifs = channelData[network][channel]["notifications"]
 
-    if ((notifs == "all" || (notifs == "highlights" && highlight)) && !document.hasFocus()) {
+    if ((notifs == "all" || (notifs == "highlight" && highlight)) && !document.hasFocus()) {
       notify(sender, message)
     }
     if (chanObj.hasClass("hidden")) {
-      if((notifs == "all" || (notifs == "highlights" && highlight))) {
+      if((notifs == "all" || (notifs == "highlight" && highlight))) {
         $("#switchto-" + channelFilter(channel)).addClass("new-messages")
       }
     } else {
