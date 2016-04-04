@@ -22,7 +22,38 @@ function updateSettingsValues(){
 }
 
 function snChangeHighlights(){
-	
+	var hlData = $("#network-highlights").val()
+  var highlights = [hlData]
+  var minIndex = 0
+
+  while(true) {
+    var current = highlights.length - 1
+    var str = highlights[current]
+    var index = str.indexOf(",", minIndex)
+
+    if (index === -1) {
+      break
+    } else if (index === 0) {
+      highlights[current] = str.slice(1)
+      minIndex = 1
+      continue
+    }
+
+    if (str.charAt(index - 1) === "\\") {
+      minIndex = index
+      highlights[current] = str.slice(0, index - 1) + str.slice(index, str.length)
+      continue
+    } else if (index === str.length - 1) {
+      highlights[current] = str.slice(0, str.length - 1)
+      break
+    }
+
+    highlights[current] = str.slice(0, index)
+    highlights.push(str.slice(index + 1, str.length))
+    minIndex = 0
+  }
+
+  channelData[getActiveNetwork()]["*highlights"] = highlights
 }
 
 function snClearHistory(){
