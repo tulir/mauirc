@@ -18,7 +18,18 @@ function closeSettings(){
 }
 
 function updateSettingsValues(){
+  $("#channel-notifications").val(channelData[getActiveNetwork()][getActiveChannel()]["notifications"])
 	$("#network-nickname").val(channelData[getActiveNetwork()]["*settings"]["nick"])
+  var highlights = ""
+  channelData[getActiveNetwork()]["*settings"]["highlights"].forEach(function(val, i, arr){
+    highlights += val.replace(",", "\\,") + ","
+  })
+  highlights = highlights.slice(0, -1)
+  $("#network-highlights").val(highlights)
+}
+
+function snChangeNotifications() {
+  channelData[getActiveNetwork()][getActiveChannel()]["notifications"] = $("#channel-notifications").val()
 }
 
 function snChangeHighlights(){

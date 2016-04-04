@@ -265,14 +265,6 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   if (isNew) {
-    if (!document.hasFocus()) {
-      notify(sender, message)
-    }
-    if (chanObj.hasClass("hidden")) {
-      $("#switchto-" + channelFilter(channel)).addClass("new-messages")
-    } else {
-      scrollDown()
-    }
 
     var highlight = channelData[getActiveNetwork()]["*settings"]["highlights"].some(function(val){
       lcMessage = message.toLowerCase()
@@ -288,6 +280,18 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 
     if (highlight) {
       $("#msg-" + id).addClass("highlight")
+    }
+    var notifs = channelData[getActiveNetwork()][getActiveChannel()]["notifications"]
+    
+    if ((notifs == "all" || (notifs == "highlights" && highlight)) && !document.hasFocus()) {
+      notify(sender, message)
+    }
+    if (chanObj.hasClass("hidden")) {
+      if((notifs == "all" || (notifs == "highlights" && highlight))) {
+        $("#switchto-" + channelFilter(channel)).addClass("new-messages")
+      }
+    } else {
+      scrollDown()
     }
   } else {
     scrollDown()

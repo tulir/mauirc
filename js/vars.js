@@ -26,12 +26,12 @@ channelData["MauIRC Status"] = {
     userlist: [],
     topic: "MauIRC status messages",
     topicsetby: "tulir293",
-    topicsetat: 1
+    topicsetat: 1,
+    notifications: "all"
   },
   "*settings": {
-    "nick": "mauIRC",
-    "highlights": [],
-    "notifications": 2
+    nick: "mauIRC",
+    highlights: []
   },
   "*list": ["MauIRC Status"]
 }
