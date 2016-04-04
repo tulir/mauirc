@@ -7,7 +7,7 @@ function toggleSettings(){
 }
 
 function openSettings(){
-  //updateSettingsValues()
+  updateSettingsValues()
   $("#settings").removeClass("hidden")
   $("#container").addClass("hidden")
 }
@@ -18,6 +18,7 @@ function closeSettings(){
 }
 
 function snNickChange(){
+	if(getActiveChannel() === "MauIRC Status") return
 	var nick = $("#network-nickname")
 	if (nick.length === 0 || nick.val().trim().length === 0) {
 		return
@@ -43,6 +44,7 @@ function updateSettingsValues(){
 }
 
 function snClearHistory(){
+	if(getActiveChannel() === "MauIRC Status") return
   sendMessage({
     type: "clear",
     network: getActiveNetwork(),
@@ -52,6 +54,7 @@ function snClearHistory(){
 }
 
 function snPartChannel(){
+	if(getActiveChannel() === "MauIRC Status") return
   sendMessage({
     type: "message",
     network: getActiveNetwork(),
