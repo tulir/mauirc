@@ -7,9 +7,9 @@
 
 @media (min-width: 750px) { .settings { left: 6rem; right: 6rem; } }
 @media (min-width: 1000px) { .settings { left: 10rem; right: 10rem; } }
-@media (min-width: 1200px) { .settings { left: 15rem; right: 15rem; } }
-@media (min-width: 1500px) { .settings { left: 20rem; right: 20rem; } }
-@media (min-width: 1800px) { .settings { left: 27rem; right: 27rem; } }
+@media (min-width: 1200px) { .settings { left: 18rem; right: 18rem; } }
+@media (min-width: 1500px) { .settings { left: 24rem; right: 24rem; } }
+@media (min-width: 1800px) { .settings { left: 32rem; right: 32rem; } }
 
 .settings-top-buttons {
     border-radius: .25rem;
