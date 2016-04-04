@@ -23,7 +23,7 @@ DataStore.prototype.getNetwork = function(name) {
     return this.netlist[name]
   } else {
     var net = new NetworkStore()
-    netlist[name] = net
+    this.netlist[name] = net
     return net
   }
 }
@@ -49,7 +49,7 @@ DataStore.prototype.channelExists = function(network, channel) {
 }
 
 DataStore.prototype.getChannel = function(network, channel) {
-  return getNetwork(network).getChannel(channel)
+  return this.getNetwork(network).getChannel(channel)
 }
 
 DataStore.prototype.getChannelIfExists = function(network, channel) {
