@@ -277,7 +277,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     var highlight = channelData[getActiveNetwork()]["*highlights"].some(function(val){
       lcMessage = message.toLowerCase()
       if(val.startsWith(":")) {
-        if (lcMessage.match(val) !== null) {
+        if (lcMessage.match(val.slice(1)) !== null) {
           return true
         }
       } else if(lcMessage.indexOf(val) !== -1) {
