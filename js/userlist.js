@@ -19,8 +19,9 @@ function updateUserList(){
     if (isUserListHidden() && !wasUserListHiddenManually()) toggleUserList(false)
 
     $("#userlist-list").text("")
-    data.getNetwork(getActiveNetwork()).getChannel(getActiveChannel()).getUsers().forEach(function(val, i, arr){
-      $("#userlist-list").append('<a class="pm-link" href="#" onClick="openPM(\'' + getActiveNetwork() + '\', \'' + ch.userlistplain[i] + '\')">' + val + '</a><br>')
+    var ch = data.getNetwork(getActiveNetwork()).getChannel(getActiveChannel())
+    ch.getUsers().forEach(function(val, i, arr){
+      $("#userlist-list").append('<a class="pm-link" href="#" onClick="openPM(\'' + getActiveNetwork() + '\', \'' + ch.getUsersPlain()[i] + '\')">' + val + '</a><br>')
     })
     $("#open-user-list").removeClass("hidden-tablet-down")
     $("#open-settings").addClass("hidden-tablet-down")
