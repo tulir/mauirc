@@ -172,6 +172,7 @@ Highlight.prototype.matches = function(str) {
       return {length: this.value.length, index: match}
     }
   }
+  return null
 }
 
 Highlight.prototype.toString = function() {
