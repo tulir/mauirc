@@ -93,6 +93,11 @@ function connect() {
       if (channelData[data.object.network] === undefined) {
         channelData[data.object.network] = {}
       }
+      if (channelData[data.object.network]["*settings"] === undefined) {
+        channelData[data.object.network]["*settings"] = {
+          "highlights": []
+        }
+      }
       channelData[data.object.network]["*settings"]["nick"] = data.object.nick
     } else if (data.type === "netlist") {
       data.object.forEach(function(val, i, arr){
