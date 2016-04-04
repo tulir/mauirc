@@ -188,9 +188,9 @@ function ChannelStore(){
   this.userlist = [],
   this.userlistPlain = [],
   this.topic = "",
-  this.topicsetby: "",
-  this.topicsetat: 0,
-  this.notifications: "all"
+  this.topicsetby = "",
+  this.topicsetat = 0,
+  this.notifications = "all"
 }
 
 ChannelStore.prototype.getUsers = function() {
