@@ -172,7 +172,7 @@ Highlight.prototype.matches = function(str) {
       return {length: match[0].length, index: match.index}
     }
   } else {
-    var match = str.toLowerCase().indexOf(val.toLowerCase())
+    var match = str.toLowerCase().indexOf(this.value.toLowerCase())
     if(match !== -1) {
       return {length: this.value.length, index: match}
     }
