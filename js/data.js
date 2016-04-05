@@ -152,11 +152,12 @@ NetworkStore.prototype.setHighlightsFromString = function(data) {
 
   highlights.forEach(function(val, i){
     if(val.startsWith(":")) {
-      this.highlights[i] = new Highlight("regex", val.slice(1))
+      highlights[i] = new Highlight("regex", val.slice(1))
     } else {
-      this.highlights[i] = new Highlight("contains", val)
+      highlights[i] = new Highlight("contains", val)
     }
   })
+  this.highlights = highlights
 }
 
 function Highlight(type, value){
