@@ -169,7 +169,7 @@ Highlight.prototype.matches = function(str) {
   if(this.type === "regex") {
     var match = new RegExp(this.value.slice(1), "gi").exec(str)
     if (match !== null) {
-      return {length: match[0].length, index: match.index}
+      return {length: match[0].length+1, index: match.index-1}
     }
   } else {
     var match = str.toLowerCase().indexOf(this.value.toLowerCase())
