@@ -73,7 +73,7 @@ function connect() {
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {
-      closeChannel(ed.object.network, ed.object.channel)
+      $("#net-" + ed.object.network + " > #chan-" + channelFilter(ed.object.channel)).html("")
     } else if (ed.type === "delete") {
       $("#msgwrap-" + ed.object).remove()
     }
