@@ -18,7 +18,7 @@ function closeSettings(){
 }
 
 function updateSettingsValues(){
-  if (data.channelExists(getActiveNetwork(), getActiveChannel())) {
+  if (!data.channelExists(getActiveNetwork(), getActiveChannel())) {
     return
   }
   $("#channel-notifications").val(data.getChannel(getActiveNetwork(), getActiveChannel()).getNotificationLevel())
