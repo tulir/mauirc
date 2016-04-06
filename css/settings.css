@@ -16,15 +16,10 @@
     background-color: #D6D6D6;
 }
 
-.btn-part-channel, .btn-clear-history {
+.btn-leave-settings, .btn-part-channel, .btn-clear-history, .btn-close-channel {
     display: table-cell;
     width: 50%;
     box-sizing: border-box;
-}
-
-.btn-leave-settings {
-    display: table-cell;
-    width: 100%;
 }
 
 .settings-container {

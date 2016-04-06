@@ -44,6 +44,11 @@ function snClearHistory(){
   closeSettings()
 }
 
+function snCloseChannel(){
+	closeChannel(getActiveNetwork(), getActiveChannel())
+	closeSettings()
+}
+
 function snChangeNick(){
 	if(getActiveChannel() === "MauIRC Status") return
 	var nick = $("#network-nickname")
