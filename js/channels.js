@@ -56,7 +56,7 @@ function newChannel(network) {
   $("#chanswitchers-" + network).loadTemplate($("#template-channel-adder"), {
     id: "channel-adder-" + network,
     wrapid: "channel-adder-wrapper-" + network,
-    finish: "if (event.keyCode === 27) { cancelNewChannel('" + network + "') }"
+    finish: "if (event.keyCode === 13) { finishNewChannel('" + network + "') } else if (event.keyCode === 27) { cancelNewChannel('" + network + "') }"
   }, {append: true, isFile: false, async: false})
   var adder = $("#channel-adder-" + network)
   adder.easyAutocomplete({
