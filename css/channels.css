@@ -84,6 +84,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     background-color: #D6D6D6;
 }
 
+.disconnected {
+    background-color: #B4B4B4;
+}
+
 .network-switcher-buttons {
     width: 80%;
     margin-top: 1.5rem;
