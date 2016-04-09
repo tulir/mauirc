@@ -67,11 +67,11 @@ function NetworkStore(){
   this.highlights = []
 }
 
-Network.prototype.isConnected = function() {
+NetworkStore.prototype.isConnected = function() {
   return this.connected
 }
 
-Network.prototype.setConnected = function(connected) {
+NetworkStore.prototype.setConnected = function(connected) {
   this.connected = connected
 }
 
