@@ -70,7 +70,20 @@ function connect() {
       ed.object.forEach(function(val, key, arr){
         openNetwork(key)
         data.getNetwork(key).setConnected(val)
+        if(val) {
+          $("switchnet-" + network).removeClass("disconnected")
+        } else {
+          $("#switchnet-" + network).addClass("disconnected")
+        }
       })
+    } else if (data.type === "netchange") {
+      openNetwork(data.object.name)
+      data.getNetwork(data.object.name).setConnected(data.object.connected)
+      if(data.object.connected) {
+        $("switchnet-" + network).removeClass("disconnected")
+      } else {
+        $("#switchnet-" + network).addClass("disconnected")
+      }
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {
