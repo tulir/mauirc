@@ -66,23 +66,13 @@ function connect() {
     } else if (ed.type === "nickchange") {
       console.log("Nick changed to " + ed.object.nick + " on " + ed.object.network)
       data.getNetwork(ed.object.network).setNick(ed.object.nick)
-    } else if (data.type === "netlist") {
-      ed.object.forEach(function(val, key, arr){
-        openNetwork(key)
-        data.getNetwork(key).setConnected(val)
-        if(val) {
-          $("switchnet-" + network).removeClass("disconnected")
-        } else {
-          $("#switchnet-" + network).addClass("disconnected")
-        }
-      })
-    } else if (data.type === "netchange") {
-      openNetwork(data.object.name)
-      data.getNetwork(data.object.name).setConnected(data.object.connected)
-      if(data.object.connected) {
-        $("switchnet-" + network).removeClass("disconnected")
+    } else if (ed.type === "netdata") {
+      openNetwork(ed.object.name)
+      data.getNetwork(ed.object.name).setConnected(ed.object.connected)
+      if(ed.object.connected) {
+        $("switchnet-" + ed.object.name).removeClass("disconnected")
       } else {
-        $("#switchnet-" + network).addClass("disconnected")
+        $("#switchnet-" + ed.object.name).addClass("disconnected")
       }
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
@@ -142,6 +132,9 @@ function history(n){
     url: "/history?n=" + n,
     dataType: "json",
     success: function(data){
+      if (isEmpty(data)) {
+        return
+      }
       data.reverse().forEach(function(val, i, arr) {
         receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.ownmsg, val.preview, false)
       })
