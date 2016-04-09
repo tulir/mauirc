@@ -101,3 +101,77 @@ button:disabled.settings-value {
     background-color: #2AAD41;
     color: #CCCCCC;
 }
+
+
+
+
+.script-list {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 20%;
+}
+
+.script-pane {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 80%;
+}
+
+.script-editor {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 2.4rem;
+	left: 0;
+}
+
+.script-tools {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 2.4rem;
+}
+
+.script-tool-save {
+	font-size: 1rem;
+	font-family: inherit;
+	color: inherit;
+
+	width: 5rem;
+	box-sizing: border-box;
+	padding: .375rem 1rem;
+	border-radius: .25rem;
+	background-color: #FAFAFA;
+	border: 1px solid #9A9A9A;
+}
+
+.script-tool-save:hover {
+	background-color: #47B9D7;
+}
+
+.script-name-wrapper {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	left: 6.4rem;
+}
+
+.script-name {
+	width: 100%;
+	height: 100%;
+	font-size: 1rem;
+	font-family: inherit;
+	color: inherit;
+
+	box-sizing: border-box;
+	padding: .375rem 1rem;
+	border-radius: .25rem;
+	background-color: #FAFAFA;
+	border: 1px solid #9A9A9A;
+}

@@ -1,4 +1,4 @@
-<div class="settings-main">
+<div class="settings-main" id="settings-main">
   <div class="settings-top-buttons">
     <button class="btn btn-leave-settings" type="button" id="leave-settings" onClick="closeSettings()">Close Settings</button>
     <button class="btn btn-close-channel" type="button" id="channel-close" onClick="snCloseChannel()">Close Channel</button>
@@ -51,11 +51,19 @@
   </div>
 </div>
 
-<div class="settings-networkeditor">
-  
+<div class="settings-networkeditor" id="settings-networkeditor">
+
 </div>
 
-<div class="settings-scripts">
-  <div class="script-list"></div>
-  <div class="script-edit"></div>
+<div class="settings-scripts" id="settings-scripts">
+  <div class="script-list" id="script-list"></div>
+  <div class="script-pane">
+    <div class="script-editor" id="script-editor"></div>
+    <div class="script-tools" id="script-tools">
+      <div class="script-name-wrapper">
+        <input class="script-name" id="script-name" type="text" autocomplete="off" placeholder="Script name">
+      </div>
+      <button class="script-tool script-tool-save" id="script-tool-save" type="button" onClick="save()">Save</button>
+    </div>
+  </div>
 </div>
