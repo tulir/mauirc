@@ -63,7 +63,16 @@ function NetworkStore(){
   this.chandata = {},
   this.chanlist = [],
   this.nick = "",
+  this.connected = false,
   this.highlights = []
+}
+
+Network.prototype.isConnected = function() {
+  return this.connected
+}
+
+Network.prototype.setConnected = function(connected) {
+  this.connected = connected
 }
 
 NetworkStore.prototype.getChannels = function(){

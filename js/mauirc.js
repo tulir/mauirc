@@ -67,8 +67,9 @@ function connect() {
       console.log("Nick changed to " + ed.object.nick + " on " + ed.object.network)
       data.getNetwork(ed.object.network).setNick(ed.object.nick)
     } else if (data.type === "netlist") {
-      ed.object.forEach(function(val, i, arr){
-        openNetwork(val)
+      ed.object.forEach(function(val, key, arr){
+        openNetwork(key)
+        data.getNetwork(key).setConnected(val)
       })
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
