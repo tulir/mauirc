@@ -116,3 +116,74 @@ function titleFinish(event) {
   $("#title").text($("#title-editor").attr("data-old-text"))
   event.preventDefault()
 }
+
+function addScripts() {
+	data.getNetwork("pvlnet").putScript("siltafilter", `if event.GetCommand() == "privmsg" && event.GetChannel() == "#mau" && event.GetSender() == "tulir293" {
+    var pattern = import("regexp").MustCompile("<([^>]+)>")
+    var match = pattern.FindString(event.GetMessage())
+    if len(match) > 2 {
+        match = match[1:len(match)-1]
+        var msg = toByteSlice(toString(event.GetMessage()))
+
+        event.SetMessage(toString(msg[len(match)+3:len(msg)]))
+        event.SetSender(match + " [S]")
+    }
+}`)
+	data.getNetwork("pvlnet").putScript("nickserv", `var strings = import("strings")
+if event.GetCommand() == "privmsg" && strings.ToLower(event.GetChannel()) == "nickserv" && strings.ToLower(event.GetSender()) != "nickserv" {
+	  if event.GetMessage() != "IDENTIFY *********" && strings.HasPrefix(strings.ToLower(event.GetMessage()), "identify ") {
+			  event.SetCancelled(true)
+				go network.irc.Privmsg(event.GetChannel(), event.GetMessage())
+				go user.SendMessage(event.GetID(), event.GetNetwork(), event.GetChannel(), event.GetTimestamp(), event.GetSender(), event.GetCommand(), "IDENTIFY *********", true)
+		}
+}`)
+}
+
+function snOpenScriptEditor(net, scripts) {
+	$("#settings-main").addClass("hidden")
+	$("#settings-networkeditor").addClass("hidden")
+	$("#settings-scripts").removeClass("hidden")
+
+	$("#script-list").empty()
+	for (var key in scripts) {
+    if (scripts.hasOwnProperty(key)) {
+			$("#script-list").append('<button class="script-list-button" id="chscript-' + key + '" type="button" onClick="snSwitchScript(\'' + net + '\', \'' + key + '\')">' + key + '</button><br>')
+    }
+	}
+}
+
+function snSwitchScript(net, name) {
+	var script
+	if (net === "global") {
+		script = data.getGlobalScript(name)
+	} else {
+		script = data.getNetwork(net).getScript(name)
+	}
+	if (script === undefined) {
+		console.log("Script not found: " + net + ", " + name)
+		return
+	}
+	$("#script-list > .active").removeClass("active")
+	$("#chscript-" + name).addClass("active")
+	scripteditor.setValue(script, 1)
+	$("#script-tool-save").click(function(){
+		snSwitchScript(net, name)
+	})
+}
+
+function snSaveScript(net, name) {
+	var script = scripteditor.val()
+	if (net === "global") {
+		data.putGlobalScript(name, script)
+	} else {
+		data.getNetwork(net).putScript(name, script)
+	}
+}
+
+function snEditScripts() {
+	snOpenScriptEditor(getActiveNetwork(), data.getNetwork(getActiveNetwork()).getScripts())
+}
+
+function snEditGlobalScripts() {
+	snOpenScriptEditor("global", data.getGlobalScripts())
+}

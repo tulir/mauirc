@@ -14,8 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-function DataStore(){
-  this.netlist = {}
+function DataStore() {
+  this.netlist = {},
+  this.globalscripts = {}
+}
+
+
+DataStore.prototype.getGlobalScript = function(name) {
+  if (this.scripts.hasOwnProperty(name)) {
+    return this.scripts[name]
+  } else {
+    return undefined
+  }
+}
+
+DataStore.prototype.putGlobalScript = function(name, script) {
+  this.scripts[name] = script
+}
+
+DataStore.prototype.getGlobalScripts = function() {
+  return this.scripts
 }
 
 DataStore.prototype.getNetwork = function(name) {
@@ -59,12 +77,13 @@ DataStore.prototype.getChannelIfExists = function(network, channel) {
   return undefined
 }
 
-function NetworkStore(){
+function NetworkStore() {
   this.chandata = {},
   this.chanlist = [],
   this.nick = "",
   this.connected = false,
-  this.highlights = []
+  this.highlights = [],
+  this.scripts = {}
 }
 
 NetworkStore.prototype.isConnected = function() {
@@ -75,7 +94,23 @@ NetworkStore.prototype.setConnected = function(connected) {
   this.connected = connected
 }
 
-NetworkStore.prototype.getChannels = function(){
+NetworkStore.prototype.getScript = function(name) {
+  if (this.scripts.hasOwnProperty(name)) {
+    return this.scripts[name]
+  } else {
+    return undefined
+  }
+}
+
+NetworkStore.prototype.putScript = function(name, script) {
+  this.scripts[name] = script
+}
+
+NetworkStore.prototype.getScripts = function() {
+  return this.scripts
+}
+
+NetworkStore.prototype.getChannels = function() {
   return this.chanlist
 }
 

@@ -20,6 +20,7 @@ var authfail = false
 var msgcontainer = false
 var titleEditClick = 0
 var data = new DataStore()
+var scripteditor = null
 
 data.getNetwork("MauIRC Status").getChannel("MauIRC Status").setTopicFull("mauIRC status messages", 1, "all")
 

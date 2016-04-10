@@ -103,30 +103,36 @@ button:disabled.settings-value {
 }
 
 
-
+.settings-scripts {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+}
 
 .script-list {
 	position: absolute;
-	top: 0;
 	left: 0;
-	bottom: 0;
+	bottom: 2.4rem;
+	top: 0;
 	width: 20%;
 }
 
 .script-pane {
 	position: absolute;
-	top: 0;
 	right: 0;
-	bottom: 0;
+	bottom: 2.4rem;
+	top: 0;
 	width: 80%;
 }
 
 .script-editor {
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 2.4rem;
+	bottom: 0;
 	left: 0;
+	right: 0;
+	top: 0;
 }
 
 .script-tools {
@@ -137,7 +143,7 @@ button:disabled.settings-value {
 	height: 2.4rem;
 }
 
-.script-tool-save {
+.script-tool, .script-list-button {
 	font-size: 1rem;
 	font-family: inherit;
 	color: inherit;
@@ -150,8 +156,19 @@ button:disabled.settings-value {
 	border: 1px solid #9A9A9A;
 }
 
-.script-tool-save:hover {
+.script-list-button {
+	width: 5rem;
+	padding: .25rem .25rem;
+}
+
+button:hover.script-tool, .script-list-button:hover {
 	background-color: #47B9D7;
+	color: #FFFFFF;
+}
+
+.script-list-button.active {
+	background-color: #50D367;
+	color: #FFFFFF;
 }
 
 .script-name-wrapper {
@@ -163,15 +180,7 @@ button:disabled.settings-value {
 }
 
 .script-name {
+	position: relative;
 	width: 100%;
 	height: 100%;
-	font-size: 1rem;
-	font-family: inherit;
-	color: inherit;
-
-	box-sizing: border-box;
-	padding: .375rem 1rem;
-	border-radius: .25rem;
-	background-color: #FAFAFA;
-	border: 1px solid #9A9A9A;
 }
