@@ -144,10 +144,21 @@ function snOpenScriptEditor(net, scripts) {
 	$("#settings-networkeditor").addClass("hidden")
 	$("#settings-scripts").removeClass("hidden")
 
+	scripteditor = ace.edit("script-editor")
+	scripteditor.setShowPrintMargin(false)
+	scripteditor.setTheme("ace/theme/xcode")
+	scripteditor.getSession().setMode("ace/mode/golang")
+	scripteditor.getSession().setUseWorker(false)
+	scripteditor.getSession().setUseWrapMode(true)
+
 	$("#script-list").empty()
 	for (var key in scripts) {
     if (scripts.hasOwnProperty(key)) {
-			$("#script-list").append('<button class="script-list-button" id="chscript-' + key + '" type="button" onClick="snSwitchScript(\'' + net + '\', \'' + key + '\')">' + key + '</button><br>')
+			$("#script-list").loadTemplate($("#template-script-list-entry"), {
+				id: "chscript-" + key,
+				name: key,
+				onclick: "snSwitchScript('" + net + "', '" + key + "')"
+			}, {append: true, isFile: false, async: false})
     }
 	}
 }
@@ -165,7 +176,11 @@ function snSwitchScript(net, name) {
 	}
 	$("#script-list > .active").removeClass("active")
 	$("#chscript-" + name).addClass("active")
+
+	scripteditor.resize()
+  scripteditor.renderer.updateFull()
 	scripteditor.setValue(script, 1)
+
 	$("#script-tool-save").click(function(){
 		snSwitchScript(net, name)
 	})

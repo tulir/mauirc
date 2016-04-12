@@ -31,13 +31,8 @@ function connect() {
         onclick: "switchTo('MauIRC Status', 'MauIRC Status')"
       }, {append: true, isFile: false, async: false})
 
-      scripteditor = ace.edit("script-editor");
-      scripteditor.setTheme("ace/theme/xcode");
-      scripteditor.getSession().setUseWorker(false);
-      scripteditor.getSession().setUseWrapMode(true);
-      scripteditor.setShowPrintMargin(false);
-      scripteditor.getSession().setMode("ace/mode/golang");
-      addScripts()
+      addScripts() // TODO remove this after server-side script sending is implemented
+
       switchTo('MauIRC Status', 'MauIRC Status')
 
       history(1024)
