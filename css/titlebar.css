@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .titlebar {
-    font-family: inherit;
     position: fixed;
     height: 2.4rem;
     width: 100%;
@@ -77,7 +76,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .title-editor {
     font-size: 1rem;
-    font-family: inherit;
     font-weight: bold;
     text-align: center;
     width: 95%;

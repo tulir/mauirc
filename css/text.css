@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 body {
-    font-family: "Raleway", "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Raleway", "Lato", "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, "Liberation Sans", "Fira Sans", Arial, sans-serif;
     color: #212121;
     background-color: #E3E3E3;
 }

@@ -68,7 +68,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .channel-adder {
     width: 100%;
     font-size: 1rem;
-    font-family: inherit;
     background-color: #FAFAFA;
     border: none;
     border-radius: .25rem;

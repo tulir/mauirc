@@ -40,21 +40,18 @@
 
     font-size: 1.5rem;
     font-weight: bold;
-    font-family: inherit;
     margin-top: 1.25rem;
     margin-bottom: 0.5rem;
 }
 
 .settings-label {
     display: table-cell;
-    font-family: inherit;
 }
 
 .settings-value {
     display: table-cell;
 
     font-size: 1rem;
-    font-family: inherit;
     color: inherit;
 
     width: 100%;
@@ -151,7 +148,6 @@ button:disabled.settings-value {
 .script-tool, .script-list-button {
 	position: absolute;
 	font-size: 1rem;
-	font-family: inherit;
 	color: inherit;
 
 	box-sizing: border-box;
