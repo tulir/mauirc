@@ -31,8 +31,6 @@ function connect() {
         onclick: "switchTo('MauIRC Status', 'MauIRC Status')"
       }, {append: true, isFile: false, async: false})
 
-      addScripts() // TODO remove this after server-side script sending is implemented
-
       switchTo('MauIRC Status', 'MauIRC Status')
 
       history(1024)
@@ -76,6 +74,22 @@ function connect() {
       } else {
         $("#switchnet-" + ed.object.name).addClass("disconnected")
       }
+
+      $.ajax({
+        type: "GET",
+        url: "/script/" + ed.object.name,
+        dataType: "json",
+        success: function(data){
+          var net = data.getNetwork(ed.object.name)
+          data.forEach(function(val, i, arr) {
+            net.putScript(val.name, val.script)
+          })
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log("Failed to get scripts of " + ed.object.name + ": " + textStatus + " " + errorThrown)
+          console.log(jqXHR)
+        }
+      })
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {

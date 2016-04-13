@@ -117,28 +117,6 @@ function titleFinish(event) {
   event.preventDefault()
 }
 
-function addScripts() {
-	data.getNetwork("pvlnet").putScript("siltafilter", `if event.GetCommand() == "privmsg" && event.GetChannel() == "#mau" && event.GetSender() == "tulir293" {
-    var pattern = import("regexp").MustCompile("<([^>]+)>")
-    var match = pattern.FindString(event.GetMessage())
-    if len(match) > 2 {
-        match = match[1:len(match)-1]
-        var msg = toByteSlice(toString(event.GetMessage()))
-
-        event.SetMessage(toString(msg[len(match)+3:len(msg)]))
-        event.SetSender(match + " [S]")
-    }
-}`)
-	data.getNetwork("pvlnet").putScript("nickserv", `var strings = import("strings")
-if event.GetCommand() == "privmsg" && strings.ToLower(event.GetChannel()) == "nickserv" && strings.ToLower(event.GetSender()) != "nickserv" {
-	  if event.GetMessage() != "IDENTIFY *********" && strings.HasPrefix(strings.ToLower(event.GetMessage()), "identify ") {
-			  event.SetCancelled(true)
-				go network.irc.Privmsg(event.GetChannel(), event.GetMessage())
-				go user.SendMessage(event.GetID(), event.GetNetwork(), event.GetChannel(), event.GetTimestamp(), event.GetSender(), event.GetCommand(), "IDENTIFY *********", true)
-		}
-}`)
-}
-
 function snOpenScriptEditor(net, scripts) {
 	$("#settings-main").addClass("hidden")
 	$("#settings-networkeditor").addClass("hidden")
@@ -197,6 +175,19 @@ function snSaveScript(net, name) {
 	} else {
 		data.getNetwork(net).putScript(name, script)
 	}
+
+	$.ajax({
+		type: "PUT",
+		url: "/script/" + net + "/" + name,
+		dataType: "json",
+		success: function(data){
+
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log("Failed to update script " + name + " @ " + net + ": " + textStatus + " " + errorThrown)
+			console.log(jqXHR)
+		}
+	})
 }
 
 function snEditScripts() {
