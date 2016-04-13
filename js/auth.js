@@ -22,7 +22,7 @@ function auth() {
   }
   $.ajax({
     type: "POST",
-    url: "/auth",
+    url: "/auth/login",
     data: JSON.stringify(payload),
     contentType: "application/json; charset=utf-8",
     success: function(data){
@@ -41,7 +41,7 @@ function checkAuth(){
   authfail = false
   $.ajax({
     type: "GET",
-    url: "/authcheck",
+    url: "/auth/check",
     success: function(data){
       if (data === "true") {
         connect()

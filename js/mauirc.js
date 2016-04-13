@@ -106,7 +106,7 @@ function connect() {
 function reconnect(){
   $.ajax({
     type: "GET",
-    url: "/authcheck",
+    url: "/auth/check",
     success: function(data){
       if (data === "true") {
         connect()
