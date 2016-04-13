@@ -144,12 +144,17 @@ function snOpenScriptEditor(net, scripts) {
 	$("#settings-networkeditor").addClass("hidden")
 	$("#settings-scripts").removeClass("hidden")
 
-	/*scripteditor = ace.edit("script-editor")
+	scripteditor = ace.edit("script-editor")
+  scripteditor.setOptions({
+    fontFamily: "Fira Code",
+    fontSize: "11pt"
+  });
 	scripteditor.setShowPrintMargin(false)
-	scripteditor.setTheme("ace/theme/xcode")
+	scripteditor.setTheme("ace/theme/chrome")
 	scripteditor.getSession().setMode("ace/mode/golang")
 	scripteditor.getSession().setUseWorker(false)
-	scripteditor.getSession().setUseWrapMode(true)*/
+	scripteditor.getSession().setUseWrapMode(true)
+  scripteditor.getSession().setUseSoftTabs(true)
 
 	$("#script-list").empty()
 	for (var key in scripts) {
@@ -177,7 +182,7 @@ function snSwitchScript(net, name) {
 	$("#script-list > .active").removeClass("active")
 	$("#chscript-" + name).addClass("active")
 
-	$("#script-editor").val(script)
+	scripteditor.setValue(script, 1)
 	$("#script-name").val(name)
 
 	$("#script-tool-save").click(function(){
@@ -186,7 +191,7 @@ function snSwitchScript(net, name) {
 }
 
 function snSaveScript(net, name) {
-	var script = $("#script-editor").val()
+	var script = scripteditor.getValue()
 	if (net === "global") {
 		data.putGlobalScript(name, script)
 	} else {

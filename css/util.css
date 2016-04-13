@@ -16,6 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/firacode.otf');
+}
+
 .hidden { display: none; }
 @media (max-width: 399px) { .hidden-mobile-down { display: none; } }
 @media (max-width: 549px) { .hidden-phablet-down { display: none; } }
