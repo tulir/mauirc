@@ -164,7 +164,7 @@ function snSwitchScript(net, name) {
 	$("#script-name").val(name)
 
 	$("#script-tool-save").click(function(){
-		snSwitchScript(net, name)
+		snSaveScript(net, name)
 	})
 }
 
