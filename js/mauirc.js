@@ -79,9 +79,9 @@ function connect() {
         type: "GET",
         url: "/script/" + ed.object.name,
         dataType: "json",
-        success: function(data){
+        success: function(scripts){
           var net = data.getNetwork(ed.object.name)
-          data.forEach(function(val, i, arr) {
+          scripts.forEach(function(val, i, arr) {
             net.putScript(val.name, val.script)
           })
         },
