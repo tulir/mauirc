@@ -179,7 +179,6 @@ function snSaveScript(net, name) {
 	$.ajax({
 		type: "PUT",
 		url: "/script/" + net + "/" + name,
-		dataType: "json",
 		success: function(data){
 
 		},
