@@ -222,7 +222,12 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     var template = "action"
   }
 
-  chanObj.loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
+  if($(sprintf("#msgwrap-%d", id)).length !== 0) {
+    var loadedTempl = $("<div/>").loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
+    $(sprintf("#msgwrap-%d", id)).replaceWith(loadedTempl.children(":first"))
+  } else {
+    chanObj.loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
+  }
 
   if (ownmsg) {
     $(sprintf("#msgwrap-%d", id)).addClass("own-message")
