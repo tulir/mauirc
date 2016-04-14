@@ -115,7 +115,7 @@ function finishNewChannel(network) {
 
 function openNetwork(network) {
   network = network.toLowerCase()
-  if ($(sprintf("#net-", network)).length !== 0) {
+  if ($(sprintf("#net-%s", network)).length !== 0) {
     return
   }
 
@@ -145,7 +145,7 @@ function openChannel(network, channel) {
   }
 
   netObj.loadTemplate($("#template-channel"), {
-    channel: sprintf("#chan-%s-%s", network, chanLower)
+    channel: sprintf("chan-%s-%s", network, chanLower)
   }, {append: true, isFile: false, async: false})
   $(sprintf("#chanswitchers-%s", network)).loadTemplate($("#template-channel-switcher"), {
     channel: sprintf("switchto-%s-%s", network, chanLower),
