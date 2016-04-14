@@ -152,7 +152,7 @@ function history(n){
       if (isEmpty(data)) {
         return
       }
-      data.reverse().forEach(function(val, i, arr) {
+      data.forEach(function(val, i, arr) {
         receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.ownmsg, val.preview, false)
       })
       scrollDown()
