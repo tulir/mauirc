@@ -197,22 +197,22 @@ function receiveCmdResponse(message) {
 
 function receive(id, network, channel, timestamp, sender, command, message, ownmsg, preview, isNew) {
   network = network.toLowerCase()
-  var netObj = $("#net-" + network)
+  var netObj = $(sprintf("#net-%s", network))
   if (netObj.length === 0) {
     openNetwork(network)
-    netObj = $("#net-" + network)
+    netObj = $(sprintf("#net-%s", network))
   }
-  var chanObj = netObj.find("#chan-" + channelFilter(channel))
+  var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   if (chanObj.length === 0) {
     openChannel(network, channel)
-    chanObj = netObj.find("#chan-" + channelFilter(channel))
+    chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   }
 
   var templateData = {
     sender: sender + " ",
     date: moment(timestamp * 1000).format("HH:mm:ss"),
-    id: "msg-" + id,
-    wrapid: "msgwrap-" + id,
+    id: sprintf("msg-%d", id),
+    wrapid: sprintf("msgwrap-%d", id),
     message: linkifyHtml(escapeHtml(message))
   }
 
@@ -223,10 +223,10 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
     templateData.class = "joinpart"
   } else if (command === "nick") {
-    templateData.message = "is now known as <b>" + message + "</b>"
+    templateData.message = sprintf("is now known as <b>%s</b>", message)
     templateData.class = "nick"
   } else if (command == "topic") {
-    templateData.message = "changed the topic to " + message
+    templateData.message = sprintf("changed the topic to %s", message)
     templateData.class = "topic"
   } else {
     var template = "message"
@@ -238,13 +238,13 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     var template = "action"
   }
 
-  chanObj.loadTemplate($("#template-" + template), templateData, {append: true, isFile: false, async: false})
+  chanObj.loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
 
   if (ownmsg) {
-    $("#msgwrap-" + id).addClass("own-message")
-    $("#msg-" + id + " > .message-sender").remove()
+    $(sprintf("#msgwrap-%d", id)).addClass("own-message")
+    $(sprintf("#msg-%d > .message-sender", id)).remove()
   }
-  var msgObj = $("#msg-" + id)
+  var msgObj = $(sprintf("#msg-%d", id))
   if (preview !== null) {
     if (!isEmpty(preview.image) && !isEmpty(preview.text)) {
       var pwTemplate = "both"
@@ -254,12 +254,12 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
       var pwTemplate = "text"
     }
     if (pwTemplate !== undefined) {
-      msgObj.loadTemplate($("#template-message-preview-" + pwTemplate), {
+      msgObj.loadTemplate($(sprintf("#template-message-preview-%s", pwTemplate)), {
         title: preview.text !== undefined ? preview.text.title : "",
         description: preview.text !== undefined && preview.text.description !== undefined ? preview.text.description.replaceAll("\n", "<br>") : "",
         sitename: preview.text !== undefined ? preview.text.sitename : "",
         image: preview.image !== undefined ? preview.image.url : "",
-        modalopen: "modalOpen('" + id + "')"
+        modalopen: sprintf("modalOpen('%d')", id)
       }, {append: true, isFile: false, async: false})
     }
   }
@@ -283,7 +283,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 
     if (match !== null) {
       var hlt = templateData.message
-      hlt = hlt.slice(0, match.index) + "<span class=\"highlighted-text\">" + hlt.slice(match.index, match.index + match.length) + "</span>" + hlt.slice(match.index + match.length)
+      sprintf('%s<span class="highlighted-text">%s</span>%s', hlt.slice(0, match.index), hlt.slice(match.index, match.index + match.length), hlt.slice(match.index + match.length)
       textObj.html(hlt)
       msgObj.addClass("highlight")
     }
@@ -295,7 +295,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     }
     if (chanObj.hasClass("hidden")) {
       if((notifs == "all" || (notifs == "highlight" && highlight))) {
-        $("#switchto-" + channelFilter(channel)).addClass("new-messages")
+        $(sprintf("#switchto-%s-%s", network, channelFilter(channel))).addClass("new-messages")
       }
     } else {
       scrollDown()
@@ -308,14 +308,14 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 function modalOpen(id) {
   $('<img id="modal-' + id + '"\
       class="preview-modal" \
-      src="' + $("#msg-" + id + " > .message-preview").find(".preview-image-link > .preview-image").attr("src") + '" \
+      src="' + $(sprintf("#msg-%d > .message-preview", id)).find(".preview-image-link > .preview-image").attr("src") + '" \
       alt="Full-sized Image" \
     />')
   .modal({
     fadeDuration: 100,
     fadeDelay: 0.8
   })
-  $("#modal-" + id).on($.modal.AFTER_CLOSE, function(event, modal) {
-    $("#modal-" + id).remove()
+  $(sprintf("#modal-%d", id)).on($.modal.AFTER_CLOSE, function(event, modal) {
+    $(sprintf("#modal-%d", id)).remove()
   });
 }

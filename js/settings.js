@@ -138,9 +138,9 @@ function snOpenScriptEditor(net, scripts) {
 	for (var key in scripts) {
     if (scripts.hasOwnProperty(key)) {
 			$("#script-list").loadTemplate($("#template-script-list-entry"), {
-				id: "chscript-" + key,
+				id: sprintf("chscript-%s", key),
 				name: key,
-				onclick: "snSwitchScript('" + net + "', '" + key + "')"
+				onclick: sprintf("snSwitchScript('%s', '%s')", net, key)
 			}, {append: true, isFile: false, async: false})
     }
 	}
@@ -154,11 +154,11 @@ function snSwitchScript(net, name) {
 		script = data.getNetwork(net).getScript(name)
 	}
 	if (script === undefined) {
-		console.log("Script not found: " + net + ", " + name)
+		console.log("Script not found:", name, "@", net)
 		return
 	}
 	$("#script-list > .active").removeClass("active")
-	$("#chscript-" + name).addClass("active")
+	$(sprintf("#chscript-%s", name)).addClass("active")
 
 	scripteditor.setValue(script, 1)
 	$("#script-name").val(name)
@@ -178,12 +178,12 @@ function snSaveScript(net, name) {
 
 	$.ajax({
 		type: "PUT",
-		url: "/script/" + net + "/" + name,
+		url: sprintf("/script/%s/%s/", net, name),
 		success: function(data){
 
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			console.log("Failed to update script " + name + " @ " + net + ": " + textStatus + " " + errorThrown)
+			console.log("Failed to update script", name, "@", net + ":", textStatus, errorThrown)
 			console.log(jqXHR)
 		}
 	})

@@ -64,15 +64,15 @@ function connect() {
         updateUserList()
       }
     } else if (ed.type === "nickchange") {
-      console.log("Nick changed to " + ed.object.nick + " on " + ed.object.network)
+      console.log("Nick changed to", ed.object.nick, "on", ed.object.network)
       data.getNetwork(ed.object.network).setNick(ed.object.nick)
     } else if (ed.type === "netdata") {
       openNetwork(ed.object.name)
       data.getNetwork(ed.object.name).setConnected(ed.object.connected)
       if(ed.object.connected) {
-        $("switchnet-" + ed.object.name).removeClass("disconnected")
+        $(sprintf("#switchnet-%s", ed.object.name)).removeClass("disconnected")
       } else {
-        $("#switchnet-" + ed.object.name).addClass("disconnected")
+        $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
       }
 
       $.ajax({
@@ -87,16 +87,16 @@ function connect() {
           })
         },
         error: function(jqXHR, textStatus, errorThrown) {
-          console.log("Failed to get scripts of " + ed.object.name + ": " + textStatus + " " + errorThrown)
+          console.log("Failed to get scripts of", ed.object.name + ":", textStatus, errorThrown)
           console.log(jqXHR)
         }
       })
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {
-      $("#net-" + ed.object.network + " > #chan-" + channelFilter(ed.object.channel)).html("")
+      $(sprintf("#chan-%s-%s", ed.object.network, channelFilter(ed.object.channel))).html("")
     } else if (ed.type === "delete") {
-      $("#msgwrap-" + ed.object).remove()
+      $(sprintf("#msgwrap-%s", ed.object)).remove()
     }
   };
 
@@ -158,7 +158,7 @@ function history(n){
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      showAlert("error", "Failed to fetch history: " + textStatus + " " + errorThrown)
+      showAlert("error", sprintf("Failed to fetch history: %s %s", textStatus, errorThrown))
       scrollDown()
       console.log(jqXHR)
     }

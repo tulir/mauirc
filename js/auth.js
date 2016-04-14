@@ -30,7 +30,7 @@ function auth() {
       connect()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Authentication failed: " + textStatus + " " + errorThrown)
+      console.log("Authentication failed:", textStatus, errorThrown)
       console.log(jqXHR)
       authfail = true
     }
@@ -52,7 +52,7 @@ function checkAuth(){
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Auth check failed: " + textStatus)
+      console.log("Auth check failed: ", textStatus)
       authfail = true
       $("#container").loadTemplate($("#template-login"), {})
       console.log(jqXHR)

@@ -47,18 +47,18 @@ function openPM(network, user) {
 function newChannel(network) {
   network = network.toLowerCase()
 
-  var oldAdder = $("#channel-adder-" + network)
+  var oldAdder = $(sprintf("#channel-adder-%s", network))
   if (oldAdder.length !== 0) {
     oldAdder.focus()
     return
   }
 
-  $("#chanswitchers-" + network).loadTemplate($("#template-channel-adder"), {
-    id: "channel-adder-" + network,
-    wrapid: "channel-adder-wrapper-" + network,
-    finish: "if (event.keyCode === 13) { finishNewChannel('" + network + "') } else if (event.keyCode === 27) { cancelNewChannel('" + network + "') }"
+  $(sprintf("#chanswitchers-%s", network)).loadTemplate($("#template-channel-adder"), {
+    id: sprintf("channel-adder-%s", network),
+    wrapid: sprintf("channel-adder-wrapper-%s", network),
+    finish: sprintf("if (event.keyCode === 13) { finishNewChannel('%$1s') } else if (event.keyCode === 27) { cancelNewChannel('%$1s') }", network)
   }, {append: true, isFile: false, async: false})
-  var adder = $("#channel-adder-" + network)
+  var adder = $(sprintf("#channel-adder-", network))
   adder.easyAutocomplete({
     data: data.getNetwork(network).getChannels(),
     placeholder: "Nick or #channel",
@@ -83,17 +83,17 @@ function newChannel(network) {
 }
 
 function cancelNewChannel(network) {
-  $("#channel-adder-wrapper-" + network).remove()
+  $(sprintf("#channel-adder-wrapper-%s", network)).remove()
 }
 
 function finishNewChannel(network) {
-  var adder = $("#channel-adder-" + network)
+  var adder = $(sprintf("#channel-adder-%s", network))
   if (adder.length === 0) {
     return
   }
 
   var name = adder.val().trim()
-  $("#channel-adder-wrapper-" + network).remove()
+  $(sprintf("#channel-adder-wrapper-%s", network)).remove()
 
   if (name.length === 0) {
     return
@@ -115,53 +115,54 @@ function finishNewChannel(network) {
 
 function openNetwork(network) {
   network = network.toLowerCase()
-  if ($("#net-" + network).length !== 0) {
+  if ($(sprintf("#net-", network)).length !== 0) {
     return
   }
 
   $("#messages").loadTemplate($("#template-network"), {
-    network: "net-" + network
+    network: sprintf("net-%s", network)
   }, {append: true, isFile: false, async: false})
   $("#networks").loadTemplate($("#template-network-switcher"), {
-    network: "switchnet-" + network,
-    brid: "break-net-" + network,
+    network: sprintf("switchnet-%s", network),
+    brid: sprintf("break-net-%s", network),
     networkname: network,
-    openchannel: "newChannel('" + network + "')",
-    networkbtns: "chanswitchers-" + network
+    openchannel: sprintf("newChannel('%s')", network),
+    networkbtns: sprintf("chanswitchers-%s", network)
   }, {append: true, isFile: false, async: false})
 }
 
 function openChannel(network, channel) {
   network = network.toLowerCase()
-  var netObj = $("#net-" + network)
+  chanLower = channe.toLowerCase()
+  var netObj = $(sprintf("#net-%s", network))
   if (netObj.length === 0) {
     openNetwork(network)
-    netObj = $("#net-" + network)
+    netObj = $(sprintf("#net-%s", network))
   }
 
-  if (netObj.find("#chan-" + channelFilter(channel)).length !== 0) {
+  if ($(sprintf("#chan-%s-%s", network, channelFilter(channel))).length !== 0) {
     return
   }
 
   netObj.loadTemplate($("#template-channel"), {
-    channel: "chan-" + channel.toLowerCase()
+    channel: sprintf("#chan-%s-%s", network, chanLower)
   }, {append: true, isFile: false, async: false})
-  $("#chanswitchers-" + network).loadTemplate($("#template-channel-switcher"), {
-    channel: "switchto-" + channel.toLowerCase(),
-    brid: "break-chan-" + channel.toLowerCase(),
+  $(sprintf("#chanswitchers-%s", network)).loadTemplate($("#template-channel-switcher"), {
+    channel: sprintf("switchto-%s-%s", network, chanLower),
+    brid: sprintf("break-chan-%s-%s", network, chanLower),
     channelname: channel,
-    onclick: "switchTo('" + network + "', '" + channel.toLowerCase() + "')"
+    onclick: sprintf("switchTo('%s', '%s')", network, chanLower)
   }, {append: true, isFile: false, async: false})
 }
 
 function closeChannel(network, channel) {
   network = network.toLowerCase()
-  var netObj = $("#net-" + network)
+  var netObj = $(sprintf("#net-%s", network))
   if (netObj.length === 0) {
     return
   }
 
-  var chanObj = netObj.find("#chan-" + channelFilter(channel))
+  var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   if (chanObj.length === 0) {
     return
   }
@@ -170,8 +171,8 @@ function closeChannel(network, channel) {
     switchTo("MauIRC Status", "MauIRC Status")
   }
   chanObj.remove()
-  $("#chanswitchers-" + network + " > #switchto-" + channelFilter(channel)).remove()
-  $("#chanswitchers-" + network + " > #break-chan-" + channelFilter(channel)).remove()
+  $(sprintf("#switchto-%s-%s", network, channelFilter(channel))).remove()
+  $(sprintf("#break-chan-%s-%s", network, channelFilter(channel))).remove()
 }
 
 function switchView(userlist) {
@@ -195,7 +196,8 @@ function switchView(userlist) {
 
 function switchTo(network, channel) {
   network = network.toLowerCase()
-  console.log("Switching to channel " + channel + " @ " + network)
+  chanFiltered = channelFilter(channel)
+  console.log(sprintf("Switching to channel %s @ %s", channel, network))
   getActiveChannelObj().addClass("hidden")
   getActiveNetworkObj().addClass("hidden")
   $(".channel-switcher.active").removeClass("active")
@@ -221,13 +223,11 @@ function switchTo(network, channel) {
     return
   }
 
-  $("#switchnet-" + network).addClass("activenet")
-  var netObj = $("#net-" + network)
-  var chanObj = netObj.find("#chan-" + channelFilter(channel))
-  netObj.removeClass("hidden")
-  chanObj.removeClass("hidden")
+  $(sprintf("#switchnet-%s", network)).addClass("activenet")
+  $(sprintf("#net-%s", network)).removeClass("hidden")
+  $(sprintf("#chan-%s-%s", network, chanFiltered)).removeClass("hidden")
 
-  var newChanSwitcher = $("#switchto-" + channelFilter(channel))
+  var newChanSwitcher = $(sprintf("#switchto-%s-%s", network, chanFiltered))
   newChanSwitcher.removeClass("new-messages")
   newChanSwitcher.addClass("active")
 

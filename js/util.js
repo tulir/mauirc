@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function showAlert(type, message) {
-  $("#status-messages").loadTemplate($("#template-" + type), {
+  $("#status-messages").loadTemplate($(sprintf("#template-%s", type)), {
     message: message
   }, {append: true})
   if($("#status-messages").hasClass('hidden')) {
