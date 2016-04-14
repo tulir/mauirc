@@ -80,6 +80,7 @@ function connect() {
         url: "/script/" + ed.object.name,
         dataType: "json",
         success: function(scripts){
+          if (isEmpty(scripts)) return
           var net = data.getNetwork(ed.object.name)
           scripts.forEach(function(val, i, arr) {
             net.putScript(val.name, val.script)
