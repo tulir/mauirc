@@ -163,6 +163,7 @@ function snSwitchScript(net, name) {
 	scripteditor.setValue(script, 1)
 	$("#script-name").val(name)
 
+  $("#script-tool-save").unbind("click")
 	$("#script-tool-save").click(function(){
 		snSaveScript(net, name)
 	})
