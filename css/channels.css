@@ -89,29 +89,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .network-switcher-buttons {
     width: 80%;
-    margin-top: 1.5rem;
+    margin-top: 0.2rem;
     float: right;
     background-color: #D6D6D6;
     border-radius: .25rem;
 }
 
+.network-switcher-buttons {
+    margin-bottom: 0.5rem;
+}
+
 .network-switcher-name {
-    position: absolute;
     padding: .375rem 0.2rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    width: 100%;
     font-weight: bold;
-    left: 0;
-}
-
-.network-adder-open {
-    position: absolute;
-    right: 0;
-}
-
-@media (max-width: 1199px) and (min-width: 750px) {
-    .network-switcher-open-text-long {
-        display: none;
-    }
 }
 
 .new-messages, .new-messages:hover {
