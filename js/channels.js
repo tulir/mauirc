@@ -56,7 +56,7 @@ function newChannel(network) {
   $(sprintf("#chanswitchers-%s", network)).loadTemplate($("#template-channel-adder"), {
     id: sprintf("channel-adder-%s", network),
     wrapid: sprintf("channel-adder-wrapper-%s", network),
-    finish: sprintf("if (event.keyCode === 13) { finishNewChannel('%$1s') } else if (event.keyCode === 27) { cancelNewChannel('%$1s') }", network)
+    finish: sprintf("if (event.keyCode === 13) { finishNewChannel('%1$s') } else if (event.keyCode === 27) { cancelNewChannel('%1$s') }", network)
   }, {append: true, isFile: false, async: false})
   var adder = $(sprintf("#channel-adder-", network))
   adder.easyAutocomplete({
