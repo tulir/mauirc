@@ -133,7 +133,7 @@ function openNetwork(network) {
 
 function openChannel(network, channel) {
   network = network.toLowerCase()
-  chanLower = channe.toLowerCase()
+  chanLower = channel.toLowerCase()
   var netObj = $(sprintf("#net-%s", network))
   if (netObj.length === 0) {
     openNetwork(network)
