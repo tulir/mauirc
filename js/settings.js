@@ -179,8 +179,9 @@ function snSaveScript(net, name) {
 	$.ajax({
 		type: "PUT",
 		url: sprintf("/script/%s/%s/", net, name),
+    data: script,
 		success: function(data){
-
+      console.log("Successfully updated script", name, "@", net)
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("Failed to update script", name, "@", net + ":", textStatus, errorThrown)
