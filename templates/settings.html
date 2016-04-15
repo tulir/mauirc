@@ -48,6 +48,11 @@
       <label class="settings-label" for="mauirc-scripts">Edit Global Scripts</label>
       <button class="settings-value" id="mauirc-scripts" type="button" onClick="snEditGlobalScripts()">Enter</button>
     </div>
+
+    <div class="settings-entry">
+      <label class="settings-label" for="mauirc-font">Font family</label>
+      <input class="settings-value" id="mauirc-font" type="text" autocomplete="off" onChange="snUpdateFont()" placeholder="Enter font name">
+    </div>
   </div>
 </div>
 
@@ -60,7 +65,6 @@
 
   <div class="script-pane">
     <div class="script-editor" id="script-editor"></div>
-    <!--<textarea class="script-editor" id="script-editor"></textarea>-->
   </div>
 
   <div class="script-tools" id="script-tools">

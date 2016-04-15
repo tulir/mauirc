@@ -18,6 +18,11 @@ function closeSettings(){
 }
 
 function updateSettingsValues(){
+	if (isEmpty(document.body.style.fontFamily)) {
+		$("#mauirc-font").val("Raleway")
+	} else {
+		$("#mauirc-font").val(document.body.style.fontFamily)
+	}
   if (!data.channelExists(getActiveNetwork(), getActiveChannel())) {
     return
   }
@@ -64,6 +69,10 @@ function snChangeNick(){
 		message: nick.val().trim()
 	})
 	closeSettings()
+}
+
+function snUpdateFont() {
+	document.body.style.fontFamily = $("#mauirc-font").val();
 }
 
 function snPartChannel(){
