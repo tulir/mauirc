@@ -95,15 +95,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     border-radius: .25rem;
 }
 
-.network-switcher-buttons {
-    margin-bottom: 0.5rem;
+.network-switcher-name {
+    padding: .1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-.network-switcher-name {
+.add-channel-wrapper {
+    text-align: right;
+}
+
+.add-channel {
     padding: .375rem 0.2rem;
-    font-size: 1.3rem;
-    width: 100%;
     font-weight: bold;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    width: 80%;
 }
 
 .new-messages, .new-messages:hover {
