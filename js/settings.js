@@ -109,16 +109,16 @@ function titleEdit() {
   }
   var now = Date.now()
   if (now - titleEditClick <= 500) {
-    $("#title").html('<input \
+    $("#title").html(sprintf('<input \
       class="title-editor" \
       type="text" \
       id="title-editor" \
       autocomplete="off" \
       placeholder="Enter the topic..." \
-      data-old-text="' + $("#title").text() + '" \
+      data-old-text="%1$s" \
       onKeyDown="titleFinish(event)" \
-      value="' + $("#title").text() + '" \
-    />')
+      value="%1$s" \
+    />', $("#title").text()))
     $("#title-editor").focus()
     titleEditClick = 0
   } else {
