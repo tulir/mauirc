@@ -107,7 +107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .add-channel {
     padding: .375rem 0.2rem;
-    font-weight: bold;
+    font-weight: normal;
     box-sizing: border-box;
     text-align: center;
     margin-bottom: 0.5rem;
