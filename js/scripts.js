@@ -31,12 +31,22 @@ function snOpenScriptEditor(net, scripts) {
 	scripteditor.getSession().setUseWrapMode(true)
   scripteditor.getSession().setUseSoftTabs(true)
 
+	scripteditor.commands.addCommand({
+	    name: 'save',
+	    bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
+	    exec: function(editor) {
+				snSaveScript()
+	    },
+	    readOnly: false
+	});
+
 	$("#script-list").empty()
 	for (var key in scripts) {
     if (scripts.hasOwnProperty(key)) {
 			$("#script-list").loadTemplate($("#template-script-list-entry"), {
 				id: sprintf("chscript-%s", key),
 				name: key,
+				network: net,
 				onclick: sprintf("snSwitchScript('%s', '%s')", net, key)
 			}, {append: true, isFile: false, async: false})
     }
@@ -62,16 +72,28 @@ function snSwitchScript(net, name) {
 
   $("#script-tool-save").unbind("click")
 	$("#script-tool-save").click(function(){
-		snSaveScript(net, name)
+		snUploadScript(net, name)
 	})
 }
 
-function snSaveScript(net, name) {
+function snSaveScript() {
 	var script = scripteditor.getValue()
+	var name = $("#script-list > .active").attr("data-name")
+	var net = $("#script-list > .active").attr("data-network")
 	if (net === "global") {
 		data.putGlobalScript(name, script)
 	} else {
 		data.getNetwork(net).putScript(name, script)
+	}
+}
+
+function snUploadScript(net, name) {
+	snSaveScript()
+
+	if (net === "global") {
+		var script = data.getGlobalScript(name)
+	} else {
+		var script = data.getNetwork(net).getScript(name)
 	}
 
 	$.ajax({
