@@ -34,17 +34,25 @@ function closeSettings(){
 }
 
 function updateSettingsValues(){
+  $("#mauirc-font").val("")
+  $("#network-nickname").val("")
+  $("#network-highlights").val("")
+  $("#channel-notifications").val("all")
+
 	if (isEmpty(document.body.style.fontFamily)) {
 		$("#mauirc-font").val("Raleway")
 	} else {
 		$("#mauirc-font").val(document.body.style.fontFamily)
 	}
+  if (!data.networkExists(getActiveNetwork())) {
+    return
+  }
+	$("#network-nickname").val(data.getNetwork(getActiveNetwork()).getNick())
+  $("#network-highlights").val(data.getNetwork(getActiveNetwork()).getHighlightsAsString())
   if (!data.channelExists(getActiveNetwork(), getActiveChannel())) {
     return
   }
   $("#channel-notifications").val(data.getChannel(getActiveNetwork(), getActiveChannel()).getNotificationLevel())
-	$("#network-nickname").val(data.getNetwork(getActiveNetwork()).getNick())
-  $("#network-highlights").val(data.getNetwork(getActiveNetwork()).getHighlightsAsString())
 }
 
 function snChangeNotifications() {
