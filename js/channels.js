@@ -23,7 +23,7 @@ function getActiveChannel() {
 }
 
 function getActiveNetwork() {
-  if (getActiveChannel() === "MauIRC Status") return "MauIRC Status"
+  if (getActiveChannel() === "mauIRC Status") return "mauIRC Status"
   var active = $(".network-switcher.activenet > .network-switcher-name")
   if (active.length) {
     return active.text().trim()
@@ -171,7 +171,7 @@ function closeChannel(network, channel) {
   }
 
   if (getActiveNetwork() === network && getActiveChannel() == channel) {
-    switchTo("MauIRC Status", "MauIRC Status")
+    switchTo("mauIRC Status", "mauIRC Status")
   }
   chanObj.remove()
   $(sprintf("#switchto-%s-%s", network, channelFilter(channel))).remove()
@@ -217,7 +217,7 @@ function switchTo(network, channel) {
     switchView(false)
   }
 
-  if (channel === "MauIRC Status") {
+  if (channel === "mauIRC Status") {
     $("#status-messages").removeClass("hidden")
     $("#status-enter").addClass("active")
     $("#status-enter").removeClass("new-messages")

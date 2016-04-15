@@ -25,7 +25,7 @@ function send(){
     return
   }
 
-  if (getActiveChannel() === "MauIRC Status") {
+  if (getActiveChannel() === "mauIRC Status") {
     statusCommand()
     return
   }

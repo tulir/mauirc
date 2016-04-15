@@ -22,7 +22,7 @@ var titleEditClick = 0
 var data = new DataStore()
 var scripteditor = null
 
-data.getNetwork("MauIRC Status").getChannel("MauIRC Status").setTopicFull("mauIRC status messages", 1, "all")
+data.getNetwork("mauIRC Status").getChannel("mauIRC Status").setTopicFull("mauIRC status messages", 1, "tulir293")
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
 if (window.location.protocol !== "https:") {

@@ -27,11 +27,11 @@ function connect() {
       }, {append: true, isFile: false, async: false})
       $("#networks").loadTemplate($("#template-channel-switcher"), {
         channel: "status-enter",
-        channelname: "MauIRC Status",
-        onclick: "switchTo('MauIRC Status', 'MauIRC Status')"
+        channelname: "mauIRC Status",
+        onclick: "switchTo('mauIRC Status', 'mauIRC Status')"
       }, {append: true, isFile: false, async: false})
 
-      switchTo('MauIRC Status', 'MauIRC Status')
+      switchTo('mauIRC Status', 'mauIRC Status')
 
       history(1024)
       msgcontainer = true
