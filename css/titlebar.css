@@ -78,7 +78,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
-    width: 95%;
+    box-sizing: border-box;
+    width: 100%;
     height: 100%;
 }
 
@@ -91,5 +92,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .title {
         left: .25rem;
         right: 3.875rem;
+    }
+
+    .messaging:not(.messaging-userlisthidden) > .titlebar > .title {
+        right: 9rem;
+    }
+}
+
+@media (min-width: 1000px) {
+    .messaging:not(.messaging-userlisthidden) > .titlebar > .title {
+        right: 10rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .messaging:not(.messaging-userlisthidden) > .titlebar > .title {
+        right: 11rem;
+    }
+}
+
+@media (min-width: 1500px) {
+    .messaging:not(.messaging-userlisthidden) > .titlebar > .title {
+        right: 12rem;
     }
 }
