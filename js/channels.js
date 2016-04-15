@@ -58,6 +58,7 @@ function newChannel(network) {
     wrapid: sprintf("channel-adder-wrapper-%s", network),
     finish: sprintf("if (event.keyCode === 13) { finishNewChannel('%1$s') } else if (event.keyCode === 27) { cancelNewChannel('%1$s') }", network)
   }, {append: true, isFile: false, async: false})
+  $(sprintf("#add-channel-%s", network)).addClass("hidden")
   var adder = $(sprintf("#channel-adder-%s", network))
   adder.easyAutocomplete({
     data: data.getNetwork(network).getChannels(),
@@ -84,6 +85,7 @@ function newChannel(network) {
 
 function cancelNewChannel(network) {
   $(sprintf("#channel-adder-wrapper-%s", network)).remove()
+  $(sprintf("#add-channel-%s", network)).removeClass("hidden")
 }
 
 function finishNewChannel(network) {
@@ -109,6 +111,7 @@ function finishNewChannel(network) {
     })
   }
 
+  $(sprintf("#add-channel-%s", network)).removeClass("hidden")
   openChannel(network, name)
   switchTo(network, name)
 }
@@ -124,10 +127,10 @@ function openNetwork(network) {
   }, {append: true, isFile: false, async: false})
   $("#networks").loadTemplate($("#template-network-switcher"), {
     network: sprintf("switchnet-%s", network),
-    brid: sprintf("break-net-%s", network),
     networkname: network,
     openchannel: sprintf("newChannel('%s')", network),
-    networkbtns: sprintf("chanswitchers-%s", network)
+    networkbtns: sprintf("chanswitchers-%s", network),
+    addchanid: sprintf("add-channel-%s", network)
   }, {append: true, isFile: false, async: false})
 }
 
