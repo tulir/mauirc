@@ -58,7 +58,7 @@ function newChannel(network) {
     wrapid: sprintf("channel-adder-wrapper-%s", network),
     finish: sprintf("if (event.keyCode === 13) { finishNewChannel('%1$s') } else if (event.keyCode === 27) { cancelNewChannel('%1$s') }", network)
   }, {append: true, isFile: false, async: false})
-  var adder = $(sprintf("#channel-adder-", network))
+  var adder = $(sprintf("#channel-adder-%s", network))
   adder.easyAutocomplete({
     data: data.getNetwork(network).getChannels(),
     placeholder: "Nick or #channel",
