@@ -12,6 +12,7 @@ cat \
     ./js/userlist.js \
     ./js/messaging.js \
     ./js/settings.js \
+    ./js/scripts.js \
     ./js/mauirc.js \
     ./js/auth.js \
     ./js/load.js \
