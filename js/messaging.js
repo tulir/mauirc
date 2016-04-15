@@ -262,7 +262,8 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     }
 
     var match = null
-    data.getNetwork(network).getHighlights().some(function(val){
+    var netwrk = data.getNetwork(network)
+    netwrk.getHighlights().concat(new Highlight("contains", netwrk.getNick())).some(function(val){
       match = val.matches(templateData.message)
       if(match !== null) {
         return true
