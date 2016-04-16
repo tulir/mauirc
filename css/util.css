@@ -17,52 +17,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 @font-face {
-    font-family: 'Fira Code';
-    src: url('/firacode.otf');
+    font-family : 'Fira Code';
+    src         : url('/firacode.otf');
 }
 
-.hidden { display: none; }
-@media (max-width: 399px) { .hidden-mobile-down { display: none; } }
-@media (max-width: 549px) { .hidden-phablet-down { display: none; } }
-@media (max-width: 749px) { .hidden-tablet-down { display: none; } }
-@media (max-width: 999px) { .hidden-desktop-down { display: none; } }
-@media (max-width: 1199px) { .hidden-hd-down { display: none; } }
-@media (min-width: 400px) { .hidden-mobile-up { display: none; } }
-@media (min-width: 550px) { .hidden-phablet-up { display: none; } }
-@media (min-width: 750px) { .hidden-tablet-up { display: none; } }
-@media (min-width: 1000px) { .hidden-desktop-up { display: none; } }
-@media (min-width: 1200px) { .hidden-hd-up { display: none; } }
-
+.hidden                                           { display: none; }
+@media (max-width: 399px)  { .hidden-mobile-down  { display: none; }}
+@media (max-width: 549px)  { .hidden-phablet-down { display: none; }}
+@media (max-width: 749px)  { .hidden-tablet-down  { display: none; }}
+@media (max-width: 999px)  { .hidden-desktop-down { display: none; }}
+@media (max-width: 1199px) { .hidden-hd-down      { display: none; }}
+@media (min-width: 400px)  { .hidden-mobile-up    { display: none; }}
+@media (min-width: 550px)  { .hidden-phablet-up   { display: none; }}
+@media (min-width: 750px)  { .hidden-tablet-up    { display: none; }}
+@media (min-width: 1000px) { .hidden-desktop-up   { display: none; }}
+@media (min-width: 1200px) { .hidden-hd-up        { display: none; }}
 
 .btn {
-    padding: .375rem 1rem;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: none;
-    border-radius: .25rem;
-    background-color: #D6D6D6;
+    padding             : .375rem 1rem;
+    border              : none;
+    border-radius       : .25rem;
+    background-color    : #D6D6D6;
+    text-align          : center;
+    vertical-align      : middle;
+    font-size           : 1rem;
+    font-weight         : bold;
+    white-space         : nowrap;
+    -moz-user-select    : none;
+    -ms-user-select     : none;
+    -webkit-user-select : none;
+    user-select         : none;
+    cursor              : pointer;
 }
 
 .btn:hover {
-    background-color: #BDBDBD;
+    background-color : #BDBDBD;
 }
 
 .left-arrow {
-    float: left;
+    float : left;
 }
 
 .right-arrow {
-    float: right;
+    float : right;
 }
 
 .center {
-    text-align: center;
+    text-align : center;
 }

@@ -17,62 +17,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .userlist {
-    height: auto;
-    width: auto;
-    position: fixed;
-    left: 0.25rem;
-    right: 0.25rem;
-    top: 0.25rem;
-    bottom: 0.25rem;
+    position : fixed;
+    top      : 0.25rem;
+    right    : 0.25rem;
+    bottom   : 0.25rem;
+    left     : 0.25rem;
+    width    : auto;
+    height   : auto;
 }
 
 .userlist-bar {
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 0;
-    height: 2.4rem;
+    position : absolute;
+    top      : 0;
+    right    : 0;
+    left     : 0;
+    height   : 2.4rem;
 }
 
 .userlist-bar > .open-user-list {
-    float: left;
+    float : left;
 }
 
 .userlist-list {
-    top: 2.5rem;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    overflow-y: scroll;
-    font-size: 1.5em;
+    position   : absolute;
+    top        : 2.5rem;
+    right      : 0;
+    bottom     : 0;
+    left       : 0;
+    overflow-y : scroll;
+    font-size  : 1.5em;
 }
 
 @media (min-width: 750px) {
     .userlist {
-        left: auto;
-        width: 8.5rem;
+        left  : auto;
+        width : 8.5rem;
     }
-
     .userlist-list {
-        font-size: 1em;
+        font-size : 1em;
     }
 }
 
 @media (min-width: 1000px) {
     .userlist {
-        width: 9.5rem;
+        width : 9.5rem;
     }
 }
 
 @media (min-width: 1200px) {
     .userlist {
-        width: 10.5rem;
+        width : 10.5rem;
     }
 }
 
 @media (min-width: 1500px) {
     .userlist {
-        width: 11.5rem;
+        width : 11.5rem;
     }
 }
