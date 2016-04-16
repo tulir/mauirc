@@ -19,7 +19,6 @@ function DataStore() {
   this.globalscripts = {}
 }
 
-
 DataStore.prototype.getGlobalScript = function(name) {
   if (this.scripts.hasOwnProperty(name)) {
     return this.scripts[name]
