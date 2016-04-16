@@ -21,6 +21,7 @@ var msgcontainer = false
 var titleEditClick = 0
 var data = new DataStore()
 var scripteditor = null
+var joinedMessages = []
 
 data.getNetwork("mauIRC Status").getChannel("mauIRC Status").setTopicFull("mauIRC status messages", 1, "tulir293")
 

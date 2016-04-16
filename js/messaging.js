@@ -193,11 +193,12 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   var templateData = {
-    sender: sender + " ",
+    sender: sender,
     date: moment(timestamp * 1000).format("HH:mm:ss"),
     id: sprintf("msg-%d", id),
     wrapid: sprintf("msgwrap-%d", id),
-    message: linkifyHtml(escapeHtml(message))
+    message: linkifyHtml(escapeHtml(message)),
+    timestamp: timestamp
   }
 
   if (command === "action") {
@@ -214,6 +215,12 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     templateData.class = "topic"
   } else {
     var template = "message"
+
+    if (preview === null){
+      if (hasJoinedMessage(id) || tryJoinMessage(id, network, channel, timestamp, sender, command, message, ownmsg, isNew)) {
+        return
+      }
+    }
   }
 
   templateData.class = "message " + templateData.class
@@ -293,6 +300,45 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   } else {
     scrollDown()
   }
+}
+
+function tryJoinMessage(id, network, channel, timestamp, sender, command, message, ownmsg, isNew) {
+  var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
+  if(isEmpty(chanObj)) return
+
+  if (!isNew) var prevMsg = chanObj.children(".message-wrapper:first")
+  else var prevMsg = chanObj.children(".message-wrapper:last")
+  if(isEmpty(prevMsg)) return
+
+  if(prevMsg.attr("sender") != sender) return
+
+  var prevMsgTime = prevMsg.attr("timestamp")
+  if(isEmpty(prevMsgTime)) return
+
+  if (!isNew) {
+    if (parseInt(prevMsgTime) < timestamp + 3) {
+      prevMsg.find(".message > .message-text").prepend(message + "<br>\n")
+      prevMsg.find(".message > .message-date").html(moment(timestamp * 1000).format("HH:mm:ss"))
+      prevMsg.attr("timestamp", timestamp)
+      joinedMessages.push(id)
+      return true
+    }
+  } else {
+    if (parseInt(prevMsgTime) > timestamp - 3) {
+      prevMsg.find(".message > .message-text").append("<br>\n" + message)
+      prevMsg.attr("timestamp", timestamp)
+      joinedMessages.push(id)
+      return true
+    }
+  }
+  return false
+}
+
+function hasJoinedMessage(id) {
+  joinedMessages.forEach(function(val){
+    if (val == id) return true
+  })
+  return false
 }
 
 function modalOpen(id) {
