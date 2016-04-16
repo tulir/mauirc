@@ -34,7 +34,6 @@ function closeSettings(){
 }
 
 function updateSettingsValues(){
-  $("#mauirc-font").val("")
   $("#network-nickname").val("")
   $("#network-highlights").val("")
   $("#channel-notifications").val("all")
@@ -44,6 +43,8 @@ function updateSettingsValues(){
 	} else {
 		$("#mauirc-font").val(document.body.style.fontFamily)
 	}
+  $("#mauirc-message-group-delay").val(data.getMessageGroupDelay())
+
   if (!data.networkExists(getActiveNetwork())) {
     return
   }
@@ -61,6 +62,10 @@ function snChangeNotifications() {
 
 function snChangeHighlights(){
   data.getNetwork(getActiveNetwork()).setHighlightsFromString($("#network-highlights").val())
+}
+
+function snChangeMsgGroupDelay() {
+  data.setMessageGroupDelay($("#mauirc-message-group-delay").val())
 }
 
 function snClearHistory(){

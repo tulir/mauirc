@@ -16,7 +16,16 @@
 
 function DataStore() {
   this.netlist = {},
-  this.globalscripts = {}
+  this.globalscripts = {},
+  this.messageGroupDelay = 3
+}
+
+DataStore.prototype.getMessageGroupDelay = function() {
+  return this.messageGroupDelay
+}
+
+DataStore.prototype.setMessageGroupDelay = function(delay) {
+  this.messageGroupDelay = delay
 }
 
 DataStore.prototype.getGlobalScript = function(name) {

@@ -50,6 +50,11 @@
     </div>
 
     <div class="settings-entry">
+      <label class="settings-label" for="mauirc-message-group-delay">Message Grouping Time</label>
+      <input class="settings-value" id="mauirc-message-group-delay" type="range" onChange="snChangeMsgGroupDelay()" min="-1" max="8">
+    </div>
+
+    <div class="settings-entry">
       <label class="settings-label" for="mauirc-font">Font family</label>
       <input class="settings-value" id="mauirc-font" type="text" autocomplete="off" onChange="snUpdateFont()" placeholder="Enter font name">
     </div>

@@ -316,7 +316,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
   if(isEmpty(prevMsgTime)) return
 
   if (!isNew) {
-    if (parseInt(prevMsgTime) < timestamp + 3) {
+    if (parseInt(prevMsgTime) < timestamp + data.getMessageGroupDelay()) {
       prevMsg.find(".message > .message-text").prepend(message + "<br>\n")
       prevMsg.find(".message > .message-date").html(moment(timestamp * 1000).format("HH:mm:ss"))
       prevMsg.attr("timestamp", timestamp)
@@ -324,7 +324,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
       return true
     }
   } else {
-    if (parseInt(prevMsgTime) > timestamp - 3) {
+    if (parseInt(prevMsgTime) > timestamp - data.getMessageGroupDelay()) {
       prevMsg.find(".message > .message-text").append("<br>\n" + message)
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
