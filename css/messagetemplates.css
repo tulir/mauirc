@@ -90,6 +90,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     hyphens       : auto;
     word-break    : break-word;
     word-wrap     : break-word;
+    white-space   : pre-wrap;
 }
 
 .action-data {

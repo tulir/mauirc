@@ -320,7 +320,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
 
   if (!isNew) {
     if (parseInt(prevMsgTime) < timestamp + data.getMessageGroupDelay()) {
-      prevMsg.find(".message > .message-text").prepend(message + "<br>\n")
+      prevMsg.find(".message > .message-text").prepend(message + "\n")
       prevMsg.find(".message > .message-date").html(moment(timestamp * 1000).format("HH:mm:ss"))
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
@@ -332,7 +332,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
       if (match !== null) {
         console.log(match)
         prevMsg.find(".message > .message-text").append(
-          sprintf('<br>\n%s<span class="highlighted-text">%s</span>%s',
+          sprintf('\n%s<span class="highlighted-text">%s</span>%s',
             message.slice(0, match.index),
             message.slice(match.index, match.index + match.length),
             message.slice(match.index + match.length)
@@ -340,7 +340,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
         )
         prevMsg.find(".message").addClass("highlight")
       } else {
-        prevMsg.find(".message > .message-text").append("<br>\n" + escapeHtml(message))
+        prevMsg.find(".message > .message-text").append("\n" + escapeHtml(message))
       }
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
