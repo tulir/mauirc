@@ -208,13 +208,11 @@ function switchTo(network, channel) {
   $(".network-switcher.activenet").removeClass("activenet")
   $("#message-text").focus()
 
-  var channelData = data.getChannelIfExists(network, channel)
-  var title = channel
-  if (channelData !== undefined) {
-    title = channelData.getTopic()
-    if (title.length === 0) {
-      title = channel
-    }
+  var channelData = data.getChannel(network, channel)
+  if (channelData.getTopic().length !== 0) {
+    var title = channelData.getTopic()
+  } else {
+    var title = channel
   }
   $("#title").text(title)
 
@@ -231,8 +229,9 @@ function switchTo(network, channel) {
     return
   }
 
-  if (channelData !== undefined && !channelData.isHistoryFetched()) {
+  if (!channelData.isHistoryFetched()) {
     history(network, channel, 512)
+    channelData.setHistoryFetched()
   }
 
   $(sprintf("#switchnet-%s", network)).addClass("activenet")

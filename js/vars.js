@@ -23,7 +23,8 @@ var data = new DataStore()
 var scripteditor = null
 var joinedMessages = []
 
-data.getNetwork("mauIRC Status").getChannel("mauIRC Status").setTopicFull("mauIRC status messages", 1, "tulir293")
+data.getChannel("mauIRC Status", "mauIRC Status").setTopicFull("mauIRC status messages", 1, "tulir293")
+data.getChannelIfExists("mauIRC Status", "mauIRC Status").setHistoryFetched()
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
 if (window.location.protocol !== "https:") {
