@@ -345,7 +345,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
         )
         prevMsg.addClass("highlight")
       } else {
-        prevMsg.find(".message > .message-text").append("<br\n" + escapeHtml(message))
+        prevMsg.find(".message > .message-text").append("<br>\n" + escapeHtml(message))
       }
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
