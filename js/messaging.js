@@ -280,7 +280,11 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 
     if (match !== null) {
       var hlt = templateData.message
-      sprintf('%s<span class="highlighted-text">%s</span>%s', hlt.slice(0, match.index), hlt.slice(match.index, match.index + match.length), hlt.slice(match.index + match.length))
+      sprintf('%s<span class="highlighted-text">%s</span>%s',
+        escapeHtml(hlt.slice(0, match.index)),
+        escapeHtml(hlt.slice(match.index, match.index + match.length)),
+        escapeHtml(hlt.slice(match.index + match.length))
+      )
       textObj.html(hlt)
       msgObj.addClass("highlight")
     }
@@ -317,7 +321,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
 
   if (!isNew) {
     if (parseInt(prevMsgTime) < timestamp + data.getMessageGroupDelay()) {
-      prevMsg.find(".message > .message-text").prepend(message + "<br>\n")
+      prevMsg.find(".message > .message-text").prepend(escapeHtml(message) + "<br>\n")
       prevMsg.find(".message > .message-date").html(moment(timestamp * 1000).format("HH:mm:ss"))
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
@@ -325,7 +329,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
     }
   } else {
     if (parseInt(prevMsgTime) > timestamp - data.getMessageGroupDelay()) {
-      prevMsg.find(".message > .message-text").append("<br>\n" + message)
+      prevMsg.find(".message > .message-text").append("<br>\n" + escapeHtml(message))
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
       return true
