@@ -64,12 +64,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .btn-clear-history,
-.btn-close-channel,
 .btn-leave-settings,
 .btn-part-channel {
 	display    : table-cell;
 	box-sizing : border-box;
 	width      : 50%;
+}
+
+.btn-leave-settings {
+    width: 100%;
 }
 
 .settings-container {

@@ -78,11 +78,6 @@ function snClearHistory(){
   closeSettings()
 }
 
-function snCloseChannel(){
-	closeChannel(getActiveNetwork(), getActiveChannel())
-	closeSettings()
-}
-
 function snChangeNick(){
 	if(getActiveChannel() === "mauIRC Status") return
 	var nick = $("#network-nickname")
@@ -104,15 +99,26 @@ function snUpdateFont() {
 	document.body.style.fontFamily = $("#mauirc-font").val();
 }
 
-function snPartChannel(){
+function snPartAndClose(){
 	if(getActiveChannel() === "mauIRC Status") return
-  sendMessage({
-    type: "message",
-    network: getActiveNetwork(),
-    channel: getActiveChannel(),
-    command: "part",
-    message: "Leaving"
-  })
+  closeChannel(getActiveNetwork(), getActiveChannel())
+
+  if(getActiveChannel().startsWith("#")) {
+    sendMessage({
+      type: "message",
+      network: getActiveNetwork(),
+      channel: getActiveChannel(),
+      command: "part",
+      message: "Leaving"
+    })
+  } else {
+    sendMessage({
+      type: "close",
+      network: getActiveNetwork(),
+      channel: getActiveChannel()
+    })
+  }
+
   closeSettings()
 }
 

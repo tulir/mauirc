@@ -15,13 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function updateUserList(){
-  if (data.channelExists(getActiveNetwork(), getActiveChannel())) {
+  var ch = data.getChannelIfExists(getActiveNetwork(), getActiveChannel())
+  if (ch !== undefined && !isEmpty(ch.getUsers())) {
     if (isUserListHidden() && !wasUserListHiddenManually()) toggleUserList(false)
 
     $("#userlist-list").text("")
-    var ch = data.getNetwork(getActiveNetwork()).getChannel(getActiveChannel())
     ch.getUsers().forEach(function(val, i, arr){
-      $("#userlist-list").append('<a class="pm-link" href="#" onClick="openPM(\'' + getActiveNetwork() + '\', \'' + ch.getUsersPlain()[i] + '\')">' + val + '</a><br>')
+      $("#userlist-list").append(sprintf('<a class="pm-link" href="#" onClick="openPM(\'%s\', \'%s\')">%s</a><br>', getActiveNetwork(), ch.getUsersPlain()[i], val))
     })
     $("#open-user-list").removeClass("hidden-tablet-down")
     $("#open-settings").addClass("hidden-tablet-down")

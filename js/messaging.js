@@ -188,7 +188,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
   var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   if (chanObj.length === 0) {
-    openChannel(network, channel)
+    openChannel(network, channel, false)
     chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   }
 

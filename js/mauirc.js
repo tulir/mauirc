@@ -57,7 +57,7 @@ function connect() {
       channel.setTopicFull(ed.object.topic, ed.object.topicsetat, ed.object.topicsetby)
       channel.setUsers(ed.object.userlist)
       channel.setNotificationLevel("all")
-      openChannel(ed.object.network, ed.object.name)
+      openChannel(ed.object.network, ed.object.name, false)
 
       if(getActiveNetwork() === ed.object.network && getActiveChannel() === ed.object.name) {
         $("#title").text(ed.object.topic)

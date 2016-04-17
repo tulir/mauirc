@@ -40,7 +40,7 @@ function getActiveNetworkObj(){
 }
 
 function openPM(network, user) {
-  openChannel(network, user)
+  openChannel(network, user, true)
   switchTo(network, user)
 }
 
@@ -113,7 +113,7 @@ function finishNewChannel(network) {
   }
 
   $(sprintf("#add-channel-%s", network)).removeClass("hidden")
-  openChannel(network, name)
+  openChannel(network, name, true)
   switchTo(network, name)
 }
 
@@ -135,7 +135,7 @@ function openNetwork(network) {
   }, {append: true, isFile: false, async: false})
 }
 
-function openChannel(network, channel) {
+function openChannel(network, channel, byUser) {
   network = network.toLowerCase()
   chanLower = channel.toLowerCase()
   var netObj = $(sprintf("#net-%s", network))
@@ -146,6 +146,15 @@ function openChannel(network, channel) {
 
   if ($(sprintf("#chan-%s-%s", network, channelFilter(channel))).length !== 0) {
     return
+  }
+
+  console.log("Sent by user:", byUser)
+  if (byUser) {
+    sendMessage({
+      type: "open",
+      network: network,
+      channel: channel
+    })
   }
 
   netObj.loadTemplate($("#template-channel"), {

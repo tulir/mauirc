@@ -264,6 +264,11 @@ ChannelStore.prototype.getUsersPlain = function() {
 }
 
 ChannelStore.prototype.setUsers = function(users) {
+  if (isEmpty(users)) {
+    this.userlist = []
+    this.users = []
+    return
+  }
   this.userlist = users
   var plainlist = []
   users.forEach(function(val, i){
