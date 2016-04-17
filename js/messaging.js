@@ -211,7 +211,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     templateData.message = sprintf("is now known as <b>%s</b>", message)
     templateData.class = "nick"
   } else if (command == "topic") {
-    templateData.message = sprintf("changed the topic to %s", message)
+    templateData.message = sprintf("changed the topic to <b>%s</b>", message)
     templateData.class = "topic"
   } else {
     var template = "message"
