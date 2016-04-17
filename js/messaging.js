@@ -261,16 +261,10 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   if (isNew) {
-    if(msgObj.hasClass("action")) {
-      var textObj = msgObj.find(".action-data > .action-text")
-    } else {
-      var textObj = msgObj.find(".message-text")
-    }
-
     var match = getHighlights(data.getNetwork(network), templateData.message)
 
-    if (match !== null) {
-      textObj.html(sprintf('%s<span class="highlighted-text">%s</span>%s',
+    if (template === "message" && match !== null) {
+      msgObj.find(".message-text").html(sprintf('%s<span class="highlighted-text">%s</span>%s',
         escapeHtml(templateData.message.slice(0, match.index)),
         escapeHtml(templateData.message.slice(match.index, match.index + match.length)),
         escapeHtml(templateData.message.slice(match.index + match.length))
