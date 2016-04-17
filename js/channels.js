@@ -148,7 +148,6 @@ function openChannel(network, channel, byUser) {
     return
   }
 
-  console.log("Sent by user:", byUser)
   if (byUser) {
     sendMessage({
       type: "open",
