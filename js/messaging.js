@@ -342,6 +342,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
       } else {
         prevMsg.find(".message > .message-text").append("\n" + escapeHtml(message))
       }
+      scrollDown()
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
       notifyMessage(network, channel, match !== null, sender, message)
