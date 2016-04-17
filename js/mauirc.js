@@ -146,7 +146,7 @@ function reconnect(){
 function history(network, channel, n){
   $.ajax({
     type: "GET",
-    url: sprintf("/history/%s/%s?n=%d", network, channel, n),
+    url: sprintf("/history/%s/%s/?n=%d", network, encodeURIComponent(channel), n),
     dataType: "json",
     success: function(data){
       if (isEmpty(data)) {
