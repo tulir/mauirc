@@ -243,7 +243,16 @@ function ChannelStore(){
   this.topic = "",
   this.topicsetby = "",
   this.topicsetat = 0,
-  this.notifications = "all"
+  this.notifications = "all",
+  this.historyfetched = false
+}
+
+ChannelStore.prototype.isHistoryFetched = function() {
+  return this.historyfetched
+}
+
+ChannelStore.prototype.setHistoryFetched = function() {
+  this.historyfetched = true
 }
 
 ChannelStore.prototype.getUsers = function() {

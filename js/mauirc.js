@@ -33,7 +33,6 @@ function connect() {
 
       switchTo('mauIRC Status', 'mauIRC Status')
 
-      history(1024)
       msgcontainer = true
     }
 
@@ -58,6 +57,7 @@ function connect() {
       channel.setTopicFull(ed.object.topic, ed.object.topicsetat, ed.object.topicsetby)
       channel.setUsers(ed.object.userlist)
       channel.setNotificationLevel("all")
+      openChannel(ed.object.network, ed.object.name)
 
       if(getActiveNetwork() === ed.object.network && getActiveChannel() === ed.object.name) {
         $("#title").text(ed.object.topic)
@@ -143,10 +143,10 @@ function reconnect(){
   });
 }
 
-function history(n){
+function history(network, channel, n){
   $.ajax({
     type: "GET",
-    url: "/history?n=" + n,
+    url: sprintf("/history/%s/%s?n=%d", network, channel, n),
     dataType: "json",
     success: function(data){
       if (isEmpty(data)) {
@@ -158,7 +158,7 @@ function history(n){
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      showAlert("error", sprintf("Failed to fetch history: %s %s", textStatus, errorThrown))
+      showAlert("error", sprintf("Failed to fetch history of %s @ %s: %s %s", channel, network, textStatus, errorThrown))
       scrollDown()
       console.log(jqXHR)
     }
