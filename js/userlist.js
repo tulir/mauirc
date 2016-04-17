@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-function updateUserList(){
+function updateUserList() {
   var ch = data.getChannelIfExists(getActiveNetwork(), getActiveChannel())
   if (ch !== undefined && !isEmpty(ch.getUsers())) {
     if (isUserListHidden() && !wasUserListHiddenManually()) toggleUserList(false)
 
     $("#userlist-list").text("")
-    ch.getUsers().forEach(function(val, i, arr){
+    ch.getUsers().forEach(function(val, i, arr) {
       $("#userlist-list").append(sprintf('<a class="pm-link" href="#" onClick="openPM(\'%s\', \'%s\')">%s</a><br>', getActiveNetwork(), ch.getUsersPlain()[i], val))
     })
     $("#open-user-list").removeClass("hidden-tablet-down")

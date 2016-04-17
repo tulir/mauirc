@@ -25,7 +25,7 @@ function auth() {
     url: "/auth/login",
     data: JSON.stringify(payload),
     contentType: "application/json; charset=utf-8",
-    success: function(data){
+    success: function(data) {
       console.log("Successfully authenticated!")
       connect()
     },
@@ -34,15 +34,15 @@ function auth() {
       console.log(jqXHR)
       authfail = true
     }
-  });
+  })
 }
 
-function checkAuth(){
+function checkAuth() {
   authfail = false
   $.ajax({
     type: "GET",
     url: "/auth/check",
-    success: function(data){
+    success: function(data) {
       if (data === "true") {
         connect()
       } else {
@@ -57,5 +57,5 @@ function checkAuth(){
       $("#container").loadTemplate($("#template-login"), {})
       console.log(jqXHR)
     }
-  });
+  })
 }

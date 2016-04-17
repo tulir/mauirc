@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-function send(){
+function send() {
   if (!connected) {
     console.log("Tried to send message without connection!")
     return
@@ -112,7 +112,7 @@ function send(){
       getActiveChannelObj().loadTemplate($("#template-error"), {
         message: "Unknown command: " + command
       }, {append: true})
-      scrollDown();
+      scrollDown()
       $("#message-text").val("")
     }
   } else {
@@ -129,7 +129,7 @@ function send(){
     getActiveChannelObj().loadTemplate($("#template-error"), {
       message: "Message too long!"
     }, {append: true})
-    scrollDown();
+    scrollDown()
   } else {
     $("#message-text").val("")
   }
@@ -172,7 +172,7 @@ function receiveCmdResponse(message) {
     notify(sender, message)
   }
 
-  if (statusMsgs.hasClass("hidden")){
+  if (statusMsgs.hasClass("hidden")) {
     $("#status-enter").addClass("new-messages")
   } else {
     scrollDown()
@@ -216,7 +216,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   } else {
     var template = "message"
 
-    if (preview === null){
+    if (preview === null) {
       if (hasJoinedMessage(id) || tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg, isNew)) {
         return
       }
@@ -280,7 +280,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 
 function getHighlights(network, message) {
   var match
-  network.getHighlights().concat(new Highlight("contains", network.getNick())).some(function(val){
+  network.getHighlights().concat(new Highlight("contains", network.getNick())).some(function(val) {
     match = val.matches(message)
     if(match !== null) {
       return true
@@ -353,7 +353,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
 }
 
 function hasJoinedMessage(id) {
-  joinedMessages.forEach(function(val){
+  joinedMessages.forEach(function(val) {
     if (val == id) return true
   })
   return false
@@ -371,5 +371,5 @@ function modalOpen(id) {
   })
   $(sprintf("#modal-%d", id)).on($.modal.AFTER_CLOSE, function(event, modal) {
     $(sprintf("#modal-%d", id)).remove()
-  });
+  })
 }

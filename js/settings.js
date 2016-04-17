@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-function toggleSettings(){
+function toggleSettings() {
 	if ($("#settings").hasClass("hidden")) {
     openSettings()
   } else {
@@ -22,18 +22,18 @@ function toggleSettings(){
   }
 }
 
-function openSettings(){
+function openSettings() {
   updateSettingsValues()
   $("#settings").removeClass("hidden")
   $("#container").addClass("hidden")
 }
 
-function closeSettings(){
+function closeSettings() {
   $("#settings").addClass("hidden")
   $("#container").removeClass("hidden")
 }
 
-function updateSettingsValues(){
+function updateSettingsValues() {
   $("#network-nickname").val("")
   $("#network-highlights").val("")
   $("#channel-notifications").val("all")
@@ -60,7 +60,7 @@ function snChangeNotifications() {
   data.getChannel(getActiveNetwork(), getActiveChannel()).setNotificationLevel($("#channel-notifications").val())
 }
 
-function snChangeHighlights(){
+function snChangeHighlights() {
   data.getNetwork(getActiveNetwork()).setHighlightsFromString($("#network-highlights").val())
 }
 
@@ -68,7 +68,7 @@ function snChangeMsgGroupDelay() {
   data.setMessageGroupDelay($("#mauirc-message-group-delay").val())
 }
 
-function snClearHistory(){
+function snClearHistory() {
 	if(getActiveChannel() === "mauIRC Status") return
   sendMessage({
     type: "clear",
@@ -78,7 +78,7 @@ function snClearHistory(){
   closeSettings()
 }
 
-function snChangeNick(){
+function snChangeNick() {
 	if(getActiveChannel() === "mauIRC Status") return
 	var nick = $("#network-nickname")
 	if (nick.length === 0 || nick.val().trim().length === 0) {
@@ -96,10 +96,10 @@ function snChangeNick(){
 }
 
 function snUpdateFont() {
-	document.body.style.fontFamily = $("#mauirc-font").val();
+	document.body.style.fontFamily = $("#mauirc-font").val()
 }
 
-function snPartAndClose(){
+function snPartAndClose() {
 	if(getActiveChannel() === "mauIRC Status") return
 
   if(getActiveChannel().startsWith("#")) {

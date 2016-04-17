@@ -35,7 +35,7 @@ function getActiveChannelObj() {
   return $(".channel-container:not(.hidden)")
 }
 
-function getActiveNetworkObj(){
+function getActiveNetworkObj() {
   return $(".network-container:not(.hidden)")
 }
 
@@ -80,7 +80,7 @@ function newChannel(network) {
   			callback: function() {}
   		}
   	}
-  });
+  })
   adder.focus()
 }
 

@@ -161,7 +161,7 @@ NetworkStore.prototype.getHighlights = function() {
 
 NetworkStore.prototype.getHighlightsAsString = function() {
   var str = ""
-  this.highlights.forEach(function(val){
+  this.highlights.forEach(function(val) {
     str += val.toString().replace(",", "\\,") + ","
   })
   return str.slice(0, -1)
@@ -202,7 +202,7 @@ NetworkStore.prototype.setHighlightsFromString = function(data) {
     minIndex = 0
   }
 
-  highlights.forEach(function(val, i){
+  highlights.forEach(function(val, i) {
     if(val.startsWith(":")) {
       highlights[i] = new Highlight("regex", val.slice(1))
     } else {
@@ -212,7 +212,7 @@ NetworkStore.prototype.setHighlightsFromString = function(data) {
   this.highlights = highlights
 }
 
-function Highlight(type, value){
+function Highlight(type, value) {
   this.type = type,
   this.value = value
 }
@@ -237,7 +237,7 @@ Highlight.prototype.toString = function() {
   return this.value
 }
 
-function ChannelStore(){
+function ChannelStore() {
   this.userlist = [],
   this.userlistPlain = [],
   this.topic = "",
@@ -271,7 +271,7 @@ ChannelStore.prototype.setUsers = function(users) {
   }
   this.userlist = users
   var plainlist = []
-  users.forEach(function(val, i){
+  users.forEach(function(val, i) {
     var ch = val.charAt(0)
     if (ch === "~" || ch === "&" || ch === "@" || ch === "%" || ch === "+") {
       plainlist[i] = val.slice(1)

@@ -16,7 +16,7 @@
 
 function connect() {
   console.log("Connecting to socket...")
-  socket = new WebSocket(websocketPath);
+  socket = new WebSocket(websocketPath)
 
   socket.onopen = function() {
     if (!msgcontainer) {
@@ -42,7 +42,7 @@ function connect() {
     $('#message-text').removeAttr('disabled')
 
     connected = true
-  };
+  }
 
   socket.onmessage = function (evt) {
     var ed = JSON.parse(evt.data)
@@ -79,7 +79,7 @@ function connect() {
         type: "GET",
         url: "/script/" + ed.object.name,
         dataType: "json",
-        success: function(scripts){
+        success: function(scripts) {
           if (isEmpty(scripts)) return
           var net = data.getNetwork(ed.object.name)
           scripts.forEach(function(val, i, arr) {
@@ -98,7 +98,7 @@ function connect() {
     } else if (ed.type === "delete") {
       $(sprintf("#msgwrap-%s", ed.object)).remove()
     }
-  };
+  }
 
   socket.onclose = function(evt) {
     if (evt.wasClean) {
@@ -115,14 +115,14 @@ function connect() {
     if (!authfail) {
       setTimeout(reconnect, 2500)
     }
-  };
+  }
 }
 
-function reconnect(){
+function reconnect() {
   $.ajax({
     type: "GET",
     url: "/auth/check",
-    success: function(data){
+    success: function(data) {
       if (data === "true") {
         connect()
       } else {
@@ -140,15 +140,15 @@ function reconnect(){
         setTimeout(reconnect, 5000)
       }
     }
-  });
+  })
 }
 
-function history(network, channel, n){
+function history(network, channel, n) {
   $.ajax({
     type: "GET",
     url: sprintf("/history/%s/%s/?n=%d", network, encodeURIComponent(channel), n),
     dataType: "json",
-    success: function(data){
+    success: function(data) {
       if (isEmpty(data)) {
         return
       }
@@ -162,5 +162,5 @@ function history(network, channel, n){
       scrollDown()
       console.log(jqXHR)
     }
-  });
+  })
 }

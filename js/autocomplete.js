@@ -21,7 +21,7 @@ function commandAutocomplete(messagebox) {
 function userAutocomplete(messagebox) {
   var text = messagebox.val().toLowerCase()
   var index = -1
-  data.getChannel(getActiveNetwork(), getActiveChannel()).getUsersPlain().forEach(function(val, i, arr){
+  data.getChannel(getActiveNetwork(), getActiveChannel()).getUsersPlain().forEach(function(val, i, arr) {
     if(val.toLowerCase().startsWith(text)) {
       if (index !== -1) {
         index = -2
@@ -35,7 +35,7 @@ function userAutocomplete(messagebox) {
   }
 }
 
-function allAutocomplete(){
+function allAutocomplete() {
   var messagebox = $("#message-text")
   if (messagebox.val().startsWith("/")) {
     commandAutocomplete(messagebox)

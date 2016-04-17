@@ -23,7 +23,7 @@ function snOpenScriptEditor(net, scripts) {
   scripteditor.setOptions({
     fontFamily: "Fira Code",
     fontSize: "11pt"
-  });
+  })
 	scripteditor.setShowPrintMargin(false)
 	scripteditor.setTheme("ace/theme/chrome")
 	scripteditor.getSession().setMode("ace/mode/golang")
@@ -38,7 +38,7 @@ function snOpenScriptEditor(net, scripts) {
 				snSaveScript()
 	    },
 	    readOnly: false
-	});
+	})
 
 	$("#script-list").empty()
 	for (var key in scripts) {
@@ -71,7 +71,7 @@ function snSwitchScript(net, name) {
 	$("#script-name").val(name)
 
   $("#script-tool-save").unbind("click")
-	$("#script-tool-save").click(function(){
+	$("#script-tool-save").click(function() {
 		snUploadScript(net, name)
 	})
 }
@@ -100,7 +100,7 @@ function snUploadScript(net, name) {
 		type: "PUT",
 		url: sprintf("/script/%s/%s/", net, name),
     data: script,
-		success: function(data){
+		success: function(data) {
       console.log("Successfully updated script", name, "@", net)
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
