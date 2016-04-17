@@ -261,45 +261,50 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   if (isNew) {
-    var textObj = null
     if(msgObj.hasClass("action")) {
-      textObj = msgObj.find(".action-data > .action-text")
+      var textObj = msgObj.find(".action-data > .action-text")
     } else {
-      textObj = msgObj.find(".message-text")
+      var textObj = msgObj.find(".message-text")
     }
 
-    var match = null
-    var netwrk = data.getNetwork(network)
-    netwrk.getHighlights().concat(new Highlight("contains", netwrk.getNick())).some(function(val){
-      match = val.matches(templateData.message)
-      if(match !== null) {
-        return true
-      }
-      return false
-    })
+    var match = getHighlights(data.getNetwork(network), templateData.message)
 
     if (match !== null) {
-      var hlt = templateData.message
-      sprintf('%s<span class="highlighted-text">%s</span>%s',
-        escapeHtml(hlt.slice(0, match.index)),
-        escapeHtml(hlt.slice(match.index, match.index + match.length)),
-        escapeHtml(hlt.slice(match.index + match.length))
-      )
-      textObj.html(hlt)
+      textObj.html(sprintf('%s<span class="highlighted-text">%s</span>%s',
+        escapeHtml(templateData.message.slice(0, match.index)),
+        escapeHtml(templateData.message.slice(match.index, match.index + match.length)),
+        escapeHtml(templateData.message.slice(match.index + match.length))
+      ))
       msgObj.addClass("highlight")
     }
 
-    var notifs = data.channelExists(network, channel) ? data.getChannel(network, channel).getNotificationLevel() : "all"
+    notifyMessage(network, channel, match !== null, sender, message)
+  } else {
+    scrollDown()
+  }
+}
 
-    if ((notifs == "all" || (notifs == "highlight" && highlight)) && !document.hasFocus()) {
-      notify(sender, message)
+function getHighlights(network, message) {
+  var match
+  network.getHighlights().concat(new Highlight("contains", network.getNick())).some(function(val){
+    match = val.matches(message)
+    if(match !== null) {
+      return true
     }
-    if (chanObj.hasClass("hidden")) {
-      if((notifs == "all" || (notifs == "highlight" && highlight))) {
-        $(sprintf("#switchto-%s-%s", network, channelFilter(channel))).addClass("new-messages")
-      }
-    } else {
-      scrollDown()
+    return false
+  })
+  return match
+}
+
+function notifyMessage(network, channel, highlight, sender, message) {
+  var notifs = data.channelExists(network, channel) ? data.getChannel(network, channel).getNotificationLevel() : "all"
+
+  if ((notifs == "all" || (notifs == "highlight" && highlight)) && !document.hasFocus()) {
+    notify(sender, message)
+  }
+  if ($(sprintf("#chan-%s-%s", network, channelFilter(channel))).hasClass("hidden")) {
+    if((notifs == "all" || (notifs == "highlight" && highlight))) {
+      $(sprintf("#switchto-%s-%s", network, channelFilter(channel))).addClass("new-messages")
     }
   } else {
     scrollDown()
@@ -329,9 +334,22 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
     }
   } else {
     if (parseInt(prevMsgTime) > timestamp - data.getMessageGroupDelay()) {
-      prevMsg.find(".message > .message-text").append("<br>\n" + escapeHtml(message))
+      var match = getHighlights(data.getNetwork(network), message)
+      if (match !== null) {
+        prevMsg.find(".message > .message-text").append("<br>\n" +
+          sprintf('%s<span class="highlighted-text">%s</span>%s',
+            escapeHtml(message.slice(0, match.index)),
+            escapeHtml(message.slice(match.index, match.index + match.length)),
+            escapeHtml(message.slice(match.index + match.length))
+          )
+        )
+        prevMsg.addClass("highlight")
+      } else {
+        prevMsg.find(".message > .message-text").append("<br\n" + escapeHtml(message))
+      }
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
+      notifyMessage(network, channel, match !== null, sender, message)
       return true
     }
   }
