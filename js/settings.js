@@ -101,7 +101,6 @@ function snUpdateFont() {
 
 function snPartAndClose(){
 	if(getActiveChannel() === "mauIRC Status") return
-  closeChannel(getActiveNetwork(), getActiveChannel())
 
   if(getActiveChannel().startsWith("#")) {
     sendMessage({
@@ -119,6 +118,7 @@ function snPartAndClose(){
     })
   }
 
+  closeChannel(getActiveNetwork(), getActiveChannel())
   closeSettings()
 }
 
