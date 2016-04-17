@@ -343,7 +343,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
             escapeHtml(message.slice(match.index + match.length))
           )
         )
-        prevMsg.addClass("highlight")
+        prevMsg.find(".message").addClass("highlight")
       } else {
         prevMsg.find(".message > .message-text").append("<br>\n" + escapeHtml(message))
       }
