@@ -217,7 +217,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     var template = "message"
 
     if (preview === null){
-      if (hasJoinedMessage(id) || tryJoinMessage(id, network, channel, timestamp, sender, command, message, ownmsg, isNew)) {
+      if (hasJoinedMessage(id) || tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg, isNew)) {
         return
       }
     }
@@ -265,9 +265,9 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 
     if (template === "message" && match !== null) {
       msgObj.find(".message-text").html(sprintf('%s<span class="highlighted-text">%s</span>%s',
-        escapeHtml(templateData.message.slice(0, match.index)),
-        escapeHtml(templateData.message.slice(match.index, match.index + match.length)),
-        escapeHtml(templateData.message.slice(match.index + match.length))
+        templateData.message.slice(0, match.index),
+        templateData.message.slice(match.index, match.index + match.length),
+        templateData.message.slice(match.index + match.length)
       ))
       msgObj.addClass("highlight")
     }
@@ -320,7 +320,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
 
   if (!isNew) {
     if (parseInt(prevMsgTime) < timestamp + data.getMessageGroupDelay()) {
-      prevMsg.find(".message > .message-text").prepend(escapeHtml(message) + "<br>\n")
+      prevMsg.find(".message > .message-text").prepend(message + "<br>\n")
       prevMsg.find(".message > .message-date").html(moment(timestamp * 1000).format("HH:mm:ss"))
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
@@ -330,11 +330,12 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
     if (parseInt(prevMsgTime) > timestamp - data.getMessageGroupDelay()) {
       var match = getHighlights(data.getNetwork(network), message)
       if (match !== null) {
-        prevMsg.find(".message > .message-text").append("<br>\n" +
-          sprintf('%s<span class="highlighted-text">%s</span>%s',
-            escapeHtml(message.slice(0, match.index)),
-            escapeHtml(message.slice(match.index, match.index + match.length)),
-            escapeHtml(message.slice(match.index + match.length))
+        console.log(match)
+        prevMsg.find(".message > .message-text").append(
+          sprintf('<br>\n%s<span class="highlighted-text">%s</span>%s',
+            message.slice(0, match.index),
+            message.slice(match.index, match.index + match.length),
+            message.slice(match.index + match.length)
           )
         )
         prevMsg.find(".message").addClass("highlight")
