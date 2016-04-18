@@ -11,6 +11,7 @@ cat \
     ./js/autocomplete.js \
     ./js/userlist.js \
     ./js/messaging.js \
+    ./js/contextmenus.js \
     ./js/settings.js \
     ./js/scripts.js \
     ./js/mauirc.js \
