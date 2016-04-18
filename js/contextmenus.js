@@ -30,7 +30,39 @@ $(function() {
     }
   });
 
-  $('.message').on('click', function(e){
-    console.log('clicked', this);
-  })
+  $.contextMenu({
+    selector: '.channel-switcher',
+    callback: function(key, options) {
+      var idPieces = $(this).attr("id").split("-")
+
+      if (key === "delete") {
+        sendMessage({
+          type: "clear",
+          network: idPieces[1],
+          channel: idPieces[2]
+        })
+      } else if (key === "part") {
+        if(idPieces[2].startsWith("#")) {
+          sendMessage({
+            type: "message",
+            network: idPieces[1],
+            channel: idPieces[2],
+            command: "part",
+            message: "Leaving"
+          })
+        } else {
+          sendMessage({
+            type: "close",
+            network: idPieces[1],
+            channel: idPieces[2]
+          })
+        }
+        closeChannel(idPieces[1], idPieces[2])
+      }
+    },
+    items: {
+      delete: {name: "Clear History", icon: "delete"},
+      part: {name: "Part Channel", icon: "quit"}
+    }
+  });
 });
