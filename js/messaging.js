@@ -26,7 +26,6 @@ function send() {
   }
 
   if (getActiveChannel() === "mauIRC Status") {
-    statusCommand()
     return
   }
 
@@ -131,30 +130,6 @@ function send() {
     }, {append: true})
     scrollDown()
   } else {
-    $("#message-text").val("")
-  }
-}
-
-function statusCommand() {
-  var args = $("#message-text").val().split(" ")
-  command = args[0].toLowerCase()
-  if (args.length > 1) {
-    args = args.slice(1, args.length)
-  } else {
-    args = []
-  }
-
-  switch(command) {
-  case "deletemessage":
-    if (args.length > 0) {
-      var payload = {
-        type: "delete",
-        id: args[0],
-      }
-    }
-    break
-  }
-  if(sendMessage(payload)) {
     $("#message-text").val("")
   }
 }
