@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 var socket = null
+var timeout = null
 var connected = false
 var authfail = false
 var msgcontainer = false
@@ -22,9 +23,6 @@ var titleEditClick = 0
 var data = new DataStore()
 var scripteditor = null
 var joinedMessages = []
-
-data.getChannel("mauIRC Status", "mauIRC Status").setTopicFull("mauIRC status messages", 1, "tulir293")
-data.getChannelIfExists("mauIRC Status", "mauIRC Status").setHistoryFetched()
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
 if (window.location.protocol !== "https:") {

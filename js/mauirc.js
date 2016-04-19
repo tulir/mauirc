@@ -22,24 +22,11 @@ function connect() {
     if (!msgcontainer) {
       $("#container").loadTemplate($("#template-main"), {append: false, isFile: false, async: false})
       $("#settings").loadTemplate($("#template-settings"), {append: false, isFile: false, async: false})
-      $("#messages").loadTemplate($("#template-channel"), {
-        channel: "status-messages"
-      }, {append: true, isFile: false, async: false})
-      $("#networks").loadTemplate($("#template-channel-switcher"), {
-        channel: "status-enter",
-        channelname: "mauIRC Status",
-        onclick: "switchTo('mauIRC Status', 'mauIRC Status')"
-      }, {append: true, isFile: false, async: false})
-
-      switchTo('mauIRC Status', 'mauIRC Status')
 
       msgcontainer = true
     }
 
-    showAlert("success", "<b>Connected to server.<b>")
-
-    $('#message-send').removeAttr('disabled')
-    $('#message-text').removeAttr('disabled')
+    $("#disconnected").addClass("hidden")
 
     connected = true
   }
@@ -107,15 +94,21 @@ function connect() {
     if (connected) {
       connected = false
 
-      showAlert("error", "<b>Disconnected from server!</b>")
-      scrollDown()
-      $('#message-send').attr('disabled', true)
-      $('#message-text').attr('disabled', true)
+      $("#disconnected").removeClass("hidden")
     }
     if (!authfail) {
-      setTimeout(reconnect, 2500)
+      timeout = setTimeout(reconnect, 20000)
     }
   }
+}
+
+function tryReconnect() {
+  clearTimeout(timeout)
+  $("#try-reconnect").attr("disabled", true)
+  setTimeout(function(){
+    $("#try-reconnect").removeAttr("disabled")
+  }, 3000)
+  reconnect()
 }
 
 function reconnect() {
@@ -137,7 +130,7 @@ function reconnect() {
         $("#container").loadTemplate($("#template-login"), {})
         msgcontainer = false
       } else {
-        setTimeout(reconnect, 5000)
+        timeout = setTimeout(reconnect, 20000)
       }
     }
   })
@@ -158,9 +151,14 @@ function history(network, channel, n) {
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      showAlert("error", sprintf("Failed to fetch history of %s @ %s: %s %s", channel, network, textStatus, errorThrown))
-      scrollDown()
       console.log(jqXHR)
+      if(getActiveNetwork().length === 0 || getActiveChannel().length === 0) {
+        return
+      }
+      $(sprintf("#chan-%s-%s", getActiveNetwork(), getActiveChannel())).loadTemplate($(sprintf("#template-error")), {
+        message: sprintf("Failed to fetch history: %s %s", channel, network, textStatus, errorThrown)
+      }, {isFile: false, async: false, append: true})
+      scrollDown()
     }
   })
 }

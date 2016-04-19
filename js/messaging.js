@@ -25,10 +25,6 @@ function send() {
     return
   }
 
-  if (getActiveChannel() === "mauIRC Status") {
-    return
-  }
-
   if (msg.startsWith("/")) {
     var args = msg.split(" ")
     command = args[0].substring(1, args[0].length).toLowerCase()
@@ -135,23 +131,7 @@ function send() {
 }
 
 function receiveCmdResponse(message) {
-  var statusMsgs = $("#status-messages")
-  statusMsgs.loadTemplate($("#template-message"), {
-    sender: "mauIRCd",
-    date: "",
-    id: "cmdresponse",
-    message: linkifyHtml(message)
-  }, {append: true, isFile: false, async: false})
-
-  if (!document.hasFocus() && isNew) {
-    notify(sender, message)
-  }
-
-  if (statusMsgs.hasClass("hidden")) {
-    $("#status-enter").addClass("new-messages")
-  } else {
-    scrollDown()
-  }
+  console.log("Received command response:", message)
 }
 
 function receive(id, network, channel, timestamp, sender, command, message, ownmsg, preview, isNew) {

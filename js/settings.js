@@ -69,7 +69,6 @@ function snChangeMsgGroupDelay() {
 }
 
 function snClearHistory() {
-	if(getActiveChannel() === "mauIRC Status") return
   sendMessage({
     type: "clear",
     network: getActiveNetwork(),
@@ -79,7 +78,6 @@ function snClearHistory() {
 }
 
 function snChangeNick() {
-	if(getActiveChannel() === "mauIRC Status") return
 	var nick = $("#network-nickname")
 	if (nick.length === 0 || nick.val().trim().length === 0) {
 		return
@@ -100,8 +98,6 @@ function snUpdateFont() {
 }
 
 function snPartAndClose() {
-	if(getActiveChannel() === "mauIRC Status") return
-
   if(getActiveChannel().startsWith("#")) {
     sendMessage({
       type: "message",

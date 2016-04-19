@@ -23,7 +23,6 @@ function getActiveChannel() {
 }
 
 function getActiveNetwork() {
-  if (getActiveChannel() === "mauIRC Status") return "mauIRC Status"
   var active = $(".network-switcher.activenet > .network-switcher-name")
   if (active.length) {
     return active.text().trim()
@@ -180,7 +179,7 @@ function closeChannel(network, channel) {
   }
 
   if (getActiveNetwork() === network && getActiveChannel() == channel) {
-    switchTo("mauIRC Status", "mauIRC Status")
+    switchToClear()
   }
   chanObj.remove()
   $(sprintf("#switchto-%s-%s", network, channelFilter(channel))).remove()
@@ -206,6 +205,17 @@ function switchView(userlist) {
   }
 }
 
+function switchToClear() {
+  getActiveChannelObj().addClass("hidden")
+  getActiveNetworkObj().addClass("hidden")
+  $(".channel-switcher.active").removeClass("active")
+  $(".network-switcher.activenet").removeClass("activenet")
+  $("#title").text("")
+  if ($("#messaging").hasClass("hidden-tablet-down")) {
+    switchView(false)
+  }
+}
+
 function switchTo(network, channel) {
   network = network.toLowerCase()
   chanFiltered = channelFilter(channel)
@@ -226,15 +236,6 @@ function switchTo(network, channel) {
 
   if ($("#messaging").hasClass("hidden-tablet-down")) {
     switchView(false)
-  }
-
-  if (channel === "mauIRC Status") {
-    $("#status-messages").removeClass("hidden")
-    $("#status-enter").addClass("active")
-    $("#status-enter").removeClass("new-messages")
-    updateUserList()
-    scrollDown()
-    return
   }
 
   if (!channelData.isHistoryFetched()) {
