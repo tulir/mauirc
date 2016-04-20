@@ -21,7 +21,7 @@ function updateUserList() {
 
     $("#userlist-list").text("")
     ch.getUsers().forEach(function(val, i, arr) {
-      $("#userlist-list").append(sprintf('<a class="pm-link" href="#" onClick="openPM(\'%s\', \'%s\')">%s</a><br>', getActiveNetwork(), ch.getUsersPlain()[i], val))
+      $("#userlist-list").append(sprintf('<a class="pm-link" href="#" onClick="openPM(\'%1$s\', \'%2$s\')" data-simplename="%2$s">%3$s</a><br>', getActiveNetwork(), ch.getUsersPlain()[i], val))
     })
     $("#open-user-list").removeClass("hidden-tablet-down")
     $("#open-settings").addClass("hidden-tablet-down")
