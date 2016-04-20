@@ -23,10 +23,35 @@ $(function() {
           type: "delete",
           id: $(this).parent().attr("id").slice("msgwrap-".length),
         })
+      } else if (key === "copy") {
+        var element = $(this).find(".message-text")
+        if (element.length === 0) {
+          element = $(this).find(".clipboard-data")
+          if (element.length === 0) {
+            console.log("Clipboard data not found!")
+            return
+          }
+        }
+        var wasHidden = false
+        if (element.hasClass("hidden")) {
+          wasHidden = true
+          element.removeClass("hidden")
+        }
+        var selection = window.getSelection()
+        var range = document.createRange()
+        range.selectNodeContents(element[0])
+        selection.removeAllRanges()
+        selection.addRange(range)
+        document.execCommand("copy")
+        selection.removeAllRanges()
+        if (wasHidden) {
+          element.addClass("hidden")
+        }
       }
     },
     items: {
-      delete: {name: "Delete", icon: "delete"}
+      delete: {name: "Delete Message", icon: "delete"},
+      copy: {name: "Copy", icon: "copy"}
     }
   });
 

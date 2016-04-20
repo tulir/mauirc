@@ -159,15 +159,19 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   if (command === "action") {
     templateData.prefix = "<b>★</b> "
     templateData.class = "action"
+    templateData.clipboard = "★ " + sender + " " + message
   } else if (command === "join" || command === "part" || command === "quit") {
     templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
     templateData.class = "joinpart"
+    templateData.clipboard = sender + " " + (command === "join" ? "joined " : "left: ") + message
   } else if (command === "nick") {
     templateData.message = sprintf("is now known as <b>%s</b>", message)
     templateData.class = "nick"
+    templateData.clipboard = sprintf("%s is now known as %s", sender, message)
   } else if (command == "topic") {
     templateData.message = sprintf("changed the topic to <b>%s</b>", message)
     templateData.class = "topic"
+    templateData.clipboard = sprintf("%s changed the topic to %s", sender, message)
   } else {
     var template = "message"
 
