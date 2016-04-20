@@ -21,10 +21,10 @@ $(function() {
     items: {
       query: {name: "Open Query", icon: "query", disabled: false},
       whois: {name: "Whois", icon: "whois", disable: true},
-      op: {name: "Give OP", icon: "op", disabled: true},
-      deop: {name: "Take OP", icon: "deop", disabled: true},
-      kick: {name: "Kick", icon: "kick", disabled: true},
-      ban: {name: "Ban", icon: "ban", disabled: true}
+      op: {name: "Give OP", icon: "op", disabled: false},
+      deop: {name: "Take OP", icon: "deop", disabled: false},
+      kick: {name: "Kick", icon: "kick", disabled: false},
+      ban: {name: "Ban", icon: "ban", disabled: false}
     }
   });
 
@@ -50,6 +50,28 @@ $(function() {
 function ctxUserList(key, options) {
   if (key === "query") {
     $(this).click()
+  } else if (key === "op") {
+    sendMessage({
+      type: "mode",
+      network: getActiveNetwork(),
+      channel: getActiveChannel(),
+      message: sprintf("+o %s", $(this).attr("data-simplename"))
+    })
+  } else if (key === "deop") {
+    sendMessage({
+      type: "mode",
+      network: getActiveNetwork(),
+      channel: getActiveChannel(),
+      message: sprintf("-o %s", $(this).attr("data-simplename"))
+    })
+  } else if (key === "kick") {
+    sendMessage({
+      type: "kick",
+      network: getActiveNetwork(),
+      channel: getActiveChannel(),
+      user: $(this).attr("data-simplename"),
+      message: "Get out"
+    })
   }
 }
 
