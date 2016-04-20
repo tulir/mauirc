@@ -171,8 +171,18 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     message = message.substr(index + 1)
     templateData.sender = sender
     templateData.message = sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, linkifyHtml(escapeHtml(message)))
-    templateData.class = "joinpart"
+    templateData.class = "action"
     templateData.clipboard = sprintf("%s was kicked by %s: %s", sender, kicker, message)
+  } else if (command === "mode") {
+    var parts = message.split(" ")
+    if (parts.length > 1) {
+      templateData.message = sprintf("set mode <b>%s</b> for <b>%s</b>", parts[0], parts[1])
+      templateData.clipboard = sprintf("set mode %s for %s", parts[0], parts[1])
+    } else {
+      templateData.message = sprintf("set channel mode <b>%s</b>", parts[0])
+      templateData.clipboard = sprintf("set channel mode %s", parts[0])
+    }
+    templateData.class = "action"
   } else if (command === "nick") {
     templateData.message = sprintf("is now known as <b>%s</b>", message)
     templateData.class = "nick"
