@@ -51,7 +51,7 @@ $(function() {
     },
     items: {
       delete: {name: "Delete Message", icon: "delete"},
-      copy: {name: "Copy", icon: "copy"}
+      copy: {name: "Copy Text", icon: "copy"}
     }
   });
 

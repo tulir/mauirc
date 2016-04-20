@@ -159,11 +159,11 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   if (command === "action") {
     templateData.prefix = "<b>★</b> "
     templateData.class = "action"
-    templateData.clipboard = "★ " + sender + " " + message
+    templateData.clipboard = sprintf("* %s %s", sender, message)
   } else if (command === "join" || command === "part" || command === "quit") {
     templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
     templateData.class = "joinpart"
-    templateData.clipboard = sender + " " + (command === "join" ? "joined " : "left: ") + message
+    templateData.clipboard = sprintf("%s %s %s", sender, command === "join" ? "joined" : "left:", message)
   } else if (command === "nick") {
     templateData.message = sprintf("is now known as <b>%s</b>", message)
     templateData.class = "nick"
