@@ -164,6 +164,15 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
     templateData.class = "joinpart"
     templateData.clipboard = sprintf("%s %s %s", sender, command === "join" ? "joined" : "left:", message)
+  } else if (command === "kick") {
+    var index = message.indexOf(":")
+    var kicker = templateData.sender
+    sender = message.substr(0, index)
+    message = message.substr(index + 1)
+    templateData.sender = sender
+    templateData.message = sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, linkifyHtml(escapeHtml(message)))
+    templateData.class = "joinpart"
+    templateData.clipboard = sprintf("%s was kicked by %s: %s", sender, kicker, message)
   } else if (command === "nick") {
     templateData.message = sprintf("is now known as <b>%s</b>", message)
     templateData.class = "nick"
