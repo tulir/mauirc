@@ -138,11 +138,13 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   network = network.toLowerCase()
   var netObj = $(sprintf("#net-%s", network))
   if (netObj.length === 0) {
+    if (command == "part" && sender == data.getNetwork(network).getNick()) return
     openNetwork(network)
     netObj = $(sprintf("#net-%s", network))
   }
   var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   if (chanObj.length === 0) {
+    if (command == "part" && sender == data.getNetwork(network).getNick()) return
     openChannel(network, channel, false)
     chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   }
