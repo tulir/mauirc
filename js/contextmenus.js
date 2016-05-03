@@ -55,7 +55,8 @@ function ctxUserList(key, options) {
       type: "message",
       network: getActiveNetwork(),
       channel: $(this).attr("data-simplename"),
-      command: "whois"
+      command: "whois",
+      message: "whois"
     })
   } else if (key === "op") {
     sendMessage({
