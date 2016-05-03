@@ -84,6 +84,8 @@ function connect() {
       $(sprintf("#chan-%s-%s", ed.object.network, channelFilter(ed.object.channel))).html("")
     } else if (ed.type === "delete") {
       $(sprintf("#msgwrap-%s", ed.object)).remove()
+    } else if (ed.type === "whois") {
+      console.log(ed.object)
     }
   }
 
