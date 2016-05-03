@@ -19,12 +19,12 @@ $(function() {
     selector: '.pm-link',
     callback: ctxUserList,
     items: {
-      query: {name: "Open Query", icon: "query", disabled: false},
-      whois: {name: "Whois", icon: "whois", disable: true},
-      op: {name: "Give OP", icon: "op", disabled: false},
-      deop: {name: "Take OP", icon: "deop", disabled: false},
-      kick: {name: "Kick", icon: "kick", disabled: false},
-      ban: {name: "Ban", icon: "ban", disabled: false}
+      query: {name: "Open Query", icon: "query"},
+      whois: {name: "Whois", icon: "whois"},
+      op: {name: "Give OP", icon: "op"},
+      deop: {name: "Take OP", icon: "deop"},
+      kick: {name: "Kick", icon: "kick"},
+      ban: {name: "Ban", icon: "ban"}
     }
   });
 
@@ -50,6 +50,13 @@ $(function() {
 function ctxUserList(key, options) {
   if (key === "query") {
     $(this).click()
+  } else if (key === "whois") {
+    sendMessage({
+      type: "message",
+      network: getActiveNetwork(),
+      channel: $(this).attr("data-simplename"),
+      command: "whois"
+    })
   } else if (key === "op") {
     sendMessage({
       type: "mode",
