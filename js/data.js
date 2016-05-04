@@ -17,7 +17,8 @@
 function DataStore() {
   this.netlist = {},
   this.globalscripts = {},
-  this.messageGroupDelay = 3
+  this.messageGroupDelay = 3,
+  this.messageFormatting = true
 }
 
 DataStore.prototype.getMessageGroupDelay = function() {

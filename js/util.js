@@ -77,3 +77,62 @@ String.prototype.escapeRegex = function(str) {
 String.prototype.replaceAll = function(search, replacement) {
     return this.replace(new RegExp(this.escapeRegex(search), 'g'), replacement)
 }
+
+String.prototype.replaceAt = function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
+}
+
+function encodeMessage(msg){
+  for (var i = 0; i < msg.length; i++) {
+    var repl
+    var char = msg.charAt(i)
+    switch (char) {
+    case "~": // Italic
+      repl = '\x1D'
+      break
+    case "*": // Bold
+      repl = '\x02'
+      break
+    case "_": // Underline
+      repl = '\x1F'
+      break
+    case "^": // Color
+      repl = '\x03'
+    default:
+      continue
+    }
+    nextIndex = msg.indexOf(char, i + 1)
+    if (nextIndex !== -1) {
+      msg = msg.replaceAt(i, repl).replaceAt(nextIndex, repl)
+    }
+  }
+  return msg
+}
+
+function decodeMessage(msg) {
+  for (var i = 0; i < msg.length; i++) {
+    var repl
+    var char = msg.charAt(i)
+    switch (char) {
+    case '\x1D': // Italic
+      repl = 'i'
+      break
+    case '\x02': // Bold
+      repl = 'b'
+      break
+    case '\x1F': // Underline
+      repl = 'u'
+      break
+    case '\x03': // Color
+      // TODO colors?
+    default:
+      continue
+    }
+    nextIndex = msg.indexOf(char, i + 1)
+    if (nextIndex !== -1) {
+      // TODO fix the loop or this replace (length changes)
+      msg = msg.replaceAt(i, "<" + repl + ">").replaceAt(nextIndex, "</" + repl + ">")
+    }
+  }
+  return msg
+}
