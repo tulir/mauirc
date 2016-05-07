@@ -113,18 +113,18 @@ var colors = {
   15: "#D2D2D2"
 }
 
-var italicRegex = new RegExp("\x1D([^\x1D]*)?\x1D?", "g");
-var boldRegex = new RegExp("\x02([^\x02]*)?\x02?", "g");
-var underlineRegex = new RegExp("\x1F([^\x1F]*)?\x1F?", "g");
-var bothColorRegex = new RegExp("\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?\x03?", "g")
-var fgColorRegex = new RegExp("\x03(1[0-5]|[0-9])([^\x03]*)?\x03?", "g")
+var italicDecRegex = new RegExp("\x1D([^\x1D]*)?\x1D?", "g");
+var boldDecRegex = new RegExp("\x02([^\x02]*)?\x02?", "g");
+var underlineDecRegex = new RegExp("\x1F([^\x1F]*)?\x1F?", "g");
+var bothColorDecRegex = new RegExp("\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?\x03?", "g")
+var fgColorDecRegex = new RegExp("\x03(1[0-5]|[0-9])([^\x03]*)?\x03?", "g")
 
 function decodeMessage(msg) {
-  msg = msg.replace(italicRegex, "<i>$1</i>")
-  msg = msg.replace(boldRegex, "<b>$1</b>")
-  msg = msg.replace(underlineRegex, "<u>$1</u>")
-  msg = msg.replace(bothColorRegex, "<span style='color: $1; background-color: $2;'>$3</span>")
-  msg = msg.replace(fgColorRegex, "<span style='color: $1;'>$2</span>")
+  msg = msg.replace(italicDecRegex, "<i>$1</i>")
+  msg = msg.replace(boldDecRegex, "<b>$1</b>")
+  msg = msg.replace(underlineDecRegex, "<u>$1</u>")
+  msg = msg.replace(bothColorDecRegex, "<span style='color: $1; background-color: $2;'>$3</span>")
+  msg = msg.replace(fgColorDecRegex, "<span style='color: $1;'>$2</span>")
 
   for (var i = 0; i < 16; i++) {
     msg = msg.replaceAll(sprintf("color: %d;", i), sprintf("color: %s;", colors[i]))
