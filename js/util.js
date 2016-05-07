@@ -57,25 +57,25 @@ function channelFilter(channel) {
 }
 
 var tagsToEscape = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;'
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;'
 }
 
 function escapeTag(tag) {
-    return tagsToEscape[tag] || tag
+  return tagsToEscape[tag] || tag
 }
 
 function escapeHtml(str) {
-    return str.replace(/[&<>]/g, escapeTag)
+  return str.replace(/[&<>]/g, escapeTag)
 }
 
 String.prototype.escapeRegex = function(str) {
-    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
+  return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
 }
 
 String.prototype.replaceAll = function(search, replacement) {
-    return this.replace(new RegExp(this.escapeRegex(search), 'g'), replacement)
+  return this.replace(new RegExp(this.escapeRegex(search), 'g'), replacement)
 }
 
 
