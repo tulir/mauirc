@@ -116,7 +116,7 @@ function send() {
       network: getActiveNetwork(),
       channel: getActiveChannel(),
       command: "privmsg",
-      message: msg
+      message: encodeMessage(msg)
     }
   }
 
@@ -154,7 +154,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     date: moment(timestamp * 1000).format("HH:mm:ss"),
     id: sprintf("msg-%d", id),
     wrapid: sprintf("msgwrap-%d", id),
-    message: linkifyHtml(escapeHtml(message)),
+    message: linkifyHtml(decodeMessage(escapeHtml(message))),
     timestamp: timestamp
   }
 
