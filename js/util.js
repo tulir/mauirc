@@ -79,11 +79,11 @@ String.prototype.replaceAll = function(search, replacement) {
 }
 
 
-var italicEncRegex = new RegExp("_(.*)_", "g");
-var boldEncRegex = new RegExp("\\*(.*)\\*", "g");
-var underlineEncRegex = new RegExp("~(.*)~", "g");
-var bothColorEncRegex = new RegExp("c(1[0-5]|[0-9])>(.*)<", "g")
-var fgColorEncRegex = new RegExp("c(1[0-5]|[0-9]),(1[0-5]|[0-9])>(.*)<", "g")
+var italicEncRegex = new RegExp("_([^_]*)_", "g");
+var boldEncRegex = new RegExp("\\*([^\\*]*)\\*", "g");
+var underlineEncRegex = new RegExp("~([^~]*)~", "g");
+var bothColorEncRegex = new RegExp("c(1[0-5]|[0-9])>([^<]*)<", "g")
+var fgColorEncRegex = new RegExp("c(1[0-5]|[0-9]),(1[0-5]|[0-9])>([^<]*)<", "g")
 
 function encodeMessage(msg){
   msg = msg.replace(italicEncRegex, "\x1D$1\x1D")
