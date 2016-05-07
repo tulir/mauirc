@@ -82,15 +82,15 @@ String.prototype.replaceAll = function(search, replacement) {
 var italicEncRegex = new RegExp("_(.*)_", "g");
 var boldEncRegex = new RegExp("\\*(.*)\\*", "g");
 var underlineEncRegex = new RegExp("~(.*)~", "g");
-//var bothColorEncRegex = new RegExp("\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?", "g")
-//var fgColorEncRegex = new RegExp("\x03(1[0-5]|[0-9])([^\x03]*)?", "g")
+var bothColorEncRegex = new RegExp("c(1[0-5]|[0-9])>(.*)<", "g")
+var fgColorEncRegex = new RegExp("c(1[0-5]|[0-9]),(1[0-5]|[0-9])>(.*)<", "g")
 
 function encodeMessage(msg){
   msg = msg.replace(italicEncRegex, "\x1D$1\x1D")
   msg = msg.replace(boldEncRegex, "\x02$1\x02")
   msg = msg.replace(underlineEncRegex, "\x1F$1\x1F")
-  //msg = msg.replace(bothColorEncRegex, "<span style='color: $1; background-color: $2;'>$3</span>")
-  //msg = msg.replace(fgColorEncRegex, "<span style='color: $1;'>$2</span>")
+  msg = msg.replace(bothColorEncRegex, "\x03$1$2")
+  msg = msg.replace(fgColorEncRegex, "\x03$1,$2$3")
   return msg
 }
 
