@@ -132,3 +132,7 @@ function decodeMessage(msg) {
 
   return msg
 }
+
+function removeFormatChars(msg) {
+  return msg.replace(/\x1D|\x02|\x1F|\x03/g, "")
+}

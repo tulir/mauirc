@@ -154,7 +154,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     date: moment(timestamp * 1000).format("HH:mm:ss"),
     id: sprintf("msg-%d", id),
     wrapid: sprintf("msgwrap-%d", id),
-    message: linkifyHtml(decodeMessage(escapeHtml(message))),
+    message: linkifyHtml(escapeHtml(message)),
     timestamp: timestamp
   }
 
@@ -204,6 +204,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   templateData.class = "message " + templateData.class
+  templateData.message = decodeMessage(templateData.message)
 
   if (template === undefined) {
     var template = "action"
@@ -271,6 +272,7 @@ function getHighlights(network, message) {
 }
 
 function notifyMessage(network, channel, highlight, sender, message) {
+  message = removeFormatChars(message)
   var notifs = data.channelExists(network, channel) ? data.getChannel(network, channel).getNotificationLevel() : "all"
 
   if ((notifs == "all" || (notifs == "highlight" && highlight)) && !document.hasFocus()) {
@@ -300,7 +302,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
 
   if (!isNew) {
     if (parseInt(prevMsgTime) < timestamp + data.getMessageGroupDelay()) {
-      prevMsg.find(".message > .message-text").prepend(message + "\n")
+      prevMsg.find(".message > .message-text").prepend(decodeMessage(message) + "\n")
       prevMsg.find(".message > .message-date").html(moment(timestamp * 1000).format("HH:mm:ss"))
       prevMsg.attr("timestamp", timestamp)
       joinedMessages.push(id)
@@ -310,17 +312,17 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
     if (parseInt(prevMsgTime) > timestamp - data.getMessageGroupDelay()) {
       var match = getHighlights(data.getNetwork(network), message)
       if (match !== null) {
-        console.log(match)
+        messageDec = decodeMessage(message)
         prevMsg.find(".message > .message-text").append(
           sprintf('\n%s<span class="highlighted-text">%s</span>%s',
-            message.slice(0, match.index),
-            message.slice(match.index, match.index + match.length),
-            message.slice(match.index + match.length)
+            messageDec.slice(0, match.index),
+            messageDec.slice(match.index, match.index + match.length),
+            messageDec.slice(match.index + match.length)
           )
         )
         prevMsg.find(".message").addClass("highlight")
       } else {
-        prevMsg.find(".message > .message-text").append("\n" + escapeHtml(message))
+        prevMsg.find(".message > .message-text").append("\n" + decodeMessage(escapeHtml(message)))
       }
       scrollDown()
       prevMsg.attr("timestamp", timestamp)
