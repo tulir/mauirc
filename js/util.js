@@ -78,61 +78,57 @@ String.prototype.replaceAll = function(search, replacement) {
     return this.replace(new RegExp(this.escapeRegex(search), 'g'), replacement)
 }
 
-String.prototype.replaceAt = function(index, character) {
-    return this.substr(0, index) + character + this.substr(index+character.length);
-}
+
+var italicEncRegex = new RegExp("_(.*)_", "g");
+var boldEncRegex = new RegExp("\\*(.*)\\*", "g");
+var underlineEncRegex = new RegExp("~(.*)~", "g");
+//var bothColorEncRegex = new RegExp("\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?", "g")
+//var fgColorEncRegex = new RegExp("\x03(1[0-5]|[0-9])([^\x03]*)?", "g")
 
 function encodeMessage(msg){
-  for (var i = 0; i < msg.length; i++) {
-    var repl
-    var char = msg.charAt(i)
-    switch (char) {
-    case "~": // Italic
-      repl = '\x1D'
-      break
-    case "*": // Bold
-      repl = '\x02'
-      break
-    case "_": // Underline
-      repl = '\x1F'
-      break
-    case "^": // Color
-      repl = '\x03'
-    default:
-      continue
-    }
-    nextIndex = msg.indexOf(char, i + 1)
-    if (nextIndex !== -1) {
-      msg = msg.replaceAt(i, repl).replaceAt(nextIndex, repl)
-    }
-  }
+  msg = msg.replace(italicEncRegex, "\x1D$1\x1D")
+  msg = msg.replace(boldEncRegex, "\x02$1\x02")
+  msg = msg.replace(underlineEncRegex, "\x1F$1\x1F")
+  //msg = msg.replace(bothColorEncRegex, "<span style='color: $1; background-color: $2;'>$3</span>")
+  //msg = msg.replace(fgColorEncRegex, "<span style='color: $1;'>$2</span>")
   return msg
 }
 
+var colors = {
+  0: "#FFFFFF",
+  1: "#000000",
+  2: "#00007F",
+  3: "#009300",
+  4: "#FF0000",
+  5: "#7F0000",
+  6: "#9C009C",
+  7: "#FC7F00",
+  8: "#FFFF00",
+  9: "#00FC00",
+  10: "#009393",
+  11: "#00FFFF",
+  12: "#0000FC",
+  13: "#FF00FF",
+  14: "#7F7F7F",
+  15: "#D2D2D2"
+}
+
+var italicRegex = new RegExp("\x1D([^\x1D]*)?\x1D?", "g");
+var boldRegex = new RegExp("\x02([^\x02]*)?\x02?", "g");
+var underlineRegex = new RegExp("\x1F([^\x1F]*)?\x1F?", "g");
+var bothColorRegex = new RegExp("\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?\x03?", "g")
+var fgColorRegex = new RegExp("\x03(1[0-5]|[0-9])([^\x03]*)?\x03?", "g")
+
 function decodeMessage(msg) {
-  for (var i = 0; i < msg.length; i++) {
-    var repl
-    var char = msg.charAt(i)
-    switch (char) {
-    case '\x1D': // Italic
-      repl = 'i'
-      break
-    case '\x02': // Bold
-      repl = 'b'
-      break
-    case '\x1F': // Underline
-      repl = 'u'
-      break
-    case '\x03': // Color
-      // TODO colors?
-    default:
-      continue
-    }
-    nextIndex = msg.indexOf(char, i + 1)
-    if (nextIndex !== -1) {
-      // TODO fix the loop or this replace (length changes)
-      msg = msg.replaceAt(i, "<" + repl + ">").replaceAt(nextIndex, "</" + repl + ">")
-    }
+  msg = msg.replace(italicRegex, "<i>$1</i>")
+  msg = msg.replace(boldRegex, "<b>$1</b>")
+  msg = msg.replace(underlineRegex, "<u>$1</u>")
+  msg = msg.replace(bothColorRegex, "<span style='color: $1; background-color: $2;'>$3</span>")
+  msg = msg.replace(fgColorRegex, "<span style='color: $1;'>$2</span>")
+
+  for (var i = 0; i < 16; i++) {
+    msg = msg.replaceAll(sprintf("color: %d;", i), sprintf("color: %s;", colors[i]))
   }
+
   return msg
 }
