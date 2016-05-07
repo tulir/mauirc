@@ -17,137 +17,152 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .message {
-    display          : inline-block;
-    position         : relative;
-    width            : auto;
-    min-width        : 30%;
-    max-width        : 80%;
-    margin-bottom    : .75rem;
-    padding          : .375em .75em;
-    border-radius    : .25rem;
-    background-color : #FAFAFA;
-    text-align       : left;
+    position: relative;
+
+    display: inline-block;
+
+    width: auto;
+    min-width: 30%;
+    max-width: 80%;
+    margin-bottom: .75rem;
+    padding: .375em .75em;
+
+    text-align: left;
+
+    border-radius: .25rem;
+    background-color: #FAFAFA;
 }
 
 @media (min-width: 1000px) {
     .message {
-        min-width : 25%;
-        max-width : 70%;
+        min-width: 25%;
+        max-width: 70%;
     }
 }
 
 @media (min-width: 1200px) {
     .message {
-        min-width : 20%;
-        max-width : 60%;
+        min-width: 20%;
+        max-width: 60%;
     }
 }
 
 @media (min-width: 1500px) {
     .message {
-        min-width : 15%;
+        min-width: 15%;
     }
 }
 
 .message-wrapper {
-    margin-right : 0.25em;
+    margin-right: 0.25em;
 }
 
 .own-message {
-    text-align : right;
+    text-align: right;
 }
 
 .highlight,
 .highlight > .message-date {
-    color            : #FFFFFF;
-    background-color : #50D367;
+    color: #FFFFFF;
+    background-color: #50D367;
 }
 
 .highlighted-text {
-    text-decoration : underline;
+    text-decoration: underline;
 }
 
 .joinpart,
 .nickchange {
-    color            : #9A9A9A;
-    background-color : #EBEBEB;
+    color: #9A9A9A;
+    background-color: #EBEBEB;
 }
 
 .message-date {
-    float      : right;
-    margin-top : 0.3rem;
-    color      : #9A9A9A;
-    font-size  : 0.7rem;
+    float: right;
+
+    margin-top: 0.3rem;
+
+    color: #9A9A9A;
+
+    font-size: 0.7rem;
 }
 
 .message-sender {
-    font-weight : bold;
+    font-weight: bold;
 }
 
 .message-text {
-    float         : left;
-    overflow-wrap : break-word;
-    hyphens       : auto;
-    word-break    : break-word;
-    word-wrap     : break-word;
-    white-space   : pre-wrap;
+    float: left;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+
+    overflow-wrap: break-word;
 }
 
 .action-data {
-    float : left;
+    float: left;
 }
 
 .action-text {
-    display   : inline;
-    word-wrap : break-word;
+    display: inline;
+
+    word-wrap: break-word;
 }
 
 .action-sender {
-    display     : inline;
-    font-weight : bold;
+    display: inline;
+
+    font-weight: bold;
 }
 
 .message-preview {
-    margin-top : 0.25rem;
+    margin-top: 0.25rem;
 }
 
 .preview-info {
-    float : left;
+    float: left;
 }
 
 .preview-sitename {
-    color       : #9A9A9A;
-    font-size   : 1em;
-    font-weight : normal;
+    color: #9A9A9A;
+
+    font-size: 1em;
+    font-weight: normal;
 }
 
 .preview-title {
-    font-size   : 1em;
-    font-weight : bold;
+    font-size: 1em;
+    font-weight: bold;
 }
 
 .preview-description {
-    font-size : 1em;
+    font-size: 1em;
 }
 
 .preview-image {
-    width  : 8rem;
-    height : 8rem;
-    float  : right;
+    float: right;
+
+    width: 8rem;
+    height: 8rem;
 }
 
 .preview-full-size {
-    width     : auto;
-    max-width : 100%;
-    height    : auto;
-    float     : left;
-    margin    : 0;
+    float: left;
+
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
 }
 
 .preview-modal {
-    display    : none;
-    width      : auto;
-    max-width  : 95%;
-    height     : auto;
-    max-height : 95%;
+    display: none;
+
+    width: auto;
+    max-width: 95%;
+    height: auto;
+    max-height: 95%;
 }

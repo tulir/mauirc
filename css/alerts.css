@@ -17,76 +17,82 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .alert {
-    box-sizing    : border-box;
-    width         : 90%;
-    margin-bottom : 1rem;
-    padding       : 1rem;
-    border        : 1px solid transparent;
-    border-radius : .25rem;
+    box-sizing: border-box;
+    width: 90%;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    border: 1px solid transparent;
+    border-radius: .25rem;
 }
 
 @media (min-width: 750px) {
     .alert {
-        width : 60%;
+        width: 60%;
     }
 }
 
 @media (min-width: 1500px) {
     .alert {
-        width : 45%;
+        width: 45%;
     }
 }
 
 .alert-success {
-    color            : #44A944;
-    border-color     : #CCEBCC;
-    background-color : #DEF2DE;
+    color: #44A944;
+    border-color: #CCEBCC;
+    background-color: #DEF2DE;
 }
 
 .alert-error {
-    color            : #A94444;
-    border-color     : #EBCCCC;
-    background-color : #F2DEDE;
+    color: #A94444;
+    border-color: #EBCCCC;
+    background-color: #F2DEDE;
 }
 
 .alert-info {
-    color            : #31708f;
-    border-color     : #bcdff1;
-    background-color : #d9edf7;
+    color: #31708f;
+    border-color: #bcdff1;
+    background-color: #d9edf7;
 }
 
 .disconnected-mauirc {
-    z-index          : 9001;
-    position         : absolute;
-    top              : 0;
-    right            : 0;
-    bottom           : 0;
-    left             : 0;
-    background-color : rgba(150, 150, 150, 0.5);
+    position: absolute;
+    z-index: 9001;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-color: rgba(150, 150, 150, 0.5);
 }
 
 .disconnected-content {
-    position         : absolute;
-    top              : 50%;
-    left             : 50%;
-    width            : 30rem;
-    height           : 6rem;
-    margin-top       : -3rem;
-    margin-left      : -15rem;
-    color            : #A94444;
-    border           : 1px solid transparent;
-    border-color     : #EBCCCC;
-    border-radius    : .25rem;
-    background-color : #F2DEDE;
-    text-align       : center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 30rem;
+    height: 6rem;
+    margin-top: -3rem;
+    margin-left: -15rem;
+
+    text-align: center;
+
+    color: #A94444;
+    border: 1px solid transparent;
+    border-color: #EBCCCC;
+    border-radius: .25rem;
+    background-color: #F2DEDE;
 }
 
 .disconnected-text {
-    margin-bottom : 0.5rem;
-    font-size     : 2rem;
-    font-weight   : bold;
+    margin-bottom: 0.5rem;
+
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .disconnected-button {
-    font-size : 1.5rem;
+    font-size: 1.5rem;
 }

@@ -17,35 +17,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 body {
-    color            : #212121;
-    background-color : #E3E3E3;
-    font-family      : "Raleway",
-                       "Lato",
-                       "Roboto",
-                       "HelveticaNeue",
-                       "Helvetica Neue",
-                       Helvetica,
-                       "Liberation Sans",
-                       "Fira Sans",
-                       Arial,
-                       sans-serif;
+    color: #212121;
+    background-color: #E3E3E3;
+
+    font-family: "Raleway", "Lato", "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, "Liberation Sans",
+                 "Fira Sans", Arial, sans-serif;
 }
 
 h1 {
-    font-size   : 40px;
-    font-weight : bold;
+    font-size: 40px;
+    font-weight: bold;
 }
 
 h2 {
-    font-size   : 30px;
-    font-weight : bold;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 h3 {
-    font-size   : 20px;
-    font-weight : bold;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 p {
-    font-size : 16px;
+    font-size: 16px;
 }

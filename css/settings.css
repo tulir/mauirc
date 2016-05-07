@@ -17,58 +17,59 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .settings {
-	position : fixed;
-	top      : 1rem;
-	right    : 1rem;
-	left     : 1rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
 }
 
 @media (min-width: 750px) {
 	.settings {
-		right : 6rem;
-		left  : 6rem;
+	    right: 6rem;
+	    left: 6rem;
 	}
 }
 
 @media (min-width: 1000px) {
 	.settings {
-		right : 10rem;
-		left  : 10rem;
+	    right: 10rem;
+	    left: 10rem;
 	}
 }
 
 @media (min-width: 1200px) {
 	.settings {
-		right : 18rem;
-		left  : 18rem;
+	    right: 18rem;
+	    left: 18rem;
 	}
 }
 
 @media (min-width: 1500px) {
 	.settings {
-		right : 24rem;
-		left  : 24rem;
+	    right: 24rem;
+	    left: 24rem;
 	}
 }
 
 @media (min-width: 1800px) {
 	.settings {
-		right : 32rem;
-		left  : 32rem;
+	    right: 32rem;
+	    left: 32rem;
 	}
 }
 
 .settings-top-buttons {
-	border-radius    : .25rem;
-	background-color : #D6D6D6;
+    border-radius: .25rem;
+    background-color: #D6D6D6;
 }
 
 .btn-clear-history,
 .btn-leave-settings,
 .btn-part-channel {
-	display    : table-cell;
-	box-sizing : border-box;
-	width      : 50%;
+    display: table-cell;
+
+    box-sizing: border-box;
+    width: 50%;
 }
 
 .btn-leave-settings {
@@ -76,79 +77,90 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .settings-container {
-	display         : table;
-	width           : 100%;
-	border-collapse : separate;
-	border-spacing  : .375rem;
-	table-layout    : fixed;
-	vertical-align  : middle;
+    display: table;
+
+    width: 100%;
+
+    table-layout: fixed;
+    border-spacing: .375rem;
+
+    vertical-align: middle;
+
+    border-collapse: separate;
 }
 
 .settings-entry {
-	display : table-row;
+    display: table-row;
 }
 
 .settings-title {
-	margin-top    : 1.25rem;
-	margin-bottom : 0.5rem;
-	text-align    : center;
-	font-size     : 1.5rem;
-	font-weight   : bold;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+
+    text-align: center;
+
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .settings-label {
-	display : table-cell;
+    display: table-cell;
 }
 
 .settings-value {
-	display          : table-cell;
-	box-sizing       : border-box;
-	width            : 100%;
-	padding          : .375rem 1rem;
-	color            : inherit;
-	border           : 1px solid #9A9A9A;
-	border-radius    : .25rem;
-	background-color : #FAFAFA;
-	font-size        : 1rem;
+    display: table-cell;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding: .375rem 1rem;
+
+    color: inherit;
+    border: 1px solid #9A9A9A;
+    border-radius: .25rem;
+    background-color: #FAFAFA;
+
+    font-size: 1rem;
 }
 
 select.settings-value {
-	-moz-appearance    : none;
-	-webkit-appearance : none;
-	appearance         : none;
-    background         : no-repeat right #FAFAFA url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M7.41%2C8.58L12%2C13.17L16.59%2C8.58L18%2C10L12%2C16L6%2C10L7.41%2C8.58Z%22%20%2F%3E%3C%2Fsvg%3E');
+    background: no-repeat right #FAFAFA url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M7.41%2C8.58L12%2C13.17L16.59%2C8.58L18%2C10L12%2C16L6%2C10L7.41%2C8.58Z%22%20%2F%3E%3C%2Fsvg%3E');
+
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 select.settings-value > option {
-	background-color : #FAFAFA;
-	font-size        : 1rem;
+    background-color: #FAFAFA;
+
+    font-size: 1rem;
 }
 
 button.settings-value {
-	color            : #FFFFFF;
-	border           : 1px solid #50D367;
-	background-color : #50D367;
+    color: #FFFFFF;
+    border: 1px solid #50D367;
+    background-color: #50D367;
 }
 
 input[type="range"].settings-value {
-	padding : 1rem;
+    padding: 1rem;
 }
 
 .settings-inputfield {
-	width : 68%;
+    width: 68%;
 }
 
 .settings-inputbutton {
-	width       : 30%;
-	margin-left : 2%;
-	padding     : .375rem 0;
+    width: 30%;
+    margin-left: 2%;
+    padding: .375rem 0;
 }
 
 button:hover.settings-value {
-	background-color : #47B9D7;
+    background-color: #47B9D7;
 }
 
 button:disabled.settings-value {
-	color            : #CCCCCC;
-	background-color : #2AAD41;
+    color: #CCCCCC;
+    background-color: #2AAD41;
 }

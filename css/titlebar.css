@@ -17,105 +17,110 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 .titlebar {
-    position    : fixed;
-    top         : inherit;
-    right       : 0.25rem;
-    width       : 100%;
-    height      : 2.4rem;
-    text-align  : center;
-    font-weight : bold;
+    position: fixed;
+    top: inherit;
+    right: 0.25rem;
+
+    width: 100%;
+    height: 2.4rem;
+
+    text-align: center;
+
+    font-weight: bold;
 }
 
-.close-user-list,
-.open-network-list,
-.open-user-list,
-.settings-open {
-    position         : absolute;
-    background-color : inherit;
+.close-user-list, .open-network-list, .open-user-list, .settings-open {
+    position: absolute;
+
+    background-color: inherit;
 }
 
-.close-user-list:hover,
-.open-network-list:hover,
-.open-user-list:hover,
-.settings-open:hover {
-    background-color : inherit;
+.close-user-list:hover, .open-network-list:hover, .open-user-list:hover, .settings-open:hover {
+    background-color: inherit;
 }
 
 .open-network-list {
-    left : 0;
+    left: 0;
 }
 
 .settings-open {
-    right : 0;
+    right: 0;
 }
 
 .open-user-list {
-    right : 32px;
-    width : auto;
+    right: 32px;
+
+    width: auto;
 }
 
 .open-user-list-small {
-    right : 0;
+    right: 0;
 }
 
 .close-user-list {
-    left  : 0;
-    width : auto;
+    left: 0;
+
+    width: auto;
 }
 
 .open-network-list {
-    float : left;
+    float: left;
 }
 
 .title {
-    position      : absolute;
-    top           : 1.05rem;
-    right         : 6.625rem;
-    left          : 8.5rem;
-    overflow      : hidden;
-    text-align    : center;
-    text-overflow : ellipsis;
-    white-space   : nowrap;
-    transform     : translateY(-50%);
+    position: absolute;
+    top: 1.05rem;
+    right: 6.625rem;
+    left: 8.5rem;
+
+    overflow: hidden;
+
+    transform: translateY(-50%);
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .title-editor {
-    box-sizing  : border-box;
-    width       : 100%;
-    height      : 100%;
-    text-align  : center;
-    font-size   : 1rem;
-    font-weight : bold;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 @media (min-width: 750px) {
     .titlebar {
-        left  : inherit;
-        width : auto;
+        left: inherit;
+
+        width: auto;
     }
     .title {
-        right : 3.875rem;
-        left  : .25rem;
+        right: 3.875rem;
+        left: .25rem;
     }
     .messaging:not(.messaging-userlisthidden) > .titlebar > .title {
-        right : 9rem;
+        right: 9rem;
     }
 }
 
 @media (min-width: 1000px) {
     .messaging:not(.messaging-userlisthidden) > .titlebar > .title {
-        right : 10rem;
+        right: 10rem;
     }
 }
 
 @media (min-width: 1200px) {
     .messaging:not(.messaging-userlisthidden) > .titlebar > .title {
-        right : 11rem;
+        right: 11rem;
     }
 }
 
 @media (min-width: 1500px) {
     .messaging:not(.messaging-userlisthidden) > .titlebar > .title {
-        right : 12rem;
+        right: 12rem;
     }
 }
