@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function toggleSettings() {
+  "use strict"
 	if ($("#settings").hasClass("hidden")) {
     openSettings()
   } else {
@@ -23,17 +25,20 @@ function toggleSettings() {
 }
 
 function openSettings() {
+  "use strict"
   updateSettingsValues()
   $("#settings").removeClass("hidden")
   $("#container").addClass("hidden")
 }
 
 function closeSettings() {
+  "use strict"
   $("#settings").addClass("hidden")
   $("#container").removeClass("hidden")
 }
 
 function updateSettingsValues() {
+  "use strict"
   $("#network-nickname").val("")
   $("#network-highlights").val("")
   $("#channel-notifications").val("all")
@@ -57,18 +62,22 @@ function updateSettingsValues() {
 }
 
 function snChangeNotifications() {
+  "use strict"
   data.getChannel(getActiveNetwork(), getActiveChannel()).setNotificationLevel($("#channel-notifications").val())
 }
 
 function snChangeHighlights() {
+  "use strict"
   data.getNetwork(getActiveNetwork()).setHighlightsFromString($("#network-highlights").val())
 }
 
 function snChangeMsgGroupDelay() {
+  "use strict"
   data.setMessageGroupDelay($("#mauirc-message-group-delay").val())
 }
 
 function snClearHistory() {
+  "use strict"
   sendMessage({
     type: "clear",
     network: getActiveNetwork(),
@@ -78,6 +87,7 @@ function snClearHistory() {
 }
 
 function snChangeNick() {
+  "use strict"
 	var nick = $("#network-nickname")
 	if (nick.length === 0 || nick.val().trim().length === 0) {
 		return
@@ -94,10 +104,12 @@ function snChangeNick() {
 }
 
 function snUpdateFont() {
+  "use strict"
 	document.body.style.fontFamily = $("#mauirc-font").val()
 }
 
 function snPartAndClose() {
+  "use strict"
   if(getActiveChannel().startsWith("#")) {
     sendMessage({
       type: "message",
@@ -119,6 +131,7 @@ function snPartAndClose() {
 }
 
 function titleEdit() {
+  "use strict"
   if ($("#title-editor").length !== 0) {
     return
   }
@@ -142,6 +155,7 @@ function titleEdit() {
 }
 
 function titleFinish(event) {
+  "use strict"
   if (event.keyCode === 13) {
     sendMessage({
       type: "message",

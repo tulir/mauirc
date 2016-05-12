@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function updateUserList() {
+  "use strict"
   var ch = data.getChannelIfExists(getActiveNetwork(), getActiveChannel())
   if (ch !== undefined && !isEmpty(ch.getUsers())) {
     if (isUserListHidden() && !wasUserListHiddenManually()) toggleUserList(false)
@@ -34,14 +36,17 @@ function updateUserList() {
 }
 
 function isUserListHidden() {
+  "use strict"
   return $("#userlist").hasClass("hidden")
 }
 
 function wasUserListHiddenManually() {
+  "use strict"
   return $("#userlist").hasClass("hidden-manual")
 }
 
 function toggleUserList(manual) {
+  "use strict"
   if ($("#userlist").hasClass("hidden")) {
     $("#userlist").removeClass("hidden")
     $("#userlist").removeClass("hidden-manual")

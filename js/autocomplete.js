@@ -15,10 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function commandAutocomplete(messagebox) {
+  "use strict"
 
 }
 
 function userAutocomplete(messagebox) {
+  "use strict"
   var text = messagebox.val().toLowerCase()
   var index = -1
   data.getChannel(getActiveNetwork(), getActiveChannel()).getUsersPlain().forEach(function(val, i, arr) {
@@ -36,6 +38,7 @@ function userAutocomplete(messagebox) {
 }
 
 function allAutocomplete() {
+  "use strict"
   var messagebox = $("#message-text")
   if (messagebox.val().startsWith("/")) {
     commandAutocomplete(messagebox)

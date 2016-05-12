@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function showAlert(type, message) {
+  "use strict"
   $("#status-messages").loadTemplate($(sprintf("#template-%s", type)), {
     message: message
   }, {append: true})
@@ -24,6 +26,7 @@ function showAlert(type, message) {
 }
 
 function sendMessage(payload) {
+  "use strict"
   if(payload === undefined || payload === null || payload.length === 0) {
     return false
   }
@@ -39,20 +42,24 @@ function sendMessage(payload) {
 }
 
 function scrollDown() {
+  "use strict"
   $("#messages").scrollTop($("#messages")[0].scrollHeight)
 }
 
 function notify(user, message) {
+  "use strict"
   if (Notification.permission === "granted") {
     new Notification(user,{body: message, icon: '/favicon.ico'})
   }
 }
 
 function isEmpty(object) {
+  "use strict"
   return object === null || object === undefined || object.length === 0
 }
 
 function channelFilter(channel) {
+  "use strict"
   return channel.replaceAll("#", "\\#").replaceAll("*", "\\*").replaceAll(".", "\\.").toLowerCase()
 }
 
@@ -63,18 +70,22 @@ var tagsToEscape = {
 }
 
 function escapeTag(tag) {
+  "use strict"
   return tagsToEscape[tag] || tag
 }
 
 function escapeHtml(str) {
+  "use strict"
   return str.replace(/[&<>]/g, escapeTag)
 }
 
 String.prototype.escapeRegex = function(str) {
+  "use strict"
   return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
 }
 
 String.prototype.replaceAll = function(search, replacement) {
+  "use strict"
   return this.replace(new RegExp(this.escapeRegex(search), 'g'), replacement)
 }
 
@@ -86,6 +97,7 @@ var bothColorEncRegex = new RegExp("c(1[0-5]|[0-9])>([^<]*)<", "g")
 var fgColorEncRegex = new RegExp("c(1[0-5]|[0-9]),(1[0-5]|[0-9])>([^<]*)<", "g")
 
 function encodeMessage(msg){
+  "use strict"
   msg = msg.replace(italicEncRegex, "\x1D$1\x1D")
   msg = msg.replace(boldEncRegex, "\x02$1\x02")
   msg = msg.replace(underlineEncRegex, "\x1F$1\x1F")
@@ -120,6 +132,7 @@ var bothColorDecRegex = new RegExp("\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?
 var fgColorDecRegex = new RegExp("\x03(1[0-5]|[0-9])([^\x03]*)?\x03?", "g")
 
 function decodeMessage(msg) {
+  "use strict"
   msg = msg.replace(italicDecRegex, "<i>$1</i>")
   msg = msg.replace(boldDecRegex, "<b>$1</b>")
   msg = msg.replace(underlineDecRegex, "<u>$1</u>")
@@ -134,12 +147,14 @@ function decodeMessage(msg) {
 }
 
 function removeFormatChars(msg) {
+  "use strict"
   return msg.replace(/\x1D|\x02|\x1F|\x03/g, "")
 }
 
 function dbg() {
-    if (debug) {
-        if (debugTrace) console.trace()
-        console.log(arguments)
-    }
+  "use strict"
+  if (debug) {
+    if (debugTrace) console.trace()
+    console.log(arguments)
+  }
 }

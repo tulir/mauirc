@@ -14,11 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function connect() {
+  "use strict"
   dbg("Connecting to socket...")
   socket = new WebSocket(websocketPath)
 
   socket.onopen = function() {
+    "use strict"
     if (!msgcontainer) {
       $("#container").loadTemplate($("#template-main"), {append: false, isFile: false, async: false})
       $("#settings").loadTemplate($("#template-settings"), {append: false, isFile: false, async: false})
@@ -32,6 +35,7 @@ function connect() {
   }
 
   socket.onmessage = function (evt) {
+    "use strict"
     var ed = JSON.parse(evt.data)
     if (ed.type === "message") {
       receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
@@ -67,6 +71,7 @@ function connect() {
         url: "/script/" + ed.object.name,
         dataType: "json",
         success: function(scripts) {
+          "use strict"
           if (isEmpty(scripts)) return
           var net = data.getNetwork(ed.object.name)
           scripts.forEach(function(val, i, arr) {
@@ -74,6 +79,7 @@ function connect() {
           })
         },
         error: function(jqXHR, textStatus, errorThrown) {
+          "use strict"
           dbg("Failed to get scripts of", ed.object.name + ":", textStatus, errorThrown)
           dbg(jqXHR)
         }
@@ -90,6 +96,7 @@ function connect() {
   }
 
   socket.onclose = function(evt) {
+    "use strict"
     if (evt.wasClean) {
       return
     }
@@ -105,6 +112,7 @@ function connect() {
 }
 
 function tryReconnect() {
+  "use strict"
   clearTimeout(timeout)
   $("#try-reconnect").attr("disabled", true)
   setTimeout(function(){
@@ -114,6 +122,7 @@ function tryReconnect() {
 }
 
 function reconnect() {
+  "use strict"
   $.ajax({
     type: "GET",
     url: "/auth/check",
@@ -139,11 +148,13 @@ function reconnect() {
 }
 
 function history(network, channel, n) {
+  "use strict"
   $.ajax({
     type: "GET",
     url: sprintf("/history/%s/%s/?n=%d", network, encodeURIComponent(channel), n),
     dataType: "json",
     success: function(data) {
+      "use strict"
       if (isEmpty(data)) {
         return
       }
@@ -153,6 +164,7 @@ function history(network, channel, n) {
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
+      "use strict"
       dbg(jqXHR)
       if(getActiveNetwork().length === 0 || getActiveChannel().length === 0) {
         return

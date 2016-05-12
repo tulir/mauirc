@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function getActiveChannel() {
+  "use strict"
   var active = $(".channel-switcher.active > .channel-switcher-name")
   if (active.length) {
     return active.text()
@@ -23,6 +25,7 @@ function getActiveChannel() {
 }
 
 function getActiveNetwork() {
+  "use strict"
   var active = $(".network-switcher.activenet > .network-switcher-name")
   if (active.length) {
     return active.text().trim()
@@ -31,19 +34,23 @@ function getActiveNetwork() {
 }
 
 function getActiveChannelObj() {
+  "use strict"
   return $(".channel-container:not(.hidden)")
 }
 
 function getActiveNetworkObj() {
+  "use strict"
   return $(".network-container:not(.hidden)")
 }
 
 function openPM(network, user) {
+  "use strict"
   openChannel(network, user, true)
   switchTo(network, user)
 }
 
 function newChannel(network) {
+  "use strict"
   network = network.toLowerCase()
 
   var oldAdder = $(sprintf("#channel-adder-%s", network))
@@ -84,11 +91,13 @@ function newChannel(network) {
 }
 
 function cancelNewChannel(network) {
+  "use strict"
   $(sprintf("#channel-adder-wrapper-%s", network)).remove()
   $(sprintf("#add-channel-%s", network)).removeClass("hidden")
 }
 
 function finishNewChannel(network) {
+  "use strict"
   var adder = $(sprintf("#channel-adder-%s", network))
   if (adder.length === 0) {
     return
@@ -117,6 +126,7 @@ function finishNewChannel(network) {
 }
 
 function openNetwork(network) {
+  "use strict"
   network = network.toLowerCase()
   if ($(sprintf("#net-%s", network)).length !== 0) {
     return
@@ -135,6 +145,7 @@ function openNetwork(network) {
 }
 
 function openChannel(network, channel, byUser) {
+  "use strict"
   network = network.toLowerCase()
   chanLower = channel.toLowerCase()
   var netObj = $(sprintf("#net-%s", network))
@@ -167,6 +178,7 @@ function openChannel(network, channel, byUser) {
 }
 
 function closeChannel(network, channel) {
+  "use strict"
   network = network.toLowerCase()
   var netObj = $(sprintf("#net-%s", network))
   if (netObj.length === 0) {
@@ -187,6 +199,7 @@ function closeChannel(network, channel) {
 }
 
 function switchView(userlist) {
+  "use strict"
   if ($("#messaging").hasClass("hidden-tablet-down")) {
     if ($("#userlist").hasClass("hidden-tablet-down")) {
       $("#networks").addClass("hidden-tablet-down")
@@ -206,6 +219,7 @@ function switchView(userlist) {
 }
 
 function switchToClear() {
+  "use strict"
   getActiveChannelObj().addClass("hidden")
   getActiveNetworkObj().addClass("hidden")
   $(".channel-switcher.active").removeClass("active")
@@ -217,6 +231,7 @@ function switchToClear() {
 }
 
 function switchTo(network, channel) {
+  "use strict"
   network = network.toLowerCase()
   chanFiltered = channelFilter(channel)
   dbg(sprintf("Switching to channel %s @ %s", channel, network))
