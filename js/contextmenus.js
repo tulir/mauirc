@@ -94,7 +94,7 @@ function ctxMessage(key, options) {
     if (element.length === 0) {
       element = $(this).find(".clipboard-data")
       if (element.length === 0) {
-        console.log("Clipboard data not found!")
+        dbg("Clipboard data not found!")
         return
       }
     }

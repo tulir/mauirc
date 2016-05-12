@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function connect() {
-  console.log("Connecting to socket...")
+  dbg("Connecting to socket...")
   socket = new WebSocket(websocketPath)
 
   socket.onopen = function() {
@@ -51,7 +51,7 @@ function connect() {
         updateUserList()
       }
     } else if (ed.type === "nickchange") {
-      console.log("Nick changed to", ed.object.nick, "on", ed.object.network)
+      dbg("Nick changed to", ed.object.nick, "on", ed.object.network)
       data.getNetwork(ed.object.network).setNick(ed.object.nick)
     } else if (ed.type === "netdata") {
       openNetwork(ed.object.name)
@@ -74,8 +74,8 @@ function connect() {
           })
         },
         error: function(jqXHR, textStatus, errorThrown) {
-          console.log("Failed to get scripts of", ed.object.name + ":", textStatus, errorThrown)
-          console.log(jqXHR)
+          dbg("Failed to get scripts of", ed.object.name + ":", textStatus, errorThrown)
+          dbg(jqXHR)
         }
       })
     } else if (ed.type === "chanlist") {
@@ -85,7 +85,7 @@ function connect() {
     } else if (ed.type === "delete") {
       $(sprintf("#msgwrap-%s", ed.object)).remove()
     } else if (ed.type === "whois") {
-      console.log(ed.object)
+      dbg(ed.object)
     }
   }
 
@@ -153,7 +153,7 @@ function history(network, channel, n) {
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR)
+      dbg(jqXHR)
       if(getActiveNetwork().length === 0 || getActiveChannel().length === 0) {
         return
       }

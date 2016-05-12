@@ -61,7 +61,7 @@ function snSwitchScript(net, name) {
 		script = data.getNetwork(net).getScript(name)
 	}
 	if (script === undefined) {
-		console.log("Script not found:", name, "@", net)
+		dbg("Script not found:", name, "@", net)
 		return
 	}
 	$("#script-list > .active").removeClass("active")
@@ -101,11 +101,11 @@ function snUploadScript(net, name) {
 		url: sprintf("/script/%s/%s/", net, name),
     data: script,
 		success: function(data) {
-      console.log("Successfully updated script", name, "@", net)
+      dbg("Successfully updated script", name, "@", net)
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			console.log("Failed to update script", name, "@", net + ":", textStatus, errorThrown)
-			console.log(jqXHR)
+			dbg("Failed to update script", name, "@", net + ":", textStatus, errorThrown)
+			dbg(jqXHR)
 		}
 	})
 }

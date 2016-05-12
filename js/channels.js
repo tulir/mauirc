@@ -219,7 +219,7 @@ function switchToClear() {
 function switchTo(network, channel) {
   network = network.toLowerCase()
   chanFiltered = channelFilter(channel)
-  console.log(sprintf("Switching to channel %s @ %s", channel, network))
+  dbg(sprintf("Switching to channel %s @ %s", channel, network))
   getActiveChannelObj().addClass("hidden")
   getActiveNetworkObj().addClass("hidden")
   $(".channel-switcher.active").removeClass("active")

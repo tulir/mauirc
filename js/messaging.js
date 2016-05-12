@@ -16,7 +16,7 @@
 
 function send() {
   if (!connected) {
-    console.log("Tried to send message without connection!")
+    dbg("Tried to send message without connection!")
     return
   }
 
@@ -131,7 +131,7 @@ function send() {
 }
 
 function receiveCmdResponse(message) {
-  console.log("Received command response:", message)
+  dbg("Received command response:", message)
 }
 
 function receive(id, network, channel, timestamp, sender, command, message, ownmsg, preview, isNew) {
