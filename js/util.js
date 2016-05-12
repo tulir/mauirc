@@ -136,3 +136,10 @@ function decodeMessage(msg) {
 function removeFormatChars(msg) {
   return msg.replace(/\x1D|\x02|\x1F|\x03/g, "")
 }
+
+function dbg() {
+    if (debug) {
+        if (debugTrace) console.trace()
+        console.log(arguments)
+    }
+}
