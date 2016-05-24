@@ -32,6 +32,7 @@ minifyappend message-preview-image
 minifyappend message-preview-text
 minifyappend network-switcher
 minifyappend whois
+minifyappend invite
 cat "templates/misc.html" | htmlminify >> templates.min.html
 
 if [ ! -f index.max.html ]; then

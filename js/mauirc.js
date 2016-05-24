@@ -86,6 +86,14 @@ function connect() {
       $(sprintf("#msgwrap-%s", ed.object)).remove()
     } else if (ed.type === "whois") {
       console.log(ed.object)
+    } else if (ed.type === "invite") {
+      var div = $("<div/>").loadTemplate($("#template-invite"), {
+        sender: ed.object.sender,
+        channel: ed.object.channel,
+        accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel)
+      }, {append: false, isFile: false, async: false})
+      div.modal()
+      console.log("You have been invited to " + ed.object.channel + " by " + ed.object.sender)
     }
   }
 
@@ -102,6 +110,17 @@ function connect() {
       timeout = setTimeout(reconnect, 20000)
     }
   }
+}
+
+function acceptInvite(net, chan) {
+  closeInvite()
+  sendMessage({
+    type: 'message',
+    network: net,
+    channel: chan,
+    command: 'join',
+    message: 'Joining'
+  })
 }
 
 function tryReconnect() {
