@@ -26,6 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.75);
+
+    font-family: 'Fira Code', 'Fira Mono', 'Droid Sans Mono', 'Liberation Mono', monospace;
+    font-size: 12px;
 }
 
 .raw-io {
@@ -47,9 +50,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     left: .25rem;
 
     overflow-y: scroll;
-
-    font-family: 'Fira Code', 'Fira Mono', 'Droid Sans Mono', 'Liberation Mono', monospace;
-    font-size: 12px;
 }
 
 .raw-input {
@@ -57,6 +57,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     right: .25rem;
     bottom: .25rem;
     left: .25rem;
+
+    font-size: 14px;
 }
 
 .raw-input-field {
@@ -67,8 +69,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     border: none;
     border-top: 1px solid #9A9A9A;
     background: none;
-}
-
-.rawoutmsg {
-    font-family: inherit;
 }
