@@ -15,16 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict"
-function closeRawIO(event) {
+function closeRawIOEvent(event) {
   "use strict"
   if($(event.target).attr('id') !== "raw-io") {
     return
   }
+  closeRawIO()
+}
+
+function closeRawIO() {
+  "use strict"
   $("#raw-io").addClass("hidden")
   $("#raw-io > :not(.hidden)").addClass("hidden")
 }
 
 function openRawIO(network) {
+  "use strict"
   if (network.length === 0) {
     return
   }
