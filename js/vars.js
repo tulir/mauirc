@@ -24,8 +24,8 @@ var titleEditClick = 0
 var data = new DataStore()
 var scripteditor = null
 var joinedMessages = []
-var debug = false
-var debugTrace = false
+var debug = window.localStorage.debug
+var debugTrace = window.localStorage.debugTrace
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
 if (window.location.protocol !== "https:") {

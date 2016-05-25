@@ -24,6 +24,7 @@ Mousetrap.bind('up up down down left right left right b a', function() {
     alert("Debug mode disabled")
     debug = false
   }
+  window.localStorage.debug = debug
 })
 
 Mousetrap.bind('a b right left right left down down up up', function() {
@@ -35,6 +36,7 @@ Mousetrap.bind('a b right left right left down down up up', function() {
     alert("Debug trace disabled")
     debugTrace = false
   }
+  window.localStorage.debugTrace = debugTrace
 })
 
 Mousetrap.bind('shift+r', function() {
