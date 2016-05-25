@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 var socket = null
 var timeout = null
 var connected = false
@@ -23,6 +24,8 @@ var titleEditClick = 0
 var data = new DataStore()
 var scripteditor = null
 var joinedMessages = []
+var debug = false
+var debugTrace = false
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
 if (window.location.protocol !== "https:") {

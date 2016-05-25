@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 $(function() {
+  "use strict"
   $.contextMenu({
     selector: '.pm-link',
     callback: ctxUserList,
@@ -48,6 +50,7 @@ $(function() {
 });
 
 function ctxUserList(key, options) {
+  "use strict"
   if (key === "query") {
     $(this).click()
   } else if (key === "whois") {
@@ -84,6 +87,7 @@ function ctxUserList(key, options) {
 }
 
 function ctxMessage(key, options) {
+  "use strict"
   if (key === "delete") {
     sendMessage({
       type: "delete",
@@ -94,7 +98,7 @@ function ctxMessage(key, options) {
     if (element.length === 0) {
       element = $(this).find(".clipboard-data")
       if (element.length === 0) {
-        console.log("Clipboard data not found!")
+        dbg("Clipboard data not found!")
         return
       }
     }
@@ -117,6 +121,7 @@ function ctxMessage(key, options) {
 }
 
 function ctxChanSwitcher(key, options) {
+  "use strict"
   var idPieces = $(this).attr("id").split("-")
 
   if (key === "delete") {

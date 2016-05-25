@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function DataStore() {
+  "use strict"
   this.netlist = {},
   this.globalscripts = {},
   this.messageGroupDelay = 3,
@@ -22,14 +24,17 @@ function DataStore() {
 }
 
 DataStore.prototype.getMessageGroupDelay = function() {
+  "use strict"
   return this.messageGroupDelay
 }
 
 DataStore.prototype.setMessageGroupDelay = function(delay) {
+  "use strict"
   this.messageGroupDelay = delay
 }
 
 DataStore.prototype.getGlobalScript = function(name) {
+  "use strict"
   if (this.scripts.hasOwnProperty(name)) {
     return this.scripts[name]
   } else {
@@ -38,14 +43,17 @@ DataStore.prototype.getGlobalScript = function(name) {
 }
 
 DataStore.prototype.putGlobalScript = function(name, script) {
+  "use strict"
   this.scripts[name] = script
 }
 
 DataStore.prototype.getGlobalScripts = function() {
+  "use strict"
   return this.scripts
 }
 
 DataStore.prototype.getNetwork = function(name) {
+  "use strict"
   if (this.netlist.hasOwnProperty(name)) {
     return this.netlist[name]
   } else {
@@ -56,6 +64,7 @@ DataStore.prototype.getNetwork = function(name) {
 }
 
 DataStore.prototype.getNetworkIfExists = function(name) {
+  "use strict"
   if (this.netlist.hasOwnProperty(name)) {
     return net
   }
@@ -63,10 +72,12 @@ DataStore.prototype.getNetworkIfExists = function(name) {
 }
 
 DataStore.prototype.networkExists = function(name) {
+  "use strict"
   return this.netlist.hasOwnProperty(name)
 }
 
 DataStore.prototype.channelExists = function(network, channel) {
+  "use strict"
   if (this.networkExists(network)) {
     if (this.netlist[network].channelExists(channel)) {
       return true
@@ -76,10 +87,12 @@ DataStore.prototype.channelExists = function(network, channel) {
 }
 
 DataStore.prototype.getChannel = function(network, channel) {
+  "use strict"
   return this.getNetwork(network).getChannel(channel)
 }
 
 DataStore.prototype.getChannelIfExists = function(network, channel) {
+  "use strict"
   if (this.networkExists(network)) {
     return this.netlist[network].getChannelIfExists(channel)
   }
@@ -96,14 +109,17 @@ function NetworkStore() {
 }
 
 NetworkStore.prototype.isConnected = function() {
+  "use strict"
   return this.connected
 }
 
 NetworkStore.prototype.setConnected = function(connected) {
+  "use strict"
   this.connected = connected
 }
 
 NetworkStore.prototype.getScript = function(name) {
+  "use strict"
   if (this.scripts.hasOwnProperty(name)) {
     return this.scripts[name]
   } else {
@@ -112,22 +128,27 @@ NetworkStore.prototype.getScript = function(name) {
 }
 
 NetworkStore.prototype.putScript = function(name, script) {
+  "use strict"
   this.scripts[name] = script
 }
 
 NetworkStore.prototype.getScripts = function() {
+  "use strict"
   return this.scripts
 }
 
 NetworkStore.prototype.getChannels = function() {
+  "use strict"
   return this.chanlist
 }
 
 NetworkStore.prototype.setChannels = function(channels) {
+  "use strict"
   this.chanlist = channels
 }
 
 NetworkStore.prototype.getChannel = function(name) {
+  "use strict"
   if (this.chandata.hasOwnProperty(name)) {
     return this.chandata[name]
   } else {
@@ -138,6 +159,7 @@ NetworkStore.prototype.getChannel = function(name) {
 }
 
 NetworkStore.prototype.getChannelIfExists = function(name) {
+  "use strict"
   if (this.chandata.hasOwnProperty(name)) {
     return this.chandata[name]
   }
@@ -145,34 +167,42 @@ NetworkStore.prototype.getChannelIfExists = function(name) {
 }
 
 NetworkStore.prototype.channelExists = function(name) {
+  "use strict"
   return this.chandata.hasOwnProperty(name)
 }
 
 NetworkStore.prototype.getNick = function() {
+  "use strict"
   return this.nick
 }
 
 NetworkStore.prototype.setNick = function(nick) {
+  "use strict"
   this.nick = nick
 }
 
 NetworkStore.prototype.getHighlights = function() {
+  "use strict"
   return this.highlights
 }
 
 NetworkStore.prototype.getHighlightsAsString = function() {
+  "use strict"
   var str = ""
   this.highlights.forEach(function(val) {
+  "use strict"
     str += val.toString().replace(",", "\\,") + ","
   })
   return str.slice(0, -1)
 }
 
 NetworkStore.prototype.setHighlights = function(highlights) {
+  "use strict"
   this.highlights = highlights
 }
 
 NetworkStore.prototype.setHighlightsFromString = function(data) {
+  "use strict"
   var highlights = [data]
   var minIndex = 0
 
@@ -204,6 +234,7 @@ NetworkStore.prototype.setHighlightsFromString = function(data) {
   }
 
   highlights.forEach(function(val, i) {
+  "use strict"
     if(val.startsWith(":")) {
       highlights[i] = new Highlight("regex", val.slice(1))
     } else {
@@ -219,6 +250,7 @@ function Highlight(type, value) {
 }
 
 Highlight.prototype.matches = function(str) {
+  "use strict"
   if(this.type === "regex") {
     var match = new RegExp(this.value.slice(1), "gi").exec(str)
     if (match !== null) {
@@ -234,6 +266,7 @@ Highlight.prototype.matches = function(str) {
 }
 
 Highlight.prototype.toString = function() {
+  "use strict"
   if(this.type === "regex") return ":" + this.value
   return this.value
 }
@@ -249,22 +282,27 @@ function ChannelStore() {
 }
 
 ChannelStore.prototype.isHistoryFetched = function() {
+  "use strict"
   return this.historyfetched
 }
 
 ChannelStore.prototype.setHistoryFetched = function() {
+  "use strict"
   this.historyfetched = true
 }
 
 ChannelStore.prototype.getUsers = function() {
+  "use strict"
   return this.userlist
 }
 
 ChannelStore.prototype.getUsersPlain = function() {
+  "use strict"
   return this.userlistPlain
 }
 
 ChannelStore.prototype.setUsers = function(users) {
+  "use strict"
   if (isEmpty(users)) {
     this.userlist = []
     this.users = []
@@ -273,6 +311,7 @@ ChannelStore.prototype.setUsers = function(users) {
   this.userlist = users
   var plainlist = []
   users.forEach(function(val, i) {
+  "use strict"
     var ch = val.charAt(0)
     if (ch === "~" || ch === "&" || ch === "@" || ch === "%" || ch === "+") {
       plainlist[i] = val.slice(1)
@@ -284,40 +323,49 @@ ChannelStore.prototype.setUsers = function(users) {
 }
 
 ChannelStore.prototype.getTopic = function() {
+  "use strict"
   return this.topic
 }
 
 ChannelStore.prototype.setTopic = function(topic) {
+  "use strict"
   this.topic = topic
 }
 
 ChannelStore.prototype.getTopicSetAt = function() {
+  "use strict"
   return this.topicsetat
 }
 
 ChannelStore.prototype.setTopicSetAt = function(setAt) {
+  "use strict"
   this.topicsetat = setAt
 }
 
 ChannelStore.prototype.getTopicSetBy = function() {
+  "use strict"
   return this.topicsetby
 }
 
 ChannelStore.prototype.setTopicSetBy = function(setBy) {
+  "use strict"
   this.topicsetby = setBy
 }
 
 ChannelStore.prototype.setTopicFull = function(topic, setAt, setBy) {
+  "use strict"
   this.topic = topic
   this.topicsetat = setAt
   this.topicsetby = setBy
 }
 
 ChannelStore.prototype.getNotificationLevel = function() {
+  "use strict"
   return this.notifications
 }
 
 ChannelStore.prototype.setNotificationLevel = function(level) {
+  "use strict"
   switch(level) {
   case "all":
   case 2:

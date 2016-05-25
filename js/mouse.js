@@ -15,7 +15,24 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict"
-dbg("Main load started.")
-checkAuth()
-dbg("Checking notification permission...")
-Notification.requestPermission()
+Mousetrap.bind('up up down down left right left right b a', function() {
+  "use strict"
+  if(!debug) {
+    alert("Debug mode enabled")
+    debug = true
+  } else {
+    alert("Debug mode disabled")
+    debug = false
+  }
+})
+
+Mousetrap.bind('a b right left right left down down up up', function() {
+  "use strict"
+  if(!debugTrace) {
+    alert("Debug trace enabled")
+    debugTrace = true
+  } else {
+    alert("Debug trace disabled")
+    debugTrace = false
+  }
+})

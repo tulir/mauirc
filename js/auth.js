@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function auth() {
+  "use strict"
   authfail = false
   payload = {
     email: $("#email").val(),
@@ -26,18 +28,19 @@ function auth() {
     data: JSON.stringify(payload),
     contentType: "application/json; charset=utf-8",
     success: function(data) {
-      console.log("Successfully authenticated!")
+      dbg("Successfully authenticated!")
       connect()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Authentication failed:", textStatus, errorThrown)
-      console.log(jqXHR)
+      dbg("Authentication failed:", textStatus, errorThrown)
+      dbg(jqXHR)
       authfail = true
     }
   })
 }
 
 function checkAuth() {
+  "use strict"
   authfail = false
   $.ajax({
     type: "GET",
@@ -52,10 +55,10 @@ function checkAuth() {
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Auth check failed: ", textStatus)
+      dbg("Auth check failed: ", textStatus)
       authfail = true
       $("#container").loadTemplate($("#template-login"), {})
-      console.log(jqXHR)
+      dbg(jqXHR)
     }
   })
 }

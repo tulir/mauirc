@@ -14,9 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function send() {
+  "use strict"
   if (!connected) {
-    console.log("Tried to send message without connection!")
+    dbg("Tried to send message without connection!")
     return
   }
 
@@ -131,10 +133,12 @@ function send() {
 }
 
 function receiveCmdResponse(message) {
-  console.log("Received command response:", message)
+  "use strict"
+  dbg("Received command response:", message)
 }
 
 function receive(id, network, channel, timestamp, sender, command, message, ownmsg, preview, isNew) {
+  "use strict"
   network = network.toLowerCase()
   var netObj = $(sprintf("#net-%s", network))
   if (netObj.length === 0) {
@@ -260,6 +264,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 }
 
 function getHighlights(network, message) {
+  "use strict"
   var match
   network.getHighlights().concat(new Highlight("contains", network.getNick())).some(function(val) {
     match = val.matches(message)
@@ -272,6 +277,7 @@ function getHighlights(network, message) {
 }
 
 function notifyMessage(network, channel, highlight, sender, message) {
+  "use strict"
   message = removeFormatChars(message)
   var notifs = data.channelExists(network, channel) ? data.getChannel(network, channel).getNotificationLevel() : "all"
 
@@ -288,6 +294,7 @@ function notifyMessage(network, channel, highlight, sender, message) {
 }
 
 function tryJoinMessage(id, network, channel, timestamp, sender, command, message, ownmsg, isNew) {
+  "use strict"
   var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   if(isEmpty(chanObj)) return
 
@@ -335,6 +342,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
 }
 
 function hasJoinedMessage(id) {
+  "use strict"
   joinedMessages.forEach(function(val) {
     if (val == id) return true
   })
@@ -342,6 +350,7 @@ function hasJoinedMessage(id) {
 }
 
 function modalOpen(id) {
+  "use strict"
   $('<img id="modal-' + id + '"\
       class="preview-modal" \
       src="' + $(sprintf("#msg-%d > .message-preview", id)).find(".preview-image-link > .preview-image").attr("src") + '" \

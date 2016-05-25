@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function snOpenScriptEditor(net, scripts) {
+  "use strict"
 	$("#settings-main").addClass("hidden")
 	$("#settings-networkeditor").addClass("hidden")
 	$("#settings-scripts").removeClass("hidden")
@@ -54,6 +56,7 @@ function snOpenScriptEditor(net, scripts) {
 }
 
 function snSwitchScript(net, name) {
+  "use strict"
 	var script
 	if (net === "global") {
 		script = data.getGlobalScript(name)
@@ -61,7 +64,7 @@ function snSwitchScript(net, name) {
 		script = data.getNetwork(net).getScript(name)
 	}
 	if (script === undefined) {
-		console.log("Script not found:", name, "@", net)
+		dbg("Script not found:", name, "@", net)
 		return
 	}
 	$("#script-list > .active").removeClass("active")
@@ -77,6 +80,7 @@ function snSwitchScript(net, name) {
 }
 
 function snSaveScript() {
+  "use strict"
 	var script = scripteditor.getValue()
 	var name = $("#script-list > .active").attr("data-name")
 	var net = $("#script-list > .active").attr("data-network")
@@ -88,6 +92,7 @@ function snSaveScript() {
 }
 
 function snUploadScript(net, name) {
+  "use strict"
 	snSaveScript()
 
 	if (net === "global") {
@@ -101,19 +106,23 @@ function snUploadScript(net, name) {
 		url: sprintf("/script/%s/%s/", net, name),
     data: script,
 		success: function(data) {
-      console.log("Successfully updated script", name, "@", net)
+      "use strict"
+      dbg("Successfully updated script", name, "@", net)
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			console.log("Failed to update script", name, "@", net + ":", textStatus, errorThrown)
-			console.log(jqXHR)
+      "use strict"
+			dbg("Failed to update script", name, "@", net + ":", textStatus, errorThrown)
+			dbg(jqXHR)
 		}
 	})
 }
 
 function snEditScripts() {
+  "use strict"
 	snOpenScriptEditor(getActiveNetwork(), data.getNetwork(getActiveNetwork()).getScripts())
 }
 
 function snEditGlobalScripts() {
+  "use strict"
 	snOpenScriptEditor("global", data.getGlobalScripts())
 }

@@ -14,11 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"use strict"
 function connect() {
-  console.log("Connecting to socket...")
+  "use strict"
+  dbg("Connecting to socket...")
   socket = new WebSocket(websocketPath)
 
   socket.onopen = function() {
+    "use strict"
     if (!msgcontainer) {
       $("#container").loadTemplate($("#template-main"), {append: false, isFile: false, async: false})
       $("#settings").loadTemplate($("#template-settings"), {append: false, isFile: false, async: false})
@@ -32,6 +35,7 @@ function connect() {
   }
 
   socket.onmessage = function (evt) {
+    "use strict"
     var ed = JSON.parse(evt.data)
     if (ed.type === "message") {
       receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
@@ -51,7 +55,7 @@ function connect() {
         updateUserList()
       }
     } else if (ed.type === "nickchange") {
-      console.log("Nick changed to", ed.object.nick, "on", ed.object.network)
+      dbg("Nick changed to", ed.object.nick, "on", ed.object.network)
       data.getNetwork(ed.object.network).setNick(ed.object.nick)
     } else if (ed.type === "netdata") {
       openNetwork(ed.object.name)
@@ -67,6 +71,7 @@ function connect() {
         url: "/script/" + ed.object.name,
         dataType: "json",
         success: function(scripts) {
+          "use strict"
           if (isEmpty(scripts)) return
           var net = data.getNetwork(ed.object.name)
           scripts.forEach(function(val, i, arr) {
@@ -74,8 +79,9 @@ function connect() {
           })
         },
         error: function(jqXHR, textStatus, errorThrown) {
-          console.log("Failed to get scripts of", ed.object.name + ":", textStatus, errorThrown)
-          console.log(jqXHR)
+          "use strict"
+          dbg("Failed to get scripts of", ed.object.name + ":", textStatus, errorThrown)
+          dbg(jqXHR)
         }
       })
     } else if (ed.type === "chanlist") {
@@ -85,7 +91,7 @@ function connect() {
     } else if (ed.type === "delete") {
       $(sprintf("#msgwrap-%s", ed.object)).remove()
     } else if (ed.type === "whois") {
-      console.log(ed.object)
+      dbg(ed.object)
     } else if (ed.type === "invite") {
       /*$("#modal-container").loadTemplate($("#template-invite"), {
         sender: ed.object.sender,
@@ -97,6 +103,7 @@ function connect() {
   }
 
   socket.onclose = function(evt) {
+    "use strict"
     if (evt.wasClean) {
       return
     }
@@ -123,6 +130,7 @@ function acceptInvite(net, chan) {
 }
 
 function tryReconnect() {
+  "use strict"
   clearTimeout(timeout)
   $("#try-reconnect").attr("disabled", true)
   setTimeout(function(){
@@ -132,6 +140,7 @@ function tryReconnect() {
 }
 
 function reconnect() {
+  "use strict"
   $.ajax({
     type: "GET",
     url: "/auth/check",
@@ -157,11 +166,13 @@ function reconnect() {
 }
 
 function history(network, channel, n) {
+  "use strict"
   $.ajax({
     type: "GET",
     url: sprintf("/history/%s/%s/?n=%d", network, encodeURIComponent(channel), n),
     dataType: "json",
     success: function(data) {
+      "use strict"
       if (isEmpty(data)) {
         return
       }
@@ -171,7 +182,8 @@ function history(network, channel, n) {
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR)
+      "use strict"
+      dbg(jqXHR)
       if(getActiveNetwork().length === 0 || getActiveChannel().length === 0) {
         return
       }
