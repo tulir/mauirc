@@ -142,7 +142,7 @@ function openNetwork(network) {
     networkbtns: sprintf("chanswitchers-%s", network),
     addchanid: sprintf("add-channel-%s", network)
   }, {append: true, isFile: false, async: false})
-  openRawIO(network)
+  createRawIO(network)
 }
 
 function openChannel(network, channel, byUser) {

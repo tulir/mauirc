@@ -25,6 +25,14 @@ function closeRawIO(event) {
 }
 
 function openRawIO(network) {
+  if (network.length === 0) {
+    return
+  }
+  $("#raw-io").removeClass("hidden")
+  $(sprintf("#raw-io-%s", network)).removeClass("hidden")
+}
+
+function createRawIO(network) {
   "use strict"
   $("#raw-io").loadTemplate($("#template-rawio"), {
     id_rawio: sprintf("raw-io-%s", network),

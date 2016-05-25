@@ -39,6 +39,7 @@ Mousetrap.bind('a b right left right left down down up up', function() {
   window.localStorage.debugTrace = debugTrace
 })
 
-Mousetrap.bind('shift+r', function() {
+Mousetrap.bind('alt+r', function() {
+  "use strict"
   openRawIO(getActiveNetwork())
 })

@@ -62,8 +62,7 @@ $(function() {
 function ctxNetSwitcher(key, options) {
   "use strict"
   if (key === "rawio") {
-    $("#raw-io").removeClass("hidden")
-    $(sprintf("#raw-io-%s", $(this).text())).removeClass("hidden")
+    openRawIO($(this).text())
   } else if (key === "oper") {
     // TODO oper auth thingy
   }
