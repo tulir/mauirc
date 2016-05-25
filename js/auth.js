@@ -18,7 +18,7 @@
 function auth() {
   "use strict"
   authfail = false
-  payload = {
+  var payload = {
     email: $("#email").val(),
     password: $("#password").val()
   }
