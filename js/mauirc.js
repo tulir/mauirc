@@ -99,6 +99,8 @@ function connect() {
         accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel)
       }, {append: false, isFile: false, async: false})
       $("#modal-container").modal()*/
+    } else if (ed.type === "raw") {
+      $(sprintf("#raw-output-%s", ed.object.network)).append(sprintf("<div class='rawoutmsg'>%s</div>", ed.object.message))
     }
   }
 

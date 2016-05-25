@@ -47,7 +47,24 @@ $(function() {
       part: {name: "Part Channel", icon: "quit"}
     }
   });
+
+  $.contextMenu({
+    selector: '.network-switcher-name',
+    callback: ctxNetSwitcher,
+    items: {
+      rawio: {name: "Raw IO", icon: "io"},
+      delete: {name: "Leave Network", icon: "quit"}
+    }
+  });
 });
+
+function ctxNetSwitcher(key, options) {
+  "use strict"
+  if (key === "rawio") {
+    $("#raw-io").removeClass("hidden")
+    $(sprintf("#raw-io-%s", $(this).text())).removeClass("hidden")
+  }
+}
 
 function ctxUserList(key, options) {
   "use strict"

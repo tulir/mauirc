@@ -33,6 +33,7 @@ minifyappend message-preview-text
 minifyappend network-switcher
 minifyappend whois
 minifyappend invite
+minifyappend rawio
 cat "templates/misc.html" | htmlminify >> templates.min.html
 
 if [ ! -f index.max.html ]; then

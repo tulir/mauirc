@@ -142,12 +142,13 @@ function openNetwork(network) {
     networkbtns: sprintf("chanswitchers-%s", network),
     addchanid: sprintf("add-channel-%s", network)
   }, {append: true, isFile: false, async: false})
+  openRawIO(network)
 }
 
 function openChannel(network, channel, byUser) {
   "use strict"
   network = network.toLowerCase()
-  chanLower = channel.toLowerCase()
+  var chanLower = channel.toLowerCase()
   var netObj = $(sprintf("#net-%s", network))
   if (netObj.length === 0) {
     openNetwork(network)
@@ -233,7 +234,7 @@ function switchToClear() {
 function switchTo(network, channel) {
   "use strict"
   network = network.toLowerCase()
-  chanFiltered = channelFilter(channel)
+  var chanFiltered = channelFilter(channel)
   dbg(sprintf("Switching to channel %s @ %s", channel, network))
   getActiveChannelObj().addClass("hidden")
   getActiveNetworkObj().addClass("hidden")
