@@ -215,7 +215,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   if($(sprintf("#msgwrap-%d", id)).length !== 0) {
-    var loadedTempl = $("<div/>").loadTemplate($(sprintf("#template-%s", template)), templateData, {append: isNew, prepend: !isNew, isFile: false, async: false})
+    var loadedTempl = $("<div></div>").loadTemplate($(sprintf("#template-%s", template)), templateData, {append: isNew, prepend: !isNew, isFile: false, async: false})
     $(sprintf("#msgwrap-%d", id)).replaceWith(loadedTempl.children(":first"))
   } else {
     chanObj.loadTemplate($(sprintf("#template-%s", template)), templateData, {append: isNew, prepend: !isNew, isFile: false, async: false})
