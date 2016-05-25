@@ -36,3 +36,7 @@ Mousetrap.bind('a b right left right left down down up up', function() {
     debugTrace = false
   }
 })
+
+Mousetrap.bind('shift+r', function() {
+  openRawIO(getActiveNetwork())
+})
