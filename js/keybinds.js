@@ -49,6 +49,7 @@ Mousetrap.bind('mod+e r', function() {
 })
 
 Mousetrap.bind('mod+e n', function() {
+  "use strict"
   var net = getActiveNetwork()
   if (net.length > 0) {
     newChannel(net)
@@ -56,6 +57,7 @@ Mousetrap.bind('mod+e n', function() {
 })
 
 Mousetrap.bind('mod+e p', function() {
+  "use strict"
   if(getActiveNetwork().length > 0 && getActiveChannel().length > 0) {
     snPartAndClose()
   }
