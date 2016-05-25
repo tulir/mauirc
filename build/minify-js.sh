@@ -17,7 +17,7 @@ cat \
     ./js/scripts.js \
     ./js/mauirc.js \
     ./js/auth.js \
-    ./js/mouse.js \
+    ./js/keybinds.js \
     ./js/load.js \
     > ./index.js
 
