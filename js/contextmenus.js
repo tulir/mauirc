@@ -53,6 +53,7 @@ $(function() {
     callback: ctxNetSwitcher,
     items: {
       rawio: {name: "Raw IO", icon: "io"},
+      oper: {name: "Oper Auth", icon: "op"},
       delete: {name: "Leave Network", icon: "quit"}
     }
   });
@@ -63,6 +64,8 @@ function ctxNetSwitcher(key, options) {
   if (key === "rawio") {
     $("#raw-io").removeClass("hidden")
     $(sprintf("#raw-io-%s", $(this).text())).removeClass("hidden")
+  } else if (key === "oper") {
+    // TODO oper auth thingy
   }
 }
 
