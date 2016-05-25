@@ -54,3 +54,9 @@ Mousetrap.bind('mod+e n', function() {
     newChannel(net)
   }
 })
+
+Mousetrap.bind('mod+e p', function() {
+  if(getActiveNetwork().length > 0 && getActiveChannel().length > 0) {
+    snPartAndClose()
+  }
+})
