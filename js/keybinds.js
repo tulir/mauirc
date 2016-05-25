@@ -39,7 +39,7 @@ Mousetrap.bind('a b right left right left down down up up', function() {
   window.localStorage.debugTrace = debugTrace
 })
 
-Mousetrap.bind('shift+r', function() {
+Mousetrap.bind('mod+e r', function() {
   "use strict"
   if ($("#raw-io").hasClass("hidden")) {
     openRawIO(getActiveNetwork())
@@ -48,7 +48,7 @@ Mousetrap.bind('shift+r', function() {
   }
 })
 
-Mousetrap.bind('shift+n', function() {
+Mousetrap.bind('mod+e n', function() {
   var net = getActiveNetwork()
   if (net.length > 0) {
     newChannel(net)
