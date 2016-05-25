@@ -155,6 +155,6 @@ function dbg() {
   "use strict"
   if (debug) {
     if (debugTrace) console.trace()
-    console.log(arguments)
+    console.log.apply(console, arguments)
   }
 }
