@@ -28,17 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	margin-left: auto;
 }
 
-.authfield {
-	box-sizing: border-box;
-
-	border: 1px solid var(--secondary-content);
-	border-radius: .25rem;
-}
-
-.authfield:focus {
-	border: 1px solid var(--maunium-green);
-}
-
 .authsend, .authfield {
 	width: 100%;
 	padding: 1rem;
@@ -73,36 +62,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 @media (min-width: 750px) {
-	.auth-wrap {
-		width: 50%;
-		padding-top: 4rem;
-		padding-bottom: 4rem;
-	}
+	.auth-wrap { width: 50%; }
 }
 
 @media (min-width: 1000px) {
-	.auth-wrap {
-		width: 40%;
-		padding-top: 5rem;
-		padding-bottom: 5rem;
-	}
+	.auth-wrap { width: 40%; }
 }
 
 @media (min-width: 1200px) {
-	.auth-wrap {
-		width: 30%;
-	}
+	.auth-wrap { width: 30%; }
 }
 
 @media (min-width: 1500px) {
-	.auth-wrap {
-		width: 25%;
-	}
+	.auth-wrap { width: 25%; }
 }
 
-
 @media (min-width: 1800px) {
-	.auth-wrap {
-		width: 20%;
-	}
+	.auth-wrap { width: 20%; }
+}
+
+.auth-wrap {
+	padding-top: 1rem;
 }
