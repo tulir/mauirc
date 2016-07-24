@@ -34,6 +34,14 @@ function auth() {
     error: function(jqXHR, textStatus, errorThrown) {
       if (jqXHR.status === 401) {
         $("#error").text("Invalid username or password")
+      } else if (jqXHR.status === 410) {
+        $("#error").text("Can't connect to mauIRCd:<br>Server is gone")
+      } else if (jqXHR.status === 418) {
+        $("#error").text("Can't connect to mauIRCd:<br>Server is a teapot")
+      } else if (jqXHR.status === 429) {
+        $("#error").text("Can't connect to mauIRCd:<br>Too many requests")
+      } else if (jqXHR.status === 500) {
+        $("#error").text("Can't connect to mauIRCd:<br>Server isn't feeling well")
       } else {
         $("#error").text("Can't connect to mauIRCd")
       }
