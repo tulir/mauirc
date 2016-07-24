@@ -35,6 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @media (min-width: 1200px) { .hidden-hd-up        { display: none; }}
 
 .btn {
+    box-sizing: border-box;
     padding: .375rem 1rem;
 
     cursor: pointer;
@@ -53,6 +54,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     font-size: 1rem;
     font-weight: bold;
+}
+
+.textfield {
+	box-sizing: border-box;
+
+	border: 1px solid var(--secondary-content);
+	border-radius: .25rem;
+}
+
+.textfield:focus {
+	border: 1px solid var(--maunium-green);
 }
 
 .btn:hover {
