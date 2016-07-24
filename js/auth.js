@@ -64,6 +64,8 @@ function checkAuth() {
       dbg("Auth check failed: ", textStatus)
       authfail = true
       $("#container").loadTemplate($("#template-login"), {})
+      $("#error").removeClass("hidden")
+      $("#error").text("Can't connect to mauIRCd")
       dbg(jqXHR)
     }
   })
