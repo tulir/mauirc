@@ -32,10 +32,10 @@ function auth() {
       connect()
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      if (jqXHR.status === 502) {
-        $("#error").text("Can't connect to mauIRCd")
-      } else if (jqXHR.status === 401) {
+      if (jqXHR.status === 401) {
         $("#error").text("Invalid username or password")
+      } else {
+        $("#error").text("Can't connect to mauIRCd")
       }
       $("#error").removeClass("hidden")
       dbg("Authentication failed:", textStatus, errorThrown)
