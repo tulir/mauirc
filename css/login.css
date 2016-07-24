@@ -31,8 +31,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .authfield {
 	box-sizing: border-box;
 
-	border: 1px solid #D6D6D6;
+	border: 1px solid var(--secondary-content);
 	border-radius: .25rem;
+}
+
+.authfield:focus {
+	border: 1px solid var(--maunium-green);
 }
 
 .authsend, .authfield {
@@ -50,7 +54,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	text-align: center;
 
 	border-radius: .25rem;
-	background-color: #FFFFFF;
+	background-color: white;
 }
 
 @media (min-width: 450px) {
