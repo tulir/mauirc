@@ -46,16 +46,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     vertical-align: middle;
     white-space: nowrap;
 
+    color: white;
     border: none;
     border-radius: .25rem;
-    background-color: #D6D6D6;
+    background-color: var(--maunium-green);
 
     font-size: 1rem;
     font-weight: bold;
 }
 
 .btn:hover {
-    background-color: #BDBDBD;
+    background-color: var(--maunium-blue);
 }
 
 .left-arrow {
