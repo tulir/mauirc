@@ -15,3 +15,52 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+.auth-alert {
+	width: 100%;
+}
+
+.authfield, .auth-alert {
+	display: block;
+
+	margin-right: auto;
+	margin-bottom: .5rem;
+	margin-left: auto;
+}
+
+.auth-send {
+	width: 100%;
+}
+
+.auth-wrap {
+	width: 95%;
+	margin-top: 20vh;
+	margin-right: auto;
+	margin-left: auto;
+
+	text-align: center;
+}
+
+@media (min-width: 550px) {
+	.auth-wrap {
+		width: 70%;
+	}
+}
+
+@media (min-width: 750px) {
+	.auth-wrap {
+		width: 50%;
+	}
+}
+
+@media (min-width: 1000px) {
+	.auth-wrap {
+		width: 40%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.auth-wrap {
+		width: 25%;
+	}
+}
