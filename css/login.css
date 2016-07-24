@@ -21,8 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .authfield, .auth-alert {
-	display: block;
-
 	margin-right: auto;
 	margin-bottom: .75rem;
 	margin-left: auto;
