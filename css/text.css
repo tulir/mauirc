@@ -16,9 +16,28 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+:root {
+    --maunium-green: #50D367;
+    --maunium-blue: #47B9D7;
+    --maunium-dark: #042B52;
+    --primary-text: #212121;
+    --secondary-text: #9A9A9A;
+    --background: #E3E3E3;
+}
+
+.container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-color: var(--maunium-green);
+}
+
 body {
-    color: #212121;
-    background-color: #E3E3E3;
+    color: var(--primary-text);
+    background-color: var(--background);
 
     font-family: "Raleway", "Lato", "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, "Liberation Sans",
                  "Fira Sans", Arial, sans-serif;
