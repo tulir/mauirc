@@ -22,7 +22,6 @@ var msgcontainer = false
 var titleEditClick = 0
 var data = new DataStore()
 var scripteditor = null
-var joinedMessages = []
 var debug = window.localStorage.debug
 var debugTrace = window.localStorage.debugTrace
 

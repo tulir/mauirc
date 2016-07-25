@@ -198,15 +198,13 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     templateData.clipboard = sprintf("%s changed the topic to %s", sender, message)
   } else {
     var template = "message"
-
-    if (preview === null) {
-      if (hasJoinedMessage(id) || tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg, isNew)) {
-        return
-      }
-    }
+    var join = tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg, isNew)
   }
 
+  dbg(join)
+  templateData.wrapclass = "message-wrapper" + (join ? " message-joined" : "")
   templateData.class = "message " + templateData.class
+  dbg(templateData.class)
   templateData.message = decodeMessage(templateData.message)
 
   if (template === undefined) {
@@ -222,6 +220,9 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 
   if (ownmsg) {
     $(sprintf("#msgwrap-%d", id)).addClass("own-message")
+    $(sprintf("#msg-%d > .message-sender", id)).remove()
+  } else if (join) {
+    $(sprintf("#msgwrap-%d", id)).addClass("message-joined")
     $(sprintf("#msg-%d > .message-sender", id)).remove()
   }
   var msgObj = $(sprintf("#msg-%d", id))
@@ -295,57 +296,15 @@ function notifyMessage(network, channel, highlight, sender, message) {
 function tryJoinMessage(id, network, channel, timestamp, sender, command, message, ownmsg, isNew) {
   "use strict"
   var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
-  if(isEmpty(chanObj)) return
+  if(isEmpty(chanObj)) return false
 
   if (!isNew) var prevMsg = chanObj.children(".message-wrapper:first")
   else var prevMsg = chanObj.children(".message-wrapper:last")
-  if(isEmpty(prevMsg)) return
+  if(isEmpty(prevMsg)) return false
 
-  if(prevMsg.attr("sender") != sender) return
-
-  var prevMsgTime = prevMsg.attr("timestamp")
-  if(isEmpty(prevMsgTime)) return
-
-  if (!isNew) {
-    if (parseInt(prevMsgTime) < timestamp + data.getMessageGroupDelay()) {
-      prevMsg.find(".message > .message-text").prepend(decodeMessage(message) + "\n")
-      prevMsg.find(".message > .message-date").html(moment(timestamp * 1000).format("HH:mm:ss"))
-      prevMsg.attr("timestamp", timestamp)
-      joinedMessages.push(id)
-      return true
-    }
-  } else {
-    if (parseInt(prevMsgTime) > timestamp - data.getMessageGroupDelay()) {
-      var match = getHighlights(data.getNetwork(network), message)
-      if (match !== null) {
-        messageDec = decodeMessage(message)
-        prevMsg.find(".message > .message-text").append(
-          sprintf('\n%s<span class="highlighted-text">%s</span>%s',
-            messageDec.slice(0, match.index),
-            messageDec.slice(match.index, match.index + match.length),
-            messageDec.slice(match.index + match.length)
-          )
-        )
-        prevMsg.find(".message").addClass("highlight")
-      } else {
-        prevMsg.find(".message > .message-text").append("\n" + decodeMessage(escapeHtml(message)))
-      }
-      scrollDown()
-      prevMsg.attr("timestamp", timestamp)
-      joinedMessages.push(id)
-      notifyMessage(network, channel, match !== null, sender, message)
-      return true
-    }
-  }
-  return false
-}
-
-function hasJoinedMessage(id) {
-  "use strict"
-  joinedMessages.forEach(function(val) {
-    if (val == id) return true
-  })
-  return false
+  if(prevMsg.attr("sender") != sender) return false
+  prevMsg.addClass("message-joined")
+  return true
 }
 
 function modalOpen(id) {
