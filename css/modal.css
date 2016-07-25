@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     position: absolute;
     z-index: 5;
 
-    background-color: #E3E3E3;
+    background-color: var(--background);
 }
 
 .lib-modal-hidden {

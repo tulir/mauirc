@@ -98,9 +98,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding: .375rem 1rem;
 
     color: inherit;
-    border: 1px solid #9A9A9A;
+    border: 1px solid var(--secondary-text);
     border-radius: .25rem;
-    background-color: #FAFAFA;
+    background-color: white;
 
     font-size: 1rem;
 }
@@ -112,8 +112,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .script-list-button:hover, button:hover.script-tool {
     color: #FFFFFF;
-    border: 1px solid #47B9D7;
-    background-color: #47B9D7;
+    border: 1px solid var(--maunium-blue);
+    background-color: var(--maunium-blue);
 }
 
 .script-tool {
@@ -124,8 +124,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .script-list-button.active {
     color: #FFFFFF;
-    border: 1px solid #50D367;
-    background-color: #50D367;
+    border: 1px solid var(--maunium-green);
+    background-color: var(--maunium-green);
 }
 
 .script-tool-new {

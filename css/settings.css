@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .settings-top-buttons {
     border-radius: .25rem;
-    background-color: #D6D6D6;
+    background-color: var(--maunium-green);
 }
 
 .btn-clear-history,
@@ -115,15 +115,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding: .375rem 1rem;
 
     color: inherit;
-    border: 1px solid #9A9A9A;
+    border: 1px solid var(--secondary-text);
     border-radius: .25rem;
-    background-color: #FAFAFA;
+    background-color: white;
 
     font-size: 1rem;
 }
 
 select.settings-value {
-    background: no-repeat right #FAFAFA url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M7.41%2C8.58L12%2C13.17L16.59%2C8.58L18%2C10L12%2C16L6%2C10L7.41%2C8.58Z%22%20%2F%3E%3C%2Fsvg%3E');
+    background: no-repeat right white url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M7.41%2C8.58L12%2C13.17L16.59%2C8.58L18%2C10L12%2C16L6%2C10L7.41%2C8.58Z%22%20%2F%3E%3C%2Fsvg%3E');
 
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -131,15 +131,15 @@ select.settings-value {
 }
 
 select.settings-value > option {
-    background-color: #FAFAFA;
+    background-color: white;
 
     font-size: 1rem;
 }
 
 button.settings-value {
-    color: #FFFFFF;
-    border: 1px solid #50D367;
-    background-color: #50D367;
+    color: white;
+    border: 1px solid var(--maunium-green);
+    background-color: var(--maunium-green);
 }
 
 input[type="range"].settings-value {
@@ -157,7 +157,7 @@ input[type="range"].settings-value {
 }
 
 button:hover.settings-value {
-    background-color: #47B9D7;
+    background-color: var(--maunium-blue);
 }
 
 button:disabled.settings-value {

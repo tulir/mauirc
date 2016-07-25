@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 3rem;
     left: 5rem;
 
-    background-color: #E3E3E3;
+    background-color: var(--background);
 }
 
 .raw-output {
@@ -67,6 +67,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding-top: .25rem;
 
     border: none;
-    border-top: 1px solid #9A9A9A;
+    border-top: 1px solid var(--secondary-text);
     background: none;
 }
