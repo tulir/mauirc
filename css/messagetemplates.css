@@ -33,6 +33,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     background-color: white;
 }
 
+.message-joined {
+    padding: .375em 0;
+}
+
 @media (min-width: 1000px) {
     .message {
         min-width: 25%;
