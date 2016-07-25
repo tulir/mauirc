@@ -201,10 +201,8 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     var join = tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg)
   }
 
-  dbg(join)
-  templateData.wrapclass = "message-wrapper" + (join ? " message-joined" : "")
+  templateData.wrapclass = "message-wrapper" + (ownmsg ? " own-message" : "")
   templateData.class = "message " + templateData.class
-  dbg(templateData.class)
   templateData.message = decodeMessage(templateData.message)
 
   if (template === undefined) {
@@ -218,11 +216,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     chanObj.loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
   }
 
-  if (ownmsg) {
-    $(sprintf("#msgwrap-%d", id)).addClass("own-message")
-    $(sprintf("#msg-%d > .message-sender", id)).remove()
-  } else if (join) {
-    $(sprintf("#msgwrap-%d", id)).addClass("message-joined")
+  if (ownmsg || join) {
     $(sprintf("#msg-%d > .message-sender", id)).remove()
   }
   var msgObj = $(sprintf("#msg-%d", id))
