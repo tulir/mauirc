@@ -198,7 +198,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     templateData.clipboard = sprintf("%s changed the topic to %s", sender, message)
   } else {
     var template = "message"
-    var join = tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg, isNew)
+    var join = tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg)
   }
 
   dbg(join)
@@ -212,10 +212,10 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   if($(sprintf("#msgwrap-%d", id)).length !== 0) {
-    var loadedTempl = $("<div></div>").loadTemplate($(sprintf("#template-%s", template)), templateData, {append: isNew, prepend: !isNew, isFile: false, async: false})
+    var loadedTempl = $("<div></div>").loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
     $(sprintf("#msgwrap-%d", id)).replaceWith(loadedTempl.children(":first"))
   } else {
-    chanObj.loadTemplate($(sprintf("#template-%s", template)), templateData, {append: isNew, prepend: !isNew, isFile: false, async: false})
+    chanObj.loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
   }
 
   if (ownmsg) {
@@ -245,21 +245,19 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     }
   }
 
+  var match = getHighlights(data.getNetwork(network), templateData.message)
+
+  if (template === "message" && match !== null) {
+    msgObj.find(".message-text").html(sprintf('%s<span class="highlighted-text">%s</span>%s',
+      templateData.message.slice(0, match.index),
+      templateData.message.slice(match.index, match.index + match.length),
+      templateData.message.slice(match.index + match.length)
+    ))
+    msgObj.addClass("highlight")
+  }
+
   if (isNew) {
-    var match = getHighlights(data.getNetwork(network), templateData.message)
-
-    if (template === "message" && match !== null) {
-      msgObj.find(".message-text").html(sprintf('%s<span class="highlighted-text">%s</span>%s',
-        templateData.message.slice(0, match.index),
-        templateData.message.slice(match.index, match.index + match.length),
-        templateData.message.slice(match.index + match.length)
-      ))
-      msgObj.addClass("highlight")
-    }
-
     notifyMessage(network, channel, match !== null, sender, message)
-  } else {
-    scrollDown()
   }
 }
 
@@ -293,13 +291,12 @@ function notifyMessage(network, channel, highlight, sender, message) {
   }
 }
 
-function tryJoinMessage(id, network, channel, timestamp, sender, command, message, ownmsg, isNew) {
+function tryJoinMessage(id, network, channel, timestamp, sender, command, message, ownmsg) {
   "use strict"
   var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
   if(isEmpty(chanObj)) return false
 
-  if (!isNew) var prevMsg = chanObj.children(".message-wrapper:first")
-  else var prevMsg = chanObj.children(".message-wrapper:last")
+  var prevMsg = chanObj.children(".message-wrapper:last")
   if(isEmpty(prevMsg)) return false
 
   if(prevMsg.attr("sender") != sender) return false
