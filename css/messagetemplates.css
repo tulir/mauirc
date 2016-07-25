@@ -60,10 +60,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .message-joined-prev {
     margin-bottom: 0;
+
+    border-bottom: none;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .message-joined {
     margin-top: 0;
+
+    border-bottom: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .message-wrapper:last-of-type.message-joined-prev {
