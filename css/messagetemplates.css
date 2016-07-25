@@ -93,7 +93,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     color: var(--secondary-text);
 }
 
-.action > .action-sender {
+.action > .action-data > .action-sender {
     color: var(--primary.text);
 }
 
