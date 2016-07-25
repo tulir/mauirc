@@ -42,8 +42,7 @@ body {
     color: var(--primary-text);
     background-color: var(--background);
 
-    font-family: "Raleway", "Lato", "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, "Liberation Sans",
-                 "Fira Sans", Arial, sans-serif;
+    font-family: "Raleway", "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, "Liberation Sans", Arial, sans-serif;
 }
 
 h1 {
