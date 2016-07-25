@@ -89,13 +89,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-size: 0.7rem;
 }
 
-.message-sender {
+.message-sender, .action-sender {
     color: var(--secondary-text);
 }
 
 .action-sender {
-    color: var(--primary-text);
-
     font-weight: bold;
 }
 
