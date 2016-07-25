@@ -124,8 +124,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     float: left;
 }
 
+.preview-sitename, .preview-title {
+    display: inline;
+}
+
 .preview-sitename {
-    color: #9A9A9A;
+    color: var(--secondary-text);
 
     font-size: 1em;
     font-weight: normal;
