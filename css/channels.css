@@ -69,7 +69,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .channel-switcher {
     width: 100%;
-    padding-left: .5rem;
+
+    text-align: left;
 }
 
 .channel-adder {
@@ -115,7 +116,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     box-sizing: border-box;
     width: 100%;
     margin-bottom: 0.5rem;
-    padding: .375rem 0.2rem;
+    padding: .375rem .2rem .375rem 1rem;
+
+    text-align: left;
 
     font-weight: normal;
 }
