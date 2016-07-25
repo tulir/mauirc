@@ -109,12 +109,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .action-text {
-    display: inline;
-
     word-wrap: break-word;
 }
 
-.action-sender {
+.action-sender, .action-text {
     display: inline;
 }
 
