@@ -28,7 +28,7 @@ function send() {
 
   if (msg.startsWith("/")) {
     var args = msg.split(" ")
-    command = args[0].substring(1, args[0].length).toLowerCase()
+    var command = args[0].substring(1, args[0].length).toLowerCase()
     if (args.length > 1) {
       args = args.slice(1, args.length)
     } else {
