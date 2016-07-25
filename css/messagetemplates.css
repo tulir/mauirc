@@ -131,17 +131,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .preview-sitename {
     color: var(--secondary-text);
 
-    font-size: 1em;
     font-weight: normal;
 }
 
 .preview-title {
-    font-size: 1em;
     font-weight: bold;
-}
-
-.preview-description {
-    font-size: 1em;
 }
 
 .preview-image {
