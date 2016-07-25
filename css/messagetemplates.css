@@ -91,8 +91,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-size: 0.7rem;
 }
 
-.message-sender {
-    font-weight: bold;
+.message-sender, .action-sender {
+    color: var(--secondary-text);
 }
 
 .message-text {
@@ -118,8 +118,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .action-sender {
     display: inline;
-
-    font-weight: bold;
 }
 
 .message-preview {
