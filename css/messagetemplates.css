@@ -26,6 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     max-width: 80%;
     padding: .375em .75em;
 
+    text-align: left;
+
     border: 1px solid var(--maunium-blue);
     border-radius: .25rem;
     background-color: white;
@@ -60,10 +62,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-align: right;
 }
 
-/*.highlight, .highlight > .message-date {
-    color: white;
-    background-color: var(--maunium-green);
-}*/
 .highlight {
     border: 2px solid var(--maunium-green);
 }
