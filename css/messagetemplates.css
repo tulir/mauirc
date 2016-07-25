@@ -141,8 +141,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .preview-image {
     float: right;
 
-    width: 8rem;
-    height: 8rem;
+    max-width: 100%;
+    max-height: 5rem;
 }
 
 .preview-full-size {
