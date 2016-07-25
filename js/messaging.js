@@ -201,8 +201,8 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     var join = tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg)
   }
 
-  templateData.wrapclass = "message-wrapper" + (ownmsg ? " own-message" : "")
-  templateData.class = "message " + templateData.class
+  templateData.wrapclass = "message-wrapper" + (ownmsg ? " own-message-wrapper" : "")
+  templateData.class = "message " + templateData.class + (ownmsg ? " own-message" : "")
   templateData.message = decodeMessage(templateData.message)
 
   if (template === undefined) {

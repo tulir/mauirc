@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 :root {
     --maunium-green: #50D367;
+    --maunium-green-light: rgba(80, 211, 103, 0.5);
+    --maunium-green-extralight: rgba(80, 211, 103, 0.2);
     --maunium-blue: #47B9D7;
     --maunium-dark: #042B52;
     --primary-text: #212121;
