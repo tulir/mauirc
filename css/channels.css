@@ -68,17 +68,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .channel-switcher {
     width: 100%;
+    padding-left: .5rem;
 }
 
 .channel-adder {
     box-sizing: border-box;
     width: 100%;
 
-    text-align: center;
-
+    color: white;
     border: none;
-    border-radius: .25rem;
-    background-color: #FAFAFA;
+    border-color: var(--maunium-green);
+    background-color: var(--maunium-green);
 
     font-size: 1rem;
     font-weight: bold;
@@ -88,8 +88,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding: .375rem 1rem;
 
     border: none;
-    border-radius: .25rem;
-    background-color: #D6D6D6;
+    background-color: var(--maunium-green);
 }
 
 .disconnected {
@@ -97,13 +96,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .network-switcher-buttons {
-    float: right;
-
-    width: 80%;
     margin-top: 0.2rem;
 
     border-radius: .25rem;
-    background-color: #D6D6D6;
 }
 
 .network-switcher-name {
@@ -113,29 +108,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: bold;
 }
 
-.add-channel-wrapper {
-    text-align: right;
-}
-
 .add-channel {
     box-sizing: border-box;
-    width: 80%;
+    width: 100%;
     margin-bottom: 0.5rem;
     padding: .375rem 0.2rem;
-
-    text-align: center;
 
     font-weight: normal;
 }
 
 .new-messages,
 .new-messages:hover {
-    color: #FFFFFF;
-    background-color: #47B9D7;
+    color: white;
+    background-color: var(--maunium-blue);
 }
 
 .active,
 .active:hover {
-    color: #FFFFFF;
-    background-color: #50D367;
+    color: white;
+    background-color: var(--maunium-green);
 }
