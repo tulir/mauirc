@@ -4,7 +4,7 @@ minify:
 	./build/minify-html.sh
 
 package: minify
-	tar cvfJ mauirc.tar.xz favicon.ico firacode.otf index.min.* templates.min.html index.html
+	tar cvfJ mauirc.tar.xz favicon.ico firacode.otf index.min.* header.html templates.min.html index.html
 
 gitpull:
 	git pull
