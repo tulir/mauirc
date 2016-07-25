@@ -61,8 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-align: right;
 }
 
-.highlight,
-.highlight > .message-date {
+.highlight, .highlight > .message-date {
     color: #FFFFFF;
     background-color: #50D367;
 }
@@ -71,8 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-decoration: underline;
 }
 
-.joinpart,
-.nickchange {
+.joinpart, .nickchange {
     color: #9A9A9A;
     background-color: #EBEBEB;
 }
