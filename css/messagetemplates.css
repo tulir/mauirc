@@ -58,26 +58,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-bottom: .75rem;
 }
 
-.message-joined-prev {
-    margin-bottom: 0;
-
-    border-bottom: none;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.message-joined {
-    margin-top: 0;
-
-    border-bottom: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
-.message-wrapper:last-of-type.message-joined-prev {
-    margin-bottom: .75rem;
-}
-
 .own-message-wrapper {
     text-align: right;
 }
@@ -153,6 +133,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding-top: .25rem;
 
     border-top: 1px solid var(--secondary-content);
+}
+
+.message-joined-prev {
+    margin-bottom: 0;
+
+    border-bottom: none;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.message-joined {
+    margin-top: 0;
+
+    border-bottom: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.message-wrapper:last-of-type.message-joined-prev {
+    margin-bottom: .75rem;
 }
 
 .preview-sitename, .preview-title {
