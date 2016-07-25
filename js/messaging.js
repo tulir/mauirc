@@ -190,7 +190,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     templateData.class = "action"
   } else if (command === "nick") {
     templateData.message = sprintf("is now known as <b>%s</b>", message)
-    templateData.class = "nick"
+    templateData.class = "nickchange"
     templateData.clipboard = sprintf("%s is now known as %s", sender, message)
   } else if (command == "topic") {
     templateData.message = sprintf("changed the topic to <b>%s</b>", message)
