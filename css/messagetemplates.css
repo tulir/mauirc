@@ -83,7 +83,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-decoration: underline;
 }
 
-.joinpart, .nickchange {
+.joinpart, .nickchange, .kick, .modechange {
     color: var(--secondary-text);
     border: 1px dashed var(--maunium-blue);
 }
