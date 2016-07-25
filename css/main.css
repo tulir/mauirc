@@ -28,16 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     --background: #E3E3E3;
 }
 
-.container {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    background: linear-gradient(#60E377, #40C357);
-}
-
 body {
     color: var(--primary-text);
     background-color: var(--background);
@@ -62,4 +52,14 @@ h3 {
 
 p {
     font-size: 16px;
+}
+
+.container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background: linear-gradient(#60E377, #40C357);
 }
