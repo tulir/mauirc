@@ -94,7 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .action > .action-data > .action-sender {
-    color: var(--primary.text);
+    color: var(--primary-text);
 }
 
 .action-sender {
