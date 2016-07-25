@@ -202,7 +202,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
   }
 
   templateData.wrapclass = "message-wrapper" + (ownmsg ? " own-message-wrapper" : "") + (join ? " message-joined" : "")
-  templateData.class = "message " + templateData.class + (ownmsg ? " own-message" : "")
+  templateData.class = "message " + (isEmpty(templateData.class) ? templateData.class : "") + (ownmsg ? " own-message" : "")
   templateData.message = decodeMessage(templateData.message)
 
   if (template === undefined) {
