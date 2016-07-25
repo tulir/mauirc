@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: bold;
 }
 
-.close-user-list, .open-network-list, .open-user-list, .settings-open {
+/*.close-user-list, .open-network-list, .open-user-list, .settings-open {
     position: absolute;
 
     background-color: inherit;
@@ -41,30 +41,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .close-user-list:hover, .open-network-list:hover, .open-user-list:hover, .settings-open:hover {
     background-color: inherit;
-}
+}*/
 
-.open-network-list {
-    left: 0;
-}
+.open-list, .open-list:hover {
+    position: absolute;
 
-.settings-open {
-    right: 0;
-
+    width: auto;
     padding-bottom: .25rem;
 
     border: none;
-}
-
-.open-user-list {
-    right: 0;
-
-    width: auto;
-}
-
-.open-user-list-small {
-    right: 0;
-
-    padding-bottom: .25rem;
+    background-color: var(--maunium-green);
 }
 
 .open-list-text {
@@ -73,16 +59,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding-top: .2rem;
 }
 
-.close-user-list {
+.open-network-list, .close-user-list {
     left: 0;
-
-    width: auto;
 }
 
-.open-network-list {
-    float: left;
-
-    padding-bottom: .25rem;
+.settings-open, .open-user-list {
+    right: 0;
 }
 
 .title {
