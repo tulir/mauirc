@@ -64,7 +64,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @media (min-width: 750px) {
     .messaging {
         right: 9rem;
-        left: 11rem;
+        left: 9rem;
     }
     .view-switch-btn {
         cursor: default;
@@ -74,21 +74,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @media (min-width: 1000px) {
     .messaging {
         right: 10rem;
-        left: 14rem;
+        left: 11rem;
     }
 }
 
 @media (min-width: 1200px) {
     .messaging {
         right: 11rem;
-        left: 17rem;
+        left: 13rem;
     }
 }
 
 @media (min-width: 1500px) {
     .messaging {
         right: 12rem;
-        left: 20rem;
+        left: 16rem;
     }
 }
 
