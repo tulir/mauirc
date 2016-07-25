@@ -62,6 +62,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-bottom: 0;
 }
 
+.message-wrapper:last-of-type.message-joined {
+    margin-bottom: .75rem;
+}
+
 .own-message-wrapper {
     text-align: right;
 }
