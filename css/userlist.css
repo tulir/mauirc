@@ -18,13 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .userlist {
     position: fixed;
-    top: 0.25rem;
-    right: 0.25rem;
-    bottom: 0.25rem;
-    left: 0.25rem;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 
     width: auto;
     height: auto;
+    padding: .25rem;
+
+    background-color: white;
 }
 
 .userlist-bar {
@@ -47,7 +50,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 0;
     left: 0;
 
-    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     font-size: 1.5em;
 }
