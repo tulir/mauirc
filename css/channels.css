@@ -73,17 +73,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-align: left;
 }
 
-.channel-adder {
+.channel-adder, .easy-autocomplete input, .easy-autocomplete input:hover, .easy-autocomplete input:focus {
     box-sizing: border-box;
     width: 100%;
+    padding: 0;
 
     color: white;
     border: none;
-    border-color: var(--maunium-green);
     background-color: var(--maunium-green);
 
     font-size: 1rem;
-    font-weight: bold;
 }
 
 .channel-adder-wrapper {
