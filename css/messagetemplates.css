@@ -88,6 +88,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     border: 1px dashed var(--maunium-blue);
 }
 
+.joinpart.own-message, .nickchange.own-message, .kick.own-message, .modechange.own-message {
+    border: 1px dashed var(--maunium-green);
+}
+
 .message-date {
     float: right;
 
