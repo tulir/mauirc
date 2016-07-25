@@ -23,7 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 0.25rem;
     left: 0.25rem;
 
-    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     width: auto;
     height: auto;
