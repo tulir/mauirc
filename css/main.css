@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 0;
     left: 0;
 
-    background-color: var(--maunium-green);
+    background: linear-gradient(#60E377, #40C357);
 }
 
 body {
