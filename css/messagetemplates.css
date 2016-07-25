@@ -33,10 +33,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     background-color: white;
 }
 
-.message-joined {
-    padding: .375em 0;
-}
-
 @media (min-width: 1000px) {
     .message {
         min-width: 25%;
@@ -60,6 +56,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .message-wrapper {
     margin: .25rem;
     margin-bottom: .75rem;
+}
+
+.message-joined {
+    margin-bottom: 0;
 }
 
 .own-message {
