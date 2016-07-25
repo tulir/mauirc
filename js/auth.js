@@ -27,6 +27,8 @@ function auth() {
     data: JSON.stringify(payload),
     contentType: "application/json; charset=utf-8",
     success: function(data) {
+      $("#authsend").addClass("disabled")
+      $("#authsend").text("Connecting...")
       dbg("Successfully authenticated!")
       connect()
     },
