@@ -105,6 +105,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .network-switcher-name {
     padding: .1rem;
 
+    color: white;
+
     font-size: 1.5rem;
     font-weight: bold;
 }
@@ -118,14 +120,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: normal;
 }
 
-.new-messages,
-.new-messages:hover {
-    color: white;
+.new-messages {
     background-color: var(--maunium-blue);
 }
 
-.active,
-.active:hover {
-    color: white;
-    background-color: var(--maunium-green);
+.active, .active:hover {
+    color: var(--primary-text);
+    background-color: white;
 }
