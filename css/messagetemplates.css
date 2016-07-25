@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     text-align: left;
 
-    border: 1px solid var(--maunium-blue);
+    border: 1px solid var(--maunium-green);
     border-radius: .25rem;
     background-color: white;
 }
@@ -85,10 +85,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .joinpart, .nickchange, .kick, .modechange {
     color: var(--secondary-text);
-    border: 1px dashed var(--maunium-blue);
-}
-
-.joinpart.own-message, .nickchange.own-message, .kick.own-message, .modechange.own-message {
     border: 1px dashed var(--maunium-green);
 }
 
