@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     position: fixed;
     top: 0;
     right: 0;
-    bottom: 0;
+    bottom: 1.5rem;
     left: 0;
 
     overflow-x: hidden;
@@ -29,6 +29,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     width: auto;
     height: auto;
     padding: .25rem;
+}
+
+.brand {
+    position: fixed;
+    bottom: .25rem;
+    left: .25rem;
+
+    color: white;
+
+    font-weight: bold;
 }
 
 @media (min-width: 750px) {
