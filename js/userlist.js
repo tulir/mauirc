@@ -27,7 +27,7 @@ function updateUserList() {
         onclick: sprintf("openPM('%s', '%s')", getActiveNetwork(), plainUser),
         simplename: plainUser,
         displayname: val
-      })
+      }, {append: true, isFile: false, async: false})
     })
     $("#userlist-list").loadTemplate($("#template-userlist-invite"), {
       onclick: sprintf("startInvite('%s', '%s')", getActiveNetwork(), getActiveChannel())
