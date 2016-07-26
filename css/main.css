@@ -61,5 +61,5 @@ p {
     bottom: 0;
     left: 0;
 
-    background: linear-gradient(#60E377, #40C357);
+    background: var(--maunium-green);
 }
