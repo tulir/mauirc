@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     left: 0;
 
     padding: .25rem;
+    padding-bottom: 0;
 
     background-color: white;
 }
@@ -45,14 +46,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .messageform {
     position: fixed;
     right: inherit;
-    bottom: 0.25rem;
+    bottom: 0;
     left: inherit;
 }
 
 .messagebox {
     box-sizing: border-box;
     width: 100%;
-    padding: 1rem;
+    padding: .5rem;
 
     border: none;
     border-top: 2px solid var(--secondary-content);
@@ -66,8 +67,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         right: 9rem;
         left: 9rem;
     }
+
     .view-switch-btn {
         cursor: default;
+    }
+
+    .messagebox {
+        padding: .75rem;
     }
 }
 
@@ -75,6 +81,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .messaging {
         right: 10rem;
         left: 11rem;
+    }
+
+    .messagebox {
+        padding: 1rem;
     }
 }
 
