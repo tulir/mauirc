@@ -81,7 +81,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-top: .1875rem;
 }
 
-.userlist-entry:last-of-type {
+.userlist-invite-box, .userlist-invite {
     margin-bottom: .25rem;
 }
 
