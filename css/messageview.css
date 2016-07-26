@@ -23,17 +23,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 0;
     left: 0;
 
-    padding: .25rem;
-    padding-bottom: 0;
+    padding: 0;
 
     background-color: white;
 }
 
 .messages {
     position: fixed;
-    top: 2.65rem;
+    top: 2.4rem;
     right: inherit;
-    bottom: 3.5rem;
+    bottom: 3.3125rem;
     left: inherit;
 
     overflow-x: hidden;
@@ -41,6 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     width: auto;
     height: auto;
+    padding: 0;
 }
 
 .messageform {
