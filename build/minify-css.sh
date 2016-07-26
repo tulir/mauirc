@@ -1,6 +1,5 @@
 #!/bin/bash
 cat \
-    ./css/lib/jquery.modal.css \
     ./css/util.css \
     ./css/text.css \
     ./css/alerts.css \

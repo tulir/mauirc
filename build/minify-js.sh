@@ -1,6 +1,5 @@
 #!/bin/bash
 cat \
-    ./js/lib/jquery.modal.min.js \
     ./js/lib/linkify.min.js \
     ./js/lib/linkify-html.min.js \
     ./js/lib/linkify-jquery.min.js \
