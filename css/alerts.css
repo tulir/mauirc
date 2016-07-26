@@ -59,25 +59,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .disconnected-mauirc {
-    position: absolute;
+    position: fixed;
     z-index: 9001;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
 
-    background-color: rgba(150, 150, 150, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
 }
 
 .disconnected-content {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
 
     width: 30rem;
     height: 6rem;
-    margin-top: -3rem;
+    margin-top: -6rem;
     margin-left: -15rem;
+    padding: 1rem;
 
     text-align: center;
 
@@ -89,7 +90,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .disconnected-text {
-    margin-bottom: 0.5rem;
+    margin-bottom: .75rem;
 
     font-size: 2rem;
     font-weight: bold;
