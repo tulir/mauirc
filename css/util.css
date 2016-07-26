@@ -35,16 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .hidden                                           { display: none; }
-@media (max-width: 399px)  { .hidden-mobile-down  { display: none; }}
-@media (max-width: 549px)  { .hidden-phablet-down { display: none; }}
-@media (max-width: 749px)  { .hidden-tablet-down  { display: none; }}
-@media (max-width: 999px)  { .hidden-desktop-down { display: none; }}
-@media (max-width: 1199px) { .hidden-hd-down      { display: none; }}
-@media (min-width: 400px)  { .hidden-mobile-up    { display: none; }}
-@media (min-width: 550px)  { .hidden-phablet-up   { display: none; }}
-@media (min-width: 750px)  { .hidden-tablet-up    { display: none; }}
-@media (min-width: 1000px) { .hidden-desktop-up   { display: none; }}
-@media (min-width: 1200px) { .hidden-hd-up        { display: none; }}
+@media (max-width: 749px)  { .hidden-medium-down  { display: none; }}
+@media (min-width: 750px)  { .hidden-medium-up    { display: none; }}
 
 .btn {
     box-sizing: border-box;
