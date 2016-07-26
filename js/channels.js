@@ -255,15 +255,16 @@ function switchTo(network, channel) {
   if ($("#messaging").hasClass("hidden-medium-down")) {
     switchView(false)
   }
+  var chanObj = getChannel(network, channel)
 
-  if (!channelData.isHistoryFetched()) {
+  if (!channelData.isHistoryFetched() && chanObj.find(".invite-wrapper").length == 0) {
     history(network, channel, 512)
     channelData.setHistoryFetched()
   }
 
   $(sprintf("#switchnet-%s", network)).addClass("activenet")
   $(sprintf("#net-%s", network)).removeClass("hidden")
-  getChannel(network, channel).removeClass("hidden")
+  chanObj.removeClass("hidden")
 
   var newChanSwitcher = $(sprintf("#switchto-%s-%s", network, channelFilter(channel)))
   newChanSwitcher.removeClass("new-messages")
