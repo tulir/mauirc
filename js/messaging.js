@@ -234,7 +234,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
         description: preview.text !== undefined && preview.text.description !== undefined ? preview.text.description.replaceAll("\n", "<br>") : "",
         sitename: preview.text !== undefined ? preview.text.sitename : "",
         image: preview.image !== undefined ? preview.image.url : "",
-        modalopen: sprintf("modalOpen('%d')", id)
+        openFullImageModal: sprintf("openFullImageModal('%d')", id)
       }, {append: true, isFile: false, async: false})
     }
   }
@@ -298,7 +298,7 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
   return true
 }
 
-function modalOpen(id) {
+function openFullImageModal(id) {
   "use strict"
   $("#modal").html(sprintf(
     '<img id="img-modal-%s"\
