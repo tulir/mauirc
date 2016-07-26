@@ -71,7 +71,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     border-radius: .25rem;
 }
 
-.userlist-entry:hover {
+.userlist-entry:hover, .userlist-invite-box {
     margin-top: .1875rem;
 
     border: .125rem solid var(--maunium-blue);
