@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-decoration: underline;
 }
 
-.joinpart, .nickchange, .kick, .modechange {
+.secondary-action {
     color: var(--secondary-text);
     border: .0625rem dashed var(--maunium-green);
 }
@@ -77,7 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     color: var(--secondary-text);
 }
 
-.action > .action-data > .action-sender {
+.user-action > .action-data > .action-sender {
     color: var(--primary-text);
 }
 

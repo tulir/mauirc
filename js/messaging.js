@@ -163,11 +163,11 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
 
   if (command === "action") {
     templateData.prefix = "<b>★</b> "
-    templateData.class = "action"
+    templateData.class = "user-action"
     templateData.clipboard = sprintf("* %s %s", sender, message)
   } else if (command === "join" || command === "part" || command === "quit") {
     templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
-    templateData.class = "joinpart"
+    templateData.class = "secondary-action joinpart"
     templateData.clipboard = sprintf("%s %s %s", sender, command === "join" ? "joined" : "left:", message)
   } else if (command === "kick") {
     var index = message.indexOf(":")
@@ -176,7 +176,7 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     message = message.substr(index + 1)
     templateData.sender = sender
     templateData.message = sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, linkifyHtml(escapeHtml(message)))
-    templateData.class = "kick"
+    templateData.class = "secondary-action kick"
     templateData.clipboard = sprintf("%s was kicked by %s: %s", sender, kicker, message)
   } else if (command === "mode") {
     var parts = message.split(" ")
@@ -187,14 +187,14 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
       templateData.message = sprintf("set channel mode <b>%s</b>", parts[0])
       templateData.clipboard = sprintf("set channel mode %s", parts[0])
     }
-    templateData.class = "modechange"
+    templateData.class = "secondary-action modechange"
   } else if (command === "nick") {
     templateData.message = sprintf("is now known as <b>%s</b>", message)
-    templateData.class = "nickchange"
+    templateData.class = "secondary-action nickchange"
     templateData.clipboard = sprintf("%s is now known as %s", sender, message)
   } else if (command == "topic") {
     templateData.message = sprintf("changed the topic to <b>%s</b>", message)
-    templateData.class = "topic"
+    templateData.class = "secondary-action topicchange"
     templateData.clipboard = sprintf("%s changed the topic to %s", sender, message)
   } else {
     var template = "message"
