@@ -99,6 +99,7 @@ function connect() {
         accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel),
         ignore: sprintf("closeChannel('%s', '%s')", ed.object.network, ed.object.channel)
       }, {append: false, isFile: false, async: false})
+      $(sprintf("#switchto-%s-%s", ed.object.network.toLowerCase(), channelFilter(ed.object.channel))).addClass("new-messages")
     } else if (ed.type === "raw") {
       $(sprintf("#raw-output-%s", ed.object.network)).append(sprintf("<div class='rawoutmsg'>%s</div>", ed.object.message))
     }
@@ -122,6 +123,13 @@ function connect() {
 
 function acceptInvite(network, channel) {
   getChannel(network, channel).html("")
+
+  var channelData = data.getChannel(network, channel)
+  if (!channelData.isHistoryFetched()) {
+    history(network, channel, 512)
+    channelData.setHistoryFetched()
+  }
+  
   sendMessage({
     type: "message",
     network: network,
