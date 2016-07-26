@@ -17,7 +17,7 @@
 $(function() {
   "use strict"
   $.contextMenu({
-    selector: '.userlist-entry',
+    selector: '.userlist-user-entry',
     callback: ctxUserList,
     items: {
       query: {name: "Open Query", icon: "query"},
