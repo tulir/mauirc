@@ -119,15 +119,18 @@ function connect() {
   }
 }
 
-function acceptInvite(net, chan) {
-  closeInvite()
+function acceptInvite(network, channel) {
+  hideModal()
   sendMessage({
-    type: 'message',
-    network: net,
-    channel: chan,
-    command: 'join',
-    message: 'Joining'
+    type: "message",
+    network: network,
+    channel: channel,
+    command: "join",
+    message: "Joining"
   })
+
+  openChannel(network, channel, true)
+  switchTo(network, channel)
 }
 
 function tryReconnect() {
