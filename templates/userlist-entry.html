@@ -15,36 +15,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<script type="text/html" id="template-userlist-entry">
-	<a href="#"
+<a href="#"
 	class="userlist-entry userlist-user-entry"
 	data-template-bind='[
 		{"attribute": "onClick", "value": "onclick"},
 		{"attribute": "data-simplename", "value": "simplename"}
 	]'
-	data-content-text="displayname"/>
-</script>
-
-<script type="text/html" id="template-userlist-invite">
-	<a href="#"
-		id="userlist-invite"
-		class="userlist-entry userlist-invite"
-		onClick="startInvite()">
-		Invite User...
-	</a>
-</script>
-
-<script type="text/html" id="template-userlist-invite-box">
-  <input
-		class="userlist-entry userlist-invite-box"
-		id="userlist-invite-box"
-		onBlur="stopInvite()"
-		onKeyDown="
-			if (event.keyCode === 13) {
-				finishInvite()
-			} else if (event.keyCode === 27) {
-				stopInvite()
-			}
-		"
-	/>
-</script>
+	data-content-text="displayname"
+/>

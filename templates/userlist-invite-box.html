@@ -15,6 +15,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<script type="text/html" id="template-error"><center><div class="alert alert-error" role="alert" data-content="message"></div></center></script>
-<script type="text/html" id="template-network"><div class="network-container hidden" data-id="network"></div></script>
-<script type="text/html" id="template-channel"><div class="channel-container hidden" data-id="channel"></div></script>
+<input
+	class="userlist-entry userlist-invite-box"
+	id="userlist-invite-box"
+	onBlur="stopInvite()"
+	onKeyDown="
+		if (event.keyCode === 13) {
+			finishInvite()
+		} else if (event.keyCode === 27) {
+			stopInvite()
+		}
+	"
+/>

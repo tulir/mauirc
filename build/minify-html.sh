@@ -23,7 +23,9 @@ minifyappend-multi() {
 }
 
 echo > templates.min.html
-minifyappend-multi misc
+minifyappend error
+minifyappend network
+minifyappend channel
 minifyappend action
 minifyappend channel-adder
 minifyappend channel-switcher
@@ -39,7 +41,9 @@ minifyappend network-switcher
 minifyappend whois
 minifyappend invite
 minifyappend rawio
-minifyappend-multi userlist
+minifyappend userlist-entry
+minifyappend userlist-invite
+minifyappend userlist-invite-box
 minifyappend oper
 
 if [ ! -f index.max.html ]; then
