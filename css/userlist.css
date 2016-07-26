@@ -85,6 +85,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-bottom: .25rem;
 }
 
+.userlist-invite-box {
+    box-sizing: border-box;
+    width: 100%;
+}
+
 .userlist-invite {
     color: var(--secondary-text);
 }
