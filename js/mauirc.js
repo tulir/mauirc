@@ -97,7 +97,7 @@ function connect() {
         sender: ed.object.sender,
         channel: ed.object.channel,
         accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel),
-        reject: sprintf("closeChannel('%s', '%s')", ed.object.network, ed.object.channel)
+        ignore: sprintf("closeChannel('%s', '%s')", ed.object.network, ed.object.channel)
       }, {append: false, isFile: false, async: false})
     } else if (ed.type === "raw") {
       $(sprintf("#raw-output-%s", ed.object.network)).append(sprintf("<div class='rawoutmsg'>%s</div>", ed.object.message))
@@ -129,9 +129,6 @@ function acceptInvite(network, channel) {
     command: "join",
     message: "Joining"
   })
-
-  openChannel(network, channel, true)
-  switchTo(network, channel)
 }
 
 function tryReconnect() {

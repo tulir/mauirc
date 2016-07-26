@@ -15,8 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="invite">
-	<h1 class="invite-text">You have been invited to <span data-content-text="channel"/> by <span data-content-text="sender"/>.</h1>
-	<button class="btn invite-ignore" onClick="hideModal()">Ignore</button>
-	<button class="btn invite-join" data-template-bind='{"attribute": "onClick", "value": "accept"}'>Accept</button>
+<div class="invite-wrapper">
+	<div class="invite">
+		<h2 class="invite-text">You have been invited to <span data-content-text="channel"/> by <span data-content-text="sender"/>.</h2>
+		<button class="btn invite-ignore" data-template-bind='{"attribute": "onClick", "value": "ignore"}'>Ignore</button>
+		<button class="btn invite-join" data-template-bind='{"attribute": "onClick", "value": "accept"}'>Accept</button>
+	</div>
 </div>
