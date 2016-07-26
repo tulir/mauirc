@@ -40,6 +40,7 @@ minifyappend whois
 minifyappend invite
 minifyappend rawio
 minifyappend-multi userlist
+minifyappend oper
 
 if [ ! -f index.max.html ]; then
     mv index.html index.max.html
