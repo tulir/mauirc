@@ -24,14 +24,14 @@ function updateUserList() {
     ch.getUsers().forEach(function(val, i, arr) {
       $("#userlist-list").append(sprintf('<a class="userlist-entry" href="#" onClick="openPM(\'%1$s\', \'%2$s\')" data-simplename="%2$s">%3$s</a>', getActiveNetwork(), ch.getUsersPlain()[i], val))
     })
-    $("#open-user-list").removeClass("hidden-tablet-down")
-    $("#open-settings").addClass("hidden-tablet-down")
+    $("#open-user-list").removeClass("hidden-medium-down")
+    $("#open-settings").addClass("hidden-medium-down")
     return
   }
 
   if (!isUserListHidden()) toggleUserList(false)
-  $("#open-user-list").addClass("hidden-tablet-down")
-  $("#open-settings").removeClass("hidden-tablet-down")
+  $("#open-user-list").addClass("hidden-medium-down")
+  $("#open-settings").removeClass("hidden-medium-down")
 }
 
 function isUserListHidden() {

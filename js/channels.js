@@ -200,20 +200,20 @@ function closeChannel(network, channel) {
 
 function switchView(userlist) {
   "use strict"
-  if ($("#messaging").hasClass("hidden-tablet-down")) {
-    if ($("#userlist").hasClass("hidden-tablet-down")) {
-      $("#networks").addClass("hidden-tablet-down")
+  if ($("#messaging").hasClass("hidden-medium-down")) {
+    if ($("#userlist").hasClass("hidden-medium-down")) {
+      $("#networks").addClass("hidden-medium-down")
     } else {
-      $("#userlist").addClass("hidden-tablet-down")
+      $("#userlist").addClass("hidden-medium-down")
     }
-    $("#messaging").removeClass("hidden-tablet-down")
+    $("#messaging").removeClass("hidden-medium-down")
   } else {
     if (userlist) {
-      $("#userlist").removeClass("hidden-tablet-down")
-      $("#messaging").addClass("hidden-tablet-down")
+      $("#userlist").removeClass("hidden-medium-down")
+      $("#messaging").addClass("hidden-medium-down")
     } else {
-      $("#networks").removeClass("hidden-tablet-down")
-      $("#messaging").addClass("hidden-tablet-down")
+      $("#networks").removeClass("hidden-medium-down")
+      $("#messaging").addClass("hidden-medium-down")
     }
   }
 }
@@ -225,7 +225,7 @@ function switchToClear() {
   $(".channel-switcher.active").removeClass("active")
   $(".network-switcher.activenet").removeClass("activenet")
   $("#title").text("")
-  if ($("#messaging").hasClass("hidden-tablet-down")) {
+  if ($("#messaging").hasClass("hidden-medium-down")) {
     switchView(false)
   }
 }
@@ -249,7 +249,7 @@ function switchTo(network, channel) {
   }
   $("#title").text(title)
 
-  if ($("#messaging").hasClass("hidden-tablet-down")) {
+  if ($("#messaging").hasClass("hidden-medium-down")) {
     switchView(false)
   }
 
