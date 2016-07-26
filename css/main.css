@@ -30,7 +30,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 body {
     color: var(--primary-text);
-    background-color: var(--background);
 
     font-family: "Raleway", "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, "Liberation Sans", Arial, sans-serif;
 }
