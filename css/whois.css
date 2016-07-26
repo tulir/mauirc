@@ -15,3 +15,41 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+.whois {
+	padding: 1rem;
+}
+
+.whois-name, .whois-title {
+	font-weight: bold;
+}
+
+.whois-title {
+	font-size: 1rem;
+}
+
+.whois-name {
+	font-size: 2rem;
+}
+
+.whois-table {
+	display: table;
+
+	border-spacing: .5rem;
+}
+
+.whois-data {
+	display: table-row;
+}
+
+.whois-data-key {
+	padding-right: .5rem;
+
+	font-weight: bold;
+}
+
+.whois-data-key, .whois-data-value {
+	display: table-cell;
+
+	text-align: left;
+}
