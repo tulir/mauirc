@@ -128,19 +128,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     display: inline;
 }
 
-.message-preview {
-    margin-top: .25rem;
-    padding-top: .25rem;
-
-    border-top: 1px solid var(--secondary-content);
-}
-
 .message-joined-prev {
     margin-bottom: 0;
 }
 
 .message-wrapper:last-of-type.message-joined-prev {
     margin-bottom: .75rem;
+}
+
+.message-preview {
+    margin-top: .25rem;
+    padding-top: .25rem;
+
+    border-top: 1px solid var(--secondary-content);
 }
 
 .preview-sitename, .preview-title {
