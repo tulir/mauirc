@@ -48,9 +48,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .userlist-list {
     position: absolute;
     top: 2.5rem;
-    right: 0;
+    right: .25rem;
     bottom: 0;
-    left: 0;
+    left: .25rem;
 
     overflow-x: hidden;
     overflow-y: auto;
@@ -62,7 +62,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     display: block;
 
     margin-top: .25rem;
-    margin-right: .25rem;
     padding: .25rem;
 
     text-decoration: none;
