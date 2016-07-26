@@ -2,7 +2,7 @@
 cat \
     ./css/lib/jquery.modal.css \
     ./css/util.css \
-    ./css/main.css \
+    ./css/text.css \
     ./css/alerts.css \
     ./css/login.css \
     ./css/messagetemplates.css \
