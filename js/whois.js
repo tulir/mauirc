@@ -16,7 +16,7 @@
 
 
 function openWhoisModal(data) {
-	data.idle = moment(data.idle).toNow(true)
+	data.idle = moment().seconds(-data.idle).fromNow()
 	$("#modal").loadTemplate($("#template-whois"), data, {append: false, isFile: false, async: false})
 	showModal()
 }
