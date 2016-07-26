@@ -43,6 +43,7 @@ function updateUserList() {
 function startInvite(network, channel) {
   $("#userlist-invite").remove()
   $("#userlist-list").loadTemplate($("#template-userlist-invite-box"), {}, {append: true, isFile: false, async: false})
+  $("#userlist-invite-box").focus()
 }
 
 function stopInvite() {
