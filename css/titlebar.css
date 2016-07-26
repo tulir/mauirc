@@ -33,16 +33,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: bold;
 }
 
-/*.close-user-list, .open-network-list, .open-user-list, .settings-open {
-    position: absolute;
-
-    background-color: inherit;
-}
-
-.close-user-list:hover, .open-network-list:hover, .open-user-list:hover, .settings-open:hover {
-    background-color: inherit;
-}*/
-
 .open-list, .open-list:hover {
     position: absolute;
 
