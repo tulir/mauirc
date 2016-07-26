@@ -1,7 +1,7 @@
 #!/bin/bash
 for template in templates/*.html; do
     [[ $template == "templates/index.html" ]] && continue
-    templatename=`echo $template | awk '{ print substr($1, 11, length($1) - 5 ) }'`
+    templatename=`echo $template | awk '{ print substr($1, 11, length($1) - 15 ) }'`
     echo -n '<script type="text/html" id="template-'$templatename'"> ' >> templates.min.html
     cat $template | html-minifier --html5 \
         --collapse-boolean-attributes \
