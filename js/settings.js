@@ -143,7 +143,8 @@ function titleEdit() {
       autocomplete="off" \
       placeholder="Enter the topic..." \
       data-old-text="%1$s" \
-      onKeyDown="titleFinish(event)" \
+      onKeyDown="titleFinish(event.keyCode)" \
+      onBlur="titleFinish(27)" \
       value="%1$s" \
     />', $("#title").text()))
     $("#title-editor").focus()
@@ -153,9 +154,9 @@ function titleEdit() {
   }
 }
 
-function titleFinish(event) {
+function titleFinish(keyCode) {
   "use strict"
-  if (event.keyCode === 13) {
+  if (keyCode === 13) {
     sendMessage({
       type: "message",
       network: getActiveNetwork(),
@@ -163,7 +164,7 @@ function titleFinish(event) {
       command: "topic",
       message: $("#title-editor").val()
     })
-  } else if (event.keyCode !== 27) {
+  } else if (keyCode !== 27) {
     return
   }
   $("#title").text($("#title-editor").attr("data-old-text"))
