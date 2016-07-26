@@ -66,7 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     text-decoration: none;
 
-    color: inherit;
+    color: var(--primary-text);
     border: .0625rem solid var(--maunium-green);
     border-radius: .25rem;
 }
