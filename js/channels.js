@@ -42,6 +42,10 @@ function getActiveNetworkObj() {
   return $(".network-container:not(.hidden)")
 }
 
+function getChannel(network, channel) {
+  return $(sprintf("#chan-%s-%s", network.toLowerCase(), channelFilter(channel)))
+}
+
 function openPM(network, user) {
   "use strict"
   openChannel(network, user, true)
@@ -154,7 +158,7 @@ function openChannel(network, channel, byUser) {
     netObj = $(sprintf("#net-%s", network))
   }
 
-  if ($(sprintf("#chan-%s-%s", network, channelFilter(channel))).length !== 0) {
+  if (getChannel(network, channel).length !== 0) {
     return
   }
 
@@ -185,7 +189,7 @@ function closeChannel(network, channel) {
     return
   }
 
-  var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
+  var chanObj = getChannel(network, channel)
   if (chanObj.length === 0) {
     return
   }
@@ -233,7 +237,6 @@ function switchToClear() {
 function switchTo(network, channel) {
   "use strict"
   network = network.toLowerCase()
-  var chanFiltered = channelFilter(channel)
   dbg(sprintf("Switching to channel %s @ %s", channel, network))
   getActiveChannelObj().addClass("hidden")
   getActiveNetworkObj().addClass("hidden")
@@ -260,9 +263,9 @@ function switchTo(network, channel) {
 
   $(sprintf("#switchnet-%s", network)).addClass("activenet")
   $(sprintf("#net-%s", network)).removeClass("hidden")
-  $(sprintf("#chan-%s-%s", network, chanFiltered)).removeClass("hidden")
+  getChannel(network, channel).removeClass("hidden")
 
-  var newChanSwitcher = $(sprintf("#switchto-%s-%s", network, chanFiltered))
+  var newChanSwitcher = $(sprintf("#switchto-%s-%s", network, channelFilter(channel)))
   newChanSwitcher.removeClass("new-messages")
   newChanSwitcher.addClass("active")
 
