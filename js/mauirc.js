@@ -90,7 +90,7 @@ function connect() {
     } else if (ed.type === "delete") {
       $(sprintf("#msgwrap-%s", ed.object)).remove()
     } else if (ed.type === "whois") {
-      dbg(ed.object)
+      openWhoisModal(ed.object)
     } else if (ed.type === "invite") {
       openChannel(ed.object.network, ed.object.channel, false)
       getChannel(ed.object.network, ed.object.channel).loadTemplate($("#template-invite"), {
