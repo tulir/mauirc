@@ -29,9 +29,7 @@ function updateUserList() {
         displayname: val
       }, {append: true, isFile: false, async: false})
     })
-    $("#userlist-list").loadTemplate($("#template-userlist-invite"), {
-      onclick: sprintf("startInvite('%s', '%s')", getActiveNetwork(), getActiveChannel())
-    }, {append: true, isFile: false, async: false})
+    $("#userlist-list").loadTemplate($("#template-userlist-invite"), {}, {append: true, isFile: false, async: false})
     $("#open-user-list").removeClass("hidden-medium-down")
     $("#open-settings").addClass("hidden-medium-down")
     return
@@ -43,18 +41,27 @@ function updateUserList() {
 }
 
 function startInvite(network, channel) {
-  $("#userlist-invite").addClass("hidden")
+  $("#userlist-invite").remove()
+  $("#userlist-list").loadTemplate($("#template-userlist-invite-box"), {}, {append: true, isFile: false, async: false})
+}
+
+function stopInvite() {
+  $("#userlist-invite-box").remove()
+  $("#userlist-list").loadTemplate($("#template-userlist-invite"), {
+  onclick: sprintf("startInvite('%s', '%s')", getActiveNetwork(), getActiveChannel())
+  }, {append: true, isFile: false, async: false})
 }
 
 function finishInvite() {
   "use strict"
   sendMessage({
     type: "message",
-    network: network,
-    channel: channel,
+    network: getActiveNetwork(),
+    channel: getActiveChannel(),
     command: "invite",
-    message: ""
+    message: $("#userlist-invite-box").val()
   })
+  stopInvite()
 }
 
 function isUserListHidden() {

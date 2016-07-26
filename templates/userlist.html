@@ -29,11 +29,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<a href="#"
 		id="userlist-invite"
 		class="userlist-entry userlist-invite"
-		data-template-bind='[{"attribute": "onClick", "value": "onclick"}]'>
+		onClick="startInvite()">
 		Invite User...
 	</a>
 </script>
 
 <script type="text/html" id="template-userlist-invite-box">
-
+	<div id="userlist-invite-box-wrapper" class="userlist-invite-box-wrapper">
+	  <input
+			class="textfield userlist-invite-box"
+			id="userlist-invite-box"
+			onBlur="stopInvite()"
+			onKeyDown="
+				if (event.keyCode === 13) {
+					finishInvite()
+				} else if (event.keyCode === 27) {
+					stopInvite()
+				}
+			"
+		/>
+	</div>
 </script>
