@@ -58,13 +58,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-size: 1.5em;
 }
 
-.pm-link {
+.userlist-entry {
+    display: block;
+
+    margin-top: .5rem;
+
     text-decoration: none;
 
     color: inherit;
 }
 
-.pm-link:hover {
+.userlist-entry:hover {
     text-decoration: underline;
 }
 
