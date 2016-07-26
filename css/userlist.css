@@ -85,6 +85,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-bottom: .25rem;
 }
 
+.userlist-invite {
+    color: var(--secondary-text);
+}
+
 @media (min-width: 750px) {
     .userlist {
         left: auto;
