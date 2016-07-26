@@ -15,6 +15,7 @@ cat \
     ./js/settings.js \
     ./js/modal.js \
     ./js/whois.js \
+    ./js/oper.js \
     ./js/rawio.js \
     ./js/scripts.js \
     ./js/mauirc.js \

@@ -1,4 +1,4 @@
-<!--
+/*
 mauIRC - The original mauIRC web frontend
 Copyright (C) 2016 Tulir Asokan
 
@@ -14,12 +14,24 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-<div class="modal-content oper-auth-wrap">
-  <h1 class="oper-auth-title">OPER authentication</h1>
-  <form action="#" class="oper-auth-form">
-    <input type="text" class="textfield oper-authfield email" id="oper-username" placeholder="OPER username">
-    <input type="password" class="textfield oper-authfield password" id="oper-password" placeholder="OPER password">
-    <button class="btn oper-authsend" type="submit" id="opersend" onClick="operSend()">Authenticate</button>
-  </form>
-</div>
+*/
+
+.oper-authfield {
+	margin-right: auto;
+	margin-bottom: .75rem;
+	margin-left: auto;
+}
+
+.oper-authsend, .oper-authfield {
+	width: 100%;
+	padding: 1rem;
+}
+
+.oper-auth-wrap {
+	padding: 1rem;
+
+	text-align: center;
+
+	border-radius: .25rem;
+	background-color: white;
+}

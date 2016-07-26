@@ -11,6 +11,7 @@ cat \
     ./css/settings.css \
     ./css/modal.css \
     ./css/whois.css \
+    ./css/oper.css \
     ./css/rawio.css \
     ./css/scripts.css \
     ./css/channels.css \

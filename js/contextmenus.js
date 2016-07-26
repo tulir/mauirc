@@ -63,7 +63,7 @@ function ctxNetSwitcher(key, options) {
   if (key === "rawio") {
     openRawIO($(this).text())
   } else if (key === "oper") {
-    // TODO oper auth thingy
+    openOper()
   }
 }
 
