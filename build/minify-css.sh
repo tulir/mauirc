@@ -17,4 +17,4 @@ cat \
     ./css/userlist.css \
     > ./index.css
 
-yui-compressor ./index.css -o ./index.min.css
+cleancss -o index.min.css index.css
