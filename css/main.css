@@ -16,18 +16,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-:root {
-    --maunium-green: #50D367;
-    --maunium-green-light: rgba(80, 211, 103, 0.5);
-    --maunium-green-extralight: rgba(80, 211, 103, 0.1);
-    --maunium-blue: #47B9D7;
-    --maunium-dark: #042B52;
-    --primary-text: #212121;
-    --secondary-text: #9A9A9A;
-    --secondary-content: #D6D6D6;
-    --background: #E3E3E3;
-}
-
 body {
     color: var(--primary-text);
 
@@ -51,14 +39,4 @@ h3 {
 
 p {
     font-size: 16px;
-}
-
-.container {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    background: var(--maunium-green);
 }
