@@ -1,5 +1,6 @@
 #!/bin/bash
 for template in templates/*.html; do
+    [[ $template == "templates/index.html" ]] && continue
     echo -n '<script type="text/html" id="template-'$template'"> ' >> templates.min.html
     cat $template | html-minifier --html5 \
         --collapse-boolean-attributes \
