@@ -59,12 +59,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .textfield {
 	box-sizing: border-box;
 
-	border: 1px solid var(--secondary-content);
+	border: .0625rem solid var(--secondary-content);
 	border-radius: .25rem;
 }
 
 .textfield:focus {
-	border: 1px solid var(--maunium-green);
+	border: .0625rem solid var(--maunium-green);
 }
 
 .btn:hover {

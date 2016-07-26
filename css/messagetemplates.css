@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     text-align: left;
 
-    border: 1px solid var(--maunium-green);
+    border: .0625rem solid var(--maunium-green);
     border-radius: .25rem;
     background-color: white;
 }
@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .highlight {
-    border: 2px solid var(--maunium-green);
+    border: .125rem solid var(--maunium-green);
 }
 
 .highlight > .message-text {
@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .joinpart, .nickchange, .kick, .modechange {
     color: var(--secondary-text);
-    border: 1px dashed var(--maunium-green);
+    border: .0625rem dashed var(--maunium-green);
 }
 
 .message-date {

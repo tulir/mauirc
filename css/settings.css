@@ -115,7 +115,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding: .375rem 1rem;
 
     color: inherit;
-    border: 1px solid var(--secondary-text);
+    border: .0625rem solid var(--secondary-text);
     border-radius: .25rem;
     background-color: white;
 
@@ -138,7 +138,7 @@ select.settings-value > option {
 
 button.settings-value {
     color: white;
-    border: 1px solid var(--maunium-green);
+    border: .0625rem solid var(--maunium-green);
     background-color: var(--maunium-green);
 }
 

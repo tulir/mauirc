@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-bottom: 1rem;
     padding: 1rem;
 
-    border: 1px solid transparent;
+    border: .0625rem solid transparent;
     border-radius: .25rem;
 
     font-weight: bold;
@@ -82,7 +82,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-align: center;
 
     color: #A94444;
-    border: 1px solid transparent;
+    border: .0625rem solid transparent;
     border-color: #EBCCCC;
     border-radius: .25rem;
     background-color: #F2DEDE;
