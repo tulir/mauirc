@@ -143,9 +143,30 @@ function tryReconnect() {
   "use strict"
   clearTimeout(timeout)
   $("#try-reconnect").attr("disabled", true)
-  setTimeout(function(){
-    $("#try-reconnect").removeAttr("disabled")
-  }, 3000)
+  $("#try-reconnect").text("Reconnecting")
+  timeout = setTimeout(function() {
+    $("#try-reconnect").text("Reconnecting.")
+    timeout = setTimeout(function() {
+      $("#try-reconnect").text("Reconnecting..")
+      timeout = setTimeout(function() {
+        $("#try-reconnect").text("Reconnecting...")
+        timeout = setTimeout(function() {
+          $("#try-reconnect").text("Reconnecting....")
+          timeout = setTimeout(function() {
+            $("#try-reconnect").text("Reconnecting.....")
+            timeout = setTimeout(function() {
+              $("#try-reconnect").text("Timed out!")
+              $("#try-reconnect").removeAttr("disabled")
+              timeout = setTimeout(function() {
+                $("#try-reconnect").text("Try to reconnect")
+                timeout = null
+              }, 2000)
+            }, 1000)
+          }, 1000)
+        }, 1000)
+      }, 1000)
+    }, 1000)
+  }, 1000)
   reconnect()
 }
 
