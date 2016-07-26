@@ -92,12 +92,13 @@ function connect() {
     } else if (ed.type === "whois") {
       dbg(ed.object)
     } else if (ed.type === "invite") {
-      $("#modal").loadTemplate($("#template-invite"), {
+      openChannel(ed.object.network, ed.object.channel, false)
+      getChannel(ed.object.network, ed.object.channel).loadTemplate($("#template-invite"), {
         sender: ed.object.sender,
         channel: ed.object.channel,
-        accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel)
+        accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel),
+        reject: sprintf("closeChannel('%s', '%s')", ed.object.network, ed.object.channel)
       }, {append: false, isFile: false, async: false})
-      showModal()
     } else if (ed.type === "raw") {
       $(sprintf("#raw-output-%s", ed.object.network)).append(sprintf("<div class='rawoutmsg'>%s</div>", ed.object.message))
     }
@@ -120,7 +121,7 @@ function connect() {
 }
 
 function acceptInvite(network, channel) {
-  hideModal()
+  getChannel(network, channel).html("")
   sendMessage({
     type: "message",
     network: network,
