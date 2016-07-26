@@ -22,7 +22,7 @@ function connect() {
   socket.onopen = function() {
     "use strict"
     if (!msgcontainer) {
-      $("#container").loadTemplate($("#template-main"), {append: false, isFile: false, async: false})
+      $("#container").loadTemplate($("#template-main"), {version: version}, {append: false, isFile: false, async: false})
       $("#settings").loadTemplate($("#template-settings"), {append: false, isFile: false, async: false})
 
       msgcontainer = true
@@ -129,7 +129,7 @@ function acceptInvite(network, channel) {
     history(network, channel, 512)
     channelData.setHistoryFetched()
   }
-  
+
   sendMessage({
     type: "message",
     network: network,
