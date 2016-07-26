@@ -53,7 +53,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .messagebox {
     box-sizing: border-box;
     width: 100%;
-    padding: .5rem;
+    padding: 1rem;
 
     border: none;
     border-top: 2px solid var(--secondary-content);
@@ -71,20 +71,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .view-switch-btn {
         cursor: default;
     }
-
-    .messagebox {
-        padding: .75rem;
-    }
 }
 
 @media (min-width: 1000px) {
     .messaging {
         right: 10rem;
         left: 11rem;
-    }
-
-    .messagebox {
-        padding: 1rem;
     }
 }
 
