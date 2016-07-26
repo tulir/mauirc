@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-dbg("Main load started.")
+dbg("mauIRC 1.0.1 loading...")
 checkAuth()
 dbg("Checking notification permission...")
 Notification.requestPermission()
