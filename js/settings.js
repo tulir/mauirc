@@ -143,7 +143,7 @@ function titleEdit() {
       autocomplete="off" \
       placeholder="Enter the topic..." \
       data-old-text="%1$s" \
-      onKeyDown="titleFinish(event.keyCode)" \
+      onKeyDown="titleFinish(event.keyCode, event)" \
       onBlur="titleFinish(27)" \
       value="%1$s" \
     />', $("#title").text()))
@@ -154,7 +154,7 @@ function titleEdit() {
   }
 }
 
-function titleFinish(keyCode) {
+function titleFinish(keyCode, event) {
   "use strict"
   if (keyCode === 13) {
     sendMessage({
@@ -168,5 +168,5 @@ function titleFinish(keyCode) {
     return
   }
   $("#title").text($("#title-editor").attr("data-old-text"))
-  event.preventDefault()
+  if (event) event.preventDefault()
 }
