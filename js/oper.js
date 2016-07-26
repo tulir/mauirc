@@ -16,11 +16,16 @@
 
 function operSend() {
   "use strict"
+	sendMessage({
+    type: "raw",
+    network: $("#oper-auth-form").attr("data-network"),
+    message: sprintf("OPER %s %s", $("#oper-username").val(), $("#oper-password").val())
+  })
   hideModal()
 }
 
-function openOper() {
+function openOper(network) {
   "use strict"
-	$("#modal").loadTemplate($("#template-oper"), {}, {append: false, isFile: false, async: false})
+	$("#modal").loadTemplate($("#template-oper"), {network: network}, {append: false, isFile: false, async: false})
 	showModal()
 }
