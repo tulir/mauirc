@@ -22,8 +22,16 @@ function updateUserList() {
 
     $("#userlist-list").text("")
     ch.getUsers().forEach(function(val, i, arr) {
-      $("#userlist-list").append(sprintf('<a class="userlist-entry" href="#" onClick="openPM(\'%1$s\', \'%2$s\')" data-simplename="%2$s">%3$s</a>', getActiveNetwork(), ch.getUsersPlain()[i], val))
+      var plainUser = ch.getUsersPlain()[i]
+      $("#userlist-list").loadTemplate($("#template-userlist-entry"), {
+        onclick: sprintf("openPM('%s', '%s')", getActiveNetwork(), plainUser),
+        simplename: plainUser,
+        displayname: val
+      })
     })
+    $("#userlist-list").loadTemplate($("#template-userlist-invite"), {
+      onclick: sprintf("startInvite('%s', '%s')", getActiveNetwork(), getActiveChannel())
+    }, {append: true, isFile: false, async: false})
     $("#open-user-list").removeClass("hidden-medium-down")
     $("#open-settings").addClass("hidden-medium-down")
     return
@@ -32,6 +40,21 @@ function updateUserList() {
   if (!isUserListHidden()) toggleUserList(false)
   $("#open-user-list").addClass("hidden-medium-down")
   $("#open-settings").removeClass("hidden-medium-down")
+}
+
+function startInvite(network, channel) {
+  $("#userlist-invite").addClass("hidden")
+}
+
+function finishInvite() {
+  "use strict"
+  sendMessage({
+    type: "message",
+    network: network,
+    channel: channel,
+    command: "invite",
+    message: ""
+  })
 }
 
 function isUserListHidden() {
