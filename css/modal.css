@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-.lib-modal-wrapper {
+.modal-container {
     position: fixed;
     z-index: 4;
     top: 0;
@@ -24,17 +24,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 0;
     left: 0;
 
-    background-color: rgb(0, 0, 0);
+    text-align: center;
+
     background-color: rgba(0, 0, 0, 0.75);
 }
 
-.lib-modal {
-    position: absolute;
+.modal {
+    position: relative;
     z-index: 5;
 
-    background-color: var(--background);
+    display: inline-block;
+    overflow-y: auto;
+
+    box-sizing: border-box;
+    width: auto;
+    max-width: 90vw;
+    height: auto;
+    max-height: 90vh;
+    margin: 50vh 5vw;
+
+    transform: translateY(-50%);
+    vertical-align: middle;
+
+    border-radius: .25rem;
+    background-color: var(--background);;
 }
 
-.lib-modal-hidden {
-    display: none;
+.modal-content {
+    box-sizing: border-box;
+    max-width: calc(90vw - .25rem);
+    max-height: calc(90vh - .25rem);
+    padding: .25rem;
 }

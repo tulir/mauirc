@@ -14,53 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-jQuery.fn.registerModalWrapper() {
-  "use strict"
-  this.addClass("lib-modal-wrapper")
-  this.addClass("lib-modal-hidden")
-  this.click(function() {
-    this.closeModal()
-  })
+function showModal() {
+	$("#modal-container").removeClass("hidden")
 }
 
-jQuery.fn.registerModal(registerWrapper) {
-  "use strict"
-  if (!this.parent().hasClass("lib-modal-wrapper")) {
-    if (registerWrapper) {
-      this.parent().registerModalWrapper()
-    } else {
-      return false
-    }
-  }
-  this.addClass("lib-modal")
-  this.addClass("lib-modal-hidden")
-  return true
-}
-
-jQuery.fn.closeModal() {
-  "use strict"
-  if(this.hasClass("lib-modal-wrapper")) {
-    this.addClass("lib-modal-hidden")
-    this.find(".lib-modal:not(.lib-modal-hidden)").addClass("lib-modal-hidden")
-    return true
-  } else if (this.hasClass("lib-modal")) {
-    this.addClass("lib-modal-hidden")
-    this.parent().addClass("lib-modal-hidden")
-    return true
-  }
-  return false
-}
-
-jQuery.fn.openModal() {
-  "use strict"
-  if (this.hasClass("lib-modal-wrapper")) {
-    this.removeClass("lib-modal-hidden")
-    this.find(".lib-modal").removeClass("lib-modal-hidden")
-    return true
-  } else if (this.hasClass("lib-modal")) {
-    this.removeClass("lib-modal-hidden")
-    this.parent().removeClass("lib-modal-hidden")
-    return true
-  }
-  return false
+function hideModal() {
+	$("#modal-container").addClass("hidden")
+  $("#modal").html("")
 }

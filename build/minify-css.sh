@@ -9,6 +9,7 @@ cat \
     ./css/messageview.css \
     ./css/titlebar.css \
     ./css/settings.css \
+    ./css/modal.css \
     ./css/rawio.css \
     ./css/scripts.css \
     ./css/channels.css \

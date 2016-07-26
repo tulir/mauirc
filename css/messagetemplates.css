@@ -157,15 +157,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin: 0;
 }
 
-.preview-modal {
-    display: none;
-
-    width: auto;
-    max-width: 95%;
-    height: auto;
-    max-height: 95%;
-}
-
 @media (min-width: 1000px) {
     .message {
         min-width: 25%;

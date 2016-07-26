@@ -92,12 +92,12 @@ function connect() {
     } else if (ed.type === "whois") {
       dbg(ed.object)
     } else if (ed.type === "invite") {
-      /*$("#modal-container").loadTemplate($("#template-invite"), {
+      $("#modal").loadTemplate($("#template-invite"), {
         sender: ed.object.sender,
         channel: ed.object.channel,
         accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel)
       }, {append: false, isFile: false, async: false})
-      $("#modal-container").modal()*/
+      showModal()
     } else if (ed.type === "raw") {
       $(sprintf("#raw-output-%s", ed.object.network)).append(sprintf("<div class='rawoutmsg'>%s</div>", ed.object.message))
     }

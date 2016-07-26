@@ -13,6 +13,7 @@ cat \
     ./js/messaging.js \
     ./js/contextmenus.js \
     ./js/settings.js \
+    ./js/modal.js \
     ./js/rawio.js \
     ./js/scripts.js \
     ./js/mauirc.js \

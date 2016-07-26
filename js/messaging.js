@@ -300,16 +300,12 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
 
 function modalOpen(id) {
   "use strict"
-  $('<img id="modal-' + id + '"\
-      class="preview-modal" \
-      src="' + $(sprintf("#msg-%d > .message-preview", id)).find(".preview-image-link > .preview-image").attr("src") + '" \
+  $("#modal").html(sprintf(
+    '<img id="img-modal-%s"\
+      class="modal-content preview-modal" \
+      src="%s" \
       alt="Full-sized Image" \
-    />')
-  .modal({
-    fadeDuration: 100,
-    fadeDelay: 0.8
-  })
-  $(sprintf("#modal-%d", id)).on($.modal.AFTER_CLOSE, function(event, modal) {
-    $(sprintf("#modal-%d", id)).remove()
-  })
+    />', id, $(sprintf("#msg-%d > .message-preview", id)).find(".preview-image-link > .preview-image").attr("src"))
+  )
+  showModal()
 }
