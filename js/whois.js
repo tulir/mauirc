@@ -16,7 +16,15 @@
 
 
 function openWhoisModal(data) {
-	data.idle = moment().seconds(-data.idle).fromNow()
+	if (data.idle === 0) {
+		data.idle = "Currently online"
+	} else {
+		data.idle = moment().seconds(-data.idle).fromNow()
+		data.idle = data.idle.charAt(0).toUpperCase() + data.idle.slice(1)
+	}
 	$("#modal").loadTemplate($("#template-whois"), data, {append: false, isFile: false, async: false})
+	if (data.away.length === 0) {
+		$("#whois-data-awaymessage").remove()
+	}
 	showModal()
 }
