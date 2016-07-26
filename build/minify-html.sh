@@ -18,7 +18,12 @@ minifyappend() {
     echo -n "</script>" >> templates.min.html
 }
 
+minifyappend-multi() {
+    cat "templates/$1.html" | htmlminify >> templates.min.html
+}
+
 echo > templates.min.html
+minifyappend-multi misc
 minifyappend action
 minifyappend channel-adder
 minifyappend channel-switcher
@@ -34,7 +39,7 @@ minifyappend network-switcher
 minifyappend whois
 minifyappend invite
 minifyappend rawio
-cat "templates/misc.html" | htmlminify >> templates.min.html
+minifyappend-multi userlist
 
 if [ ! -f index.max.html ]; then
     mv index.html index.max.html
