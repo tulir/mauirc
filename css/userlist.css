@@ -82,6 +82,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin-top: .1875rem;
 }
 
+.userlist-entry:last-of-type {
+    margin-bottom: .25rem;
+}
+
 @media (min-width: 750px) {
     .userlist {
         left: auto;
