@@ -97,6 +97,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     background: var(--maunium-green);
 }
 
+.display-too-small {
+    display: none;
+}
+
 @media (max-width: 399px) {
     .container, .raw-io-wrapper, .settings, .modal-container {
         display: none;
