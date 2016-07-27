@@ -18,62 +18,80 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .settings {
     position: fixed;
-    top: 1rem;
-    right: 1rem;
-    left: 1rem;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    padding: 1.5rem 1rem;
 }
 
 @media (min-width: 750px) {
 	.settings {
-	    right: 6rem;
-	    left: 6rem;
+        padding: 1.5rem 6rem;
 	}
 }
 
 @media (min-width: 1000px) {
 	.settings {
-	    right: 10rem;
-	    left: 10rem;
+        padding: 1.5rem 10rem;
 	}
 }
 
 @media (min-width: 1200px) {
 	.settings {
-	    right: 18rem;
-	    left: 18rem;
+        padding: 1.5rem 18rem;
 	}
 }
 
 @media (min-width: 1500px) {
 	.settings {
-	    right: 24rem;
-	    left: 24rem;
+        padding: 1.5rem 24rem;
 	}
 }
 
 @media (min-width: 1800px) {
 	.settings {
-	    right: 32rem;
-	    left: 32rem;
+        padding: 1.5rem 32rem;
 	}
 }
 
-.settings-top-buttons {
-    border-radius: .25rem;
+.settings-top-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    height: auto;
+
     background-color: var(--maunium-green);
 }
 
-.btn-clear-history,
-.btn-leave-settings,
-.btn-part-channel {
-    display: table-cell;
-
-    box-sizing: border-box;
-    width: 50%;
+.settings-top-buttons > .btn {
+    border-radius: 0;
 }
 
 .btn-leave-settings {
-    width: 100%;
+    height: 2.375rem;
+}
+
+.btn-leave-settings-text {
+    display: inline-block;
+
+    padding-top: .2rem;
+}
+
+.btn-part-channel, .btn-clear-history {
+    float: right;
+
+    height: 2.375rem;
+    padding: .5rem;
+}
+
+.settings-top-buttons > .btn {
+    box-sizing: border-box;
 }
 
 .settings-container {

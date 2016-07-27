@@ -47,7 +47,6 @@ function updateSettingsValues() {
 	} else {
 		$("#mauirc-font").val(document.body.style.fontFamily)
 	}
-  $("#mauirc-message-group-delay").val(data.getMessageGroupDelay())
 
   if (!data.networkExists(getActiveNetwork())) {
     return
@@ -68,11 +67,6 @@ function snChangeNotifications() {
 function snChangeHighlights() {
   "use strict"
   data.getNetwork(getActiveNetwork()).setHighlightsFromString($("#network-highlights").val())
-}
-
-function snChangeMsgGroupDelay() {
-  "use strict"
-  data.setMessageGroupDelay($("#mauirc-message-group-delay").val())
 }
 
 function snClearHistory() {

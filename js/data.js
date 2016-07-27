@@ -18,18 +18,7 @@ function DataStore() {
   "use strict"
   this.netlist = {},
   this.globalscripts = {},
-  this.messageGroupDelay = 3,
   this.messageFormatting = true
-}
-
-DataStore.prototype.getMessageGroupDelay = function() {
-  "use strict"
-  return this.messageGroupDelay
-}
-
-DataStore.prototype.setMessageGroupDelay = function(delay) {
-  "use strict"
-  this.messageGroupDelay = delay
 }
 
 DataStore.prototype.getGlobalScript = function(name) {
