@@ -300,7 +300,6 @@ function tryJoinMessage(id, network, channel, timestamp, sender, command, messag
 
 function openFullImageModal(id) {
   "use strict"
-  dbg(id)
   $("#modal").loadTemplate($("#template-image-modal"), {
     id: sprintf("img-modal-%s", id),
     src: $(sprintf("#msg-%d > .message-preview", id)).find(".preview-image-link > .preview-image").attr("src")
