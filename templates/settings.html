@@ -86,6 +86,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 
 <div class="settings-scripts hidden" id="settings-scripts">
+  <div class="settings-top-bar">
+    <button class="btn btn-leave-settings" type="button" id="leave-scripts" onClick="snCloseScriptEditor()">
+      <span class="left-arrow">
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+          <path fill="#FFFFFF" d="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z" />
+        </svg>
+      </span>
+      <span class="btn-leave-settings-text">
+        Close Script Editor
+      </span>
+    </button>
+  </div>
+
   <div class="script-list" id="script-list"></div>
 
   <div class="script-pane">
@@ -93,10 +106,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </div>
 
   <div class="script-tools" id="script-tools">
-    <button class="script-tool script-tool-new" id="script-tool-new" type="button" onClick="snNewScript()">New Script</button>
+    <button class="btn script-tool script-tool-new" id="script-tool-new" type="button" onClick="snNewScript()">New Script</button>
     <div class="script-name-wrapper">
-      <input class="script-tool script-name" id="script-name" type="text" autocomplete="off" placeholder="Script name">
+      <input class="textfield script-tool script-name" id="script-name" type="text" autocomplete="off" placeholder="Script name">
     </div>
-    <button class="script-tool script-tool-save" id="script-tool-save" type="button">Upload</button>
+    <button class="btn script-tool script-tool-save" id="script-tool-save" type="button">Upload</button>
   </div>
 </div>

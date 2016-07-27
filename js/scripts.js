@@ -54,6 +54,12 @@ function snOpenScriptEditor(net, scripts) {
 	}
 }
 
+function snCloseScriptEditor() {
+  $("#settings-main").removeClass("hidden")
+	$("#settings-networkeditor").addClass("hidden")
+	$("#settings-scripts").addClass("hidden")
+}
+
 function snSwitchScript(net, name) {
   "use strict"
 	var script
@@ -66,8 +72,8 @@ function snSwitchScript(net, name) {
 		dbg("Script not found:", name, "@", net)
 		return
 	}
-	$("#script-list > .active").removeClass("active")
-	$(sprintf("#chscript-%s", name)).addClass("active")
+	$("#script-list > .selected-script").removeClass("selected-script")
+	$(sprintf("#chscript-%s", name)).addClass("selected-script")
 
 	scripteditor.setValue(script, 1)
 	$("#script-name").val(name)
@@ -81,8 +87,8 @@ function snSwitchScript(net, name) {
 function snSaveScript() {
   "use strict"
 	var script = scripteditor.getValue()
-	var name = $("#script-list > .active").attr("data-name")
-	var net = $("#script-list > .active").attr("data-network")
+	var name = $("#script-list > .selected-script").attr("data-name")
+	var net = $("#script-list > .selected-script").attr("data-network")
 	if (net === "global") {
 		data.putGlobalScript(name, script)
 	} else {

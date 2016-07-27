@@ -18,44 +18,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .settings-scripts {
     position: fixed;
-    top: .5rem;
-    right: .1rem;
-    bottom: .5rem;
-    left: .1rem;
+    top: 2.375rem;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    box-sizing: border-box;
+    margin: .5rem .1rem;
 }
 
 @media (min-width: 750px) {
     .settings-scripts {
-        right: .6rem;
-        left: .6rem;
+        margin: .5rem .6rem;
     }
 }
 
 @media (min-width: 1000px) {
     .settings-scripts {
-        right: 1rem;
-        left: 1rem;
+        margin: .5rem 1rem;
     }
 }
 
 @media (min-width: 1200px) {
     .settings-scripts {
-        right: 1.8rem;
-        left: 1.8rem;
+        margin: .5rem 1.8rem;
     }
 }
 
 @media (min-width: 1500px) {
     .settings-scripts {
-        right: 2.4rem;
-        left: 2.4rem;
+        margin: .5rem 2.4rem;
     }
 }
 
 @media (min-width: 1800px) {
     .settings-scripts {
-        right: 3.2rem;
-        left: 3.2rem;
+        margin: .5rem 3.2rem;
     }
 }
 
@@ -91,29 +89,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     height: 2.4rem;
 }
 
-.script-list-button, .script-tool {
-    position: absolute;
-
-    box-sizing: border-box;
-    padding: .375rem 1rem;
-
-    color: inherit;
-    border: .0625rem solid var(--secondary-text);
-    border-radius: .25rem;
-    background-color: white;
-
-    font-size: 1rem;
-}
-
 .script-list-button {
     width: 5rem;
     padding: .25rem .25rem;
-}
-
-.script-list-button:hover, button:hover.script-tool {
-    color: #FFFFFF;
-    border: .0625rem solid var(--maunium-blue);
-    background-color: var(--maunium-blue);
 }
 
 .script-tool {
@@ -122,10 +100,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     bottom: 0;
 }
 
-.script-list-button.active {
-    color: #FFFFFF;
-    border: .0625rem solid var(--maunium-green);
-    background-color: var(--maunium-green);
+.script-list-button:hover, .script-list-button.selected-script {
+    color: white;
+    background-color: var(--maunium-blue);
 }
 
 .script-tool-new {
@@ -135,8 +112,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .script-list-button {
-    position: relative;
-
     width: 8rem;
 }
 
