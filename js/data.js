@@ -35,6 +35,11 @@ DataStore.prototype.putGlobalScript = function(name, script) {
   this.scripts[name] = script
 }
 
+DataStore.prototype.deleteGlobalScript = function(name) {
+  "use strict"
+  delete this.scripts[name]
+}
+
 DataStore.prototype.getGlobalScripts = function() {
   "use strict"
   return this.scripts
@@ -118,6 +123,11 @@ NetworkStore.prototype.getScript = function(name) {
 NetworkStore.prototype.putScript = function(name, script) {
   "use strict"
   this.scripts[name] = script
+}
+
+NetworkStore.prototype.deleteScript = function(name) {
+  "use strict"
+  delete this.scripts[name]
 }
 
 NetworkStore.prototype.getScripts = function() {
