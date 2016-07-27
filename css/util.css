@@ -96,3 +96,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     background: var(--maunium-green);
 }
+
+@media (max-width: 399px) {
+    .container, .raw-io-wrapper, .settings, .modal-container {
+        display: none;
+    }
+
+    .display-too-small {
+        display: block;
+
+        padding-top: 2rem;
+
+        text-align: center;
+
+        font-size: 16vw;
+        font-weight: bold;
+    }
+}
