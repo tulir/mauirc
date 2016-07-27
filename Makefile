@@ -12,5 +12,4 @@ gitpull:
 update: clean gitpull minify
 
 clean:
-	rm -f index.min.js index.js index.min.css index.css templates.min.html mauirc.tar.xz
-	mv -f index.max.html index.html
+	./build/clean.sh
