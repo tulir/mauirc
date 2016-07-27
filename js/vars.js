@@ -24,7 +24,7 @@ var data = new DataStore()
 var scripteditor = null
 var debug = window.localStorage.debug
 var debugTrace = window.localStorage.debugTrace
-var version = "1.0.3"
+var version = "1.1.0"
 
 var websocketPath = 'wss://' + window.location.host + '/socket'
 if (window.location.protocol !== "https:") {
