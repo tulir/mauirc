@@ -54,10 +54,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     color: white;
     border: none;
     border-radius: .25rem;
+    outline: none;
     background-color: var(--maunium-green);
 
     font-size: 1rem;
     font-weight: bold;
+}
+
+.btn:-moz-focusring {
+    outline: none;
 }
 
 .textfield {
