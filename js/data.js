@@ -23,8 +23,8 @@ function DataStore() {
 
 DataStore.prototype.getGlobalScript = function(name) {
   "use strict"
-  if (this.scripts.hasOwnProperty(name)) {
-    return this.scripts[name]
+  if (this.globalscripts.hasOwnProperty(name)) {
+    return this.globalscripts[name]
   } else {
     return undefined
   }
@@ -32,17 +32,17 @@ DataStore.prototype.getGlobalScript = function(name) {
 
 DataStore.prototype.putGlobalScript = function(name, script) {
   "use strict"
-  this.scripts[name] = script
+  this.globalscripts[name] = script
 }
 
 DataStore.prototype.deleteGlobalScript = function(name) {
   "use strict"
-  delete this.scripts[name]
+  delete this.globalscripts[name]
 }
 
 DataStore.prototype.getGlobalScripts = function() {
   "use strict"
-  return this.scripts
+  return this.globalscripts
 }
 
 DataStore.prototype.getNetwork = function(name) {

@@ -65,24 +65,7 @@ function connect() {
         $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
       }
 
-      $.ajax({
-        type: "GET",
-        url: "/script/" + ed.object.name,
-        dataType: "json",
-        success: function(scripts) {
-          "use strict"
-          if (isEmpty(scripts)) return
-          var net = data.getNetwork(ed.object.name)
-          scripts.forEach(function(val, i, arr) {
-            net.putScript(val.name, val.script)
-          })
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          "use strict"
-          dbg("Failed to get scripts of", ed.object.name + ":", textStatus, errorThrown)
-          dbg(jqXHR)
-        }
-      })
+      updateScripts(ed.object.name, false)
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {

@@ -52,6 +52,11 @@ function snOpenScriptEditor(net, scripts) {
 			}, {append: true, isFile: false, async: false})
     }
 	}
+
+  $("#script-tool-new").unbind("click")
+  $("#script-tool-new").click(function() {
+    snNewScript(net)
+  })
 }
 
 function snCloseScriptEditor() {
@@ -78,6 +83,11 @@ function snSwitchScript(net, name) {
 	scripteditor.setValue(script, 1)
 	$("#script-name").val(name)
 
+  $("#script-tool-delete").unbind("click")
+  $("#script-tool-delete").click(function() {
+    snDeleteScript(net, name)
+  })
+
   $("#script-tool-save").unbind("click")
 	$("#script-tool-save").click(function() {
 		snUploadScript(net, name)
@@ -96,6 +106,25 @@ function snSaveScript() {
 	}
 }
 
+function snNewScript(net) {
+  var key = "new-script"
+  $("#script-list").loadTemplate($("#template-script-list-entry"), {
+    id: sprintf("chscript-%s", key),
+    name: key,
+    network: net,
+    onclick: sprintf("snSwitchScript('%s', '%s')", net, key)
+  }, {append: true, isFile: false, async: false})
+
+  if (net === "global") {
+		data.putGlobalScript(key, "")
+	} else {
+		data.getNetwork(net).putScript(key, "")
+	}
+
+  snSwitchScript(net, key)
+  snUploadScript(net, key)
+}
+
 function snUploadScript(net, name) {
   "use strict"
 	snSaveScript()
@@ -106,7 +135,7 @@ function snUploadScript(net, name) {
 		var script = data.getNetwork(net).getScript(name)
 	}
 
-	$.ajax({
+  $.ajax({
 		type: "PUT",
 		url: sprintf("/script/%s/%s/", net, name),
     data: script,
@@ -122,6 +151,60 @@ function snUploadScript(net, name) {
 	})
 }
 
+function snRenameScript(net, name) {
+  var newName = $("#script-name").val()
+  $.ajax({
+		type: "POST",
+		url: sprintf("/script/%s/%s/", net, name),
+    data: sprintf("%s,%s", net, newName),
+		success: function() {
+      "use strict"
+      dbg("Successfully renamed script", name, "@", net, "to", newName)
+      if(net === "global") {
+        var script = data.getGlobalScript(name)
+        data.deleteGlobalScript(name)
+        data.putGlobalScript(newName, script)
+        snOpenScriptEditor(net, data.getGlobalScripts())
+      } else {
+        var netw = data.getNetwork(net)
+        var script = netw.getScript(name)
+        netw.deleteScript(name)
+        netw.putScript(newName, script)
+        snOpenScriptEditor(net, netw.getScripts())
+      }
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+      "use strict"
+			dbg("Failed to rename script", name, "@", net, "to", newName + ":", textStatus, errorThrown)
+			dbg(jqXHR)
+		}
+	})
+}
+
+function snDeleteScript(net, name) {
+  $.ajax({
+		type: "DELETE",
+		url: sprintf("/script/%s/%s/", net, name),
+		success: function() {
+      "use strict"
+      dbg("Successfully deleted script", name, "@", net)
+      if (net === "global") {
+    	  data.deleteGlobalScript(name)
+        snOpenScriptEditor(net, data.getGlobalScripts())
+    	} else {
+        var netw = data.getNetwork(net)
+    		netw.deleteScript(name)
+        snOpenScriptEditor(net, netw.getScripts())
+    	}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+      "use strict"
+			dbg("Failed to delete script", name, "@", net + ":", textStatus, errorThrown)
+			dbg(jqXHR)
+		}
+	})
+}
+
 function snEditScripts() {
   "use strict"
 	snOpenScriptEditor(getActiveNetwork(), data.getNetwork(getActiveNetwork()).getScripts())
@@ -130,4 +213,41 @@ function snEditScripts() {
 function snEditGlobalScripts() {
   "use strict"
 	snOpenScriptEditor("global", data.getGlobalScripts())
+}
+
+function updateScripts(net, reload) {
+  dbg("Loading scripts for", net)
+  "use strict"
+  $.ajax({
+    type: "GET",
+    url: "/script/" + net,
+    dataType: "json",
+    success: function(scripts) {
+      "use strict"
+      if (isEmpty(scripts)) return
+      if (net === "global") {
+        scripts.forEach(function(val, i, arr) {
+          data.putGlobalScript(val.name, val.script)
+        })
+
+        if (reload) {
+          snEditGlobalScripts()
+        }
+      } else {
+        var netw = data.getNetwork(net)
+        scripts.forEach(function(val, i, arr) {
+          netw.putScript(val.name, val.script)
+        })
+
+        if (reload) {
+          snEditScripts()
+        }
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      "use strict"
+      dbg("Failed to get scripts of", net + ":", textStatus, errorThrown)
+      dbg(jqXHR)
+    }
+  })
 }
