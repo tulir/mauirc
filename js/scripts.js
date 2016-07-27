@@ -92,6 +92,11 @@ function snSwitchScript(net, name) {
 	$("#script-tool-save").click(function() {
 		snUploadScript(net, name)
 	})
+
+  $("#script-tool-rename").unbind("click")
+	$("#script-tool-rename").click(function() {
+		snRenameScript(net, name)
+	})
 }
 
 function snSaveScript() {

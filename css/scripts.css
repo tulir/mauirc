@@ -125,10 +125,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     width: 6rem;
 }
 
+.script-tool-rename {
+    right: 6.4rem;
+
+    width: 6rem;
+}
+
 .script-name-wrapper {
     position: absolute;
     top: 0;
-    right: 6.4rem;
+    right: 12.8rem;
     bottom: 0;
     left: 8.4rem;
 
