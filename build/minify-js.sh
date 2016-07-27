@@ -8,6 +8,6 @@ for script in
     settings modal whois oper \
     rawio scripts mauirc auth \
     keybinds load
-do cat js/$script >> index.js done
+do cat js/$script.js >> index.js done
 
 uglifyjs -cmo index.min.js -- index.js
