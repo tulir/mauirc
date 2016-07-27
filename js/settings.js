@@ -136,17 +136,7 @@ function titleEdit() {
   }
   var now = Date.now()
   if (now - titleEditClick <= 500) {
-    $("#title").html(sprintf('<input \
-      class="title-editor" \
-      type="text" \
-      id="title-editor" \
-      autocomplete="off" \
-      placeholder="Enter the topic..." \
-      data-old-text="%1$s" \
-      onKeyDown="titleFinish(event.keyCode, event)" \
-      onBlur="titleFinish(27)" \
-      value="%1$s" \
-    />', $("#title").text()))
+    $("#title").loadTemplate($("#template-title-editor"), {title: $("#title").text()}, {append: false, isFile: false, async: false})
     $("#title-editor").focus()
     titleEditClick = 0
   } else {
