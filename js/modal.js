@@ -20,5 +20,5 @@ function showModal() {
 
 function hideModal() {
 	$("#modal-container").addClass("hidden")
-  $("#modal").html("")
+  $("#modal").empty()
 }

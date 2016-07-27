@@ -86,7 +86,7 @@ function connect() {
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {
-      $(sprintf("#chan-%s-%s", ed.object.network, channelFilter(ed.object.channel))).html("")
+      $(sprintf("#chan-%s-%s", ed.object.network, channelFilter(ed.object.channel))).empty()
     } else if (ed.type === "delete") {
       $(sprintf("#msgwrap-%s", ed.object)).remove()
     } else if (ed.type === "whois") {
@@ -122,7 +122,7 @@ function connect() {
 }
 
 function acceptInvite(network, channel) {
-  getChannel(network, channel).html("")
+  getChannel(network, channel).empty()
 
   var channelData = data.getChannel(network, channel)
   if (!channelData.isHistoryFetched()) {
