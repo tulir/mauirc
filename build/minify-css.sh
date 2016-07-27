@@ -1,4 +1,5 @@
 #!/bin/bash
+echo > index.css
 for stylesheet in
     util text alerts login \
     messagetemplates messageview \

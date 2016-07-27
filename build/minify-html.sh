@@ -1,4 +1,5 @@
 #!/bin/bash
+echo > templates.min.html
 for template in templates/*.html; do
     [[ $template == "templates/index.html" ]] && continue
     templatename=`echo $template | awk '{ print substr($1, 11, length($1) - 15 ) }'`

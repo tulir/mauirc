@@ -1,4 +1,5 @@
 #!/bin/bash
+echo > index.js
 for script in
     lib/linkify.min lib/linkify-html.min \
     data vars util channels \
