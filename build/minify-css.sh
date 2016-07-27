@@ -1,20 +1,10 @@
 #!/bin/bash
-cat \
-    ./css/util.css \
-    ./css/text.css \
-    ./css/alerts.css \
-    ./css/login.css \
-    ./css/messagetemplates.css \
-    ./css/messageview.css \
-    ./css/titlebar.css \
-    ./css/settings.css \
-    ./css/modal.css \
-    ./css/whois.css \
-    ./css/oper.css \
-    ./css/rawio.css \
-    ./css/scripts.css \
-    ./css/channels.css \
-    ./css/userlist.css \
-    > ./index.css
+for stylesheet in
+    util text alerts login \
+    messagetemplates messageview \
+    titlebar settings modal \
+    whois oper rawio scripts \
+    channels userlist
+do cat css/$stylesheet >> index.css done
 
 cleancss -o index.min.css index.css
