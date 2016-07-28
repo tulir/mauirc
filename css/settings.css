@@ -69,10 +69,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     background-color: var(--maunium-green);
 }
 
-.settings-top-buttons > .btn {
-    border-radius: 0;
-}
-
 .btn-leave-settings {
     height: 2.375rem;
 }
@@ -90,8 +86,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding: .5rem;
 }
 
-.settings-top-buttons > .btn {
+.settings-top-bar > .btn {
     box-sizing: border-box;
+
+    border-radius: 0;
 }
 
 .settings-container {
@@ -156,7 +154,7 @@ select.settings-value > option {
 
 button.settings-value {
     color: white;
-    border: .0625rem solid var(--maunium-green);
+    border: none;
     background-color: var(--maunium-green);
 }
 
