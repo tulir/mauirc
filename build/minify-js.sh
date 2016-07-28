@@ -6,8 +6,8 @@ for script in \
     autocomplete userlist \
     messaging contextmenus \
     settings modal whois oper \
-    rawio scripts mauirc auth \
-    keybinds load
+    rawio scripts networks \
+    mauirc auth keybinds load
 do cat js/$script.js >> index.js; done
 
 uglifyjs -cmo index.min.js -- index.js
