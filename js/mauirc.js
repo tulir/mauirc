@@ -23,7 +23,6 @@ function connect() {
     "use strict"
     if (!msgcontainer) {
       $("#container").loadTemplate($("#template-main"), {version: version}, {append: false, isFile: false, async: false})
-      $("#settings").loadTemplate($("#template-settings"), {append: false, isFile: false, async: false})
 
       msgcontainer = true
     }

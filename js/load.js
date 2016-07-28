@@ -18,3 +18,6 @@ dbg("mauIRC", version, "loading...")
 checkAuth()
 dbg("Checking notification permission...")
 Notification.requestPermission()
+
+dbg("Loading settings view")
+$("#settings").loadTemplate($("#template-settings"), {append: false, isFile: false, async: false})
