@@ -21,3 +21,5 @@ Notification.requestPermission()
 
 dbg("Loading settings view")
 $("#settings").loadTemplate($("#template-settings"), {append: false, isFile: false, async: false})
+$("#settings-scripts").loadTemplate($("#template-settings-scripts"), {append: false, isFile: false, async: false})
+$("#settings-networks").loadTemplate($("#template-settings-networks"), {append: false, isFile: false, async: false})
