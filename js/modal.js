@@ -15,10 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function showModal() {
-	$("#modal-container").removeClass("hidden")
+	"use strict"
+  $("#modal-container").removeClass("hidden")
 }
 
 function hideModal() {
-	$("#modal-container").addClass("hidden")
+	"use strict"
+  $("#modal-container").addClass("hidden")
   $("#modal").empty()
 }

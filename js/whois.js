@@ -14,17 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 function openWhoisModal(data) {
-	if (data.idle === 0) {
-		data.idle = "Currently online"
-	} else {
-		data.idle = moment().seconds(-data.idle).fromNow()
-		data.idle = data.idle.charAt(0).toUpperCase() + data.idle.slice(1)
-	}
-	$("#modal").loadTemplate($("#template-whois"), data, {append: false, isFile: false, async: false})
-	if (data.away.length === 0) {
-		$("#whois-data-awaymessage").remove()
-	}
-	showModal()
+  "use strict"
+  if (data.idle === 0) {
+    data.idle = "Currently online"
+  } else {
+    data.idle = moment().seconds(-data.idle).fromNow()
+    data.idle = data.idle.charAt(0).toUpperCase() + data.idle.slice(1)
+  }
+  $("#modal").loadTemplate($("#template-whois"), data, {append: false, isFile: false, async: false})
+  if (data.away.length === 0) {
+    $("#whois-data-awaymessage").remove()
+  }
+  showModal()
 }

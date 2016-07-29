@@ -93,6 +93,7 @@ DataStore.prototype.getChannelIfExists = function(network, channel) {
 }
 
 function NetworkStore() {
+	"use strict"
   this.chandata = {},
   this.chanlist = [],
   this.nick = "",
@@ -243,6 +244,7 @@ NetworkStore.prototype.setHighlightsFromString = function(data) {
 }
 
 function Highlight(type, value) {
+	"use strict"
   this.type = type,
   this.value = value
 }
@@ -270,6 +272,7 @@ Highlight.prototype.toString = function() {
 }
 
 function ChannelStore() {
+	"use strict"
   this.userlist = [],
   this.userlistPlain = [],
   this.topic = "",

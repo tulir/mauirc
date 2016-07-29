@@ -104,6 +104,7 @@ function connect() {
 }
 
 function acceptInvite(network, channel) {
+	"use strict"
   getChannel(network, channel).empty()
 
   var channelData = data.getChannel(network, channel)

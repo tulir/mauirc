@@ -69,66 +69,58 @@ function ctxNetSwitcher(key, options) {
   } else if (key === "connect") {
     var net = $(this).text()
     $.ajax({
-  		type: "POST",
-  		url: sprintf("/network/%s/connect/", net),
-  		success: function(data) {
+      type: "POST",
+      url: sprintf("/network/%s/connect/", net),
+      success: function(data) {
         "use strict"
         dbg("Successfully connected to", net)
-  		},
-  		error: function(jqXHR, textStatus, errorThrown) {
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
         "use strict"
         if (jqXHR.status === 403) {
           dbg("Failed to connect to", net + ":", "Already connected")
         } else if (jqXHR.status == 500) {
           dbg("Failed to connect to", net + ":", "Server error")
         } else {
-    			dbg("Failed to connect to", net + ":", jqXHR.status, errorThrown)
-    			dbg(jqXHR)
+          dbg("Failed to connect to", net + ":", jqXHR.status, errorThrown)
+          dbg(jqXHR)
         }
-  		}
-  	})
+      }
+    })
   } else if (key === "disconnect") {
     var net = $(this).text()
     $.ajax({
-  		type: "POST",
-  		url: sprintf("/network/%s/disconnect/", net),
-  		success: function(data) {
+      type: "POST",
+      url: sprintf("/network/%s/disconnect/", net),
+      success: function(data) {
         "use strict"
         dbg("Successfully connected to", net)
-  		},
-  		error: function(jqXHR, textStatus, errorThrown) {
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
         "use strict"
         if (jqXHR.status === 403) {
           dbg("Failed to disconnect from", net + ":", "Not connected")
-        }/* else if (jqXHR.status == 500) {
-          dbg("Failed to disconnect from", net + ":", "Server error")
-        }*/ else {
-    			dbg("Failed to disconnect from", net + ":", jqXHR.status, errorThrown)
-    			dbg(jqXHR)
+        } else {
+          dbg("Failed to disconnect from", net + ":", jqXHR.status, errorThrown)
+          dbg(jqXHR)
         }
-  		}
-  	})
+      }
+    })
   } else if (key === "forcedisconnect") {
     var net = $(this).text()
     $.ajax({
-  		type: "POST",
-  		url: sprintf("/network/%s/forcedisconnect/", net),
-  		success: function(data) {
+      type: "POST",
+      url: sprintf("/network/%s/forcedisconnect/", net),
+      success: function(data) {
         "use strict"
         dbg("Successfully cut connection to", net)
-  		},
-  		error: function(jqXHR, textStatus, errorThrown) {
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
         "use strict"
-        /*if (jqXHR.status === 403) {
-          dbg("Failed to disconnect from", net + ":", "Not connected")
-        } else if (jqXHR.status == 500) {
-          dbg("Failed to disconnect from", net + ":", "Server error")
-        } else {*/
-    			dbg("Failed to disconnect from", net + ":", jqXHR.status, errorThrown)
-    			dbg(jqXHR)
-        //}
-  		}
-  	})
+        dbg("Failed to disconnect from", net + ":", jqXHR.status, errorThrown)
+        dbg(jqXHR)
+      }
+    })
   }
 }
 

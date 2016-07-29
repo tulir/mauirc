@@ -15,11 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function snOpenNetworkEditor() {
-	$("#settings-main").addClass("hidden")
-	$("#settings-networks").removeClass("hidden")
+  "use strict"
+  $("#settings-main").addClass("hidden")
+  $("#settings-networks").removeClass("hidden")
 }
 
 function snCloseNetworkEditor() {
-	$("#settings-main").removeClass("hidden")
-	$("#settings-networks").addClass("hidden")
+  "use strict"
+  $("#settings-main").removeClass("hidden")
+  $("#settings-networks").addClass("hidden")
 }

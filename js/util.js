@@ -88,7 +88,6 @@ String.prototype.replaceAll = function(search, replacement) {
   return this.replace(new RegExp(this.escapeRegex(search), 'g'), replacement)
 }
 
-
 var italicEncRegex = new RegExp("_([^_]*)_", "g");
 var boldEncRegex = new RegExp("\\*([^\\*]*)\\*", "g");
 var underlineEncRegex = new RegExp("~([^~]*)~", "g");

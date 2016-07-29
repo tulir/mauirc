@@ -16,7 +16,7 @@
 
 function toggleSettings() {
   "use strict"
-	if ($("#settings").hasClass("hidden")) {
+  if ($("#settings").hasClass("hidden")) {
     openSettings()
   } else {
     closeSettings()
@@ -42,16 +42,16 @@ function updateSettingsValues() {
   $("#network-highlights").val("")
   $("#channel-notifications").val("all")
 
-	if (isEmpty(document.body.style.fontFamily)) {
-		$("#mauirc-font").val("Raleway")
-	} else {
-		$("#mauirc-font").val(document.body.style.fontFamily)
-	}
+  if (isEmpty(document.body.style.fontFamily)) {
+    $("#mauirc-font").val("Raleway")
+  } else {
+    $("#mauirc-font").val(document.body.style.fontFamily)
+  }
 
   if (!data.networkExists(getActiveNetwork())) {
     return
   }
-	$("#network-nickname").val(data.getNetwork(getActiveNetwork()).getNick())
+  $("#network-nickname").val(data.getNetwork(getActiveNetwork()).getNick())
   $("#network-highlights").val(data.getNetwork(getActiveNetwork()).getHighlightsAsString())
   if (!data.channelExists(getActiveNetwork(), getActiveChannel())) {
     return
@@ -81,24 +81,24 @@ function snClearHistory() {
 
 function snChangeNick() {
   "use strict"
-	var nick = $("#network-nickname")
-	if (nick.length === 0 || nick.val().trim().length === 0) {
-		return
-	}
+  var nick = $("#network-nickname")
+  if (nick.length === 0 || nick.val().trim().length === 0) {
+    return
+  }
 
-	sendMessage({
-		type: "message",
-		network: getActiveNetwork(),
-		channel: getActiveChannel(),
-		command: "nick",
-		message: nick.val().trim()
-	})
-	closeSettings()
+  sendMessage({
+    type: "message",
+    network: getActiveNetwork(),
+    channel: getActiveChannel(),
+    command: "nick",
+    message: nick.val().trim()
+  })
+  closeSettings()
 }
 
 function snUpdateFont() {
   "use strict"
-	document.body.style.fontFamily = $("#mauirc-font").val()
+  document.body.style.fontFamily = $("#mauirc-font").val()
 }
 
 function snPartAndClose() {

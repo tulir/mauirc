@@ -43,6 +43,7 @@ function getActiveNetworkObj() {
 }
 
 function getChannel(network, channel) {
+  "use strict"
   return $(sprintf("#chan-%s-%s", network.toLowerCase(), channelFilter(channel)))
 }
 
@@ -73,22 +74,22 @@ function newChannel(network) {
   adder.easyAutocomplete({
     data: data.getNetwork(network).getChannels(),
     placeholder: "Nick or #channel",
-  	list: {
-  		maxNumberOfElements: 10,
-  		match: { enabled: true },
+    list: {
+      maxNumberOfElements: 10,
+      match: { enabled: true },
       sort: {enabled: true },
       onChooseEvent: function() { finishNewChannel(network) },
-  		showAnimation: {
-  			type: "slide",
-  			time: 400,
-  			callback: function() {}
-  		},
-  		hideAnimation: {
-  			type: "slide",
-  			time: 400,
-  			callback: function() {}
-  		}
-  	}
+      showAnimation: {
+        type: "slide",
+        time: 400,
+        callback: function() {}
+      },
+      hideAnimation: {
+        type: "slide",
+        time: 400,
+        callback: function() {}
+      }
+    }
   })
   adder.focus()
 }

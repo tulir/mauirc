@@ -16,7 +16,7 @@
 
 function operSend() {
   "use strict"
-	sendMessage({
+  sendMessage({
     type: "raw",
     network: $("#oper-auth-form").attr("data-network"),
     message: sprintf("OPER %s %s", $("#oper-username").val(), $("#oper-password").val())
@@ -26,6 +26,6 @@ function operSend() {
 
 function openOper(network) {
   "use strict"
-	$("#modal").loadTemplate($("#template-oper"), {network: network}, {append: false, isFile: false, async: false})
-	showModal()
+  $("#modal").loadTemplate($("#template-oper"), {network: network}, {append: false, isFile: false, async: false})
+  showModal()
 }

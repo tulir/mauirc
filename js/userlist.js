@@ -41,12 +41,14 @@ function updateUserList() {
 }
 
 function startInvite(network, channel) {
+  "use strict"
   $("#userlist-invite").remove()
   $("#userlist-list").loadTemplate($("#template-userlist-invite-box"), {}, {append: true, isFile: false, async: false})
   $("#userlist-invite-box").focus()
 }
 
 function stopInvite() {
+  "use strict"
   $("#userlist-invite-box").remove()
   $("#userlist-list").loadTemplate($("#template-userlist-invite"), {
   onclick: sprintf("startInvite('%s', '%s')", getActiveNetwork(), getActiveChannel())
