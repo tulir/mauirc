@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-function snOpenScriptEditor(net, scripts) {
+settings.scripts = function(){}
+
+settings.scripts.openEditor = function (net, scripts) {
   "use strict"
   $("#settings-main").addClass("hidden")
   $("#settings-networkeditor").addClass("hidden")
@@ -36,7 +38,7 @@ function snOpenScriptEditor(net, scripts) {
       name: 'save',
       bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
       exec: function(editor) {
-        snSaveScript()
+        settings.scripts.save()
       },
       readOnly: false
   })
@@ -48,25 +50,25 @@ function snOpenScriptEditor(net, scripts) {
         id: sprintf("chscript-%s", key),
         name: key,
         network: net,
-        onclick: sprintf("snSwitchScript('%s', '%s')", net, key)
+        onclick: sprintf("settings.scripts.switch('%s', '%s')", net, key)
       }, {append: true, isFile: false, async: false})
     }
   }
 
   $("#script-tool-new").unbind("click")
   $("#script-tool-new").click(function() {
-    snNewScript(net)
+    settings.scripts.new(net)
   })
 }
 
-function snCloseScriptEditor() {
+settings.scripts.closeEditor = function () {
   "use strict"
   $("#settings-main").removeClass("hidden")
   $("#settings-networkeditor").addClass("hidden")
   $("#settings-scripts").addClass("hidden")
 }
 
-function snSwitchScript(net, name) {
+settings.scripts.switch = function (net, name) {
   "use strict"
   var script
   if (net === "global") {
@@ -86,21 +88,21 @@ function snSwitchScript(net, name) {
 
   $("#script-tool-delete").unbind("click")
   $("#script-tool-delete").click(function() {
-    snDeleteScript(net, name)
+    settings.scripts.delete(net, name)
   })
 
   $("#script-tool-save").unbind("click")
   $("#script-tool-save").click(function() {
-    snUploadScript(net, name)
+    settings.scripts.upload(net, name)
   })
 
   $("#script-tool-rename").unbind("click")
   $("#script-tool-rename").click(function() {
-    snRenameScript(net, name)
+    settings.scripts.rename(net, name)
   })
 }
 
-function snSaveScript() {
+settings.scripts.save = function () {
   "use strict"
   var script = scripteditor.getValue()
   var name = $("#script-list > .selected-script").attr("data-name")
@@ -112,14 +114,14 @@ function snSaveScript() {
   }
 }
 
-function snNewScript(net) {
+settings.scripts.new = function (net) {
   "use strict"
   var key = "new-script"
   $("#script-list").loadTemplate($("#template-script-list-entry"), {
     id: sprintf("chscript-%s", key),
     name: key,
     network: net,
-    onclick: sprintf("snSwitchScript('%s', '%s')", net, key)
+    onclick: sprintf("settings.scripts.switch('%s', '%s')", net, key)
   }, {append: true, isFile: false, async: false})
 
   if (net === "global") {
@@ -128,13 +130,13 @@ function snNewScript(net) {
     data.getNetwork(net).putScript(key, "")
   }
 
-  snSwitchScript(net, key)
-  snUploadScript(net, key)
+  settings.scripts.switch(net, key)
+  settings.scripts.upload(net, key)
 }
 
-function snUploadScript(net, name) {
+settings.scripts.upload = function (net, name) {
   "use strict"
-  snSaveScript()
+  settings.scripts.save()
 
   if (net === "global") {
     var script = data.getGlobalScript(name)
@@ -158,7 +160,7 @@ function snUploadScript(net, name) {
   })
 }
 
-function snRenameScript(net, name) {
+settings.scripts.rename = function (net, name) {
   "use strict"
   var newName = $("#script-name").val()
   $.ajax({
@@ -172,13 +174,13 @@ function snRenameScript(net, name) {
         var script = data.getGlobalScript(name)
         data.deleteGlobalScript(name)
         data.putGlobalScript(newName, script)
-        snOpenScriptEditor(net, data.getGlobalScripts())
+        settings.scripts.openEditor(net, data.getGlobalScripts())
       } else {
         var netw = data.getNetwork(net)
         var script = netw.getScript(name)
         netw.deleteScript(name)
         netw.putScript(newName, script)
-        snOpenScriptEditor(net, netw.getScripts())
+        settings.scripts.openEditor(net, netw.getScripts())
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -189,7 +191,7 @@ function snRenameScript(net, name) {
   })
 }
 
-function snDeleteScript(net, name) {
+settings.scripts.delete = function (net, name) {
   "use strict"
   $.ajax({
     type: "DELETE",
@@ -199,11 +201,11 @@ function snDeleteScript(net, name) {
       dbg("Successfully deleted script", name, "@", net)
       if (net === "global") {
         data.deleteGlobalScript(name)
-        snOpenScriptEditor(net, data.getGlobalScripts())
+        settings.scripts.openEditor(net, data.getGlobalScripts())
       } else {
         var netw = data.getNetwork(net)
         netw.deleteScript(name)
-        snOpenScriptEditor(net, netw.getScripts())
+        settings.scripts.openEditor(net, netw.getScripts())
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -214,17 +216,17 @@ function snDeleteScript(net, name) {
   })
 }
 
-function snEditScripts() {
+settings.scripts.edit = function () {
   "use strict"
-  snOpenScriptEditor(getActiveNetwork(), data.getNetwork(getActiveNetwork()).getScripts())
+  settings.scripts.openEditor(getActiveNetwork(), data.getNetwork(getActiveNetwork()).getScripts())
 }
 
-function snEditGlobalScripts() {
+settings.scripts.editGlobal = function () {
   "use strict"
-  snOpenScriptEditor("global", data.getGlobalScripts())
+  settings.scripts.openEditor("global", data.getGlobalScripts())
 }
 
-function updateScripts(net, reload) {
+settings.scripts.update = function(net, reload) {
   "use strict"
   dbg("Loading scripts for", net)
   $.ajax({
@@ -240,7 +242,7 @@ function updateScripts(net, reload) {
         })
 
         if (reload) {
-          snEditGlobalScripts()
+          settings.scripts.editGlobal()
         }
       } else {
         var netw = data.getNetwork(net)
@@ -249,7 +251,7 @@ function updateScripts(net, reload) {
         })
 
         if (reload) {
-          snEditScripts()
+          settings.scripts.edit()
         }
       }
     },

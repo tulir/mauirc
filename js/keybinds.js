@@ -58,6 +58,6 @@ Mousetrap.bind('mod+e n', function() {
 Mousetrap.bind('mod+e p', function() {
   "use strict"
   if(getActiveNetwork().length > 0 && getActiveChannel().length > 0) {
-    snPartAndClose()
+    settings.partAndClose()
   }
 })

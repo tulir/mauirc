@@ -14,29 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-function toggleSettings() {
+function settings(){}
+
+settings.toggle = function () {
   "use strict"
   if ($("#settings").hasClass("hidden")) {
-    openSettings()
+    settings.open()
   } else {
-    closeSettings()
+    settings.close()
   }
 }
 
-function openSettings() {
+settings.open = function () {
   "use strict"
-  updateSettingsValues()
+  settings.updateValues()
   $("#settings").removeClass("hidden")
   $("#container").addClass("hidden")
 }
 
-function closeSettings() {
+settings.close = function () {
   "use strict"
   $("#settings").addClass("hidden")
   $("#container").removeClass("hidden")
 }
 
-function updateSettingsValues() {
+settings.updateValues = function () {
   "use strict"
   $("#network-nickname").val("")
   $("#network-highlights").val("")
@@ -59,27 +61,27 @@ function updateSettingsValues() {
   $("#channel-notifications").val(data.getChannel(getActiveNetwork(), getActiveChannel()).getNotificationLevel())
 }
 
-function snChangeNotifications() {
+settings.changeNotifications = function () {
   "use strict"
   data.getChannel(getActiveNetwork(), getActiveChannel()).setNotificationLevel($("#channel-notifications").val())
 }
 
-function snChangeHighlights() {
+settings.changeHighlights = function () {
   "use strict"
   data.getNetwork(getActiveNetwork()).setHighlightsFromString($("#network-highlights").val())
 }
 
-function snClearHistory() {
+settings.clearHistory = function () {
   "use strict"
   sendMessage({
     type: "clear",
     network: getActiveNetwork(),
     channel: getActiveChannel()
   })
-  closeSettings()
+  settings.close()
 }
 
-function snChangeNick() {
+settings.changeNick = function () {
   "use strict"
   var nick = $("#network-nickname")
   if (nick.length === 0 || nick.val().trim().length === 0) {
@@ -93,15 +95,15 @@ function snChangeNick() {
     command: "nick",
     message: nick.val().trim()
   })
-  closeSettings()
+  settings.close()
 }
 
-function snUpdateFont() {
+settings.updateFont = function () {
   "use strict"
   document.body.style.fontFamily = $("#mauirc-font").val()
 }
 
-function snPartAndClose() {
+settings.partAndClose = function () {
   "use strict"
   if(getActiveChannel().startsWith("#")) {
     sendMessage({
@@ -120,10 +122,10 @@ function snPartAndClose() {
   }
 
   closeChannel(getActiveNetwork(), getActiveChannel())
-  closeSettings()
+  settings.close()
 }
 
-function titleEdit() {
+settings.titleEdit = function () {
   "use strict"
   if ($("#title-editor").length !== 0) {
     return
@@ -138,7 +140,7 @@ function titleEdit() {
   }
 }
 
-function titleFinish(keyCode, event) {
+settings.titleFinish = function (keyCode, event) {
   "use strict"
   if (keyCode === 13) {
     sendMessage({

@@ -14,13 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-function snOpenNetworkEditor() {
+settings.networks = function(){}
+
+settings.networks.openEditor = function() {
   "use strict"
   $("#settings-main").addClass("hidden")
   $("#settings-networks").removeClass("hidden")
 }
 
-function snCloseNetworkEditor() {
+settings.networks.closeEditor = function() {
   "use strict"
   $("#settings-main").removeClass("hidden")
   $("#settings-networks").addClass("hidden")

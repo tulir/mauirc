@@ -64,7 +64,7 @@ function connect() {
         $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
       }
 
-      updateScripts(ed.object.name, false)
+      settings.scripts.update(ed.object.name, false)
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {
