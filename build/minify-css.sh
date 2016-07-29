@@ -5,7 +5,7 @@ for stylesheet in \
     messagetemplates messageview \
     titlebar settings modal \
     whois oper rawio scripts \
-    channels userlist
+    networks channels userlist
 do cat css/$stylesheet.css >> index.css; done
 
 cleancss -o index.min.css index.css
