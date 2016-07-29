@@ -62,6 +62,8 @@ function checkAuth() {
     url: "/auth/check",
     success: function(data) {
       if (data === "true") {
+        $("#authsend").addClass("disabled")
+        $("#authsend").text("Connecting...")
         connect()
       } else {
         authfail = true
