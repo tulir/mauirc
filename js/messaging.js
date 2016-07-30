@@ -145,11 +145,11 @@ function receive(id, network, channel, timestamp, sender, command, message, ownm
     openNetwork(network)
     netObj = $(sprintf("#net-%s", network))
   }
-  var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
+  var chanObj = getChannel(network, channel)
   if (chanObj.length === 0) {
     if (command == "part" && sender == data.getNetwork(network).getNick()) return
     openChannel(network, channel, false)
-    chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
+    chanObj = getChannel(network, channel)
   }
 
   var templateData = {
@@ -276,7 +276,7 @@ function notifyMessage(network, channel, highlight, sender, message) {
   if ((notifs == "all" || (notifs == "highlight" && highlight)) && !document.hasFocus()) {
     notify(sender, message)
   }
-  if ($(sprintf("#chan-%s-%s", network, channelFilter(channel))).hasClass("hidden")) {
+  if (getChannel(network, channel).hasClass("hidden")) {
     if((notifs == "all" || (notifs == "highlight" && highlight))) {
       $(sprintf("#switchto-%s-%s", network, channelFilter(channel))).addClass("new-messages")
     }
@@ -287,7 +287,7 @@ function notifyMessage(network, channel, highlight, sender, message) {
 
 function tryJoinMessage(id, network, channel, timestamp, sender, command, message, ownmsg) {
   "use strict"
-  var chanObj = $(sprintf("#chan-%s-%s", network, channelFilter(channel)))
+  var chanObj = getChannel(network, channel)
   if(isEmpty(chanObj)) return false
 
   var prevMsg = chanObj.children(".message-wrapper:last")

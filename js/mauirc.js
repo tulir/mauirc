@@ -68,7 +68,7 @@ function connect() {
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {
-      $(sprintf("#chan-%s-%s", ed.object.network, channelFilter(ed.object.channel))).empty()
+      getChannel(ed.object.network, ed.object.channel).empty()
     } else if (ed.type === "delete") {
       $(sprintf("#msgwrap-%s", ed.object)).remove()
     } else if (ed.type === "whois") {
@@ -190,6 +190,7 @@ function history(network, channel, n) {
       if (isEmpty(data)) {
         return
       }
+
       data.reverse().forEach(function(val, i, arr) {
         receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.ownmsg, val.preview, false)
       })
@@ -201,7 +202,7 @@ function history(network, channel, n) {
       if(getActiveNetwork().length === 0 || getActiveChannel().length === 0) {
         return
       }
-      $(sprintf("#chan-%s-%s", getActiveNetwork(), getActiveChannel())).loadTemplate($(sprintf("#template-error")), {
+      getChannel(getActiveNetwork(), getActiveChannel()).loadTemplate($(sprintf("#template-error")), {
         message: sprintf("Failed to fetch history: %s %s", channel, network, textStatus, errorThrown)
       }, {isFile: false, async: false, append: true})
       scrollDown()
