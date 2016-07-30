@@ -61,15 +61,16 @@ function connect() {
       dbg("Nick changed to", ed.object.nick, "on", ed.object.network)
       data.getNetwork(ed.object.network).setNick(ed.object.nick)
     } else if (ed.type === "netdata") {
-      openNetwork(ed.object.name)
+      if ($("#net-%s", ed.object.name.toLowerCase()).length === 0) {
+        openNetwork(ed.object.name)
+        settings.scripts.update(ed.object.name, false)
+      }
       data.getNetwork(ed.object.network).setNetData(ed.object)
       if(ed.object.connected) {
         $(sprintf("#switchnet-%s", ed.object.name)).removeClass("disconnected")
       } else {
         $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
       }
-
-      settings.scripts.update(ed.object.name, false)
     } else if (ed.type === "chanlist") {
       data.getNetwork(ed.object.network).setChannels(ed.object.list)
     } else if (ed.type === "clear") {
