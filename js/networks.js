@@ -27,7 +27,7 @@ settings.networks.openEditor = function() {
       $("#network-list").loadTemplate($("#template-settings-list-entry"), {
         name: name,
         class: "btn network-list-entry",
-        onclick: sprintf("settings.networks.switchNetwork('%s')", name),
+        onclick: sprintf("settings.networks.switch('%s')", name),
         id: sprintf("chnet-%s", name)
       }, {append: true, isFile: false, async: false})
     }
@@ -41,7 +41,7 @@ settings.networks.closeEditor = function() {
   $("#settings-networks").addClass("hidden")
 }
 
-settings.networks.switchNetwork = function(net) {
+settings.networks.switch = function(net) {
   "use strict"
   var netData = data.getNetwork(net)
   $("#network-pane").attr("data-network", net)
