@@ -192,13 +192,13 @@ function history(network, channel, n) {
     type: "GET",
     url: sprintf("/history/%s/%s/?n=%d", network, encodeURIComponent(channel), n),
     dataType: "json",
-    success: function(data) {
+    success: function(histData) {
       "use strict"
-      if (isEmpty(data)) {
+      if (isEmpty(histData)) {
         return
       }
       children.remove()
-      data.reverse().forEach(function(val, i, arr) {
+      histData.reverse().forEach(function(val, i, arr) {
         receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.ownmsg, val.preview, false)
       })
       var chanData = data.getChannel(network, channel)
