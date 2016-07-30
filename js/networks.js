@@ -27,3 +27,16 @@ settings.networks.closeEditor = function() {
   $("#settings-main").removeClass("hidden")
   $("#settings-networks").addClass("hidden")
 }
+
+settings.networks.switchNetwork = function(net) {
+  "use strict"
+  var netData = data.getNetwork(net)
+  $("#network-pane").attr("data-network", net)
+  $("#network-ed-name").val(net)
+  $("#network-ed-addr").val(netData.getIP())
+  $("#network-ed-port").val(netData.getPort())
+  $("#network-ed-ssl").val(netData.usingSSL())
+  $("#network-ed-user").val(netData.getUser())
+  $("#network-ed-realname").val(netData.getRealName())
+  $("#network-ed-nick").val(netData.getNick())
+}
