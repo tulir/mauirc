@@ -65,7 +65,7 @@ function connect() {
         openNetwork(ed.object.name)
         settings.scripts.update(ed.object.name, false)
       }
-      data.getNetwork(ed.object.network).setNetData(ed.object)
+      data.getNetwork(ed.object.name).setNetData(ed.object)
       if(ed.object.connected) {
         $(sprintf("#switchnet-%s", ed.object.name)).removeClass("disconnected")
       } else {
