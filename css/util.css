@@ -105,7 +105,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .slider:before {
-    position: relative;
+    position: absolute;
 
     width: 50%;
     height: 100%;
