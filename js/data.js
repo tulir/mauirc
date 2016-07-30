@@ -56,6 +56,11 @@ DataStore.prototype.getNetwork = function(name) {
   }
 }
 
+DataStore.prototype.getNetworks = function() {
+  "use strict"
+  return this.netlist
+}
+
 DataStore.prototype.getNetworkIfExists = function(name) {
   "use strict"
   if (this.netlist.hasOwnProperty(name)) {
