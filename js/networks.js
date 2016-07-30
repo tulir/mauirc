@@ -39,12 +39,20 @@ settings.networks.closeEditor = function() {
   "use strict"
   $("#settings-main").removeClass("hidden")
   $("#settings-networks").addClass("hidden")
+  $("#network-tool-save").unbind("click")
 }
 
 settings.networks.switch = function(net) {
   "use strict"
-  var netData = data.getNetwork(net)
+  $("#network-tool-save").unbind("click")
+  $("#network-tool-save").click(function() {
+    settings.networks.save(net)
+  })
+
   $("#network-pane").attr("data-network", net)
+
+  var netData = data.getNetwork(net)
+  $("#network-ed-name").attr("disabled", true)
   $("#network-ed-name").val(net)
   $("#network-ed-addr").val(netData.getIP())
   $("#network-ed-port").val(netData.getPort())
@@ -52,13 +60,20 @@ settings.networks.switch = function(net) {
   $("#network-ed-user").val(netData.getUser())
   $("#network-ed-realname").val(netData.getRealname())
   $("#network-ed-nick").val(netData.getNick())
+}
 
-  $("#network-tool-save").unbind("click")
-  $("#network-tool-save").click(function() {
-    settings.networks.save(net)
-  })
+settings.networks.new = function() {
+  var name = "newnet"
+  $("#network-list").loadTemplate($("#template-settings-list-entry"), {
+    name: name,
+    class: "btn network-list-entry",
+    onclick: sprintf("settings.networks.switch('%s')", name),
+    id: sprintf("chnet-%s", name)
+  }, {append: true, isFile: false, async: false})
+
+  settings.networks.switch(name)
 }
 
 settings.networks.save = function(net) {
-  
+
 }
