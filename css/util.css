@@ -80,6 +80,57 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     background-color: var(--maunium-blue);
 }
 
+.switch {
+    width: 4rem;
+    height: 2rem;
+
+    cursor: pointer;
+
+    border: .0625rem solid var(--secondary-text);
+    border-radius: .25rem;
+    background-color: white;
+}
+
+.switch input {
+    display: none;
+}
+
+.switch-box {
+    width: 50%;
+    height: 100%;
+
+    transition: .4s;
+    text-align: center;
+
+    border-radius: .25rem;
+    background-color: var(--maunium-blue);
+}
+
+.switch[active=true] .switch-box {
+    transform: translateX(100%);
+
+    background-color: var(--maunium-green);
+}
+
+.switch-box-text {
+    position: relative;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: white;
+
+    font-size: 1rem;
+}
+
+.switch-box-text:after {
+    content: "No";
+}
+
+.switch[active=true] .switch-box .switch-box-text:after {
+    content: "Yes";
+}
+
 .left-arrow {
     float: left;
 }
