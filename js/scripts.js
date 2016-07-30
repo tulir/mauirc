@@ -46,9 +46,9 @@ settings.scripts.openEditor = function (net, scripts) {
   $("#script-list").empty()
   for (var key in scripts) {
     if (scripts.hasOwnProperty(key)) {
-      $("#script-list").loadTemplate($("#template-network-list-entry"), {
+      $("#script-list").loadTemplate($("#template-settings-list-entry"), {
         id: sprintf("chscript-%s", key),
-        class: "btn settings-list-button",
+        class: "btn script-list-button",
         name: key,
         network: net,
         onclick: sprintf("settings.scripts.switch('%s', '%s')", net, key)
@@ -118,9 +118,9 @@ settings.scripts.save = function () {
 settings.scripts.new = function (net) {
   "use strict"
   var key = "new-script"
-  $("#script-list").loadTemplate($("#template-network-list-entry"), {
+  $("#script-list").loadTemplate($("#template-settings-list-entry"), {
     id: sprintf("chscript-%s", key),
-    class: "btn settings-list-button",
+    class: "btn script-list-button",
     name: key,
     network: net,
     onclick: sprintf("settings.scripts.switch('%s', '%s')", net, key)
