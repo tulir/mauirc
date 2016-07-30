@@ -50,7 +50,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-ssl">Use SSL/TLS</label>
-			<input type="checkbox" id="network-ed-ssl">
+			<div class="switch settings-value" id="network-ed-ssl" onClick='$(this).attr("active", $(this).attr("active") !== "true"); settings.networks.onChange.ssl()'>
+				<div class="switch-box"><div class="switch-box-text"/></div>
+			</div>
 		</div>
 	</div>
 
