@@ -180,6 +180,7 @@ function reconnect() {
 }
 
 function history(network, channel, n) {
+  var children = getChannel(network, channel).children(".message-wrapper")
   "use strict"
   $.ajax({
     type: "GET",
@@ -190,7 +191,7 @@ function history(network, channel, n) {
       if (isEmpty(data)) {
         return
       }
-
+      children.remove()
       data.reverse().forEach(function(val, i, arr) {
         receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.ownmsg, val.preview, false)
       })
