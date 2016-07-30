@@ -52,4 +52,13 @@ settings.networks.switch = function(net) {
   $("#network-ed-user").val(netData.getUser())
   $("#network-ed-realname").val(netData.getRealname())
   $("#network-ed-nick").val(netData.getNick())
+
+  $("#network-tool-save").unbind("click")
+  $("#network-tool-save").click(function() {
+    settings.networks.save(net)
+  })
+}
+
+settings.networks.save = function(net) {
+  
 }
