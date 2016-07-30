@@ -97,6 +97,11 @@ function NetworkStore() {
   this.chandata = {},
   this.chanlist = [],
   this.nick = "",
+  this.user = "",
+  this.realname = "",
+  this.ip = "",
+  this.port = 0,
+  this.ssl = false,
   this.connected = false,
   this.highlights = [],
   this.scripts = {}
@@ -178,6 +183,42 @@ NetworkStore.prototype.getNick = function() {
 NetworkStore.prototype.setNick = function(nick) {
   "use strict"
   this.nick = nick
+}
+
+NetworkStore.prototype.setNetData = function(nd) {
+  "use strict"
+  this.nick = nd.nick
+  this.user = nd.user
+  this.realname = nd.realname
+  this.ip = nd.ip
+  this.port = nd.port
+  this.ssl = nd.ssl
+  this.connected = nd.connected
+}
+
+NetworkStore.prototype.getIP = function() {
+  "use strict"
+  return this.ip
+}
+
+NetworkStore.prototype.getPort = function() {
+  "use strict"
+  return this.port
+}
+
+NetworkStore.prototype.usingSSL = function() {
+  "use strict"
+  return this.ssl
+}
+
+NetworkStore.prototype.getUser = function() {
+  "use strict"
+  return this.user
+}
+
+NetworkStore.prototype.getRealname = function() {
+  "use strict"
+  return this.realname
 }
 
 NetworkStore.prototype.getHighlights = function() {
