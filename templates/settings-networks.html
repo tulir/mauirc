@@ -31,10 +31,58 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="network-list" id="network-list"/>
 
 <div class="network-pane" id="network-pane">
-	<!-- TODO network settings-->
+	<div class="settings-title">Network info</div>
+	<div class="settings-container network-pane-section">
+		<div class="settings-entry">
+			<label class="settings-label" for="network-ed-name">Network Name</label>
+			<input class="settings-value" id="network-ed-name" type="text" autocomplete="off" onChange="settings.networks.onChange.name()" placeholder="Network name">
+		</div>
+
+		<div class="settings-entry">
+			<label class="settings-label" for="network-ed-addr">Address</label>
+			<input class="settings-value" id="network-ed-addr" type="text" autocomplete="off" onChange="settings.networks.onChange.address()" placeholder="Server address">
+		</div>
+
+		<div class="settings-entry">
+			<label class="settings-label" for="network-ed-port">Port</label>
+			<input class="settings-value" id="network-ed-port" type="number" autocomplete="off" onChange="settings.networks.onChange.port()" placeholder="Server port" value="6667">
+		</div>
+
+		<div class="settings-entry">
+			<label class="settings-label" for="network-ed-ssl">Use SSL/TLS</label>
+			<label class="switch settings-value">
+			  <input type="checkbox" id="network-ed-ssl">
+			  <div class="slider"/>
+			</label>
+		</div>
+	</div>
+
+	<div class="settings-title">User info</div>
+	<div class="settings-container network-pane-section">
+		<div class="settings-entry">
+			<label class="settings-label" for="network-ed-user">Username</label>
+			<input class="settings-value" id="network-ed-user" type="text" autocomplete="off" onChange="settings.networks.onChange.user()" placeholder="IRC User">
+		</div>
+		<div class="settings-entry">
+			<label class="settings-label" for="network-ed-realname">Realname</label>
+			<input class="settings-value" id="network-ed-realname" type="text" autocomplete="off" onChange="settings.networks.onChange.realname()" placeholder="IRC Realname">
+		</div>
+		<div class="settings-entry">
+			<label class="settings-label" for="network-ed-nick">Nick</label>
+			<input class="settings-value" id="network-ed-nick" type="text" autocomplete="off" onChange="settings.networks.onChange.nick()" placeholder="IRC Nick">
+		</div>
+	</div>
+
+	<div class="settings-title">Other info</div>
+	<div class="settings-container network-pane-section">
+		<div class="settings-entry">
+			<label class="settings-label" for="network-ed-highlights">Highlight Words</label>
+			<input class="settings-value" id="network-ed-highlights" type="text" autocomplete="off" onChange="settings.networks.onChange.highlights()" placeholder="Comma-separated list">
+		</div>
+	</div>
 </div>
 
 <div class="network-tools" id="network-tools">
-	<button class="btn network-tool network-tool-new" id="network-tool-new" type="button">New Network</button>
-	<button class="btn network-tool network-tool-save" id="network-tool-save" type="button">Save</button>
+	<button class="btn network-tool network-tool-new" id="network-tool-new" type="button">Create Network</button>
+	<button class="btn network-tool network-tool-save" id="network-tool-save" type="button">Save Network</button>
 </div>

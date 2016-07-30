@@ -162,6 +162,11 @@ input[type="range"].settings-value {
     padding: 1rem;
 }
 
+.switch.settings-value {
+    padding: 1rem;
+    padding-bottom: 0.9375rem;
+}
+
 .settings-inputfield {
     width: 68%;
 }
