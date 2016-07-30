@@ -16,9 +16,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <button
-	class="btn script-list-button"
 	type="button"
 	data-id="id"
-	data-template-bind='[{"attribute": "onClick", "value": "onclick"},{"attribute": "data-name", "value": "name"},{"attribute": "data-network", "value": "network"}]'
+	data-template-bind='[
+		{"attribute": "onClick", "value": "onclick"},
+		{"attribute": "class", "value": "class"},
+		{"attribute": "data-name", "value": "name"},
+		{"attribute": "data-network", "value": "network"}
+	]'
 	data-content="name"
 />
