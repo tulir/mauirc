@@ -35,17 +35,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div class="settings-container network-pane-section">
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-name">Network Name</label>
-			<input class="settings-value" id="network-ed-name" type="text" autocomplete="off" onChange="settings.networks.onChange.name()" placeholder="Network name">
+			<input class="settings-value" id="network-ed-name" type="text" autocomplete="off" onChange="settings.networks.onChange.name()" placeholder="Network name" required>
 		</div>
 
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-addr">Address</label>
-			<input class="settings-value" id="network-ed-addr" type="text" autocomplete="off" onChange="settings.networks.onChange.address()" placeholder="Server address">
+			<input class="settings-value" id="network-ed-addr" type="text" autocomplete="off" onChange="settings.networks.onChange.address()" placeholder="Server address" required>
 		</div>
 
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-port">Port</label>
-			<input class="settings-value" id="network-ed-port" type="number" autocomplete="off" onChange="settings.networks.onChange.port()" placeholder="Server port" value="6667">
+			<input class="settings-value" id="network-ed-port" type="number" autocomplete="off" onChange="settings.networks.onChange.port()" placeholder="Server port" value="6667" required>
 		</div>
 
 		<div class="settings-entry">
@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div class="settings-container network-pane-section">
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-user">Username</label>
-			<input class="settings-value" id="network-ed-user" type="text" autocomplete="off" onChange="settings.networks.onChange.user()" placeholder="IRC User">
+			<input class="settings-value" id="network-ed-user" type="text" autocomplete="off" onChange="settings.networks.onChange.user()" placeholder="IRC User" required>
 		</div>
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-realname">Realname</label>
