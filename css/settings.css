@@ -163,8 +163,15 @@ input[type="range"].settings-value {
 }
 
 .switch.settings-value {
-    padding: 1rem;
-    padding-bottom: 0.9375rem;
+    padding: .25rem;
+}
+
+.switch.settings-value .switch-box {
+    transition: .7s;
+}
+
+.switch.settings-value .switch-box .switch-box-text {
+    font-weight: bold;
 }
 
 .settings-inputfield {
