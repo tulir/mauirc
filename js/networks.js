@@ -48,8 +48,8 @@ settings.networks.switchNetwork = function(net) {
   $("#network-ed-name").val(net)
   $("#network-ed-addr").val(netData.getIP())
   $("#network-ed-port").val(netData.getPort())
-  $("#network-ed-ssl").val(netData.usingSSL())
+  $("#network-ed-ssl").attr("active", netData.usingSSL())
   $("#network-ed-user").val(netData.getUser())
-  $("#network-ed-realname").val(netData.getRealName())
+  $("#network-ed-realname").val(netData.getRealname())
   $("#network-ed-nick").val(netData.getNick())
 }
