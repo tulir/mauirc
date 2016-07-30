@@ -20,6 +20,19 @@ settings.networks.openEditor = function() {
   "use strict"
   $("#settings-main").addClass("hidden")
   $("#settings-networks").removeClass("hidden")
+
+  for (var name in data.getNetworks()) {
+    var net = data.getNetworkIfExists(name)
+    if (net !== undefined) {
+      $("#network-list").loadTemplate($("#template-settings-list-entry"), {
+        name: name,
+        class: "btn network-list-entry",
+        onclick: sprintf("settings.networks.switchNetwork('%s')", name),
+        id: sprintf("chnet-%s", name)
+      }, {append: true, isFile: false, async: false})
+    }
+  }
+
 }
 
 settings.networks.closeEditor = function() {
