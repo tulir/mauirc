@@ -35,22 +35,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div class="settings-container network-pane-section">
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-name">Network Name</label>
-			<input class="settings-value" id="network-ed-name" type="text" autocomplete="off" onChange="settings.networks.onChange.name()" placeholder="Network name" required>
+			<input class="settings-value" id="network-ed-name" type="text" autocomplete="off" placeholder="Network name" required>
 		</div>
 
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-addr">Address</label>
-			<input class="settings-value" id="network-ed-addr" type="text" autocomplete="off" onChange="settings.networks.onChange.address()" placeholder="Server address" required>
+			<input class="settings-value" id="network-ed-addr" type="text" autocomplete="off" placeholder="Server address" required>
 		</div>
 
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-port">Port</label>
-			<input class="settings-value" id="network-ed-port" type="number" autocomplete="off" onChange="settings.networks.onChange.port()" placeholder="Server port" value="6667" required>
+			<input class="settings-value" id="network-ed-port" type="number" autocomplete="off" placeholder="Server port" value="6667" required>
 		</div>
 
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-ssl">Use SSL/TLS</label>
-			<div class="switch settings-value" id="network-ed-ssl" onClick='$(this).attr("active", $(this).attr("active") !== "true"); settings.networks.onChange.ssl()'>
+			<div class="switch settings-value" id="network-ed-ssl" onClick='$(this).attr("active", $(this).attr("active") !== "true")'>
 				<div class="switch-box"><div class="switch-box-text"/></div>
 			</div>
 		</div>
@@ -60,15 +60,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div class="settings-container network-pane-section">
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-user">Username</label>
-			<input class="settings-value" id="network-ed-user" type="text" autocomplete="off" onChange="settings.networks.onChange.user()" placeholder="IRC User" required>
+			<input class="settings-value" id="network-ed-user" type="text" autocomplete="off" placeholder="IRC User" required>
 		</div>
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-realname">Realname</label>
-			<input class="settings-value" id="network-ed-realname" type="text" autocomplete="off" onChange="settings.networks.onChange.realname()" placeholder="IRC Realname">
+			<input class="settings-value" id="network-ed-realname" type="text" autocomplete="off" placeholder="IRC Realname">
 		</div>
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-nick">Nick</label>
-			<input class="settings-value" id="network-ed-nick" type="text" autocomplete="off" onChange="settings.networks.onChange.nick()" placeholder="IRC Nick">
+			<input class="settings-value" id="network-ed-nick" type="text" autocomplete="off" placeholder="IRC Nick">
 		</div>
 	</div>
 
@@ -76,12 +76,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div class="settings-container network-pane-section">
 		<div class="settings-entry">
 			<label class="settings-label" for="network-ed-highlights">Highlight Words</label>
-			<input class="settings-value" id="network-ed-highlights" type="text" autocomplete="off" onChange="settings.networks.onChange.highlights()" placeholder="Comma-separated list">
+			<input class="settings-value" id="network-ed-highlights" type="text" autocomplete="off" placeholder="Comma-separated list">
 		</div>
 	</div>
 </div>
 
 <div class="network-tools" id="network-tools">
-	<button class="btn network-tool network-tool-new" id="network-tool-new" type="button">Join Network</button>
+	<button class="btn network-tool network-tool-new" id="network-tool-new" type="button" onClick="settings.networks.new()">Join Network</button>
 	<button class="btn network-tool network-tool-save" id="network-tool-save" type="button">Save Network</button>
 </div>
