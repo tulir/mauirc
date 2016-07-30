@@ -260,7 +260,6 @@ function switchTo(network, channel) {
 
   if (!channelData.isHistoryFetched() && chanObj.find(".invite-wrapper").length == 0) {
     history(network, channel, 512)
-    channelData.setHistoryFetched()
   }
 
   $(sprintf("#switchnet-%s", network)).addClass("activenet")

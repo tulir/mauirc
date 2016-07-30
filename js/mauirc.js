@@ -36,9 +36,14 @@ function connect() {
     "use strict"
     var ed = JSON.parse(evt.data)
     if (ed.type === "message") {
-      receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
-        ed.object.sender, ed.object.command, ed.object.message, ed.object.ownmsg,
-        ed.object.preview, true)
+      var chanData = data.getChannel(ed.object.network, ed.object.channel)
+      if (chanData.isFetchingHistory()) {
+        chanData.pushCache(ed.object)
+      } else {
+        receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
+          ed.object.sender, ed.object.command, ed.object.message, ed.object.ownmsg,
+          ed.object.preview, true)
+      }
     } else if (ed.type === "cmdresponse") {
       receiveCmdResponse(ed.object.message)
     } else if (ed.type === "chandata") {
@@ -110,7 +115,6 @@ function acceptInvite(network, channel) {
   var channelData = data.getChannel(network, channel)
   if (!channelData.isHistoryFetched()) {
     history(network, channel, 512)
-    channelData.setHistoryFetched()
   }
 
   sendMessage({
@@ -181,6 +185,7 @@ function reconnect() {
 
 function history(network, channel, n) {
   var children = getChannel(network, channel).children(".message-wrapper")
+  data.getChannel(network, channel).setFetchingHistory(true)
   "use strict"
   $.ajax({
     type: "GET",
@@ -195,10 +200,19 @@ function history(network, channel, n) {
       data.reverse().forEach(function(val, i, arr) {
         receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.ownmsg, val.preview, false)
       })
+      var chanData = data.getChannel(network, channel)
+      var msg = chanData.shiftCache()
+      while (!isEmpty(msg)) {
+        receive(msg.id, msg.network, msg.channel, msg.timestamp, msg.sender, msg.command, msg.message, msg.ownmsg, msg.preview, true)
+        var msg = chanData.shiftCache()
+      }
+      chanData.setFetchingHistory(false)
+      chanData.setHistoryFetched()
       scrollDown()
     },
     error: function(jqXHR, textStatus, errorThrown) {
       "use strict"
+      data.getChannel(network, channel).setFetchingHistory(false)
       dbg(jqXHR)
       if(getActiveNetwork().length === 0 || getActiveChannel().length === 0) {
         return

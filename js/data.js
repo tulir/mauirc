@@ -279,7 +279,27 @@ function ChannelStore() {
   this.topicsetby = "",
   this.topicsetat = 0,
   this.notifications = "all",
-  this.historyfetched = false
+  this.historyfetched = false,
+  this.fetchinghistory = false,
+  this.messagecache = []
+}
+
+ChannelStore.prototype.isFetchingHistory = function() {
+  "use strict"
+  return this.fetchinghistory
+}
+
+ChannelStore.prototype.setFetchingHistory = function(fetching) {
+  "use strict"
+  this.fetchinghistory = fetching ? true : false
+}
+
+ChannelStore.prototype.pushCache = function(message) {
+  this.messagecache.push(message)
+}
+
+ChannelStore.prototype.shiftCache = function() {
+  return this.messagecache.shift()
 }
 
 ChannelStore.prototype.isHistoryFetched = function() {
