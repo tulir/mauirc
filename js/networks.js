@@ -26,7 +26,7 @@ settings.networks.openEditor = function() {
     if (net !== undefined) {
       $("#network-list").loadTemplate($("#template-settings-list-entry"), {
         name: name,
-        class: "btn network-list-entry",
+        class: "btn network-list-button",
         onclick: sprintf("settings.networks.switch('%s')", name),
         id: sprintf("chnet-%s", name)
       }, {append: true, isFile: false, async: false})
@@ -44,6 +44,8 @@ settings.networks.closeEditor = function() {
 
 settings.networks.switch = function(net) {
   "use strict"
+  $("#network-list .new-net").remove()
+
   $("#network-tool-save").unbind("click")
   $("#network-tool-save").click(function() {
     settings.networks.save(net)
@@ -51,12 +53,16 @@ settings.networks.switch = function(net) {
 
   $("#network-pane").attr("data-network", net)
 
+  $(".network-list .selected-network").removeClass("selected-network")
+  $(sprintf("#chnet-%s", net)).addClass("selected-network")
+
   var netData = data.getNetwork(net)
   $("#network-ed-name").attr("disabled", true)
   $("#network-ed-name").val(net)
   $("#network-ed-addr").val(netData.getIP())
   $("#network-ed-port").val(netData.getPort())
   $("#network-ed-ssl").attr("active", netData.usingSSL())
+  $("#network-ed-connected").attr("active", netData.isConnected())
   $("#network-ed-user").val(netData.getUser())
   $("#network-ed-realname").val(netData.getRealname())
   $("#network-ed-nick").val(netData.getNick())
@@ -66,7 +72,7 @@ settings.networks.new = function() {
   var name = "newnet"
   $("#network-list").loadTemplate($("#template-settings-list-entry"), {
     name: name,
-    class: "btn network-list-entry",
+    class: "btn network-list-entry new-net",
     onclick: sprintf("settings.networks.switch('%s')", name),
     id: sprintf("chnet-%s", name)
   }, {append: true, isFile: false, async: false})
@@ -75,5 +81,63 @@ settings.networks.new = function() {
 }
 
 settings.networks.save = function(net) {
-
+  if ($(sprintf("#chnet-%s", net)).hasClass("new-net")) {
+    net = $("#network-ed-name").val()
+    $(sprintf("#chnet-%s", net)).removeClass("new-net")
+    $.ajax({
+      type: "POST",
+      url: sprintf("/network/%s/", net),
+      data: JSON.stringify({
+        ip: $("#network-ed-addr").val(),
+        port: $("#network-ed-port").val(),
+        ssl: $("#network-ed-ssl").attr("active") === "true",
+        user: $("#network-ed-user").val(),
+        realname: $("#network-ed-realname").val(),
+        nick: $("#network-ed-nick").val(),
+      }),
+      dataType: "json",
+      success: function(data) {
+        "use strict"
+        dbg("Successfully created network", net)
+        $.ajax({
+          type: "POST",
+          url: sprintf("/network/%s/", net),
+          data: JSON.stringify({
+            connected: $("#network-ed-connected").attr("active")
+          })
+        })
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        "use strict"
+        dbg("Failed to create network", net + ":", textStatus, errorThrown)
+        dbg(jqXHR)
+      }
+    })
+  } else {
+    $.ajax({
+      type: "POST",
+      url: sprintf("/network/%s/", net),
+      data: JSON.stringify({
+        name: $("#network-ed-name").val(),
+        ip: $("#network-ed-addr").val(),
+        port: $("#network-ed-port").val(),
+        ssl: $("#network-ed-ssl").attr("active"),
+        connected: $("#network-ed-connected").attr("active"),
+        user: $("#network-ed-user").val(),
+        realname: $("#network-ed-realname").val(),
+        nick: $("#network-ed-nick").val(),
+        forcedisconnect: false
+      }),
+      dataType: "json",
+      success: function(data) {
+        "use strict"
+        dbg("Successfully updated network", net)
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        "use strict"
+        dbg("Failed to update network", net + ":", textStatus, errorThrown)
+        dbg(jqXHR)
+      }
+    })
+  }
 }
