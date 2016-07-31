@@ -154,6 +154,7 @@ settings.networks.save = function(net) {
       success: function(data) {
         "use strict"
         dbg("Successfully updated network", net)
+        dbg(data)
       },
       error: function(jqXHR, textStatus, errorThrown) {
         "use strict"
