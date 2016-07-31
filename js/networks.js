@@ -45,7 +45,9 @@ settings.networks.closeEditor = function() {
 
 settings.networks.switch = function(net) {
   "use strict"
-  $("#network-list .new-net").remove()
+  if (!$(sprintf("#chnet-%s", net)).hasClass("new-net")) {
+    $("#network-list .new-net").remove()
+  }
 
   $("#network-tool-save").unbind("click")
   $("#network-tool-save").click(function() {
@@ -63,7 +65,6 @@ settings.networks.switch = function(net) {
   $(sprintf("#chnet-%s", net)).addClass("selected-network")
 
   var netData = data.getNetwork(net)
-  $("#network-ed-name").attr("disabled", true)
   $("#network-ed-name").val(net)
   $("#network-ed-addr").val(netData.getIP())
   $("#network-ed-port").val(netData.getPort())
@@ -78,12 +79,13 @@ settings.networks.new = function() {
   var name = "newnet"
   $("#network-list").loadTemplate($("#template-settings-list-entry"), {
     name: name,
-    class: "btn network-list-entry new-net",
+    class: "btn network-list-button new-net",
     onclick: sprintf("settings.networks.switch('%s')", name),
     id: sprintf("chnet-%s", name)
   }, {append: true, isFile: false, async: false})
 
   settings.networks.switch(name)
+  $("#network-ed-name").val("")
 }
 
 settings.networks.delete = function(net) {
@@ -104,10 +106,12 @@ settings.networks.delete = function(net) {
 
 settings.networks.save = function(net) {
   if ($(sprintf("#chnet-%s", net)).hasClass("new-net")) {
-    net = $("#network-ed-name").val()
     $(sprintf("#chnet-%s", net)).removeClass("new-net")
+    $(sprintf("#chnet-%s", net)).prop("id", $("#network-ed-name").val())
+    net = $("#network-ed-name").val()
+    $(sprintf("#chnet-%s", net)).text(net)
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: sprintf("/network/%s/", net),
       data: JSON.stringify({
         ip: $("#network-ed-addr").val(),
@@ -117,7 +121,6 @@ settings.networks.save = function(net) {
         realname: $("#network-ed-realname").val(),
         nick: $("#network-ed-nick").val(),
       }),
-      dataType: "json",
       success: function(data) {
         "use strict"
         dbg("Successfully created network", net)
