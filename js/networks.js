@@ -40,6 +40,7 @@ settings.networks.closeEditor = function() {
   $("#settings-main").removeClass("hidden")
   $("#settings-networks").addClass("hidden")
   $("#network-tool-save").unbind("click")
+  $("#network-tool-delete").unbind("click")
 }
 
 settings.networks.switch = function(net) {
@@ -49,6 +50,11 @@ settings.networks.switch = function(net) {
   $("#network-tool-save").unbind("click")
   $("#network-tool-save").click(function() {
     settings.networks.save(net)
+  })
+
+  $("#network-tool-delete").unbind("click")
+  $("#network-tool-delete").click(function() {
+    settings.networks.delete(net)
   })
 
   $("#network-pane").attr("data-network", net)
@@ -78,6 +84,22 @@ settings.networks.new = function() {
   }, {append: true, isFile: false, async: false})
 
   settings.networks.switch(name)
+}
+
+settings.networks.delete = function(net) {
+  $.ajax({
+    type: "DELETE",
+    url: sprintf("/network/%s/", net),
+    success: function(data) {
+      "use strict"
+      dbg("Successfully deleted network", net)
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      "use strict"
+      dbg("Failed to delete network", net + ":", textStatus, errorThrown)
+      dbg(jqXHR)
+    }
+  })
 }
 
 settings.networks.save = function(net) {

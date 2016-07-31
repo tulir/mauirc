@@ -79,7 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     padding-top: .2rem;
 }
 
-.btn-part-channel, .btn-clear-history, .btn-delete-script {
+.btn-part-channel, .btn-clear-history, .btn-delete-script, .btn-delete-network {
     float: right;
 
     height: 2.375rem;
