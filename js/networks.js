@@ -111,7 +111,7 @@ settings.networks.save = function(net) {
       url: sprintf("/network/%s/", net),
       data: JSON.stringify({
         ip: $("#network-ed-addr").val(),
-        port: $("#network-ed-port").val(),
+        port: parseInt($("#network-ed-port").val()),
         ssl: $("#network-ed-ssl").attr("active") === "true",
         user: $("#network-ed-user").val(),
         realname: $("#network-ed-realname").val(),
@@ -142,7 +142,7 @@ settings.networks.save = function(net) {
       data: JSON.stringify({
         name: $("#network-ed-name").val(),
         ip: $("#network-ed-addr").val(),
-        port: $("#network-ed-port").val(),
+        port: parseInt($("#network-ed-port").val()),
         ssl: $("#network-ed-ssl").attr("active"),
         connected: $("#network-ed-connected").attr("active"),
         user: $("#network-ed-user").val(),
