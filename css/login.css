@@ -26,9 +26,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	margin-left: auto;
 }
 
-.authsend, .authfield {
-	width: 100%;
+.authfield, .btn-auth {
 	padding: 1rem;
+}
+
+.authfield {
+	width: 100%;
+}
+
+.btn-auth {
+	width: calc(50% - .125rem);
 }
 
 .auth-wrap {
@@ -54,14 +61,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .auth-footer-link:hover {
 	text-decoration: underline;
-}
-
-.forgot-password {
-	float: left;
-}
-
-.register {
-	float: right;
 }
 
 @media (min-width: 450px) {
