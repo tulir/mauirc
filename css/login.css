@@ -44,6 +44,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	background-color: white;
 }
 
+.auth-footer-link, .auth-footer-link:visited {
+	margin-top: .5rem;
+
+	text-decoration: none;
+
+	color: var(--secondary-text);
+}
+
+.auth-footer-link:hover {
+	text-decoration: underline;
+}
+
+.forgot-password {
+	float: left;
+}
+
+.register {
+	float: right;
+}
+
 @media (min-width: 450px) {
 	.auth-wrap {
 		width: 75%;
