@@ -38,6 +38,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	width: calc(50% - .125rem);
 }
 
+.auth-form {
+	margin-bottom: .5rem;
+}
+
 .auth-wrap {
 	width: 90%;
 	margin-top: 18vh;
@@ -52,8 +56,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .auth-footer-link, .auth-footer-link:visited {
-	margin-top: .5rem;
-
 	text-decoration: none;
 
 	color: var(--secondary-text);
