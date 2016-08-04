@@ -42,6 +42,7 @@ func LoadTemplates() {
 	LoadTemplate("oper")
 	LoadTemplate("rawio")
 	settings := LoadTemplate("settings")
+	LoadTemplateInto(settings, "main")
 	LoadTemplateInto(settings, "networks")
 	LoadTemplateInto(settings, "scripts")
 	LoadTemplate("settings-list-entry")
