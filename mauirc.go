@@ -17,6 +17,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 	"html/template"
 )
@@ -29,7 +30,18 @@ var tmpl = template.New("root")
 
 func main() {
 	fmt.Println("mauIRC", VERSION, "loading...")
+
+	fmt.Println("Loading templates")
 	LoadTemplates()
+
+	fmt.Println("Checking notification permission")
+	js.Global.Get("Notification").Call("requestPermission", nil)
+
+	fmt.Println("Applying templates")
 	ApplyTemplate("login", "#container", nil)
 	ApplyTemplate("settings", "#settings", nil)
+
+	fmt.Println("Init done")
+
+	// CheckAuth()
 }
