@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
+	"maunium.net/go/mauirc/socket"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/util"
 )
@@ -46,7 +47,7 @@ func Check() {
 			if data == "true" {
 				jq("#authsend").AddClass("disabled")
 				jq("#authsend").SetText("Connecting...")
-				//connect()
+				socket.Connect()
 			} else {
 				//authfail = true
 				//msgcontainer = false
