@@ -18,10 +18,11 @@ for template in templates/*.html; do
 done
 
 if [ ! -f index.max.html ]; then
-    mv index.html index.max.html
+  rm -f index.html
+  mv index.max.html index.html
 fi
 
-cat index-min.html | html-minifier \
+cat index.html | html-minifier \
         --html5 --collapse-boolean-attributes --collapse-inline-tag-whitespace \
         --collapse-whitespace --remove-attribute-quotes --remove-redundant-attributes \
         --remove-script-type-attributes --remove-style-link-type-attributes \
