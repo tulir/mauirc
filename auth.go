@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
+	"maunium.net/go/mauirc/templates"
 )
 
 func init() {
@@ -44,14 +45,14 @@ func CheckAuth() {
 			} else {
 				//authfail = true
 				//msgcontainer = false
-				ApplyTemplate("login", "#container", "")
+				templates.Apply("login", "#container", "")
 				fmt.Println("Not logged in")
 			}
 		},
 		jquery.ERROR: func(data map[string]interface{}, textStatus, errorThrown string) {
 			fmt.Println("Auth check failed: ", textStatus)
 			//authfail = true
-			ApplyTemplate("login", "#container", "")
+			templates.Apply("login", "#container", "")
 			jq("#error").RemoveClass("hidden")
 			jq("#error").SetText("Can't connect to mauIRCd")
 			fmt.Println(data)
