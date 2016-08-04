@@ -29,25 +29,17 @@ minify-css: build-css
 build-min-css: build-css minify-css
 
 
+package: build-min package-existing
 
-package: minify
+package-max: build package-existing
+
+package-existing:
 	tar cvfJ mauirc.tar.xz res/ index.js index.css templates.html index.html
 
 gitpull:
 	git pull
 
-update: clean gitpull minify
+update: clean gitpull build-min
 
-clean-build: clean-build-index
-	rm -f index.js.map index.js index.css templates.html
-
-clean-build-index:
-	if [ -f index.max.html ]; then	\
-	  rm -f index.html;							\
-	  mv index.max.html index.html;	\
-	fi
-
-clean-package:
-	rm -f mauirc.tar.xz
-
-clean: clean-build clean-package
+clean:
+	rm -f index.js.map index.js index.html index.css templates.html mauirc.tar.xz

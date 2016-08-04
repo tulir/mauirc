@@ -6,3 +6,5 @@ for template in html/*.gohtml; do
     cat $template | html-minifier --html5 --remove-comments | sed "s/^/  /g" >> templates.html
     echo -e "</script>\n" >> templates.html
 done
+
+cp html/index.html index.html
