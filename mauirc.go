@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
+	"maunium.net/go/mauirc/auth"
 	"maunium.net/go/mauirc/templates"
 )
 
@@ -42,5 +43,5 @@ func main() {
 
 	fmt.Println("Init done")
 
-	CheckAuth()
+	auth.Check()
 }

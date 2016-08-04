@@ -13,7 +13,9 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-package main
+
+// Package auth contains authentication code
+package auth
 
 import (
 	"encoding/json"
@@ -21,18 +23,21 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 	"maunium.net/go/mauirc/templates"
+	"maunium.net/go/mauirc/util"
 )
+
+var jq = jquery.NewJQuery
 
 func init() {
 	js.Global.Set("auth", map[string]interface{}{
-		"check":    CheckAuth,
+		"check":    Check,
 		"login":    Login,
 		"register": Register,
 	})
 }
 
-// CheckAuth asks the server if the cookied authentication is valid
-func CheckAuth() {
+// Check asks the server if the cookied authentication is valid
+func Check() {
 	fmt.Println("Checking authentication status...")
 	jquery.Ajax(map[string]interface{}{
 		"type": "GET",
@@ -82,18 +87,15 @@ func Login() {
 		},
 		"error": func(data map[string]interface{}, textStatus, errorThrown string) {
 			status, _ := data["status"].(int)
-			if status == 401 {
-				jq("#error").SetText("Invalid username or password")
-			} else if status == 410 {
-				jq("#error").SetText("Can't connect to mauIRCd:<br>Server is gone")
-			} else if status == 418 {
-				jq("#error").SetText("Can't connect to mauIRCd:<br>Server is a teapot")
-			} else if status == 429 {
-				jq("#error").SetText("Can't connect to mauIRCd:<br>Too many requests")
+			if status == 502 {
+				jq("#error").SetText("Can't connect to mauIRCd")
 			} else if status == 500 {
 				jq("#error").SetText("Can't connect to mauIRCd:<br>Server isn't feeling well")
 			} else {
-				jq("#error").SetText("Can't connect to mauIRCd")
+				var err util.WebError
+				rawData, _ := data["responseText"].(string)
+				json.Unmarshal([]byte(rawData), &err)
+				jq("#error").SetText(err.Human)
 			}
 			jq("#error").RemoveClass("hidden")
 			fmt.Println("Authentication failed:", textStatus, errorThrown)
