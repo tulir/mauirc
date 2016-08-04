@@ -77,7 +77,7 @@ func Login() {
 	jquery.Ajax(map[string]interface{}{
 		"type": "POST",
 		"url":  "/auth/login",
-		"data": payload,
+		"data": string(payload),
 		"success": func() {
 			jq("#auth-login").AddClass("disabled")
 			jq("#auth-register").AddClass("disabled")
