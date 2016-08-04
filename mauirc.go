@@ -15,9 +15,20 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package main
 
+import (
+	"fmt"
+	"github.com/gopherjs/jquery"
+	"html/template"
+)
+
 // VERSION of mauIRC
 const VERSION = "2.0.0"
 
-func main() {
+var jq = jquery.NewJQuery
+var tmpl = template.New("root")
 
+func main() {
+	fmt.Println("mauIRC", VERSION, "loading...")
+	LoadTemplates()
+	ApplyTemplate("login", "#container", nil)
 }
