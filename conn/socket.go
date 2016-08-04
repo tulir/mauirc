@@ -31,7 +31,7 @@ var wsPath string
 func init() {
 	wsPath = "wss://" + js.Global.Get("window").Get("location").Get("host").String() + "/socket"
 	if js.Global.Get("window").Get("location").Get("protocol").String() != "https:" {
-		wsPath = "ws" + wsPath[3:]
+		wsPath = "w" + wsPath[2:]
 	}
 }
 
