@@ -20,7 +20,6 @@ package conn
 import (
 	"encoding/json"
 	"fmt"
-
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 	"maunium.net/go/mauirc/templates"

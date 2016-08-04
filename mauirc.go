@@ -17,7 +17,6 @@ package main
 
 import (
 	"fmt"
-
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 	"maunium.net/go/mauirc/conn"
