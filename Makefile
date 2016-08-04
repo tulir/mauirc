@@ -12,10 +12,10 @@ build-min-js: $(shell find -name "*.go")
 
 
 
-build-html: $(shell find -name "*.html")
+build-html: $(shell find -name "*.gohtml")
 	./build/html.sh
 
-build-min-html: $(shell find -name "*.html")
+build-min-html: $(shell find -name "*.gohtml")
 	./build/html.min.sh
 
 
