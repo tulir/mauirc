@@ -17,10 +17,20 @@
 // Package util contains utilities
 package util
 
+import (
+	"encoding/json"
+)
+
 // WebError is a wrapper for errors intended to be sent to HTTP clients
 type WebError struct {
 	HTTP      int    `json:"http"`
 	Simple    string `json:"error"`
 	Human     string `json:"error-humanreadable"`
 	ExtraInfo string `json:"error-extrainfo,omitempty"`
+}
+
+// MarshalString marshals the given interface into JSON and stringifies the byte array result
+func MarshalString(data interface{}) string {
+	dat, _ := json.Marshal(&data)
+	return string(dat)
 }
