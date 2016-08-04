@@ -17,11 +17,10 @@ for template in templates/*.gohtml; do
 done
 
 if [ ! -f index.max.html ]; then
-  rm -f index.html
-  mv index.max.html index.html
+  mv index.html index.max.html
 fi
 
-cat index.html | html-minifier \
+cat index.max.html | html-minifier \
         --html5 --collapse-boolean-attributes --collapse-inline-tag-whitespace \
         --collapse-whitespace --remove-attribute-quotes --remove-redundant-attributes \
         --remove-script-type-attributes --remove-style-link-type-attributes \
