@@ -17,12 +17,12 @@
 // Package data contains the session data storage system
 package data
 
-// RootStore is the base struct
-type RootStore struct {
-	Networks          NetworkList
-	GlobalScripts     ScriptStore
-	MessageFormatting bool
-}
+// Base store variables
+var (
+	Networks          = make(NetworkList)
+	GlobalScripts     = make(ScriptStore)
+	MessageFormatting = true
+)
 
 // NetworkList is a list of networks
 type NetworkList map[string]*Network
