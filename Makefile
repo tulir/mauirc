@@ -16,9 +16,8 @@ build-min-html: $(shell find -name "*.gohtml")
 
 build-css: $(shell find -name "*.css")
 	./build/css.sh
-minify-css: build-css
+build-min-css: build-css
 	cleancss -o index.css index.css
-build-min-css: build-css minify-css
 
 
 package: build-min package-existing
