@@ -72,12 +72,10 @@ type loginForm struct {
 
 // Login sends a request to /auth/login
 func Login() {
-	payload, _ := json.Marshal(&loginForm{Email: jq("#email").Val(), Password: jq("#password").Val()})
-
 	jquery.Ajax(map[string]interface{}{
 		"type": "POST",
 		"url":  "/auth/login",
-		"data": string(payload),
+		"data": util.MarshalString(loginForm{Email: jq("#email").Val(), Password: jq("#password").Val()}),
 		"success": func() {
 			jq("#auth-login").AddClass("disabled")
 			jq("#auth-register").AddClass("disabled")
