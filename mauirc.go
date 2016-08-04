@@ -19,27 +19,26 @@ import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
-	"html/template"
+	"maunium.net/go/mauirc/templates"
 )
 
 // VERSION of mauIRC
 const VERSION = "2.0.0"
 
 var jq = jquery.NewJQuery
-var tmpl = template.New("root")
 
 func main() {
 	fmt.Println("mauIRC", VERSION, "loading...")
 
 	fmt.Println("Loading templates")
-	LoadTemplates()
+	templates.LoadAll()
 
 	fmt.Println("Checking notification permission")
 	js.Global.Get("Notification").Call("requestPermission")
 
 	fmt.Println("Applying templates")
-	ApplyTemplate("login", "#container", nil)
-	ApplyTemplate("settings", "#settings", nil)
+	templates.Apply("login", "#container", nil)
+	templates.Apply("settings", "#settings", nil)
 
 	fmt.Println("Init done")
 
