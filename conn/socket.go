@@ -14,31 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package socket contains WebSocket code
-package socket
+// Package conn contains connection code
+package conn
 
 import (
 	"github.com/gopherjs/gopherjs/js"
-	"github.com/gopherjs/jquery"
 	"github.com/gopherjs/websocket"
 	"maunium.net/go/mauirc/templates"
 )
 
-var jq = jquery.NewJQuery
 var ws *websocket.WebSocket
-var path string
+var wsPath string
 
 func init() {
-	path = "wss://" + js.Global.Get("window").Get("location").Get("host").String() + "/socket"
+	wsPath = "wss://" + js.Global.Get("window").Get("location").Get("host").String() + "/socket"
 	if js.Global.Get("window").Get("location").Get("protocol").String() != "https:" {
-		path = "ws" + path[3:]
+		wsPath = "ws" + wsPath[3:]
 	}
 }
 
 // Connect to the socket
 func Connect() {
 	var err error
-	ws, err = websocket.New(path)
+	ws, err = websocket.New(wsPath)
 	if err != nil {
 		panic(err)
 	}

@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package auth contains authentication code
-package auth
+// Package conn contains connection code
+package conn
 
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
-	"maunium.net/go/mauirc/socket"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/util"
 )
@@ -31,14 +31,14 @@ var jq = jquery.NewJQuery
 
 func init() {
 	js.Global.Set("auth", map[string]interface{}{
-		"check":    Check,
+		"check":    CheckAuth,
 		"login":    Login,
 		"register": Register,
 	})
 }
 
-// Check asks the server if the cookied authentication is valid
-func Check() {
+// CheckAuth asks the server if the cookied authentication is valid
+func CheckAuth() {
 	fmt.Println("Checking authentication status...")
 	jquery.Ajax(map[string]interface{}{
 		"type": "GET",
@@ -47,7 +47,7 @@ func Check() {
 			if data == "true" {
 				jq("#authsend").AddClass("disabled")
 				jq("#authsend").SetText("Connecting...")
-				socket.Connect()
+				Connect()
 			} else {
 				//authfail = true
 				//msgcontainer = false
