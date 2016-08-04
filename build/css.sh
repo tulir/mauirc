@@ -7,5 +7,3 @@ for stylesheet in \
     whois oper rawio scripts \
     networks channels userlist
 do cat css/$stylesheet.css >> index.css; done
-
-cleancss -o index.min.css index.css
