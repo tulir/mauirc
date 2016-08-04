@@ -18,11 +18,11 @@
 package conn
 
 import (
+	"encoding/json"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/websocket"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
-	"time"
 )
 
 var ws *websocket.WebSocket
@@ -57,18 +57,123 @@ func Disconnect() {
 	}
 }
 
-func reconnect() {
-
-}
-
 func open(evt *js.Object) {
 	templates.Apply("main", "#container", nil)
 	jq("#disconnected").AddClass("hidden")
 	data.Connected = true
 }
 
-func message(evt *js.Object) {
+// TODO move socketMessage and type constants
+type socketMessage struct {
+	Type   string                 `json:"type"`
+	Object map[string]interface{} `json:"object"`
+}
 
+// Message types
+const (
+	MsgRaw         = "raw"
+	MsgInvite      = "invite"
+	MsgNickChange  = "nickchange"
+	MsgNetData     = "netdata"
+	MsgChanData    = "chandata"
+	MsgWhois       = "whois"
+	MsgClear       = "clear"
+	MsgDelete      = "delete"
+	MsgChanList    = "chanlist"
+	MsgCmdResponse = "cmdresponse"
+	MsgMessage     = "message"
+	MsgKick        = "kick"
+	MsgMode        = "mode"
+	MsgClose       = "close"
+	MsgOpen        = "open"
+)
+
+func message(evt *js.Object) {
+	var msg socketMessage
+
+	if err := json.Unmarshal([]byte(evt.Get("data").String()), &msg); err != nil {
+		panic(err)
+	}
+
+	switch msg.Type { // TODO implement
+	case MsgMessage:
+		/* Original JS implementation:
+		var chanData = data.getChannel(ed.object.network, ed.object.channel)
+		if (chanData.isFetchingHistory()) {
+		  chanData.pushCache(ed.object)
+		} else {
+		  receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
+			ed.object.sender, ed.object.command, ed.object.message, ed.object.ownmsg,
+			ed.object.preview, true)
+		}
+		*/
+	case MsgCmdResponse:
+		/* Original JS implementation:
+		receiveCmdResponse(ed.object.message)
+		*/
+	case MsgChanList:
+		/* Original JS implementation:
+		data.getNetwork(ed.object.network).setChannels(ed.object.list)
+		*/
+	case MsgChanData:
+		/* Original JS implementation:
+		var channel = data.getChannel(ed.object.network, ed.object.name)
+		channel.setTopicFull(ed.object.topic, ed.object.topicsetat, ed.object.topicsetby)
+		channel.setUsers(ed.object.userlist)
+		channel.setNotificationLevel("all")
+		openChannel(ed.object.network, ed.object.name, false)
+
+		if(getActiveNetwork() === ed.object.network && getActiveChannel() === ed.object.name) {
+		  $("#title").text(ed.object.topic)
+		  updateUserList()
+		}
+		*/
+	case MsgNetData:
+		/* Original JS implementation:
+		if ($("#net-%s", ed.object.name.toLowerCase()).length === 0) {
+		  openNetwork(ed.object.name)
+		  settings.scripts.update(ed.object.name, false)
+		}
+		data.getNetwork(ed.object.name).setNetData(ed.object)
+		if(ed.object.connected) {
+		  $(sprintf("#switchnet-%s", ed.object.name)).removeClass("disconnected")
+		} else {
+		  $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
+		}
+		*/
+	case MsgNickChange:
+		/* Original JS implementation:
+		dbg("Nick changed to", ed.object.nick, "on", ed.object.network)
+		data.getNetwork(ed.object.network).setNick(ed.object.nick)
+		*/
+	case MsgClear:
+		/* Original JS implementation:
+		getChannel(ed.object.network, ed.object.channel).empty()
+		*/
+	case MsgDelete:
+		/* Original JS implementation:
+		$(sprintf("#msgwrap-%s", ed.object)).remove()
+		*/
+	case MsgWhois:
+		/* Original JS implementation:
+		openWhoisModal(ed.object)
+		*/
+	case MsgInvite:
+		/* Original JS implementation:
+		openChannel(ed.object.network, ed.object.channel, false)
+		getChannel(ed.object.network, ed.object.channel).loadTemplate($("#template-invite"), {
+		  sender: ed.object.sender,
+		  channel: ed.object.channel,
+		  accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel),
+		  ignore: sprintf("closeChannel('%s', '%s')", ed.object.network, ed.object.channel)
+		}, {append: false, isFile: false, async: false})
+		$(sprintf("#switchto-%s-%s", ed.object.network.toLowerCase(), channelFilter(ed.object.channel))).addClass("new-messages")
+		*/
+	case MsgRaw:
+		/* Original JS implementation:
+		$(sprintf("#raw-output-%s", ed.object.network)).append(sprintf("<div class='rawoutmsg'>%s</div>", ed.object.message))
+		*/
+	}
 }
 
 func close(evt *js.Object) {
@@ -82,10 +187,11 @@ func close(evt *js.Object) {
 	}
 
 	if !data.AuthFail {
-		time.AfterFunc(20*time.Second, reconnect)
+		// TODO edit CheckAuth to work for reconnects too
+		//time.AfterFunc(20*time.Second, reconnect)
 	}
 }
 
 func errorr(evt *js.Object) {
-
+	// TODO do something here?
 }
