@@ -87,24 +87,24 @@ func Login() {
 			jq("#auth-register").AddClass("disabled")
 			jq("#auth-login").SetText("Connecting...")
 			fmt.Println("Successfully authenticated!")
-			//connect()
+			Connect()
 		},
-		"error": func(data map[string]interface{}, textStatus, errorThrown string) {
-			status, _ := data["status"].(int)
+		"error": func(info map[string]interface{}, textStatus, errorThrown string) {
+			status, _ := info["status"].(int)
 			if status == 502 {
 				jq("#error").SetText("Can't connect to mauIRCd")
 			} else if status == 500 {
 				jq("#error").SetText("Can't connect to mauIRCd:<br>Server isn't feeling well")
 			} else {
 				var err util.WebError
-				rawData, _ := data["responseText"].(string)
+				rawData, _ := info["responseText"].(string)
 				json.Unmarshal([]byte(rawData), &err)
 				jq("#error").SetText(err.Human)
 			}
 			jq("#error").RemoveClass("hidden")
 			fmt.Println("Authentication failed:", textStatus, errorThrown)
-			fmt.Println(data)
-			//authfail = true
+			fmt.Println(info)
+			data.AuthFail = true
 		},
 	})
 }
