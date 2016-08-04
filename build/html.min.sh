@@ -1,8 +1,8 @@
 #!/bin/bash
-echo > templates.min.html
+echo > templates.html
 for template in templates/*.gohtml; do
     templatename=`echo $template | awk '{ print substr($1, 11, length($1) - 17 ) }'`
-    echo -n '<script type="text/html" class="template" id="template-'$templatename'"> ' >> templates.min.html
+    echo -n '<script type="text/html" class="template" id="template-'$templatename'"> ' >> templates.html
     cat $template | html-minifier --html5 \
         --collapse-boolean-attributes \
         --collapse-inline-tag-whitespace \
@@ -12,8 +12,8 @@ for template in templates/*.gohtml; do
         --remove-redundant-attributes \
         --remove-script-type-attributes \
         --remove-style-link-type-attributes \
-        --use-short-doctype >> templates.min.html
-    echo -n "</script>" >> templates.min.html
+        --use-short-doctype >> templates.html
+    echo -n "</script>" >> templates.html
 done
 
 if [ ! -f index.max.html ]; then
