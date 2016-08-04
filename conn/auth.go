@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
+	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/util"
 )
@@ -42,25 +43,30 @@ func CheckAuth() {
 	jquery.Ajax(map[string]interface{}{
 		"type": "GET",
 		"url":  "/auth/check",
-		jquery.SUCCESS: func(data string) {
-			if data == "true" {
+		jquery.SUCCESS: func(rawdat string) {
+			var dat struct {
+				Success bool `json:"success"`
+			}
+			json.Unmarshal([]byte(rawdat), &dat)
+
+			if dat.Success {
 				jq("#authsend").AddClass("disabled")
 				jq("#authsend").SetText("Connecting...")
 				Connect()
 			} else {
-				//authfail = true
-				//msgcontainer = false
+				data.AuthFail = true
+				data.MessageContainerActive = false
 				templates.Apply("login", "#container", "")
 				fmt.Println("Not logged in")
 			}
 		},
-		jquery.ERROR: func(data map[string]interface{}, textStatus, errorThrown string) {
-			fmt.Println("Auth check failed: ", textStatus)
-			//authfail = true
+		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
+			fmt.Println("Auth check failed: HTTP", info["status"])
+			fmt.Println(info)
+			data.AuthFail = true
 			templates.Apply("login", "#container", "")
 			jq("#error").RemoveClass("hidden")
 			jq("#error").SetText("Can't connect to mauIRCd")
-			fmt.Println(data)
 		},
 	})
 }
