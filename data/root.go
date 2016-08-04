@@ -24,6 +24,13 @@ var (
 	MessageFormatting = true
 )
 
+// Misc variables
+var (
+	AuthFail               = false
+	Connected              = false
+	MessageContainerActive = false
+)
+
 // NetworkList is a list of networks
 type NetworkList map[string]*Network
 
