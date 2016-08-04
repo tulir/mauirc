@@ -1,7 +1,6 @@
 #!/bin/bash
 echo > templates.min.html
 for template in templates/*.gohtml; do
-    [[ $template == "templates/index.gohtml" ]] && continue
     templatename=`echo $template | awk '{ print substr($1, 11, length($1) - 17 ) }'`
     echo -n '<script type="text/html" class="template" id="template-'$templatename'"> ' >> templates.min.html
     cat $template | html-minifier --html5 \
