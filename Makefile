@@ -31,12 +31,23 @@ build-min-css: build-css minify-css
 
 
 package: minify
-	tar cvfJ mauirc.tar.xz favicon.ico firacode.otf index.js index.css header.html templates.html index.html
+	tar cvfJ mauirc.tar.xz res/ index.js index.css templates.html index.html
 
 gitpull:
 	git pull
 
 update: clean gitpull minify
 
-clean:
-	./build/clean.sh
+clean-build: clean-build-index
+	rm -f index.js.map index.js index.css templates.html
+
+clean-build-index:
+	if [ -f index.max.html ]; then	\
+	  rm -f index.html;							\
+	  mv index.max.html index.html;	\
+	fi
+
+clean-package:
+	rm -f mauirc.tar.xz
+
+clean: clean-build clean-package
