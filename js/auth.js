@@ -25,10 +25,10 @@ function auth() {
     type: "POST",
     url: "/auth/login",
     data: JSON.stringify(payload),
-    contentType: "application/json; charset=utf-8",
     success: function(data) {
-      $("#authsend").addClass("disabled")
-      $("#authsend").text("Connecting...")
+      $("#auth-login").addClass("disabled")
+      $("#auth-register").addClass("disabled")
+      $("#auth-login").text("Connecting...")
       dbg("Successfully authenticated!")
       connect()
     },
@@ -52,6 +52,45 @@ function auth() {
       authfail = true
     }
   })
+}
+
+function register() {
+    "use strict"
+    var payload = {
+        email: $("#email").val(),
+        password: $("#password").val()
+    }
+    $.ajax({
+        type: "POST",
+        url: "/auth/register",
+        data: JSON.stringify(payload),
+        success: function(data) {
+          $("#auth-login").addClass("disabled")
+          $("#auth-register").addClass("disabled")
+          $("#auth-register").text("Connecting...")
+          dbg("Successfully authenticated!")
+          connect()
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          if (jqXHR.status === 401) {
+            $("#error").text("Email already in use")
+          } else if (jqXHR.status === 410) {
+            $("#error").text("Can't connect to mauIRCd:<br>Server is gone")
+          } else if (jqXHR.status === 418) {
+            $("#error").text("Can't connect to mauIRCd:<br>Server is a teapot")
+          } else if (jqXHR.status === 429) {
+            $("#error").text("Can't connect to mauIRCd:<br>Too many requests")
+          } else if (jqXHR.status === 500) {
+            $("#error").text("Can't connect to mauIRCd:<br>Server isn't feeling well")
+          } else {
+            $("#error").text("Can't connect to mauIRCd")
+          }
+          $("#error").removeClass("hidden")
+          dbg("Register failed:", textStatus, errorThrown)
+          dbg(jqXHR)
+          authfail = true
+        }
+    })
 }
 
 function checkAuth() {
