@@ -31,4 +31,5 @@ func main() {
 	fmt.Println("mauIRC", VERSION, "loading...")
 	LoadTemplates()
 	ApplyTemplate("login", "#container", nil)
+	ApplyTemplate("settings", "#settings", nil)
 }

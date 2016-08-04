@@ -41,10 +41,10 @@ func LoadTemplates() {
 	LoadTemplate("network-switcher")
 	LoadTemplate("oper")
 	LoadTemplate("rawio")
-	LoadTemplate("settings")
+	settings := LoadTemplate("settings")
+	LoadTemplateInto(settings, "networks")
+	LoadTemplateInto(settings, "scripts")
 	LoadTemplate("settings-list-entry")
-	LoadTemplate("settings-networks")
-	LoadTemplate("settings-scripts")
 	LoadTemplate("title-editor")
 	LoadTemplate("userlist-entry")
 	LoadTemplate("userlist-invite-box")
@@ -56,6 +56,13 @@ func LoadTemplates() {
 func LoadTemplate(name string) *template.Template {
 	templ := tmpl.New(name)
 	templ.Parse(jq(fmt.Sprintf("#template-%s", name)).Html())
+	return templ
+}
+
+// LoadTemplateInto ...
+func LoadTemplateInto(tmpl *template.Template, name string) *template.Template {
+	templ := tmpl.New(name)
+	templ.Parse(jq(fmt.Sprintf("#template-%s-%s", tmpl.Name(), name)).Html())
 	return templ
 }
 
