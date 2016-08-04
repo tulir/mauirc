@@ -20,7 +20,9 @@ package conn
 import (
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/websocket"
+	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
+	"time"
 )
 
 var ws *websocket.WebSocket
@@ -62,6 +64,7 @@ func reconnect() {
 func open(evt *js.Object) {
 	templates.Apply("main", "#container", nil)
 	jq("#disconnected").AddClass("hidden")
+	data.Connected = true
 }
 
 func message(evt *js.Object) {
@@ -73,15 +76,14 @@ func close(evt *js.Object) {
 		return
 	}
 
-	/* TODO fix the variable names
-	if connected {
+	if data.Connected {
 		jq("#disconnected").RemoveClass("hidden")
+		data.Connected = false
 	}
 
-	if !authfail {
-		time.AfterFunc(20 * time.Second, reconnect)
+	if !data.AuthFail {
+		time.AfterFunc(20*time.Second, reconnect)
 	}
-	*/
 }
 
 func errorr(evt *js.Object) {
