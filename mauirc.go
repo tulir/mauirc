@@ -35,7 +35,7 @@ func main() {
 	LoadTemplates()
 
 	fmt.Println("Checking notification permission")
-	js.Global.Get("Notification").Call("requestPermission", nil)
+	js.Global.Get("Notification").Call("requestPermission")
 
 	fmt.Println("Applying templates")
 	ApplyTemplate("login", "#container", nil)
