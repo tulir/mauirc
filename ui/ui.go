@@ -18,7 +18,16 @@
 package ui
 
 import (
+	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 )
 
 var jq = jquery.NewJQuery
+
+func init() {
+	js.Global.Set("ui", map[string]interface{}{
+		"autocomplete": Autocomplete,
+		"showModal":    ShowModal,
+		"hideModal":    HideModal,
+	})
+}
