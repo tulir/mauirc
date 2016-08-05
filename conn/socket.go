@@ -31,6 +31,15 @@ import (
 	"time"
 )
 
+func init() {
+	js.Global.Set("socket", map[string]interface{}{
+		"sendMessage": SendMessage,
+		"connect":     Connect,
+		"disconnect":  Disconnect,
+		"reconnect":   Reconnect,
+	})
+}
+
 // SendMessage sends the given struct through the WebSocket
 func SendMessage(payload interface{}) bool {
 	if payload == nil {
