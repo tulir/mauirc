@@ -72,3 +72,14 @@ func Apply(name, target string, args interface{}) {
 	tmpl.ExecuteTemplate(&buf, name, args)
 	jq(target).SetHtml(buf.String())
 }
+
+// Append the template with the given name and the given args to the given object
+func Append(name, target string, args interface{}) {
+	var jqtarget = jq(target)
+
+	var buf bytes.Buffer
+	buf.WriteString(jqtarget.Html())
+	tmpl.ExecuteTemplate(&buf, name, args)
+
+	jq(target).SetHtml(buf.String())
+}
