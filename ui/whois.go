@@ -24,7 +24,7 @@ import (
 	"time"
 )
 
-func openWhoisModal(data messages.WhoisData) {
+func OpenWhoisModal(data messages.WhoisData) {
 	if data.IdleTime == 0 {
 		data.Idle = "Currently online"
 	} else {
