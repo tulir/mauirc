@@ -91,10 +91,8 @@ func message(evt *js.Object) {
 		receiveCmdResponse(ed.object.message)
 		*/
 	case messages.MsgChanList:
-		//msgData := messages.ParseChanList(msg.Object)
-		/* Original JS implementation:
-		data.getNetwork(ed.object.network).setChannels(ed.object.list)
-		*/
+		msgData := messages.ParseChanList(msg.Object)
+		data.Networks.Get(msgData.Network).ChannelNames = msgData.List
 	case messages.MsgChanData:
 		//msgData := messages.ParseChanData(msg.Object)
 		/* Original JS implementation:
