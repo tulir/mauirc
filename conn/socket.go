@@ -74,6 +74,7 @@ func message(evt *js.Object) {
 
 	switch msg.Type { // TODO implement
 	case messages.MsgMessage:
+		//msgData := messages.ParseMessage(msg.Object)
 		/* Original JS implementation:
 		var chanData = data.getChannel(ed.object.network, ed.object.channel)
 		if (chanData.isFetchingHistory()) {
@@ -85,14 +86,17 @@ func message(evt *js.Object) {
 		}
 		*/
 	case messages.MsgCmdResponse:
+		//msgData := messages.ParseCommandResponse(msg.Object)
 		/* Original JS implementation:
 		receiveCmdResponse(ed.object.message)
 		*/
 	case messages.MsgChanList:
+		//msgData := messages.ParseChanList(msg.Object)
 		/* Original JS implementation:
 		data.getNetwork(ed.object.network).setChannels(ed.object.list)
 		*/
 	case messages.MsgChanData:
+		//msgData := messages.ParseChanData(msg.Object)
 		/* Original JS implementation:
 		var channel = data.getChannel(ed.object.network, ed.object.name)
 		channel.setTopicFull(ed.object.topic, ed.object.topicsetat, ed.object.topicsetby)
@@ -106,6 +110,7 @@ func message(evt *js.Object) {
 		}
 		*/
 	case messages.MsgNetData:
+		//msgData := messages.ParseNetData(msg.Object)
 		/* Original JS implementation:
 		if ($("#net-%s", ed.object.name.toLowerCase()).length === 0) {
 		  openNetwork(ed.object.name)
@@ -119,9 +124,11 @@ func message(evt *js.Object) {
 		}
 		*/
 	case messages.MsgNickChange:
-		//fmt.Println("Nick changed to", msg.Object.Nick, "on", msg.Object.Network)
-		//data.Networks.Get(msg.Object.Network).Nick = msg.Object.Nick
+		msgData := messages.ParseNickChange(msg.Object)
+		fmt.Println("Nick changed to", msgData.Nick, "on", msgData.Network)
+		data.Networks.Get(msgData.Network).Nick = msgData.Nick
 	case messages.MsgClear:
+		//msgData := messages.ParseClearHistory(msg.Object)
 		/* Original JS implementation:
 		getChannel(ed.object.network, ed.object.channel).empty()
 		*/
@@ -132,6 +139,7 @@ func message(evt *js.Object) {
 		openWhoisModal(ed.object)
 		*/
 	case messages.MsgInvite:
+		//msgData := messages.ParseInvite(msg.Object)
 		/* Original JS implementation:
 		openChannel(ed.object.network, ed.object.channel, false)
 		getChannel(ed.object.network, ed.object.channel).loadTemplate($("#template-invite"), {
@@ -143,9 +151,8 @@ func message(evt *js.Object) {
 		$(sprintf("#switchto-%s-%s", ed.object.network.toLowerCase(), channelFilter(ed.object.channel))).addClass("new-messages")
 		*/
 	case messages.MsgRaw:
-		/* Original JS implementation:
-		$(sprintf("#raw-output-%s", ed.object.network)).append(sprintf("<div class='rawoutmsg'>%s</div>", ed.object.message))
-		*/
+		msgData := messages.ParseRawMessage(msg.Object)
+		jq(fmt.Sprintf("#raw-output-%s", msgData.Network)).Append(fmt.Sprintf("<div class='rawoutmsg'>%s</div>", msgData.Message))
 	}
 }
 
