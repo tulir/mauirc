@@ -25,6 +25,7 @@ import (
 	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
+	"maunium.net/go/mauirc/ui"
 )
 
 var ws *websocket.WebSocket
@@ -133,10 +134,8 @@ func message(evt *js.Object) {
 	case messages.MsgDelete:
 		jq(fmt.Sprintf("#msgwrap-%s", msg.Object)).Remove()
 	case messages.MsgWhois:
-		//msgData := messages.ParseWhoisData(msg.Object)
-		/* Original JS implementation:
-		openWhoisModal(ed.object)
-		*/
+		msgData := messages.ParseWhoisData(msg.Object)
+		ui.OpenWhoisModal(msgData)
 	case messages.MsgInvite:
 		//msgData := messages.ParseInvite(msg.Object)
 		/* Original JS implementation:
