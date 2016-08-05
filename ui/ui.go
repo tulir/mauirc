@@ -26,8 +26,19 @@ var jq = jquery.NewJQuery
 
 func init() {
 	js.Global.Set("ui", map[string]interface{}{
-		"autocomplete": Autocomplete,
-		"showModal":    ShowModal,
-		"hideModal":    HideModal,
+		"autocomplete":        Autocomplete,
+		"showModal":           ShowModal,
+		"hideModal":           HideModal,
+		"getActiveChannel":    GetActiveChannel,
+		"getActiveNetwork":    GetActiveNetwork,
+		"getActiveChannelObj": GetActiveChannelObj,
+		"getActiveNetworkObj": GetActiveNetworkObj,
+		"getChannel":          GetChannel,
+		"getNetwork":          GetNetwork,
+		"channelFilter":       ChannelFilter,
+		"networkFilter":       NetworkFilter,
+		"openChannelAdder":    OpenChannelAdder,
+		"finishChannelAdding": FinishChannelAdding,
+		"cancelChannelAdding": CancelChannelAdding,
 	})
 }
