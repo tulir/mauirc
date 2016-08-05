@@ -24,6 +24,7 @@ import (
 	"time"
 )
 
+// OpenWhoisModal opens the WHOIS data modal
 func OpenWhoisModal(data messages.WhoisData) {
 	if data.IdleTime == 0 {
 		data.Idle = "Currently online"
