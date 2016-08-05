@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/websocket"
+	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 )
@@ -64,40 +65,15 @@ func open(evt *js.Object) {
 	data.Connected = true
 }
 
-// TODO move socketMessage and type constants
-type socketMessage struct {
-	Type   string      `json:"type"`
-	Object interface{} `json:"object"`
-}
-
-// Message types
-const (
-	MsgRaw         = "raw"
-	MsgInvite      = "invite"
-	MsgNickChange  = "nickchange"
-	MsgNetData     = "netdata"
-	MsgChanData    = "chandata"
-	MsgWhois       = "whois"
-	MsgClear       = "clear"
-	MsgDelete      = "delete"
-	MsgChanList    = "chanlist"
-	MsgCmdResponse = "cmdresponse"
-	MsgMessage     = "message"
-	MsgKick        = "kick"
-	MsgMode        = "mode"
-	MsgClose       = "close"
-	MsgOpen        = "open"
-)
-
 func message(evt *js.Object) {
-	var msg socketMessage
+	var msg messages.Container
 
 	if err := json.Unmarshal([]byte(evt.Get("data").String()), &msg); err != nil {
 		panic(err)
 	}
 
 	switch msg.Type { // TODO implement
-	case MsgMessage:
+	case messages.MsgMessage:
 		/* Original JS implementation:
 		var chanData = data.getChannel(ed.object.network, ed.object.channel)
 		if (chanData.isFetchingHistory()) {
@@ -108,15 +84,15 @@ func message(evt *js.Object) {
 			ed.object.preview, true)
 		}
 		*/
-	case MsgCmdResponse:
+	case messages.MsgCmdResponse:
 		/* Original JS implementation:
 		receiveCmdResponse(ed.object.message)
 		*/
-	case MsgChanList:
+	case messages.MsgChanList:
 		/* Original JS implementation:
 		data.getNetwork(ed.object.network).setChannels(ed.object.list)
 		*/
-	case MsgChanData:
+	case messages.MsgChanData:
 		/* Original JS implementation:
 		var channel = data.getChannel(ed.object.network, ed.object.name)
 		channel.setTopicFull(ed.object.topic, ed.object.topicsetat, ed.object.topicsetby)
@@ -129,7 +105,7 @@ func message(evt *js.Object) {
 		  updateUserList()
 		}
 		*/
-	case MsgNetData:
+	case messages.MsgNetData:
 		/* Original JS implementation:
 		if ($("#net-%s", ed.object.name.toLowerCase()).length === 0) {
 		  openNetwork(ed.object.name)
@@ -142,20 +118,20 @@ func message(evt *js.Object) {
 		  $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
 		}
 		*/
-	case MsgNickChange:
+	case messages.MsgNickChange:
 		//fmt.Println("Nick changed to", msg.Object.Nick, "on", msg.Object.Network)
 		//data.Networks.Get(msg.Object.Network).Nick = msg.Object.Nick
-	case MsgClear:
+	case messages.MsgClear:
 		/* Original JS implementation:
 		getChannel(ed.object.network, ed.object.channel).empty()
 		*/
-	case MsgDelete:
+	case messages.MsgDelete:
 		jq(fmt.Sprintf("#msgwrap-%s", msg.Object)).Remove()
-	case MsgWhois:
+	case messages.MsgWhois:
 		/* Original JS implementation:
 		openWhoisModal(ed.object)
 		*/
-	case MsgInvite:
+	case messages.MsgInvite:
 		/* Original JS implementation:
 		openChannel(ed.object.network, ed.object.channel, false)
 		getChannel(ed.object.network, ed.object.channel).loadTemplate($("#template-invite"), {
@@ -166,7 +142,7 @@ func message(evt *js.Object) {
 		}, {append: false, isFile: false, async: false})
 		$(sprintf("#switchto-%s-%s", ed.object.network.toLowerCase(), channelFilter(ed.object.channel))).addClass("new-messages")
 		*/
-	case MsgRaw:
+	case messages.MsgRaw:
 		/* Original JS implementation:
 		$(sprintf("#raw-output-%s", ed.object.network)).append(sprintf("<div class='rawoutmsg'>%s</div>", ed.object.message))
 		*/
