@@ -17,13 +17,8 @@
 // Package ui contains UI-related functions
 package ui
 
-// ShowModal shows the modal container
-func ShowModal() {
-	jq("#modal-container").RemoveClass("hidden")
-}
+import (
+	"github.com/gopherjs/jquery"
+)
 
-// HideModal hides the modal container and deletes the contents of the modal
-func HideModal() {
-	jq("#modal-container").AddClass("hidden")
-	jq("#modal").Empty()
-}
+var jq = jquery.NewJQuery
