@@ -15,10 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="network-switcher" data-id="network">
-  <div class="network-switcher-name" data-content-text="networkname">nullnet</div>
-  <div class="network-switcher-buttons" data-id="networkbtns"></div>
-  <div class="add-channel-wrapper" data-id="addchanid">
-    <button class="btn add-channel" type="button" data-template-bind='[{"attribute": "onClick", "value": "openchannel"}]'>New Channel</button>
+<div class="network-switcher" id="{{ .Network }}">
+  <div class="network-switcher-name">{{ .NetworkName }}</div>
+  <div class="network-switcher-buttons" id="{{ .NetworkButtons }}"></div>
+  <div class="add-channel-wrapper" id="{{ .AddChanID }}">
+    <button class="btn add-channel" type="button" onClick="{{ .OpenChannel }}">New Channel</button>
   </div>
 </div>

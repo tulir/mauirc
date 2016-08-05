@@ -17,9 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <a href="javascript:void(0)"
 	class="userlist-entry userlist-user-entry"
-	data-template-bind='[
-		{"attribute": "onClick", "value": "onclick"},
-		{"attribute": "data-simplename", "value": "simplename"}
-	]'
-	data-content-text="displayname"
-></a>
+	onClick="{{ .OnClick }}"
+	data-simplename="{{ .SimpleName }}"
+>{{ .DisplayName }}</a>

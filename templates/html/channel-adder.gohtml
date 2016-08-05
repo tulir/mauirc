@@ -15,6 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div data-id="wrapid" class="channel-adder-wrapper">
-  <input class="textfield channel-adder" data-id="id" data-template-bind='[{"attribute": "onkeydown", "value": "finish"}, {"attribute": "onblur", "value": "blur"}]'>
+<div id="{{ .WrapID }}" class="channel-adder-wrapper">
+  <input class="textfield channel-adder" data-id="id" onKeyDown="{{ .Finish }}" onBlur="{{ .Blur }}">
 </div>

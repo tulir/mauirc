@@ -23,8 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	placeholder="Enter the topic..."
 	onKeyDown="titleFinish(event.keyCode, event)"
 	onBlur="titleFinish(27)"
-	data-template-bind='[
-		{"attribute": "data-old-text", "value": "title"},
-		{"attribute": "value", "value": "title"}
-	]'
+	data-old-text="{{ .Title }}"
+	value="{{ .Title }}"
 >

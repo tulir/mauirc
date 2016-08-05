@@ -17,39 +17,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="whois">
 	<div class="whois-title">WHOIS results</div>
-	<div class="whois-name" data-content-text="nick"></div>
+	<div class="whois-name">{{ .Nick }}</div>
 	<div class="whois-table">
 		<div class="whois-data" id="whois-data-realname">
 			<div class="whois-data-key">Real name</div>
-			<div class="whois-data-value" data-content-text="realname"></div>
+			<div class="whois-data-value">{{ .Realname }}</div>
 		</div>
 		<div class="whois-data" id="whois-data-username">
 			<div class="whois-data-key">Username</div>
-			<div class="whois-data-value" data-content-text="user"></div>
+			<div class="whois-data-value">{{ .User }}</div>
 		</div>
 		<div class="whois-data" id="whois-data-lastseen">
 			<div class="whois-data-key">Last seen</div>
-			<div class="whois-data-value" data-content-text="idle"></div>
+			<div class="whois-data-value">{{ .Idle }}</div>
 		</div>
 		<div class="whois-data" id="whois-data-awaymessage">
 			<div class="whois-data-key">Away Message</div>
-			<div class="whois-data-value" data-content-text="away"></div>
+			<div class="whois-data-value">{{ .Away }}</div>
 		</div>
 		<div class="whois-data" id="whois-data-host">
 			<div class="whois-data-key">Host</div>
-			<div class="whois-data-value" data-content-text="host"></div>
+			<div class="whois-data-value">{{ .Host }}</div>
 		</div>
 		<div class="whois-data" id="whois-data-using-ssl">
 			<div class="whois-data-key">Using SSL</div>
-			<div class="whois-data-value" data-content-text="secure-connection"></div>
+			<div class="whois-data-value">{{ .SecureConnection }}</div>
 		</div>
 		<div class="whois-data" id="whois-data-server">
 			<div class="whois-data-key">Server</div>
-			<div class="whois-data-value" data-content-text="server"></div>
+			<div class="whois-data-value">{{ .Server }}</div>
 		</div>
 		<div class="whois-data" id="whois-data-server-info">
 			<div class="whois-data-key">Server Info</div>
-			<div class="whois-data-value" data-content-text="server-info"></div>
+			<div class="whois-data-value">{{ .ServerInfo }}</div>
 		</div>
 	</div>
 </div>

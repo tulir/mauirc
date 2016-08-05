@@ -19,11 +19,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	class="userlist-entry userlist-invite-box"
 	id="userlist-invite-box"
 	onBlur="stopInvite()"
-	onKeyDown="
-		if (event.keyCode === 13) {
-			finishInvite()
-		} else if (event.keyCode === 27) {
-			stopInvite()
-		}
-	"
+	onKeyDown="if (event.keyCode === 13) { finishInvite() } else if (event.keyCode === 27) { stopInvite() } "
 >

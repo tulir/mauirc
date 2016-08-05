@@ -15,11 +15,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div data-id="wrapid" data-template-bind='[{"attribute": "class", "value": "wrapclass"},{"attribute": "timestamp", "value": "timestamp"}, {"attribute": "sender", "value": "sender"}]'>
-  <div data-id="id" data-template-bind='[{"attribute": "class", "value": "class"}]'>
-    <div class="message-sender" data-content-text="sender"></div>
-    <div class="message-text" data-content="message"></div>
+<div id="{{ .WrapID }}" class="{{ .WrapClass }}" data-timestamp="{{ .Timestamp }}" data-sender="{{ .Sender }}">
+  <div id="{{ .ID }}" class="{{ .Class }}">
+    <div class="message-sender" data-content-text="sender">{{ .Sender }}</div>
+    <div class="message-text" data-content="message">{{ .Message }}</div>
     &nbsp;
-    <div class="message-date" data-content-text="date"></div>
+    <div class="message-date" data-content-text="date">{{ .Date }}</div>
   </div>
 </div>
