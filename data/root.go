@@ -20,6 +20,7 @@ package data
 import (
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/websocket"
+	"maunium.net/go/mauirc-common/messages"
 )
 
 // Base store variables
@@ -40,6 +41,7 @@ var (
 var (
 	Socket     *websocket.WebSocket
 	SocketPath string
+	Messages   = make(chan messages.Container, 16)
 )
 
 func init() {
