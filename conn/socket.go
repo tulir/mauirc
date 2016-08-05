@@ -26,6 +26,7 @@ import (
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/ui"
+	"maunium.net/go/mauirc/util"
 )
 
 var ws *websocket.WebSocket
@@ -36,6 +37,22 @@ func init() {
 	if js.Global.Get("window").Get("location").Get("protocol").String() != "https:" {
 		wsPath = "w" + wsPath[2:]
 	}
+}
+
+// SendMessage sends the given struct through the WebSocket
+func SendMessage(payload interface{}) bool {
+	if payload == nil {
+		return false
+	}
+
+	var data = util.MarshalString(payload)
+
+	if len(data) > 1024 {
+		return false
+	}
+
+	ws.Send(data)
+	return true
 }
 
 // Connect to the socket
