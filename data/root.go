@@ -17,6 +17,11 @@
 // Package data contains the session data storage system
 package data
 
+import (
+	"github.com/gopherjs/gopherjs/js"
+	"github.com/gopherjs/websocket"
+)
+
 // Base store variables
 var (
 	Networks          = make(NetworkList)
@@ -30,6 +35,19 @@ var (
 	Connected              = false
 	MessageContainerActive = false
 )
+
+// Connection variables
+var (
+	Socket     *websocket.WebSocket
+	SocketPath string
+)
+
+func init() {
+	SocketPath = "wss://" + js.Global.Get("window").Get("location").Get("host").String() + "/socket"
+	if js.Global.Get("window").Get("location").Get("protocol").String() != "https:" {
+		SocketPath = "w" + SocketPath[2:]
+	}
+}
 
 // NetworkList is a list of networks
 type NetworkList map[string]*Network
