@@ -21,12 +21,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
+	"github.com/gopherjs/jquery"
 	"github.com/gopherjs/websocket"
 	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/ui"
 	"maunium.net/go/mauirc/util"
+	"time"
 )
 
 // SendMessage sends the given struct through the WebSocket
@@ -172,9 +174,35 @@ func close(evt *js.Object) {
 	}
 
 	if !data.AuthFail {
-		// TODO edit CheckAuth to work for reconnects too
-		//time.AfterFunc(20*time.Second, reconnect)
+		time.AfterFunc(10*time.Second, Reconnect)
 	}
+}
+
+// Reconnect tries to reconnect to the mauIRC server
+func Reconnect() {
+	jquery.Ajax(map[string]interface{}{
+		"type": "GET",
+		"url":  "/auth/check",
+		jquery.SUCCESS: func(rawdat string) {
+			var dat struct {
+				Success bool `json:"authenticated"`
+			}
+			json.Unmarshal([]byte(rawdat), &dat)
+
+			if dat.Success {
+				Connect()
+			} else {
+				data.AuthFail = true
+				data.MessageContainerActive = false
+				templates.Apply("login", "#container", "")
+			}
+		},
+		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
+			fmt.Println("Reconnect failed: HTTP", info["status"])
+			fmt.Println(info)
+			time.AfterFunc(10*time.Second, Reconnect)
+		},
+	})
 }
 
 func errorr(evt *js.Object) {
