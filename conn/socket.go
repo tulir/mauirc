@@ -19,6 +19,7 @@ package conn
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/websocket"
 	"maunium.net/go/mauirc/data"
@@ -65,8 +66,8 @@ func open(evt *js.Object) {
 
 // TODO move socketMessage and type constants
 type socketMessage struct {
-	Type   string                 `json:"type"`
-	Object map[string]interface{} `json:"object"`
+	Type   string      `json:"type"`
+	Object interface{} `json:"object"`
 }
 
 // Message types
@@ -142,18 +143,14 @@ func message(evt *js.Object) {
 		}
 		*/
 	case MsgNickChange:
-		/* Original JS implementation:
-		dbg("Nick changed to", ed.object.nick, "on", ed.object.network)
-		data.getNetwork(ed.object.network).setNick(ed.object.nick)
-		*/
+		//fmt.Println("Nick changed to", msg.Object.Nick, "on", msg.Object.Network)
+		//data.Networks.Get(msg.Object.Network).Nick = msg.Object.Nick
 	case MsgClear:
 		/* Original JS implementation:
 		getChannel(ed.object.network, ed.object.channel).empty()
 		*/
 	case MsgDelete:
-		/* Original JS implementation:
-		$(sprintf("#msgwrap-%s", ed.object)).remove()
-		*/
+		jq(fmt.Sprintf("#msgwrap-%s", msg.Object)).Remove()
 	case MsgWhois:
 		/* Original JS implementation:
 		openWhoisModal(ed.object)
