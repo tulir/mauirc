@@ -111,5 +111,29 @@ func Login() {
 
 // Register sends a request to /auth/register
 func Register() {
-
+	jquery.Ajax(map[string]interface{}{
+		"type": "POST",
+		"url":  "/auth/regster",
+		"data": util.MarshalString(loginForm{Email: jq("#email").Val(), Password: jq("#password").Val()}),
+		"success": func() {
+			// TODO register success message
+		},
+		"error": func(info map[string]interface{}, textStatus, errorThrown string) {
+			status, _ := info["status"].(int)
+			if status == 502 {
+				jq("#error").SetText("Can't connect to mauIRCd")
+			} else if status == 500 {
+				jq("#error").SetText("Can't connect to mauIRCd:<br>Server isn't feeling well")
+			} else {
+				var err util.WebError
+				rawData, _ := info["responseText"].(string)
+				json.Unmarshal([]byte(rawData), &err)
+				jq("#error").SetText(err.Human)
+			}
+			jq("#error").RemoveClass("hidden")
+			fmt.Println("Register failed:", textStatus, errorThrown)
+			fmt.Println(info)
+			data.AuthFail = true
+		},
+	})
 }
