@@ -47,10 +47,10 @@ func LoadAll() {
 	Load("network-switcher")
 	Load("oper")
 	Load("rawio")
-	settings := Load("settings")
-	LoadInto(settings, "main")
-	LoadInto(settings, "networks")
-	LoadInto(settings, "scripts")
+	Load("settings")
+	Load("settings-main")
+	Load("settings-networks")
+	Load("settings-scripts")
 	Load("settings-list-entry")
 	Load("title-editor")
 	Load("userlist-entry")
@@ -63,13 +63,6 @@ func LoadAll() {
 func Load(name string) *template.Template {
 	templ := tmpl.New(name)
 	templ.Parse(jq(fmt.Sprintf("#template-%s", name)).Html())
-	return templ
-}
-
-// LoadInto ...
-func LoadInto(tmpl *template.Template, name string) *template.Template {
-	templ := tmpl.New(name)
-	templ.Parse(jq(fmt.Sprintf("#template-%s-%s", tmpl.Name(), name)).Html())
 	return templ
 }
 
