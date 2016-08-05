@@ -76,7 +76,7 @@ func message(evt *js.Object) {
 	switch msg.Type { // TODO implement
 	case messages.MsgMessage:
 		msgData := messages.ParseMessage(msg.Object)
-		chanData := data.Networks.GetChannel(msgData.Network, msgData.Channel)
+		chanData := data.Networks.MustGetChannel(msgData.Network, msgData.Channel)
 		if chanData.FetchingHistory {
 			chanData.MessageCache <- msgData
 		} else {
@@ -93,7 +93,7 @@ func message(evt *js.Object) {
 		*/
 	case messages.MsgChanList:
 		msgData := messages.ParseChanList(msg.Object)
-		data.Networks.Get(msgData.Network).ChannelNames = msgData.List
+		data.Networks.MustGet(msgData.Network).ChannelNames = msgData.List
 	case messages.MsgChanData:
 		//msgData := messages.ParseChanData(msg.Object)
 		/* Original JS implementation:
