@@ -45,7 +45,7 @@ func CheckAuth() {
 		"url":  "/auth/check",
 		jquery.SUCCESS: func(rawdat string) {
 			var dat struct {
-				Success bool `json:"success"`
+				Success bool `json:"authenticated"`
 			}
 			json.Unmarshal([]byte(rawdat), &dat)
 
