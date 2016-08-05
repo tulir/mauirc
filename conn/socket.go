@@ -29,49 +29,39 @@ import (
 	"maunium.net/go/mauirc/util"
 )
 
-var ws *websocket.WebSocket
-var wsPath string
-
-func init() {
-	wsPath = "wss://" + js.Global.Get("window").Get("location").Get("host").String() + "/socket"
-	if js.Global.Get("window").Get("location").Get("protocol").String() != "https:" {
-		wsPath = "w" + wsPath[2:]
-	}
-}
-
 // SendMessage sends the given struct through the WebSocket
 func SendMessage(payload interface{}) bool {
 	if payload == nil {
 		return false
 	}
 
-	var data = util.MarshalString(payload)
+	var dat = util.MarshalString(payload)
 
-	if len(data) > 1024 {
+	if len(dat) > 1024 {
 		return false
 	}
 
-	ws.Send(data)
+	data.Socket.Send(dat)
 	return true
 }
 
 // Connect to the socket
 func Connect() {
 	var err error
-	ws, err = websocket.New(wsPath)
+	data.Socket, err = websocket.New(data.SocketPath)
 	if err != nil {
 		panic(err)
 	}
 
-	ws.AddEventListener("open", false, open)
-	ws.AddEventListener("message", false, message)
-	ws.AddEventListener("close", false, close)
-	ws.AddEventListener("error", false, errorr)
+	data.Socket.AddEventListener("open", false, open)
+	data.Socket.AddEventListener("message", false, message)
+	data.Socket.AddEventListener("close", false, close)
+	data.Socket.AddEventListener("error", false, errorr)
 }
 
 // Disconnect from the socket
 func Disconnect() {
-	err := ws.Close()
+	err := data.Socket.Close()
 	if err != nil {
 		panic(err)
 	}
