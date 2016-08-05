@@ -135,6 +135,7 @@ func message(evt *js.Object) {
 	case messages.MsgDelete:
 		jq(fmt.Sprintf("#msgwrap-%s", msg.Object)).Remove()
 	case messages.MsgWhois:
+		//msgData := messages.ParseWhoisData(msg.Object)
 		/* Original JS implementation:
 		openWhoisModal(ed.object)
 		*/
