@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
+	"maunium.net/go/mauirc-common/errors"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/util"
@@ -96,7 +97,7 @@ func Login() {
 			} else if status == 500 {
 				jq("#error").SetText("Can't connect to mauIRCd:<br>Server isn't feeling well")
 			} else {
-				var err util.WebError
+				var err errors.WebError
 				rawData, _ := info["responseText"].(string)
 				json.Unmarshal([]byte(rawData), &err)
 				jq("#error").SetText(err.Human)
@@ -125,7 +126,7 @@ func Register() {
 			} else if status == 500 {
 				jq("#error").SetText("Can't connect to mauIRCd:<br>Server isn't feeling well")
 			} else {
-				var err util.WebError
+				var err errors.WebError
 				rawData, _ := info["responseText"].(string)
 				json.Unmarshal([]byte(rawData), &err)
 				jq("#error").SetText(err.Human)
