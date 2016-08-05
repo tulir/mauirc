@@ -74,17 +74,17 @@ func message(evt *js.Object) {
 
 	switch msg.Type { // TODO implement
 	case messages.MsgMessage:
-		//msgData := messages.ParseMessage(msg.Object)
-		/* Original JS implementation:
-		var chanData = data.getChannel(ed.object.network, ed.object.channel)
-		if (chanData.isFetchingHistory()) {
-		  chanData.pushCache(ed.object)
+		msgData := messages.ParseMessage(msg.Object)
+		chanData := data.Networks.GetChannel(msgData.Network, msgData.Channel)
+		if chanData.FetchingHistory {
+			chanData.MessageCache <- msgData
 		} else {
-		  receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
-			ed.object.sender, ed.object.command, ed.object.message, ed.object.ownmsg,
-			ed.object.preview, true)
+			/* Original JS implementation:
+			  receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
+				ed.object.sender, ed.object.command, ed.object.message, ed.object.ownmsg,
+				ed.object.preview, true)
+			*/
 		}
-		*/
 	case messages.MsgCmdResponse:
 		//msgData := messages.ParseCommandResponse(msg.Object)
 		/* Original JS implementation:
