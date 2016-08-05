@@ -17,6 +17,10 @@
 // Package data contains the session data storage system
 package data
 
+import (
+	"maunium.net/go/mauirc-common/messages"
+)
+
 // Channel contains channel data
 type Channel struct {
 	Userlist        []string
@@ -27,7 +31,7 @@ type Channel struct {
 	Notifications   NotificationLevel
 	HistoryFetched  bool
 	FetchingHistory bool
-	MessageCache    chan interface{}
+	MessageCache    chan messages.Message
 }
 
 // CreateChannel creates a channel
