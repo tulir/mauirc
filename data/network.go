@@ -18,6 +18,7 @@
 package data
 
 import (
+	"maunium.net/go/mauirc-common/messages"
 	"strings"
 )
 
@@ -42,7 +43,7 @@ func CreateNetwork() *Network {
 }
 
 // SetNetData ...
-func SetNetData() {
+func (net *Network) SetNetData(nd messages.NetData) {
 	// TODO implement setting nick, user, realname, ip, port, ssl and connected from struct
 }
 
