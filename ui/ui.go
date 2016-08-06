@@ -60,3 +60,10 @@ func init() {
 func ScrollDown() {
 	jq("#messages").SetScrollTop(jq("#messages").Underlying().Index(0).Get("scrollHeight").Int())
 }
+
+// SendNotification sends a notification to the desktop
+func SendNotification(user, message string) {
+	if js.Global.Get("Notification").Get("permission").String() == "granted" {
+		js.Global.Get("Notification").New(user, map[string]interface{}{"body": message, "icon": "/res/favicon.ico"})
+	}
+}
