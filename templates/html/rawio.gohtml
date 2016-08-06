@@ -15,16 +15,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div data-id="id_rawio" class="raw-io hidden" data-network-name="{{ .Name }}">
-  <div data-id="id_rawout" class="raw-output"></div>
-  <form action="#" data-id="id_rawin" class="raw-input">
+<div id="raw-io-{{.}}" class="raw-io hidden" data-network-name="{{.}}" onClick="event.stopPropagation()">
+  <div id="raw-output-{{.}}" class="raw-output"></div>
+  <form action="#" id="raw-input-{{.}}" class="raw-input">
     <input
       class="raw-input-field"
       type="text"
-      data-id="id_rawin_field"
+      id="raw-input-field-{{.}}"
       autocomplete="off"
       placeholder="Write a raw IRC command"
     >
-    <button type="submit" class="hidden" onClick="sendRaw()">Send</button>
+    <button type="submit" class="hidden" onClick="ui.rawio.send('{{.}}')">Send</button>
   </form>
 </div>
