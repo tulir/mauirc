@@ -20,6 +20,7 @@ package ui
 import (
 	"fmt"
 	"github.com/gopherjs/jquery"
+	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"regexp"
 	"strings"
@@ -239,52 +240,46 @@ func SwitchToClear() {
 	}
 }
 
+// SwitchTo switches to the given channel on the given network
+func SwitchTo(network, channel string) {
+	network = NetworkFilter(network)
+	fmt.Printf("Switching to channel %s @ %s\n", channel, network)
+
+	SwitchToClear()
+	jq("#message-text").Focus()
+
+	var title string
+	chanData := data.Networks.MustGetChannel(network, channel)
+	if len(chanData.Topic) != 0 {
+		title = chanData.Topic
+	} else {
+		title = channel
+	}
+	jq("#title").SetText(title)
+
+	chanObj := GetChannel(network, channel)
+	if chanData.HistoryFetched && chanObj.Find(".invite-wrapper").Length == 0 {
+		// TODO fetch history
+		// history(network, channel, 512)
+	}
+
+	jq("#switchnet-%s", network).AddClass("activenet")
+	jq("#net-%s", network).RemoveClass("hidden")
+	chanObj.RemoveClass("hidden")
+	chanSwitcher := jq(fmt.Sprintf("#switchto-%s-%s", network, ChannelFilter(channel)))
+	chanSwitcher.RemoveClass("new-messages")
+	chanSwitcher.AddClass("active")
+	// UpdateUserList()
+	// ScrollDown()
+}
+
+// OpenPM opens a private query with the given user on the given network
+func OpenPM(network, user string) {
+	OpenChannel(network, user, true)
+	SwitchTo(network, user)
+}
+
 /* TODO implement the following
-
-function switchTo(network, channel) {
-  "use strict"
-  network = network.toLowerCase()
-  dbg(sprintf("Switching to channel %s @ %s", channel, network))
-  getActiveChannelObj().addClass("hidden")
-  getActiveNetworkObj().addClass("hidden")
-  $(".channel-switcher.active").removeClass("active")
-  $(".network-switcher.activenet").removeClass("activenet")
-  $("#message-text").focus()
-
-  var channelData = data.getChannel(network, channel)
-  if (channelData.getTopic().length !== 0) {
-    var title = channelData.getTopic()
-  } else {
-    var title = channel
-  }
-  $("#title").text(title)
-
-  if ($("#messaging").hasClass("hidden-medium-down")) {
-    switchView(false)
-  }
-  var chanObj = getChannel(network, channel)
-
-  if (!channelData.isHistoryFetched() && chanObj.find(".invite-wrapper").length == 0) {
-    history(network, channel, 512)
-  }
-
-  $(sprintf("#switchnet-%s", network)).addClass("activenet")
-  $(sprintf("#net-%s", network)).removeClass("hidden")
-  chanObj.removeClass("hidden")
-
-  var newChanSwitcher = $(sprintf("#switchto-%s-%s", network, channelFilter(channel)))
-  newChanSwitcher.removeClass("new-messages")
-  newChanSwitcher.addClass("active")
-
-  updateUserList()
-  scrollDown()
-}
-function openPM(network, user) {
-  "use strict"
-  openChannel(network, user, true)
-  switchTo(network, user)
-}
-
 function switchView(userlist) {
   "use strict"
   if ($("#messaging").hasClass("hidden-medium-down")) {
