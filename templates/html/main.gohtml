@@ -42,7 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="messaging" id="messaging">
   <div class="titlebar" id="titlebar">
-    <span class="title" id="title" onClick="titleEdit()"></span>
+    <span class="title" id="title" onClick="ui.editTitle()"></span>
 
     <button class="btn open-list open-network-list hidden-medium-up" onClick="switchView(false)">
       <span class="left-arrow">
@@ -80,7 +80,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       id="message-text"
       autocomplete="off"
       placeholder="Write a message..."
-      onKeyDown="if (event.keyCode === 9) {allAutocomplete(); event.preventDefault()}"
+      onKeyDown="if (event.keyCode === 9) {ui.autocomplete(); event.preventDefault()}"
     >
     <button class="btn hidden" type="submit" id="message-send" onClick="send()">Send</button>
   </form>
@@ -89,6 +89,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div id="disconnected" class="disconnected-mauirc">
   <div class="disconnected-content">
     <div class="disconnected-text">Disconnected from mauIRCd!</div>
-    <button class="btn disconnected-button" id="try-reconnect" onClick="tryReconnect()">Try to reconnect</button>
+    <button class="btn disconnected-button" id="try-reconnect" onClick="socket.reconnect()">Try to reconnect</button>
   </div>
 </div>
