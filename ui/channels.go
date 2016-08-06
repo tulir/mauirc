@@ -204,32 +204,34 @@ func OpenChannel(network, channel string, byUser bool) {
 	})
 }
 
+// CloseChannel closes a channel
+func CloseChannel(network, channel string) {
+	network = NetworkFilter(network)
+	chanFiltered := ChannelFilter(channel)
+
+	netObj := GetNetwork(network)
+	if netObj.Length == 0 {
+		return
+	}
+
+	chanObj := GetChannel(network, channel)
+	if chanObj.Length == 0 {
+		return
+	}
+
+	if GetActiveNetwork() == network && GetActiveChannel() == channel {
+		// SwitchToClear()
+	}
+	chanObj.Remove()
+	jq(fmt.Sprintf("#switchto-%s-%s", network, chanFiltered)).Remove()
+	jq(fmt.Sprintf("#break-chan-%s-%s", network, chanFiltered)).Remove()
+}
+
 /* TODO implement the following
 function openPM(network, user) {
   "use strict"
   openChannel(network, user, true)
   switchTo(network, user)
-}
-
-function closeChannel(network, channel) {
-  "use strict"
-  network = network.toLowerCase()
-  var netObj = $(sprintf("#net-%s", network))
-  if (netObj.length === 0) {
-    return
-  }
-
-  var chanObj = getChannel(network, channel)
-  if (chanObj.length === 0) {
-    return
-  }
-
-  if (getActiveNetwork() === network && getActiveChannel() == channel) {
-    switchToClear()
-  }
-  chanObj.remove()
-  $(sprintf("#switchto-%s-%s", network, channelFilter(channel))).remove()
-  $(sprintf("#break-chan-%s-%s", network, channelFilter(channel))).remove()
 }
 
 function switchView(userlist) {
