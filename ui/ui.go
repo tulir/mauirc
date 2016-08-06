@@ -26,9 +26,22 @@ var jq = jquery.NewJQuery
 
 func init() {
 	js.Global.Set("ui", map[string]interface{}{
-		"autocomplete":        Autocomplete,
-		"showModal":           ShowModal,
-		"hideModal":           HideModal,
+		"autocomplete": Autocomplete,
+		"modal": map[string]interface{}{
+			"show": ShowModal,
+			"hide": HideModal,
+		},
+		"userlist": map[string]interface{}{
+			"update":            UpdateUserlist,
+			"isHidden":          IsUserlistHidden,
+			"wasHiddenManually": WasUserlistHiddenManually,
+			"toggle":            ToggleUserlist,
+		},
+		"invite": map[string]interface{}{
+			"start":  StartInvite,
+			"stop":   StopInvite,
+			"finish": FinishInvite,
+		},
 		"getActiveChannel":    GetActiveChannel,
 		"getActiveNetwork":    GetActiveNetwork,
 		"getActiveChannelObj": GetActiveChannelObj,
