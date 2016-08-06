@@ -42,6 +42,12 @@ func init() {
 			"stop":   StopInvite,
 			"finish": FinishInvite,
 		},
+		"rawio": map[string]interface{}{
+			"open":   OpenRawIO,
+			"close":  CloseRawIO,
+			"create": CreateRawIO,
+			"send":   SendRaw,
+		},
 		"getActiveChannel":    GetActiveChannel,
 		"getActiveNetwork":    GetActiveNetwork,
 		"getActiveChannelObj": GetActiveChannelObj,
