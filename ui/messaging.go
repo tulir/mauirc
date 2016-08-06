@@ -20,11 +20,13 @@ package ui
 import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
+	"github.com/sorcix/irc"
 	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/util"
 	"strings"
+	"time"
 )
 
 // Send messages
@@ -51,16 +53,16 @@ func Send() {
 				Command: "action",
 				Message: strings.Join(args, " "),
 			}
-		case "topic":
+		case irc.TOPIC:
 			fallthrough
 		case "title":
 			obj = messages.Message{
 				Network: GetActiveNetwork(),
 				Channel: GetActiveChannel(),
-				Command: "topic",
+				Command: irc.TOPIC,
 				Message: strings.Join(args, " "),
 			}
-		case "nick":
+		case irc.NICK:
 			fallthrough
 		case "name":
 			fallthrough
@@ -68,7 +70,7 @@ func Send() {
 			obj = messages.Message{
 				Network: GetActiveNetwork(),
 				Channel: GetActiveChannel(),
-				Command: "nick",
+				Command: irc.NICK,
 				Message: strings.Join(args, " "),
 			}
 		case "msg":
@@ -88,7 +90,7 @@ func Send() {
 					Message: strings.Join(args[1:], " "),
 				}
 			}
-		case "join":
+		case irc.JOIN:
 			if len(args) > 0 {
 				obj = messages.Message{
 					Network: GetActiveNetwork(),
@@ -97,17 +99,17 @@ func Send() {
 					Message: "Joining",
 				}
 			}
-		case "part":
+		case irc.PART:
 			fallthrough
 		case "leave":
 			fallthrough
-		case "quit":
+		case irc.QUIT:
 			fallthrough
 		case "exit":
 			obj = messages.Message{
 				Network: GetActiveNetwork(),
 				Channel: args[0],
-				Command: "part",
+				Command: irc.PART,
 				Message: "Leaving",
 			}
 		default:
@@ -132,11 +134,23 @@ func Send() {
 	jq("#message-text").SetVal("")
 }
 
+// MessageTemplateData contains things
+type MessageTemplateData struct {
+	Sender    string
+	Date      string
+	Message   string
+	Class     string
+	WrapClass string
+	Clipboard string
+	ID        int64
+	Timestamp int64
+}
+
 // Receive messages
 func Receive(msg messages.Message, isNew bool) {
 	net := GetNetwork(msg.Network)
 	if net.Length == 0 {
-		if msg.Command == "part" && msg.Sender == data.Networks.MustGet(msg.Network).Nick {
+		if msg.Command == irc.PART && msg.Sender == data.Networks.MustGet(msg.Network).Nick {
 			return
 		}
 
@@ -146,7 +160,7 @@ func Receive(msg messages.Message, isNew bool) {
 
 	ch := GetChannel(msg.Network, msg.Channel)
 	if ch.Length == 0 {
-		if msg.Command == "part" && msg.Sender == data.Networks.MustGet(msg.Network).Nick {
+		if msg.Command == irc.PART && msg.Sender == data.Networks.MustGet(msg.Network).Nick {
 			return
 		}
 
@@ -154,71 +168,89 @@ func Receive(msg messages.Message, isNew bool) {
 		ch = GetChannel(msg.Network, msg.Channel)
 	}
 
+	templateData := MessageTemplateData{
+		Sender:    msg.Sender,
+		Date:      time.Unix(msg.Timestamp, 0).Format("15:04:05"),
+		ID:        msg.ID,
+		WrapClass: "message-wrapper",
+		Class:     "message",
+		/*
+		   id: sprintf("msg-%d", id),
+		   wrapid: sprintf("msgwrap-%d", id),
+		*/
+		Message:   msg.Message, // TODO linkify and escape html?
+		Timestamp: msg.Timestamp,
+	}
+	var joined bool
+	var template = "action"
+
+	switch msg.Command {
+	case "action":
+		templateData.Class += "user-action"
+		templateData.Clipboard = fmt.Sprintln("*", msg.Sender, msg.Message)
+	case irc.JOIN:
+		templateData.Clipboard = fmt.Sprintln(msg.Sender, "joined", msg.Message)
+		templateData.Class += "secondary-action joinpart"
+	case irc.PART:
+		fallthrough
+	case irc.QUIT:
+		templateData.Clipboard = fmt.Sprintln(msg.Sender, "left: ", msg.Message)
+		templateData.Class += "secondary-action joinpart"
+	case irc.KICK:
+		index := strings.Index(msg.Message, ":")
+		kicker := templateData.Sender
+		msg.Sender = msg.Message[:index]
+		msg.Message = msg.Message[index+1:]
+		templateData.Sender = msg.Sender
+		templateData.Message = fmt.Sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, msg.Message) // TODO linkify and escape html on message?
+		templateData.Class += "secondary-action kick"
+		templateData.Clipboard = fmt.Sprintf("%s was kicked by %s: %s", msg.Sender, kicker, msg.Message)
+	case irc.MODE:
+		parts := strings.Split(msg.Message, " ")
+		if len(parts) > 0 {
+			templateData.Message = fmt.Sprintf("set mode <b>%s</b> for <b>%s</b>", parts[0], parts[1])
+			templateData.Clipboard = fmt.Sprintf("set mode %s for %s", parts[0], parts[1])
+		} else {
+			templateData.Message = fmt.Sprintf("set channel mode <b>%s</b>", parts[0])
+			templateData.Clipboard = fmt.Sprintf("set channel mode %s", parts[0])
+		}
+		templateData.Class += "secondary-action modechange"
+	case irc.NICK:
+		templateData.Message = fmt.Sprintf("is now known as <b>%s</b>", msg.Message)
+		templateData.Class += "secondary-action nickchange"
+		templateData.Clipboard = fmt.Sprintf("%s is now known as %s", msg.Sender, msg.Message)
+	case irc.TOPIC:
+		templateData.Message = fmt.Sprintf("changed the topic to <b>%s</b>", msg.Message)
+		templateData.Class += "secondary-action topicchange"
+		templateData.Clipboard = fmt.Sprintf("%s changed the topic to %s", msg.Sender, msg.Message)
+	default:
+		template = "message"
+		joined = TryJoinMessage(msg)
+	}
+
+	if msg.OwnMsg {
+		templateData.Class += " own-message"
+		templateData.WrapClass += " own-message-wrapper"
+	}
+
+	if joined {
+		templateData.WrapClass += " message-joined"
+	}
+
+	templateData.Message = util.DecodeMessage(templateData.Message)
+
+	fmt.Println(templateData, template)
+
+	oldMsgWrap := jq(fmt.Sprintf("#msgwrap-%d", msg.ID))
+	if oldMsgWrap.Length != 0 {
+		loadedTempl := jq("<div></div>")
+		templates.AppendObj(template, loadedTempl, templateData)
+		oldMsgWrap.ReplaceWith(loadedTempl.Children(":first"))
+	} else {
+		templates.AppendObj(template, ch, templateData)
+	}
+
 	/* TODO finish implementation. Original JS:
-	   var templateData = {
-	     sender: sender,
-	     date: moment(timestamp * 1000).format("HH:mm:ss"),
-	     id: sprintf("msg-%d", id),
-	     wrapid: sprintf("msgwrap-%d", id),
-	     message: linkifyHtml(escapeHtml(message)),
-	     timestamp: timestamp
-	   }
-
-	   if (command === "action") {
-	     templateData.prefix = "<b>★</b> "
-	     templateData.class = "user-action"
-	     templateData.clipboard = sprintf("* %s %s", sender, message)
-	   } else if (command === "join" || command === "part" || command === "quit") {
-	     templateData.message = (command === "join" ? "joined " : "left: ") + templateData.message
-	     templateData.class = "secondary-action joinpart"
-	     templateData.clipboard = sprintf("%s %s %s", sender, command === "join" ? "joined" : "left:", message)
-	   } else if (command === "kick") {
-	     var index = message.indexOf(":")
-	     var kicker = templateData.sender
-	     sender = message.substr(0, index)
-	     message = message.substr(index + 1)
-	     templateData.sender = sender
-	     templateData.message = sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, linkifyHtml(escapeHtml(message)))
-	     templateData.class = "secondary-action kick"
-	     templateData.clipboard = sprintf("%s was kicked by %s: %s", sender, kicker, message)
-	   } else if (command === "mode") {
-	     var parts = message.split(" ")
-	     if (parts.length > 1) {
-	       templateData.message = sprintf("set mode <b>%s</b> for <b>%s</b>", parts[0], parts[1])
-	       templateData.clipboard = sprintf("set mode %s for %s", parts[0], parts[1])
-	     } else {
-	       templateData.message = sprintf("set channel mode <b>%s</b>", parts[0])
-	       templateData.clipboard = sprintf("set channel mode %s", parts[0])
-	     }
-	     templateData.class = "secondary-action modechange"
-	   } else if (command === "nick") {
-	     templateData.message = sprintf("is now known as <b>%s</b>", message)
-	     templateData.class = "secondary-action nickchange"
-	     templateData.clipboard = sprintf("%s is now known as %s", sender, message)
-	   } else if (command == "topic") {
-	     templateData.message = sprintf("changed the topic to <b>%s</b>", message)
-	     templateData.class = "secondary-action topicchange"
-	     templateData.clipboard = sprintf("%s changed the topic to %s", sender, message)
-	   } else {
-	     var template = "message"
-	     var join = tryJoinMessage(id, network, channel, timestamp, sender, command, templateData.message, ownmsg)
-	   }
-
-	   templateData.wrapclass = "message-wrapper" + (ownmsg ? " own-message-wrapper" : "") + (join ? " message-joined" : "")
-	   templateData.class = "message " + (!isEmpty(templateData.class) ? templateData.class : "") + (ownmsg ? " own-message" : "")
-	   templateData.message = decodeMessage(templateData.message)
-
-	   if (template === undefined) {
-	     var template = "action"
-	   }
-
-	   if($(sprintf("#msgwrap-%d", id)).length !== 0) {
-	     var loadedTempl = $("<div></div>").loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
-	     $(sprintf("#msgwrap-%d", id)).replaceWith(loadedTempl.children(":first"))
-	   } else {
-	     chanObj.loadTemplate($(sprintf("#template-%s", template)), templateData, {append: true, isFile: false, async: false})
-	   }
-
 	   if (ownmsg || join) {
 	     $(sprintf("#msg-%d > .message-sender", id)).remove()
 	   }
