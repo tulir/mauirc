@@ -38,7 +38,7 @@ func Autocomplete() {
 	if word[0] == '/' {
 		// TODO command autocomplete
 	} else {
-		for _, user := range data.Networks.MustGetChannel("ACTIVENET", "ACTIVECHAN").UserlistPlain {
+		for _, user := range data.Networks.MustGetChannel(GetActiveNetwork(), GetActiveChannel()).UserlistPlain {
 			if strings.HasPrefix(strings.ToLower(user), word) {
 				if spIndex == -1 {
 					msgbox.SetVal(fmt.Sprintf("%s: %s", user, text[caretPos:]))
