@@ -169,44 +169,46 @@ func OpenNetwork(network string) {
 	// CreateRawIO(network)
 }
 
+// OpenChannel opens a channel
+func OpenChannel(network, channel string, byUser bool) {
+	network = NetworkFilter(network)
+	chanLower := strings.ToLower(channel)
+
+	netObj := GetNetwork(network)
+	if netObj.Length == 0 {
+		OpenNetwork(network)
+		netObj = GetNetwork(network)
+	}
+
+	if GetChannel(network, channel).Length != 0 {
+		return
+	}
+
+	if byUser {
+		/* TODO send messages?
+		data.Messages <- messages.Container{
+			Type: messages.MsgOpen,
+			Object: messages.Open{
+				Network: network,
+				Channel: channel,
+			},
+		}
+		*/
+	}
+
+	templates.AppendObj("channel", netObj, fmt.Sprintf("chan-%s-%s", network, chanLower))
+	templates.Append("channel-switcher", fmt.Sprintf("#chanswitchers-%s", network), map[string]interface{}{
+		"Channel":     chanLower,
+		"ChannelReal": channel,
+		"Network":     network,
+	})
+}
+
 /* TODO implement the following
 function openPM(network, user) {
   "use strict"
   openChannel(network, user, true)
   switchTo(network, user)
-}
-
-function openChannel(network, channel, byUser) {
-  "use strict"
-  network = network.toLowerCase()
-  var chanLower = channel.toLowerCase()
-  var netObj = $(sprintf("#net-%s", network))
-  if (netObj.length === 0) {
-    openNetwork(network)
-    netObj = $(sprintf("#net-%s", network))
-  }
-
-  if (getChannel(network, channel).length !== 0) {
-    return
-  }
-
-  if (byUser) {
-    sendMessage({
-      type: "open",
-      network: network,
-      channel: channel
-    })
-  }
-
-  netObj.loadTemplate($("#template-channel"), {
-    channel: sprintf("chan-%s-%s", network, chanLower)
-  }, {append: true, isFile: false, async: false})
-  $(sprintf("#chanswitchers-%s", network)).loadTemplate($("#template-channel-switcher"), {
-    channel: sprintf("switchto-%s-%s", network, chanLower),
-    brid: sprintf("break-chan-%s-%s", network, chanLower),
-    channelname: channel,
-    onclick: sprintf("switchTo('%s', '%s')", network, chanLower)
-  }, {append: true, isFile: false, async: false})
 }
 
 function closeChannel(network, channel) {
