@@ -83,3 +83,18 @@ func Append(name, target string, args interface{}) {
 
 	jq(target).SetHtml(buf.String())
 }
+
+// ApplyObj applies the template with the given name to the given object
+func ApplyObj(name string, obj jquery.JQuery, args interface{}) {
+	var buf bytes.Buffer
+	tmpl.ExecuteTemplate(&buf, name, args)
+	obj.SetHtml(buf.String())
+}
+
+// AppendObj appends the template with the given name to the given object
+func AppendObj(name string, obj jquery.JQuery, args interface{}) {
+	var buf bytes.Buffer
+	buf.WriteString(obj.Html())
+	tmpl.ExecuteTemplate(&buf, name, args)
+	obj.SetHtml(buf.String())
+}
