@@ -235,9 +235,7 @@ func SwitchToClear() {
 	jq(".channel-switcher.active").RemoveClass("active")
 	jq(".network-switcher.activenet").RemoveClass("activenet")
 	jq("#title").SetText("")
-	if jq("#messaging").HasClass("hidden-medium-down") {
-		// SwitchView(false)
-	}
+	OpenMessageView()
 }
 
 // SwitchTo switches to the given channel on the given network
@@ -279,24 +277,41 @@ func OpenPM(network, user string) {
 	SwitchTo(network, user)
 }
 
-/* TODO implement the following
-function switchView(userlist) {
-  "use strict"
-  if ($("#messaging").hasClass("hidden-medium-down")) {
-    if ($("#userlist").hasClass("hidden-medium-down")) {
-      $("#networks").addClass("hidden-medium-down")
-    } else {
-      $("#userlist").addClass("hidden-medium-down")
-    }
-    $("#messaging").removeClass("hidden-medium-down")
-  } else {
-    if (userlist) {
-      $("#userlist").removeClass("hidden-medium-down")
-      $("#messaging").addClass("hidden-medium-down")
-    } else {
-      $("#networks").removeClass("hidden-medium-down")
-      $("#messaging").addClass("hidden-medium-down")
-    }
-  }
+// OpenMessageView switches to the message view
+func OpenMessageView() {
+	jq("#networks").AddClass("hidden-medium-down")
+	jq("#messaging").RemoveClass("hidden-medium-down")
+	jq("#userlist").AddClass("hidden-medium-down")
 }
-*/
+
+// OpenNetworksView switches to the network list view
+func OpenNetworksView() {
+	jq("#networks").RemoveClass("hidden-medium-down")
+	jq("#messaging").AddClass("hidden-medium-down")
+	jq("#userlist").AddClass("hidden-medium-down")
+}
+
+// OpenUserlistView switches to the userlist view
+func OpenUserlistView() {
+	jq("#networks").AddClass("hidden-medium-down")
+	jq("#messaging").AddClass("hidden-medium-down")
+	jq("#userlist").RemoveClass("hidden-medium-down")
+}
+
+// ToggleNetworksView toggles between the network and message view
+func ToggleNetworksView() {
+	if jq("#networks").HasClass("hidden-medium-down") {
+		OpenNetworksView()
+	} else {
+		OpenMessageView()
+	}
+}
+
+// ToggleUserlistView toggles between the userlist and message view
+func ToggleUserlistView() {
+	if jq("#userlist").HasClass("hidden-medium-down") {
+		OpenUserlistView()
+	} else {
+		OpenMessageView()
+	}
+}
