@@ -267,7 +267,7 @@ func SwitchTo(network, channel string) {
 	chanSwitcher := jq(fmt.Sprintf("#switchto-%s-%s", network, ChannelFilter(channel)))
 	chanSwitcher.RemoveClass("new-messages")
 	chanSwitcher.AddClass("active")
-	// UpdateUserList()
+	UpdateUserlist()
 	// ScrollDown()
 }
 
