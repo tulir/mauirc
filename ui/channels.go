@@ -268,7 +268,7 @@ func SwitchTo(network, channel string) {
 	chanSwitcher.RemoveClass("new-messages")
 	chanSwitcher.AddClass("active")
 	UpdateUserlist()
-	// ScrollDown()
+	ScrollDown()
 }
 
 // OpenPM opens a private query with the given user on the given network

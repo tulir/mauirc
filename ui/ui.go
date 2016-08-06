@@ -55,3 +55,8 @@ func init() {
 		"cancelChannelAdding": CancelChannelAdding,
 	})
 }
+
+// ScrollDown scrolls the message pane to the bottom
+func ScrollDown() {
+	jq("#messages").SetScrollTop(jq("#messages").Underlying().Index(0).Get("scrollHeight").Int())
+}
