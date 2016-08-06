@@ -68,6 +68,12 @@ func Connect() {
 	data.Socket.AddEventListener("message", false, message)
 	data.Socket.AddEventListener("close", false, close)
 	data.Socket.AddEventListener("error", false, errorr)
+
+	go func() {
+		for msg := range data.Messages {
+			SendMessage(msg)
+		}
+	}()
 }
 
 // Disconnect from the socket
