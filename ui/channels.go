@@ -220,51 +220,26 @@ func CloseChannel(network, channel string) {
 	}
 
 	if GetActiveNetwork() == network && GetActiveChannel() == channel {
-		// SwitchToClear()
+		SwitchToClear()
 	}
 	chanObj.Remove()
 	jq(fmt.Sprintf("#switchto-%s-%s", network, chanFiltered)).Remove()
 	jq(fmt.Sprintf("#break-chan-%s-%s", network, chanFiltered)).Remove()
 }
 
+// SwitchToClear switches to a empty message view
+func SwitchToClear() {
+	GetActiveChannelObj().AddClass("hidden")
+	GetActiveNetworkObj().AddClass("hidden")
+	jq(".channel-switcher.active").RemoveClass("active")
+	jq(".network-switcher.activenet").RemoveClass("activenet")
+	jq("#title").SetText("")
+	if jq("#messaging").HasClass("hidden-medium-down") {
+		// SwitchView(false)
+	}
+}
+
 /* TODO implement the following
-function openPM(network, user) {
-  "use strict"
-  openChannel(network, user, true)
-  switchTo(network, user)
-}
-
-function switchView(userlist) {
-  "use strict"
-  if ($("#messaging").hasClass("hidden-medium-down")) {
-    if ($("#userlist").hasClass("hidden-medium-down")) {
-      $("#networks").addClass("hidden-medium-down")
-    } else {
-      $("#userlist").addClass("hidden-medium-down")
-    }
-    $("#messaging").removeClass("hidden-medium-down")
-  } else {
-    if (userlist) {
-      $("#userlist").removeClass("hidden-medium-down")
-      $("#messaging").addClass("hidden-medium-down")
-    } else {
-      $("#networks").removeClass("hidden-medium-down")
-      $("#messaging").addClass("hidden-medium-down")
-    }
-  }
-}
-
-function switchToClear() {
-  "use strict"
-  getActiveChannelObj().addClass("hidden")
-  getActiveNetworkObj().addClass("hidden")
-  $(".channel-switcher.active").removeClass("active")
-  $(".network-switcher.activenet").removeClass("activenet")
-  $("#title").text("")
-  if ($("#messaging").hasClass("hidden-medium-down")) {
-    switchView(false)
-  }
-}
 
 function switchTo(network, channel) {
   "use strict"
@@ -303,5 +278,30 @@ function switchTo(network, channel) {
 
   updateUserList()
   scrollDown()
+}
+function openPM(network, user) {
+  "use strict"
+  openChannel(network, user, true)
+  switchTo(network, user)
+}
+
+function switchView(userlist) {
+  "use strict"
+  if ($("#messaging").hasClass("hidden-medium-down")) {
+    if ($("#userlist").hasClass("hidden-medium-down")) {
+      $("#networks").addClass("hidden-medium-down")
+    } else {
+      $("#userlist").addClass("hidden-medium-down")
+    }
+    $("#messaging").removeClass("hidden-medium-down")
+  } else {
+    if (userlist) {
+      $("#userlist").removeClass("hidden-medium-down")
+      $("#messaging").addClass("hidden-medium-down")
+    } else {
+      $("#networks").removeClass("hidden-medium-down")
+      $("#messaging").addClass("hidden-medium-down")
+    }
+  }
 }
 */
