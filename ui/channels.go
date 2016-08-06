@@ -153,8 +153,8 @@ func FinishChannelAdding(network string) {
 	}
 
 	jq(fmt.Sprintf("#add-channel-%s", network)).RemoveClass("hidden")
-	//OpenChannel(network, name, true)
-	//SwitchTo(network, name)
+	OpenChannel(network, name, true)
+	SwitchTo(network, name)
 }
 
 // OpenNetwork opens a network
