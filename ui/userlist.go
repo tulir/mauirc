@@ -18,6 +18,7 @@
 package ui
 
 import (
+	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 )
@@ -67,7 +68,7 @@ func StopInvite() {
 
 // FinishInvite invites the person given and closes the invite box
 func FinishInvite() {
-	/*data.Messages <- messages.Container{
+	data.Messages <- messages.Container{
 		Type: messages.MsgMessage,
 		Object: messages.Message{
 			Network: GetActiveNetwork(),
@@ -75,7 +76,7 @@ func FinishInvite() {
 			Command: "invite",
 			Message: jq("#userlist-invite-box").Val(),
 		},
-	}*/
+	}
 	StopInvite()
 }
 

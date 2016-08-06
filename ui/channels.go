@@ -20,6 +20,7 @@ package ui
 import (
 	"fmt"
 	"github.com/gopherjs/jquery"
+	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"regexp"
@@ -139,17 +140,15 @@ func FinishChannelAdding(network string) {
 	}
 
 	if name[0] == '#' {
-		/* TODO how to send messages?
-		  data.Messages <- messages.Container{
-			  Type: messages.MsgMessage,
-			  Object: messages.Message{
-				  Network: network,
-				  Channel: name,
-				  Command: "join",
-				  Message: "Joining",
-			  },
-		  }
-		*/
+		data.Messages <- messages.Container{
+			Type: messages.MsgMessage,
+			Object: messages.Message{
+				Network: network,
+				Channel: name,
+				Command: "join",
+				Message: "Joining",
+			},
+		}
 	}
 
 	jq(fmt.Sprintf("#add-channel-%s", network)).RemoveClass("hidden")
@@ -186,15 +185,13 @@ func OpenChannel(network, channel string, byUser bool) {
 	}
 
 	if byUser {
-		/* TODO send messages?
 		data.Messages <- messages.Container{
 			Type: messages.MsgOpen,
-			Object: messages.Open{
+			Object: messages.OpenCloseChannel{
 				Network: network,
 				Channel: channel,
 			},
 		}
-		*/
 	}
 
 	templates.AppendObj("channel", netObj, fmt.Sprintf("chan-%s-%s", network, chanLower))
