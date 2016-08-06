@@ -119,57 +119,60 @@ func message(evt *js.Object) {
 		msgData := messages.ParseChanList(msg.Object)
 		data.Networks.MustGet(msgData.Network).ChannelNames = msgData.List
 	case messages.MsgChanData:
-		//msgData := messages.ParseChanData(msg.Object)
-		/* Original JS implementation:
-		var channel = data.getChannel(ed.object.network, ed.object.name)
-		channel.setTopicFull(ed.object.topic, ed.object.topicsetat, ed.object.topicsetby)
-		channel.setUsers(ed.object.userlist)
-		channel.setNotificationLevel("all")
-		openChannel(ed.object.network, ed.object.name, false)
-
-		if(getActiveNetwork() === ed.object.network && getActiveChannel() === ed.object.name) {
-		  $("#title").text(ed.object.topic)
-		  updateUserList()
+		msgData := messages.ParseChanData(msg.Object)
+		chanData := data.Networks.MustGetChannel(msgData.Network, msgData.Name)
+		chanData.SetTopicData(msgData.Topic, msgData.TopicSetBy, msgData.TopicSetAt)
+		chanData.SetUserlist(msgData.Userlist)
+		chanData.Notifications = data.ParseNotificationLevel("all") // FIXME
+		ui.OpenChannel(msgData.Network, msgData.Name, false)
+		if ui.GetActiveNetwork() == msgData.Network && ui.GetActiveChannel() == msgData.Name {
+			//ui.UpdateTitle() TODO
+			ui.UpdateUserlist()
 		}
-		*/
 	case messages.MsgNetData:
-		//msgData := messages.ParseNetData(msg.Object)
-		/* Original JS implementation:
-		if ($("#net-%s", ed.object.name.toLowerCase()).length === 0) {
-		  openNetwork(ed.object.name)
-		  settings.scripts.update(ed.object.name, false)
+		msgData := messages.ParseNetData(msg.Object)
+		if ui.GetNetwork(msgData.Name).Length == 0 {
+			ui.OpenNetwork(msgData.Name)
+			// scripts.Update(msgData.Name, false) TODO
 		}
-		data.getNetwork(ed.object.name).setNetData(ed.object)
-		if(ed.object.connected) {
-		  $(sprintf("#switchnet-%s", ed.object.name)).removeClass("disconnected")
-		} else {
-		  $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
-		}
+		data.Networks.MustGet(msgData.Name).SetNetData(msgData)
+		/* TODO
+		ui.SetNetworkConnected(msgData.Name, msgData.Connected)
+
+		Original JS implementation:
+			if(ed.object.connected) {
+			  $(sprintf("#switchnet-%s", ed.object.name)).removeClass("disconnected")
+			} else {
+			  $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
+			}
 		*/
 	case messages.MsgNickChange:
 		msgData := messages.ParseNickChange(msg.Object)
 		fmt.Println("Nick changed to", msgData.Nick, "on", msgData.Network)
 		data.Networks.Get(msgData.Network).Nick = msgData.Nick
 	case messages.MsgClear:
-		//msgData := messages.ParseClearHistory(msg.Object)
-		/* Original JS implementation:
-		getChannel(ed.object.network, ed.object.channel).empty()
-		*/
+		msgData := messages.ParseClearHistory(msg.Object)
+		ui.GetChannel(msgData.Network, msgData.Channel).Empty()
 	case messages.MsgDelete:
 		jq(fmt.Sprintf("#msgwrap-%s", msg.Object)).Remove()
 	case messages.MsgWhois:
 		msgData := messages.ParseWhoisData(msg.Object)
 		ui.OpenWhoisModal(msgData)
 	case messages.MsgInvite:
-		//msgData := messages.ParseInvite(msg.Object)
-		/* Original JS implementation:
-		openChannel(ed.object.network, ed.object.channel, false)
-		getChannel(ed.object.network, ed.object.channel).loadTemplate($("#template-invite"), {
+		msgData := messages.ParseInvite(msg.Object)
+		ui.OpenChannel(msgData.Network, msgData.Channel, false)
+		templates.ApplyObj("invite", ui.GetChannel(msgData.Network, msgData.Channel), map[string]interface{}{
+			"Network": msgData.Network,
+			"Channel": msgData.Channel,
+			"Sender":  msgData.Sender,
+		})
+		/* TODO fix template invite
 		  sender: ed.object.sender,
 		  channel: ed.object.channel,
 		  accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel),
 		  ignore: sprintf("closeChannel('%s', '%s')", ed.object.network, ed.object.channel)
-		}, {append: false, isFile: false, async: false})
+
+		  TODO implement the following
 		$(sprintf("#switchto-%s-%s", ed.object.network.toLowerCase(), channelFilter(ed.object.channel))).addClass("new-messages")
 		*/
 	case messages.MsgRaw:
