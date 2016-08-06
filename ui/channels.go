@@ -156,31 +156,24 @@ func FinishChannelAdding(network string) {
 	//SwitchTo(network, name)
 }
 
+// OpenNetwork opens a network
+func OpenNetwork(network string) {
+	network = NetworkFilter(network)
+
+	if jq(fmt.Sprintf("#net-%s", network)).Length != 0 {
+		return
+	}
+
+	templates.Append("network", "#messages", network)
+	templates.Append("network-switcher", "#networks", network)
+	// CreateRawIO(network)
+}
+
 /* TODO implement the following
 function openPM(network, user) {
   "use strict"
   openChannel(network, user, true)
   switchTo(network, user)
-}
-
-function openNetwork(network) {
-  "use strict"
-  network = network.toLowerCase()
-  if ($(sprintf("#net-%s", network)).length !== 0) {
-    return
-  }
-
-  $("#messages").loadTemplate($("#template-network"), {
-    network: sprintf("net-%s", network)
-  }, {append: true, isFile: false, async: false})
-  $("#networks").loadTemplate($("#template-network-switcher"), {
-    network: sprintf("switchnet-%s", network),
-    networkname: network,
-    openchannel: sprintf("newChannel('%s')", network),
-    networkbtns: sprintf("chanswitchers-%s", network),
-    addchanid: sprintf("add-channel-%s", network)
-  }, {append: true, isFile: false, async: false})
-  createRawIO(network)
 }
 
 function openChannel(network, channel, byUser) {
