@@ -206,6 +206,7 @@ func Receive(msg messages.Message, isNew bool) {
 		class:     []string{"message"},
 		wrapClass: []string{"message-wrapper"},
 		OwnMsg:    msg.OwnMsg,
+		Joined:    TryJoinMessage(msg),
 		Message:   msg.Message, // TODO linkify and escape html?
 		Timestamp: msg.Timestamp,
 		IsAction:  true,
@@ -255,7 +256,6 @@ func Receive(msg messages.Message, isNew bool) {
 		templateData.Clipboard = fmt.Sprintf("%s changed the topic to %s", msg.Sender, msg.Message)
 	default:
 		templateData.IsAction = false
-		joined = TryJoinMessage(msg)
 	}
 
 	if msg.OwnMsg {
