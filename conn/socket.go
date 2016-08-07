@@ -149,6 +149,7 @@ func message(evt *js.Object) {
 		msgData := messages.ParseClearHistory(msg.Object)
 		ui.GetChannel(msgData.Network, msgData.Channel).Empty()
 	case messages.MsgDelete:
+		// TODO check message joining
 		jq(fmt.Sprintf("#msgwrap-%s", msg.Object)).Remove()
 	case messages.MsgWhois:
 		msgData := messages.ParseWhoisData(msg.Object)
