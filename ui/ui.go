@@ -66,6 +66,12 @@ func init() {
 			"finishAdding": FinishChannelAdding,
 			"cancelAdding": CancelChannelAdding,
 		},
+		"contextmenu": map[string]interface{}{
+			"message":         ContextMessage,
+			"channelSwitcher": ContextChannelSwitcher,
+			"networkSwitcher": ContextNetworkSwitcher,
+			"userlistEntry":   ContextUserlistEntry,
+		},
 		"getActiveChannel":    GetActiveChannel,
 		"getActiveNetwork":    GetActiveNetwork,
 		"getActiveChannelObj": GetActiveChannelObj,
