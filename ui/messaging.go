@@ -184,8 +184,8 @@ func Receive(msg messages.Message, isNew bool) {
 	}
 	var joined bool
 
-	switch msg.Command {
-	case "action":
+	switch strings.ToUpper(msg.Command) {
+	case "ACTION":
 		templateData.Class += "user-action"
 		templateData.Clipboard = fmt.Sprintln("*", msg.Sender, msg.Message)
 	case irc.JOIN:
