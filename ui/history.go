@@ -40,7 +40,7 @@ func GetHistory(network, channel string, n int) {
 			var histData = make([]messages.Message, 0)
 			json.Unmarshal([]byte(rawData), &histData)
 
-			for i := len(histData) - 1; i >= 0; i++ {
+			for i := len(histData) - 1; i >= 0; i-- {
 				Receive(histData[i], false)
 			}
 
