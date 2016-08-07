@@ -186,16 +186,16 @@ func Receive(msg messages.Message, isNew bool) {
 
 	switch strings.ToUpper(msg.Command) {
 	case "ACTION":
-		templateData.Class += "user-action"
+		templateData.Class += " user-action"
 		templateData.Clipboard = fmt.Sprintln("*", msg.Sender, msg.Message)
 	case irc.JOIN:
 		templateData.Clipboard = fmt.Sprintln(msg.Sender, "joined", msg.Message)
-		templateData.Class += "secondary-action joinpart"
+		templateData.Class += " secondary-action joinpart"
 	case irc.PART:
 		fallthrough
 	case irc.QUIT:
 		templateData.Clipboard = fmt.Sprintln(msg.Sender, "left: ", msg.Message)
-		templateData.Class += "secondary-action joinpart"
+		templateData.Class += " secondary-action joinpart"
 	case irc.KICK:
 		index := strings.Index(msg.Message, ":")
 		kicker := templateData.Sender
@@ -203,7 +203,7 @@ func Receive(msg messages.Message, isNew bool) {
 		msg.Message = msg.Message[index+1:]
 		templateData.Sender = msg.Sender
 		templateData.Message = fmt.Sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, msg.Message) // TODO linkify and escape html on message?
-		templateData.Class += "secondary-action kick"
+		templateData.Class += " secondary-action kick"
 		templateData.Clipboard = fmt.Sprintf("%s was kicked by %s: %s", msg.Sender, kicker, msg.Message)
 	case irc.MODE:
 		parts := strings.Split(msg.Message, " ")
@@ -214,14 +214,14 @@ func Receive(msg messages.Message, isNew bool) {
 			templateData.Message = fmt.Sprintf("set channel mode <b>%s</b>", parts[0])
 			templateData.Clipboard = fmt.Sprintf("set channel mode %s", parts[0])
 		}
-		templateData.Class += "secondary-action modechange"
+		templateData.Class += " secondary-action modechange"
 	case irc.NICK:
 		templateData.Message = fmt.Sprintf("is now known as <b>%s</b>", msg.Message)
-		templateData.Class += "secondary-action nickchange"
+		templateData.Class += " secondary-action nickchange"
 		templateData.Clipboard = fmt.Sprintf("%s is now known as %s", msg.Sender, msg.Message)
 	case irc.TOPIC:
 		templateData.Message = fmt.Sprintf("changed the topic to <b>%s</b>", msg.Message)
-		templateData.Class += "secondary-action topicchange"
+		templateData.Class += " secondary-action topicchange"
 		templateData.Clipboard = fmt.Sprintf("%s changed the topic to %s", msg.Sender, msg.Message)
 	default:
 		templateData.IsAction = false
