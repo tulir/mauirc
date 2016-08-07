@@ -41,6 +41,7 @@ func init() {
 			"start":  StartInvite,
 			"stop":   StopInvite,
 			"finish": FinishInvite,
+			"accept": AcceptInvite,
 		},
 		"rawio": map[string]interface{}{
 			"open":   OpenRawIO,
