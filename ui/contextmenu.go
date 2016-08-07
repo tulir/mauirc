@@ -55,7 +55,14 @@ func ContextNetworkSwitcher(event *js.Object, network string) {
 
 // ContextUserlistEntry shows the context menu for an userlist entry
 func ContextUserlistEntry(event *js.Object, network, user string) {
-
+	templates.Apply("contextmenu", "#contextmenu", map[string]string{
+		"Open Query": fmt.Sprintf("ui.contextmenu.click.networkSwitcher.openQuery('%s', '%s')", network, user),
+		"Whois":      fmt.Sprintf("ui.contextmenu.click.networkSwitcher.whois('%s', '%s')", network, user),
+		"Give OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher.giveOp('%s', '%s')", network, user),
+		"Take OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher.takeOp('%s', '%s')", network, user),
+		"Kick":       fmt.Sprintf("ui.contextmenu.click.networkSwitcher.kick('%s', '%s')", network, user),
+		"Ban":        fmt.Sprintf("ui.contextmenu.click.networkSwitcher.ban('%s', '%s')", network, user),
+	})
 	ShowContextMenu(event)
 }
 
