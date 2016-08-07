@@ -15,3 +15,34 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+.contextmenu {
+	position: fixed;
+
+	border: 1px solid var(--background);
+	border-radius: .25rem;
+	background-color: white;
+}
+
+.contextmenu-button {
+	position: relative;
+
+	display: block;
+
+	width: 10rem;
+	height: 2rem;
+	margin-top: .5rem;
+	margin-bottom: .5rem;
+	padding: 0;
+
+	color: var(--maunium-green);
+	border: none;
+	background-color: white;
+
+	font-size: 1rem;
+}
+
+.contextmenu-button:hover {
+	color: white;
+	background-color: var(--maunium-green);
+}
