@@ -138,6 +138,7 @@ func Send() {
 type MessageTemplateData struct {
 	Sender    string
 	Date      string
+	DateFull  string
 	Message   string
 	class     []string
 	wrapClass []string
@@ -187,6 +188,7 @@ func Receive(msg messages.Message, isNew bool) {
 	templateData := MessageTemplateData{
 		Sender:    msg.Sender,
 		Date:      time.Unix(msg.Timestamp, 0).Format("15:04:05"),
+		DateFull:  time.Unix(msg.Timestamp, 0).Format("Monday, 2 Jan 2006 (MST)"),
 		ID:        msg.ID,
 		class:     []string{"message"},
 		wrapClass: []string{"message-wrapper"},
