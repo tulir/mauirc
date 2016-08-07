@@ -74,6 +74,10 @@ func init() {
 			"hide":            HideContextMenu,
 			"show":            ShowContextMenu,
 		},
+		"oper": map[string]interface{}{
+			"send": OperSend,
+			"open": OpenOper,
+		},
 		"getActiveChannel":    GetActiveChannel,
 		"getActiveNetwork":    GetActiveNetwork,
 		"getActiveChannelObj": GetActiveChannelObj,
