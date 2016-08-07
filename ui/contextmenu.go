@@ -20,6 +20,8 @@ package ui
 import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
+	"maunium.net/go/mauirc-common/messages"
+	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 )
 
@@ -34,7 +36,41 @@ func ContextMessage(event *js.Object, id int64) {
 
 // ContextMessageClick ...
 func ContextMessageClick(command string, id int64) {
+	switch command {
+	case "delete":
+		data.Messages <- messages.Container{
+			Type:   messages.MsgDelete,
+			Object: messages.DeleteMessage(id),
+		}
+	case "copy":
+		thisObj := jq(fmt.Sprintf("#msg-%d", id))
+		textObj := thisObj.Find(".message-text")
+		if textObj.Length == 0 {
+			textObj = thisObj.Find(".clipboard-data")
+			if textObj.Length == 0 {
+				fmt.Println("Failed to copy to clipboard: Text not found!")
+				return
+			}
+		}
 
+		wasHidden := false
+		if textObj.HasClass("hidden") {
+			wasHidden = true
+			textObj.RemoveClass("hidden")
+		}
+
+		selection := js.Global.Get("window").Call("getSelection")
+		rangee := js.Global.Get("document").Call("createRange")
+		rangee.Call("selectNodeContents", textObj.Underlying().Index(0))
+		selection.Call("removeAllRanges")
+		selection.Call("addRange", rangee)
+		js.Global.Get("document").Call("execCommand", "copy")
+		selection.Call("removeAllRanges")
+
+		if wasHidden {
+			textObj.AddClass("hidden")
+		}
+	}
 }
 
 // ContextChannelSwitcher shows the context menu for a channel switcher
