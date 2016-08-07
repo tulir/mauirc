@@ -28,6 +28,7 @@ import (
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/ui"
 	"maunium.net/go/mauirc/util"
+	"strings"
 	"time"
 )
 
@@ -93,7 +94,10 @@ func open(evt *js.Object) {
 func message(evt *js.Object) {
 	var msg messages.Container
 
-	if err := json.Unmarshal([]byte(evt.Get("data").String()), &msg); err != nil {
+	dec := json.NewDecoder(strings.NewReader(evt.Get("data").String()))
+	dec.UseNumber()
+
+	if err := dec.Decode(&msg); err != nil {
 		panic(err)
 	}
 
