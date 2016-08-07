@@ -24,7 +24,7 @@ import (
 
 // Network contains network data
 type Network struct {
-	Channels     ChannelList
+	Channels     map[string]*Channel
 	ChannelNames []string
 	Highlights   HighlightList
 	Scripts      ScriptStore
@@ -40,7 +40,7 @@ type Network struct {
 // CreateNetwork creates a network
 func CreateNetwork() *Network {
 	return &Network{
-		Channels:     make(ChannelList),
+		Channels:     make(map[string]*Channel),
 		Highlights:   make(HighlightList, 0),
 		Scripts:      make(ScriptStore),
 		ChannelNames: make([]string, 0),
@@ -52,31 +52,28 @@ func (net *Network) SetNetData(nd messages.NetData) {
 	// TODO implement setting nick, user, realname, ip, port, ssl and connected from struct
 }
 
-// ChannelList is a list of channels
-type ChannelList map[string]*Channel
-
-// MustGet gets or creates the channel with the given name
-func (cl ChannelList) MustGet(name string) *Channel {
-	ch, ok := cl[name]
+// MustGetChannel gets or creates the channel with the given name
+func (net *Network) MustGetChannel(name string) *Channel {
+	ch, ok := net.Channels[name]
 	if !ok {
 		ch = CreateChannel()
-		cl[name] = ch
+		net.Channels[name] = ch
 	}
 	return ch
 }
 
-// Get the channel with the given name if it exists
-func (cl ChannelList) Get(name string) *Channel {
-	ch, ok := cl[name]
+// GetChannel the channel with the given name if it exists
+func (net *Network) GetChannel(name string) *Channel {
+	ch, ok := net.Channels[name]
 	if !ok {
 		return nil
 	}
 	return ch
 }
 
-// Exists checks if the channel with the given name exists
-func (cl ChannelList) Exists(name string) bool {
-	_, ok := cl[name]
+// ChannelExists checks if the channel with the given name exists
+func (net *Network) ChannelExists(name string) bool {
+	_, ok := net.Channels[name]
 	return ok
 }
 

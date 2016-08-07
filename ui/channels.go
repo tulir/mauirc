@@ -239,7 +239,7 @@ func SwitchTo(network, channel string) {
 	jq("#message-text").Focus()
 
 	var title string
-	chanData := data.Networks.MustGetChannel(network, channel)
+	chanData := data.MustGetChannel(network, channel)
 	if len(chanData.Topic) != 0 {
 		title = chanData.Topic
 	} else {

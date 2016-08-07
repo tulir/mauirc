@@ -25,7 +25,7 @@ import (
 
 // UpdateUserlist updates the userlist contents
 func UpdateUserlist() {
-	chanData := data.Networks.GetChannel(GetActiveNetwork(), GetActiveChannel())
+	chanData := data.GetChannel(GetActiveNetwork(), GetActiveChannel())
 	if chanData == nil || len(chanData.Userlist) == 0 {
 		if !IsUserlistHidden() {
 			ToggleUserlist(false)
@@ -84,7 +84,7 @@ func FinishInvite() {
 func AcceptInvite(network, channel string) {
 	GetChannel(network, channel).Empty()
 
-	chanData := data.Networks.MustGetChannel(network, channel)
+	chanData := data.MustGetChannel(network, channel)
 	if !chanData.HistoryFetched {
 		//history(network, channel, 512) TODO
 	}

@@ -100,7 +100,7 @@ func message(evt *js.Object) {
 	switch msg.Type { // TODO implement
 	case messages.MsgMessage:
 		msgData := messages.ParseMessage(msg.Object)
-		chanData := data.Networks.MustGetChannel(msgData.Network, msgData.Channel)
+		chanData := data.MustGetChannel(msgData.Network, msgData.Channel)
 		if chanData.FetchingHistory {
 			chanData.MessageCache <- msgData
 		} else {
@@ -108,10 +108,10 @@ func message(evt *js.Object) {
 		}
 	case messages.MsgChanList:
 		msgData := messages.ParseChanList(msg.Object)
-		data.Networks.MustGet(msgData.Network).ChannelNames = msgData.List
+		data.MustGetNetwork(msgData.Network).ChannelNames = msgData.List
 	case messages.MsgChanData:
 		msgData := messages.ParseChanData(msg.Object)
-		chanData := data.Networks.MustGetChannel(msgData.Network, msgData.Name)
+		chanData := data.MustGetChannel(msgData.Network, msgData.Name)
 		chanData.SetTopicData(msgData.Topic, msgData.TopicSetBy, msgData.TopicSetAt)
 		chanData.SetUserlist(msgData.Userlist)
 		chanData.Notifications = data.ParseNotificationLevel("all") // FIXME
@@ -126,7 +126,7 @@ func message(evt *js.Object) {
 			ui.OpenNetwork(msgData.Name)
 			// scripts.Update(msgData.Name, false) TODO
 		}
-		data.Networks.MustGet(msgData.Name).SetNetData(msgData)
+		data.MustGetNetwork(msgData.Name).SetNetData(msgData)
 		/* TODO
 		ui.SetNetworkConnected(msgData.Name, msgData.Connected)
 
@@ -140,7 +140,7 @@ func message(evt *js.Object) {
 	case messages.MsgNickChange:
 		msgData := messages.ParseNickChange(msg.Object)
 		fmt.Println("Nick changed to", msgData.Nick, "on", msgData.Network)
-		data.Networks.Get(msgData.Network).Nick = msgData.Nick
+		data.GetNetwork(msgData.Network).Nick = msgData.Nick
 	case messages.MsgClear:
 		msgData := messages.ParseClearHistory(msg.Object)
 		ui.GetChannel(msgData.Network, msgData.Channel).Empty()

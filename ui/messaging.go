@@ -153,7 +153,7 @@ type MessageTemplateData struct {
 func Receive(msg messages.Message, isNew bool) {
 	net := GetNetwork(msg.Network)
 	if net.Length == 0 {
-		if msg.Command == irc.PART && msg.Sender == data.Networks.MustGet(msg.Network).Nick {
+		if msg.Command == irc.PART && msg.Sender == data.MustGetNetwork(msg.Network).Nick {
 			return
 		}
 
@@ -163,7 +163,7 @@ func Receive(msg messages.Message, isNew bool) {
 
 	ch := GetChannel(msg.Network, msg.Channel)
 	if ch.Length == 0 {
-		if msg.Command == irc.PART && msg.Sender == data.Networks.MustGet(msg.Network).Nick {
+		if msg.Command == irc.PART && msg.Sender == data.MustGetNetwork(msg.Network).Nick {
 			return
 		}
 
@@ -291,7 +291,7 @@ func Receive(msg messages.Message, isNew bool) {
 
 // GetHighlight gets the first highlight match
 func GetHighlight(network, message string) *data.HighlightMatch {
-	netData := data.Networks.MustGet(network)
+	netData := data.MustGetNetwork(network)
 	for _, hl := range netData.Highlights {
 		match := hl.Match(message)
 		if match != nil {
@@ -306,7 +306,7 @@ func NotifyMessage(network, channel, sender, message string, highlight bool) {
 	message = util.RemoveFormatChars(message)
 
 	notifs := data.NotificationAll
-	ch := data.Networks.GetChannel(network, channel)
+	ch := data.GetChannel(network, channel)
 	if ch != nil {
 		notifs = ch.Notifications
 	}

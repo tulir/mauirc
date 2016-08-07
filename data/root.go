@@ -25,7 +25,7 @@ import (
 
 // Base store variables
 var (
-	Networks          = make(NetworkList)
+	Networks          = make(map[string]*Network)
 	GlobalScripts     = make(ScriptStore)
 	MessageFormatting = true
 )
@@ -51,53 +51,50 @@ func init() {
 	}
 }
 
-// NetworkList is a list of networks
-type NetworkList map[string]*Network
-
-// MustGet gets or creates the network with the given name
-func (nl NetworkList) MustGet(name string) *Network {
-	net, ok := nl[name]
+// MustGetNetwork gets or creates the network with the given name
+func MustGetNetwork(name string) *Network {
+	net, ok := Networks[name]
 	if !ok {
 		net = CreateNetwork()
-		nl[name] = net
+		Networks[name] = net
 	}
 	return net
 }
 
-// Get the network with the given name if it exists
-func (nl NetworkList) Get(name string) *Network {
-	net, ok := nl[name]
+// GetNetwork the network with the given name if it exists
+func GetNetwork(name string) *Network {
+	net, ok := Networks[name]
 	if !ok {
 		return nil
 	}
 	return net
 }
 
-// Exists checks if the network with the given name exists
-func (nl NetworkList) Exists(name string) bool {
-	_, ok := nl[name]
+// NetworkExists checks if the network with the given name exists
+func NetworkExists(name string) bool {
+	_, ok := Networks[name]
 	return ok
 }
 
 // MustGetChannel gets or creates the channel with the given name in the network with the given name
-func (nl NetworkList) MustGetChannel(network, channel string) *Channel {
-	return nl.MustGet(network).Channels.MustGet(channel)
+func MustGetChannel(network, channel string) *Channel {
+	return MustGetNetwork(network).MustGetChannel(channel)
 }
 
 // GetChannel gets the channel with the given name in the network with the given name if they both exist
-func (nl NetworkList) GetChannel(network, channel string) *Channel {
-	net := nl.Get(network)
+func GetChannel(network, channel string) *Channel {
+	net := GetNetwork(network)
 	if net != nil {
-		return net.Channels.Get(channel)
+		return net.GetChannel(channel)
 	}
 	return nil
 }
 
 // ChannelExists checks if a channel with the given name exists in the network with the given name
-func (nl NetworkList) ChannelExists(network, channel string) bool {
-	net := nl.Get(network)
+func ChannelExists(network, channel string) bool {
+	net := GetNetwork(network)
 	if net != nil {
-		return net.Channels.Exists(channel)
+		return net.ChannelExists(channel)
 	}
 	return false
 }
