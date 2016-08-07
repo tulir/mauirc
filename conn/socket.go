@@ -86,7 +86,7 @@ func Disconnect() {
 }
 
 func open(evt *js.Object) {
-	templates.Apply("main", "#container", nil)
+	templates.Apply("main", "#container", data.Version)
 	jq("#disconnected").AddClass("hidden")
 	data.Connected = true
 }
@@ -201,7 +201,7 @@ func Reconnect() {
 			} else {
 				data.AuthFail = true
 				data.MessageContainerActive = false
-				templates.Apply("login", "#container", "")
+				templates.Apply("login", "#container", nil)
 			}
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {

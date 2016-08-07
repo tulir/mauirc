@@ -57,7 +57,7 @@ func CheckAuth() {
 			} else {
 				data.AuthFail = true
 				data.MessageContainerActive = false
-				templates.Apply("login", "#container", "")
+				templates.Apply("login", "#container", nil)
 				fmt.Println("Not logged in")
 			}
 		},
@@ -65,7 +65,7 @@ func CheckAuth() {
 			fmt.Println("Auth check failed: HTTP", info["status"])
 			fmt.Println(info)
 			data.AuthFail = true
-			templates.Apply("login", "#container", "")
+			templates.Apply("login", "#container", nil)
 			jq("#error").RemoveClass("hidden")
 			jq("#error").SetText("Can't connect to mauIRCd")
 		},
