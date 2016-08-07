@@ -217,7 +217,6 @@ func CloseChannel(network, channel string) {
 	}
 	chanObj.Remove()
 	jq(fmt.Sprintf("#switchto-%s-%s", network, chanFiltered)).Remove()
-	jq(fmt.Sprintf("#break-chan-%s-%s", network, chanFiltered)).Remove()
 }
 
 // SwitchToClear switches to a empty message view
