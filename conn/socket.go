@@ -104,17 +104,8 @@ func message(evt *js.Object) {
 		if chanData.FetchingHistory {
 			chanData.MessageCache <- msgData
 		} else {
-			/* Original JS implementation:
-			  receive(ed.object.id, ed.object.network, ed.object.channel, ed.object.timestamp,
-				ed.object.sender, ed.object.command, ed.object.message, ed.object.ownmsg,
-				ed.object.preview, true)
-			*/
+			ui.Receive(msgData, true)
 		}
-	case messages.MsgCmdResponse:
-		//msgData := messages.ParseCommandResponse(msg.Object)
-		/* Original JS implementation:
-		receiveCmdResponse(ed.object.message)
-		*/
 	case messages.MsgChanList:
 		msgData := messages.ParseChanList(msg.Object)
 		data.Networks.MustGet(msgData.Network).ChannelNames = msgData.List
