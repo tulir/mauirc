@@ -21,7 +21,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/gopherjs/jquery"
-	"html/template"
+	"text/template"
 )
 
 var jq = jquery.NewJQuery
