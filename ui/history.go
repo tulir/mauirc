@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package conn contains connection code
-package conn
+// Package ui contains UI-related functions
+package ui
 
 import (
 	"encoding/json"
@@ -25,12 +25,11 @@ import (
 	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
-	"maunium.net/go/mauirc/ui"
 )
 
 // GetHistory gets n messages of the history of channel @ network
 func GetHistory(network, channel string, n int) {
-	children := ui.GetChannel(network, channel).Children(".message-wrapper")
+	children := GetChannel(network, channel).Children(".message-wrapper")
 	data.MustGetChannel(network, channel).FetchingHistory = true
 	jquery.Ajax(map[string]interface{}{
 		"type": "GET",
@@ -42,7 +41,7 @@ func GetHistory(network, channel string, n int) {
 			json.Unmarshal([]byte(rawData), &histData)
 
 			for i := len(histData) - 1; i >= 0; i++ {
-				ui.Receive(histData[i], false)
+				Receive(histData[i], false)
 			}
 
 			chanData := data.MustGetChannel(network, channel)
@@ -50,25 +49,25 @@ func GetHistory(network, channel string, n int) {
 			for {
 				select {
 				case obj := <-chanData.MessageCache:
-					ui.Receive(obj, true)
+					Receive(obj, true)
 				default:
 					break Loop
 				}
 			}
 			chanData.FetchingHistory = false
 			chanData.HistoryFetched = true
-			ui.ScrollDown()
+			ScrollDown()
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
 			fmt.Println("Failed to fetch history: HTTP", info["status"])
 			fmt.Println(info)
 			data.MustGetChannel(network, channel).FetchingHistory = false
-			if len(ui.GetActiveNetwork()) == 0 || len(ui.GetActiveChannel()) == 0 {
+			if len(GetActiveNetwork()) == 0 || len(GetActiveChannel()) == 0 {
 				return
 			}
 
-			templates.AppendObj("error", ui.GetActiveChannelObj(), fmt.Sprintln("Failed to fetch history:", textStatus, errorThrown))
-			ui.ScrollDown()
+			templates.AppendObj("error", GetActiveChannelObj(), fmt.Sprintln("Failed to fetch history:", textStatus, errorThrown))
+			ScrollDown()
 		},
 	})
 }

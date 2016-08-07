@@ -86,7 +86,7 @@ func AcceptInvite(network, channel string) {
 
 	chanData := data.MustGetChannel(network, channel)
 	if !chanData.HistoryFetched {
-		//history(network, channel, 512) TODO
+		GetHistory(network, channel, 512)
 	}
 
 	data.Messages <- messages.Container{

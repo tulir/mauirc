@@ -249,8 +249,7 @@ func SwitchTo(network, channel string) {
 
 	chanObj := GetChannel(network, channel)
 	if chanData.HistoryFetched && chanObj.Find(".invite-wrapper").Length == 0 {
-		// TODO fetch history
-		// history(network, channel, 512)
+		GetHistory(network, channel, 512)
 	}
 
 	jq("#switchnet-%s", network).AddClass("activenet")
