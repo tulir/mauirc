@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="message-preview">
 	{{ if .PreviewImage }}
-		<a class="preview-image-link {{ if not .PreviewText }} preview-full-size {{ end }}" href="javascript:void(0)" onClick="{{ .ModalOpen }}">
+		<a class="preview-image-link {{ if not .PreviewText }} preview-full-size {{ end }}" href="javascript:void(0)" onClick="openFullImageModal({{ .ID }})">
 			<img class="preview-image" src="{{ .Image }}" alt="Preview Image">
 		</a>
 	{{ end }}
