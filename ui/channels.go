@@ -232,7 +232,6 @@ func SwitchToClear() {
 
 // SwitchTo switches to the given channel on the given network
 func SwitchTo(network, channel string) {
-	network = NetworkFilter(network)
 	fmt.Printf("Switching to channel %s @ %s\n", channel, network)
 
 	SwitchToClear()
@@ -253,9 +252,9 @@ func SwitchTo(network, channel string) {
 	}
 
 	jq("#switchnet-%s", network).AddClass("activenet")
-	jq("#net-%s", network).RemoveClass("hidden")
+	GetNetwork(network).RemoveClass("hidden")
 	chanObj.RemoveClass("hidden")
-	chanSwitcher := jq(fmt.Sprintf("#switchto-%s-%s", network, ChannelFilter(channel)))
+	chanSwitcher := jq(fmt.Sprintf("#switchto-%s-%s", NetworkFilter(network), ChannelFilter(channel)))
 	chanSwitcher.RemoveClass("new-messages")
 	chanSwitcher.AddClass("active")
 	UpdateUserlist()
