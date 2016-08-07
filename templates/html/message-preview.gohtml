@@ -16,12 +16,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="message-preview">
-	<a class="preview-image-link" href="javascript:void(0)" onClick="{{ .ModalOpen }}">
-		<img class="preview-image" src="{{ .Image }}" alt="Preview Image">
-	</a>
-	<div class="preview-info">
-		<div class="preview-title">{{ .Title }}</div>
-		<div class="preview-sitename">{{ .Sitename }}</div>
-		<div class="preview-description">{{ .Description }}</div>
-	</div>
+	{{ if .PreviewImage }}
+		<a class="preview-image-link {{ if not .PreviewText }} preview-full-size {{ end }}" href="javascript:void(0)" onClick="{{ .ModalOpen }}">
+			<img class="preview-image" src="{{ .Image }}" alt="Preview Image">
+		</a>
+	{{ end }}
+
+	{{ if .PreviewText }}
+		<div class="preview-info {{ if not .PreviewImage }} preview-full-size {{ end }}">
+			<div class="preview-title">{{ .Title }}</div>
+			<div class="preview-sitename">{{ .Sitename }}</div>
+			<div class="preview-description">{{ .Description }}</div>
+		</div>
+	{{ end }}
 </div>
