@@ -15,11 +15,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div id="{{ .WrapID }}" class="{{ .WrapClass }}" data-timestamp="{{ .Timestamp }}" data-sender="{{ .Sender }}">
-  <div id="{{ .ID }}" class="{{ .Class }}">
-    <div class="message-sender" data-content-text="sender">{{ .Sender }}</div>
-    <div class="message-text" data-content="message">{{ .Message }}</div>
-    &nbsp;
-    <div class="message-date" data-content-text="date">{{ .Date }}</div>
+<div id="msgwrap-{{ .ID }}" class="{{ .WrapClass }}" data-id="{{ .ID }}" data-timestamp="{{ .Timestamp }}" data-sender="{{ .Sender }}">
+  <div id="msg-{{ .ID }}" class="{{ .Class }}">
+    {{ if .IsAction }}
+      <div class="action-data">
+        <span class="action-prefix">{{ .Prefix }}</span>
+        <div class="action-sender">{{ .Sender }}</div>
+        &nbsp;
+        <div class="action-text">{{ .Message }}</div>
+        &nbsp;
+      </div>
+      <div class="clipboard-data hidden" id="clipboard-data">{{ .Clipboard }}</div>
+    {{ else }}
+      {{ if !.Joined && !.OwnMsg }}
+        <div class="message-sender">{{ .Sender }}</div>
+      {{ end }}
+      <div class="message-text">{{ .Message }}</div>
+      &nbsp;
+    {{ end }}
+    <div class="message-date">{{ .Date }}</div>
   </div>
 </div>
