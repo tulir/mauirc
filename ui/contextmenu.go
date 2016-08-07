@@ -19,42 +19,53 @@ package ui
 
 import (
 	"fmt"
+	"github.com/gopherjs/gopherjs/js"
 	"maunium.net/go/mauirc/templates"
 )
 
 // ContextMessage shows the context menu for a message
-func ContextMessage(x, y int, id int64) {
-	templates.Apply("contextmenu", "#contextmenu", map[string]map[string]string{
-		"Delete Message": map[string]string{
-			"OnClick": fmt.Sprintf("ui.contextmenu.click.message.delete('%d')", id),
-		},
-		"Copy Text": map[string]string{
-			"OnClick": fmt.Sprintf("ui.contextmenu.click.message.copy('%d')", id),
-		},
+func ContextMessage(event *js.Object, id int64) {
+	templates.Apply("contextmenu", "#contextmenu", map[string]string{
+		"Delete Message": fmt.Sprintf("ui.contextmenu.click.message.delete('%d')", id),
+		"Copy Text":      fmt.Sprintf("ui.contextmenu.click.message.copy('%d')", id),
 	})
-	ShowContextMenu(x, y)
+	ShowContextMenu(event)
 }
 
 // ContextChannelSwitcher shows the context menu for a channel switcher
-func ContextChannelSwitcher(network, channel string) {
-
+func ContextChannelSwitcher(event *js.Object, network, channel string) {
+	templates.Apply("contextmenu", "#contextmenu", map[string]string{
+		"Clear History": fmt.Sprintf("ui.contextmenu.click.channelSwitcher.clear('%s', '%s')", network, channel),
+		"Part Channel":  fmt.Sprintf("ui.contextmenu.click.channelSwitcher.part('%s', '%s')", network, channel),
+	})
+	ShowContextMenu(event)
 }
 
 // ContextNetworkSwitcher shows the context menu for a network switcher
-func ContextNetworkSwitcher(network string) {
-
+func ContextNetworkSwitcher(event *js.Object, network string) {
+	templates.Apply("contextmenu", "#contextmenu", map[string]string{
+		"Raw IO":           fmt.Sprintf("ui.contextmenu.click.networkSwitcher.rawIO('%s')", network),
+		"Oper Auth":        fmt.Sprintf("ui.contextmenu.click.networkSwitcher.operAuth('%s')", network),
+		"Connect":          fmt.Sprintf("ui.contextmenu.click.networkSwitcher.connect('%s')", network),
+		"Disconnect":       fmt.Sprintf("ui.contextmenu.click.networkSwitcher.disconnect('%s')", network),
+		"Force Disconnect": fmt.Sprintf("ui.contextmenu.click.networkSwitcher.forceDisonnect('%s')", network),
+	})
+	ShowContextMenu(event)
 }
 
 // ContextUserlistEntry shows the context menu for an userlist entry
-func ContextUserlistEntry(network, user string) {
+func ContextUserlistEntry(event *js.Object, network, user string) {
 
+	ShowContextMenu(event)
 }
 
 // ShowContextMenu shows the context menu
-func ShowContextMenu(x, y int) {
+func ShowContextMenu(event *js.Object) {
+	event.Call("stopPropagation")
+	event.Call("preventDefault")
 	jq("#contextmenu").SetCss(map[string]interface{}{
-		"top":  y,
-		"left": x,
+		"top":  event.Get("pageY").Int(),
+		"left": event.Get("pageX").Int(),
 	})
 	jq("#contextmenu").RemoveClass("hidden")
 }
