@@ -71,6 +71,8 @@ func init() {
 			"channelSwitcher": ContextChannelSwitcher,
 			"networkSwitcher": ContextNetworkSwitcher,
 			"userlistEntry":   ContextUserlistEntry,
+			"hide":            HideContextMenu,
+			"show":            ShowContextMenu,
 		},
 		"getActiveChannel":    GetActiveChannel,
 		"getActiveNetwork":    GetActiveNetwork,
