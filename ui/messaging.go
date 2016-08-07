@@ -249,45 +249,44 @@ func Receive(msg messages.Message, isNew bool) {
 		templates.AppendObj("message", ch, templateData)
 	}
 
-	/* TODO finish implementation. Original JS:
-	   if (ownmsg || join) {
-	     $(sprintf("#msg-%d > .message-sender", id)).remove()
-	   }
-	   var msgObj = $(sprintf("#msg-%d", id))
-	   if (preview !== null) {
-	     if (!isEmpty(preview.image) && !isEmpty(preview.text)) {
-	       var pwTemplate = "both"
-	     } else if (!isEmpty(preview.image)) {
-	       var pwTemplate = "image"
-	     } else if (!isEmpty(preview.text)) {
-	       var pwTemplate = "text"
-	     }
-	     if (pwTemplate !== undefined) {
-	       msgObj.loadTemplate($(sprintf("#template-message-preview-%s", pwTemplate)), {
-	         title: preview.text !== undefined ? preview.text.title : "",
-	         description: preview.text !== undefined && preview.text.description !== undefined ? preview.text.description.replaceAll("\n", "<br>") : "",
-	         sitename: preview.text !== undefined ? preview.text.sitename : "",
-	         image: preview.image !== undefined ? preview.image.url : "",
-	         modalopen: sprintf("openFullImageModal('%d')", id)
-	       }, {append: true, isFile: false, async: false})
-	     }
-	   }
+	msgObj := jq(fmt.Sprintf("#msg-%d", msg.ID))
 
-	   var match = getHighlights(data.getNetwork(network), templateData.message)
+	/* TODO Implement previews. Original JS:
+		var msgObj = $(sprintf("#msg-%d", id))
+		if (preview !== null) {
+			if (!isEmpty(preview.image) && !isEmpty(preview.text)) {
+				var pwTemplate = "both"
+			} else if (!isEmpty(preview.image)) {
+				var pwTemplate = "image"
+			} else if (!isEmpty(preview.text)) {
+				var pwTemplate = "text"
+			}
+			if (pwTemplate !== undefined) {
+				msgObj.loadTemplate($(sprintf("#template-message-preview-%s", pwTemplate)), {
+					title: preview.text !== undefined ? preview.text.title : "",
+					description: preview.text !== undefined && preview.text.description !== undefined ? preview.text.description.replaceAll("\n", "<br>") : "",
+					sitename: preview.text !== undefined ? preview.text.sitename : "",
+					image: preview.image !== undefined ? preview.image.url : "",
+					modalopen: sprintf("openFullImageModal('%d')", id)
+				}, {append: true, isFile: false, async: false})
+			}
+		}
+	}*/
 
-	   if (template === "message" && match !== null) {
-	     msgObj.find(".message-text").html(sprintf('%s<span class="highlighted-text">%s</span>%s',
-	       templateData.message.slice(0, match.index),
-	       templateData.message.slice(match.index, match.index + match.length),
-	       templateData.message.slice(match.index + match.length)
-	     ))
-	     msgObj.addClass("highlight")
-	   }
+	match := GetHighlight(msg.Network, templateData.Message)
 
-	   if (isNew) {
-	     notifyMessage(network, channel, match !== null, sender, message)
-	   }
-	 }*/
+	if !templateData.IsAction && match != nil {
+		msgObj.Find(".message-text").SetHtml(fmt.Sprintf("%s<span class='highlighted-text'>%s</span>%s",
+			templateData.Message[:match.Index],
+			templateData.Message[match.Index:match.Index+match.Length],
+			templateData.Message[match.Index+match.Length:],
+		))
+		msgObj.AddClass("highlight")
+	}
+
+	if isNew {
+		NotifyMessage(msg.Network, msg.Channel, templateData.Sender, templateData.Clipboard, match != nil)
+	}
 }
 
 // GetHighlight gets the first highlight match
