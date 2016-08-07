@@ -26,7 +26,10 @@ var jq = jquery.NewJQuery
 
 func init() {
 	js.Global.Set("ui", map[string]interface{}{
-		"autocomplete": Autocomplete,
+		"messagebox": map[string]interface{}{
+			"autocomplete": Autocomplete,
+			"send":         Send,
+		},
 		"modal": map[string]interface{}{
 			"show": ShowModal,
 			"hide": HideModal,
@@ -36,6 +39,11 @@ func init() {
 			"isHidden":          IsUserlistHidden,
 			"wasHiddenManually": WasUserlistHiddenManually,
 			"toggle":            ToggleUserlist,
+		},
+		"view": map[string]interface{}{
+			"userlist": OpenUserlistView,
+			"message":  OpenMessageView,
+			"networks": OpenNetworksView,
 		},
 		"invite": map[string]interface{}{
 			"start":  StartInvite,
