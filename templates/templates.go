@@ -30,8 +30,9 @@ var tmpl = template.New("root")
 // LoadAll loads all the default templates
 func LoadAll() {
 	Load("channel-adder")
-	Load("channel")
 	Load("channel-switcher")
+	Load("channel")
+	Load("contextmenu")
 	Load("error")
 	Load("image-modal")
 	Load("index")
