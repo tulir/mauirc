@@ -80,6 +80,26 @@ func FinishInvite() {
 	StopInvite()
 }
 
+// AcceptInvite accepts an invite
+func AcceptInvite(network, channel string) {
+	GetChannel(network, channel).Empty()
+
+	chanData := data.Networks.MustGetChannel(network, channel)
+	if !chanData.HistoryFetched {
+		//history(network, channel, 512) TODO
+	}
+
+	data.Messages <- messages.Container{
+		Type: "message",
+		Object: messages.Message{
+			Network: network,
+			Channel: channel,
+			Command: "join",
+			Message: "Joining",
+		},
+	}
+}
+
 // IsUserlistHidden checks if the userlist is currently hidden by user action or lack of content
 func IsUserlistHidden() bool {
 	return jq("#userlist").HasClass("hidden")
