@@ -29,7 +29,6 @@ var tmpl = template.New("root")
 
 // LoadAll loads all the default templates
 func LoadAll() {
-	Load("action")
 	Load("channel-adder")
 	Load("channel")
 	Load("channel-switcher")
@@ -40,9 +39,7 @@ func LoadAll() {
 	Load("login")
 	Load("main")
 	Load("message")
-	Load("message-preview-both")
-	Load("message-preview-image")
-	Load("message-preview-text")
+	Load("message-preview")
 	Load("network")
 	Load("network-switcher")
 	Load("oper")
