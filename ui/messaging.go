@@ -139,6 +139,8 @@ type MessageTemplateData struct {
 	Sender    string
 	Date      string
 	Message   string
+	class     []string
+	wrapClass []string
 	Class     string
 	WrapClass string
 	Clipboard string
@@ -175,8 +177,8 @@ func Receive(msg messages.Message, isNew bool) {
 		Sender:    msg.Sender,
 		Date:      time.Unix(msg.Timestamp, 0).Format("15:04:05"),
 		ID:        msg.ID,
-		WrapClass: "message-wrapper",
-		Class:     "message",
+		class:     []string{"message"},
+		wrapClass: []string{"message-wrapper"},
 		OwnMsg:    msg.OwnMsg,
 		Message:   msg.Message, // TODO linkify and escape html?
 		Timestamp: msg.Timestamp,
@@ -186,18 +188,18 @@ func Receive(msg messages.Message, isNew bool) {
 
 	switch strings.ToUpper(msg.Command) {
 	case "ACTION":
-		templateData.Class += " user-action"
+		templateData.class = append(templateData.class, "secondary-action", "user-action")
 		templateData.Clipboard = fmt.Sprintln("*", templateData.Sender, templateData.Message)
 	case irc.JOIN:
 		templateData.Message = fmt.Sprintln("joined", templateData.Message)
 		templateData.Clipboard = fmt.Sprintln(templateData.Sender, "joined", templateData.Message)
-		templateData.Class += " secondary-action joinpart"
+		templateData.class = append(templateData.class, "secondary-action", "joinpart")
 	case irc.PART:
 		fallthrough
 	case irc.QUIT:
 		templateData.Message = fmt.Sprintln("left:", templateData.Message)
 		templateData.Clipboard = fmt.Sprintln(templateData.Sender, "left: ", templateData.Message)
-		templateData.Class += " secondary-action joinpart"
+		templateData.class = append(templateData.class, "secondary-action", "joinpart")
 	case irc.KICK:
 		index := strings.Index(msg.Message, ":")
 		kicker := templateData.Sender
@@ -205,7 +207,7 @@ func Receive(msg messages.Message, isNew bool) {
 		msg.Message = msg.Message[index+1:]
 		templateData.Sender = msg.Sender
 		templateData.Message = fmt.Sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, msg.Message) // TODO linkify and escape html on message?
-		templateData.Class += " secondary-action kick"
+		templateData.class = append(templateData.class, "secondary-action", "kick")
 		templateData.Clipboard = fmt.Sprintf("%s was kicked by %s: %s", msg.Sender, kicker, msg.Message)
 	case irc.MODE:
 		parts := strings.Split(msg.Message, " ")
@@ -216,14 +218,14 @@ func Receive(msg messages.Message, isNew bool) {
 			templateData.Message = fmt.Sprintf("set channel mode <b>%s</b>", parts[0])
 			templateData.Clipboard = fmt.Sprintf("set channel mode %s", parts[0])
 		}
-		templateData.Class += " secondary-action modechange"
+		templateData.class = append(templateData.class, "secondary-action", "modechange")
 	case irc.NICK:
 		templateData.Message = fmt.Sprintf("is now known as <b>%s</b>", msg.Message)
-		templateData.Class += " secondary-action nickchange"
+		templateData.class = append(templateData.class, "secondary-action", "nickchange")
 		templateData.Clipboard = fmt.Sprintf("%s is now known as %s", msg.Sender, msg.Message)
 	case irc.TOPIC:
 		templateData.Message = fmt.Sprintf("changed the topic to <b>%s</b>", msg.Message)
-		templateData.Class += " secondary-action topicchange"
+		templateData.class = append(templateData.class, "secondary-action", "topicchange")
 		templateData.Clipboard = fmt.Sprintf("%s changed the topic to %s", msg.Sender, msg.Message)
 	default:
 		templateData.IsAction = false
@@ -231,14 +233,17 @@ func Receive(msg messages.Message, isNew bool) {
 	}
 
 	if msg.OwnMsg {
-		templateData.Class += " own-message"
-		templateData.WrapClass += " own-message-wrapper"
+		templateData.class = append(templateData.class, "own-message")
+		templateData.wrapClass = append(templateData.wrapClass, "own-message-wrapper")
 	}
 
 	if joined {
-		templateData.WrapClass += " message-joined"
+		templateData.wrapClass = append(templateData.wrapClass, "message-joined")
 		templateData.Joined = true
 	}
+
+	templateData.Class = strings.Join(templateData.class, " ")
+	templateData.WrapClass = strings.Join(templateData.wrapClass, " ")
 
 	templateData.Message = util.DecodeMessage(templateData.Message)
 
