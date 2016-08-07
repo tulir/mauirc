@@ -17,46 +17,58 @@
 // Package conn contains connection code
 package conn
 
-/* TODO implemet history
-function history(network, channel, n) {
-  var children = getChannel(network, channel).children(".message-wrapper")
-  data.getChannel(network, channel).setFetchingHistory(true)
-  "use strict"
-  $.ajax({
-    type: "GET",
-    url: sprintf("/history/%s/%s/?n=%d", network, encodeURIComponent(channel), n),
-    dataType: "json",
-    success: function(histData) {
-      "use strict"
-      if (isEmpty(histData)) {
-        return
-      }
-      children.remove()
-      histData.reverse().forEach(function(val, i, arr) {
-        receive(val.id, val.network, val.channel, val.timestamp, val.sender, val.command, val.message, val.ownmsg, val.preview, false)
-      })
-      var chanData = data.getChannel(network, channel)
-      var msg = chanData.shiftCache()
-      while (!isEmpty(msg)) {
-        receive(msg.id, msg.network, msg.channel, msg.timestamp, msg.sender, msg.command, msg.message, msg.ownmsg, msg.preview, true)
-        var msg = chanData.shiftCache()
-      }
-      chanData.setFetchingHistory(false)
-      chanData.setHistoryFetched()
-      scrollDown()
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      "use strict"
-      data.getChannel(network, channel).setFetchingHistory(false)
-      dbg(jqXHR)
-      if(getActiveNetwork().length === 0 || getActiveChannel().length === 0) {
-        return
-      }
-      getChannel(getActiveNetwork(), getActiveChannel()).loadTemplate($(sprintf("#template-error")), {
-        message: sprintf("Failed to fetch history: %s %s", channel, network, textStatus, errorThrown)
-      }, {isFile: false, async: false, append: true})
-      scrollDown()
-    }
-  })
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/gopherjs/gopherjs/js"
+	"github.com/gopherjs/jquery"
+	"maunium.net/go/mauirc-common/messages"
+	"maunium.net/go/mauirc/data"
+	"maunium.net/go/mauirc/templates"
+	"maunium.net/go/mauirc/ui"
+)
+
+// GetHistory gets n messages of the history of channel @ network
+func GetHistory(network, channel string, n int) {
+	children := ui.GetChannel(network, channel).Children(".message-wrapper")
+	data.MustGetChannel(network, channel).FetchingHistory = true
+	jquery.Ajax(map[string]interface{}{
+		"type": "GET",
+		"url":  fmt.Sprintf("/history/%s/%s/?n=%d", network, js.Global.Call("encodeURIComponent", channel).String(), n),
+		jquery.SUCCESS: func(rawData string) {
+			children.Remove()
+
+			var histData = make([]messages.Message, 0)
+			json.Unmarshal([]byte(rawData), &histData)
+
+			for i := len(histData) - 1; i >= 0; i++ {
+				ui.Receive(histData[i], false)
+			}
+
+			chanData := data.MustGetChannel(network, channel)
+		Loop:
+			for {
+				select {
+				case obj := <-chanData.MessageCache:
+					ui.Receive(obj, true)
+				default:
+					break Loop
+				}
+			}
+			chanData.FetchingHistory = false
+			chanData.HistoryFetched = true
+			ui.ScrollDown()
+		},
+		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
+			fmt.Println("Failed to fetch history: HTTP", info["status"])
+			fmt.Println(info)
+			data.MustGetChannel(network, channel).FetchingHistory = false
+			if len(ui.GetActiveNetwork()) == 0 || len(ui.GetActiveChannel()) == 0 {
+				return
+			}
+
+			templates.AppendObj("error", ui.GetActiveChannelObj(), fmt.Sprintln("Failed to fetch history:", textStatus, errorThrown))
+			ui.ScrollDown()
+		},
+	})
 }
-*/
