@@ -200,16 +200,16 @@ func Receive(msg messages.Message, isNew bool) {
 	switch strings.ToUpper(msg.Command) {
 	case "ACTION":
 		templateData.class = append(templateData.class, "secondary-action", "user-action")
-		templateData.Clipboard = fmt.Sprintln("*", templateData.Sender, templateData.Message)
+		templateData.Clipboard = fmt.Sprintf("* %s %s", templateData.Sender, templateData.Message)
 	case irc.JOIN:
-		templateData.Message = fmt.Sprintln("joined", templateData.Message)
-		templateData.Clipboard = fmt.Sprintln(templateData.Sender, "joined", templateData.Message)
+		templateData.Message = fmt.Sprintf("joined %s", templateData.Message)
+		templateData.Clipboard = fmt.Sprintf("%s joined %s", templateData.Sender, templateData.Message)
 		templateData.class = append(templateData.class, "secondary-action", "joinpart")
 	case irc.PART:
 		fallthrough
 	case irc.QUIT:
-		templateData.Message = fmt.Sprintln("left:", templateData.Message)
-		templateData.Clipboard = fmt.Sprintln(templateData.Sender, "left: ", templateData.Message)
+		templateData.Message = fmt.Sprintf("left: %s", templateData.Message)
+		templateData.Clipboard = fmt.Sprintf("%s left: %s", templateData.Sender, templateData.Message)
 		templateData.class = append(templateData.class, "secondary-action", "joinpart")
 	case irc.KICK:
 		index := strings.Index(msg.Message, ":")
