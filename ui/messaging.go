@@ -151,6 +151,17 @@ type MessageTemplateData struct {
 	Timestamp int64
 }
 
+// PreviewTemplateData contains more things
+type PreviewTemplateData struct {
+	PreviewImage bool
+	PreviewText  bool
+	Image        string
+	Title        string
+	Sitename     string
+	Description  string
+	ID           int64
+}
+
 // Receive messages
 func Receive(msg messages.Message, isNew bool) {
 	net := GetNetwork(msg.Network)
@@ -258,27 +269,22 @@ func Receive(msg messages.Message, isNew bool) {
 
 	msgObj := jq(fmt.Sprintf("#msg-%d", msg.ID))
 
-	/* TODO Implement previews. Original JS:
-		var msgObj = $(sprintf("#msg-%d", id))
-		if (preview !== null) {
-			if (!isEmpty(preview.image) && !isEmpty(preview.text)) {
-				var pwTemplate = "both"
-			} else if (!isEmpty(preview.image)) {
-				var pwTemplate = "image"
-			} else if (!isEmpty(preview.text)) {
-				var pwTemplate = "text"
-			}
-			if (pwTemplate !== undefined) {
-				msgObj.loadTemplate($(sprintf("#template-message-preview-%s", pwTemplate)), {
-					title: preview.text !== undefined ? preview.text.title : "",
-					description: preview.text !== undefined && preview.text.description !== undefined ? preview.text.description.replaceAll("\n", "<br>") : "",
-					sitename: preview.text !== undefined ? preview.text.sitename : "",
-					image: preview.image !== undefined ? preview.image.url : "",
-					modalopen: sprintf("openFullImageModal('%d')", id)
-				}, {append: true, isFile: false, async: false})
-			}
+	if msg.Preview != nil {
+		previewData := PreviewTemplateData{
+			ID: msg.ID,
 		}
-	}*/
+		if msg.Preview.Image != nil {
+			previewData.PreviewImage = true
+			previewData.Image = msg.Preview.Image.URL
+		}
+		if msg.Preview.Text != nil {
+			previewData.PreviewText = true
+			previewData.Title = msg.Preview.Text.Title
+			previewData.Description = msg.Preview.Text.Description
+			previewData.Sitename = msg.Preview.Text.SiteName
+		}
+		templates.AppendObj("message-preview", msgObj, previewData)
+	}
 
 	match := GetHighlight(msg.Network, templateData.Message)
 
