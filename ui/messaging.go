@@ -142,6 +142,9 @@ type MessageTemplateData struct {
 	Class     string
 	WrapClass string
 	Clipboard string
+	OwnMsg    bool
+	Joined    bool
+	IsAction  bool
 	ID        int64
 	Timestamp int64
 }
@@ -174,15 +177,12 @@ func Receive(msg messages.Message, isNew bool) {
 		ID:        msg.ID,
 		WrapClass: "message-wrapper",
 		Class:     "message",
-		/*
-		   id: sprintf("msg-%d", id),
-		   wrapid: sprintf("msgwrap-%d", id),
-		*/
+		OwnMsg:    msg.OwnMsg,
 		Message:   msg.Message, // TODO linkify and escape html?
 		Timestamp: msg.Timestamp,
+		IsAction:  true,
 	}
 	var joined bool
-	var template = "action"
 
 	switch msg.Command {
 	case "action":
@@ -224,7 +224,7 @@ func Receive(msg messages.Message, isNew bool) {
 		templateData.Class += "secondary-action topicchange"
 		templateData.Clipboard = fmt.Sprintf("%s changed the topic to %s", msg.Sender, msg.Message)
 	default:
-		template = "message"
+		templateData.IsAction = false
 		joined = TryJoinMessage(msg)
 	}
 
@@ -235,19 +235,18 @@ func Receive(msg messages.Message, isNew bool) {
 
 	if joined {
 		templateData.WrapClass += " message-joined"
+		templateData.Joined = true
 	}
 
 	templateData.Message = util.DecodeMessage(templateData.Message)
 
-	fmt.Println(templateData, template)
-
 	oldMsgWrap := jq(fmt.Sprintf("#msgwrap-%d", msg.ID))
 	if oldMsgWrap.Length != 0 {
 		loadedTempl := jq("<div></div>")
-		templates.AppendObj(template, loadedTempl, templateData)
+		templates.AppendObj("message", loadedTempl, templateData)
 		oldMsgWrap.ReplaceWith(loadedTempl.Children(":first"))
 	} else {
-		templates.AppendObj(template, ch, templateData)
+		templates.AppendObj("message", ch, templateData)
 	}
 
 	/* TODO finish implementation. Original JS:
