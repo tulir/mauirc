@@ -5,5 +5,6 @@ for stylesheet in \
     messagetemplates messageview \
     titlebar settings modal \
     whois oper rawio scripts \
-    networks channels userlist
+    networks channels userlist \
+    contextmenu
 do cat css/$stylesheet.css >> index.css; done
