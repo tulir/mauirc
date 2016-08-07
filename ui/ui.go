@@ -50,11 +50,13 @@ func init() {
 			"send":   SendRaw,
 		},
 		"channels": map[string]interface{}{
-			"open":   OpenChannel,
-			"close":  CloseChannel,
-			"get":    GetChannel,
-			"switch": SwitchTo,
-			"clear":  SwitchToClear,
+			"open":         OpenChannel,
+			"close":        CloseChannel,
+			"get":          GetChannel,
+			"switch":       SwitchTo,
+			"clear":        SwitchToClear,
+			"finishAdding": FinishChannelAdding,
+			"cancelAdding": CancelChannelAdding,
 		},
 		"getActiveChannel":    GetActiveChannel,
 		"getActiveNetwork":    GetActiveNetwork,
@@ -64,8 +66,6 @@ func init() {
 		"channelFilter":       ChannelFilter,
 		"networkFilter":       NetworkFilter,
 		"openChannelAdder":    OpenChannelAdder,
-		"finishChannelAdding": FinishChannelAdding,
-		"cancelChannelAdding": CancelChannelAdding,
 	})
 }
 
