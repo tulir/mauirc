@@ -87,12 +87,7 @@ func OpenChannelAdder(network string) {
 		return
 	}
 
-	templates.Append("channel-adder", fmt.Sprintf("#chanswitchers-%s", network), map[string]interface{}{
-		"ID":     fmt.Sprintf("channel-adder-%s", network),
-		"WrapID": fmt.Sprintf("channel-adder-wrapper-%s", network),
-		"Finish": fmt.Sprintf("if (event.keyCode === 13) { ui.finishChannelAdding('%[1]s') } else if (event.keyCode === 27) { ui.cancelChannelAdding('%[1]s') }", network),
-		"Blur":   fmt.Sprintf("ui.cancelChannelAdding('%s')", network),
-	})
+	templates.Append("channel-adder", fmt.Sprintf("#chanswitchers-%s", network), network)
 
 	adder := jq(fmt.Sprintf("#channel-adder-%s", network))
 	adder.Focus()
