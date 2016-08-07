@@ -92,9 +92,14 @@ func Send() {
 			}
 		case irc.JOIN:
 			if len(args) > 0 {
+				net := GetActiveNetwork()
+				ch := args[0]
+				if len(args) > 0 {
+					net = args[0]
+				}
 				obj = messages.Message{
-					Network: GetActiveNetwork(),
-					Channel: args[0],
+					Network: net,
+					Channel: ch,
 					Command: "action",
 					Message: "Joining",
 				}
@@ -106,9 +111,17 @@ func Send() {
 		case irc.QUIT:
 			fallthrough
 		case "exit":
+			net := GetActiveNetwork()
+			ch := GetActiveChannel()
+			if len(args) > 0 {
+				ch = args[0]
+				if len(args) > 1 {
+					net = args[1]
+				}
+			}
 			obj = messages.Message{
-				Network: GetActiveNetwork(),
-				Channel: args[0],
+				Network: net,
+				Channel: ch,
 				Command: irc.PART,
 				Message: "Leaving",
 			}
