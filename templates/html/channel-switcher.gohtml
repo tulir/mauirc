@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   class="btn channel-switcher"
   id="switchto-{{ .Network }}-{{ .Channel }}"
   onClick="ui.channels.switch('{{ .Network }}', '{{ .Channel }}')"
-  onContextMenu="ui.contextmenu.channelSwitcher('{{ .Network }}', '{{ .Channel }}'); event.preventDefault()"
+  onContextMenu="ui.contextmenu.channelSwitcher(event, '{{ .Network }}', '{{ .Channel }}')"
 >
   <div class="right-arrow hidden-medium-up">
     <svg style="width:24px;height:24px" viewBox="0 0 24 24">
