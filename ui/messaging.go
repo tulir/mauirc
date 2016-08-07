@@ -365,7 +365,7 @@ func TryJoinMessage(msg messages.Message) bool {
 		return false
 	}
 
-	if prevMsg.Attr("sender") != msg.Sender {
+	if prevMsg.Attr("data-sender") != msg.Sender {
 		return false
 	}
 
