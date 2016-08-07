@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </div>
       <div class="clipboard-data hidden" id="clipboard-data">{{ .Clipboard }}</div>
     {{ else }}
-      {{ if and not .Joined not .OwnMsg }}
+      {{ if and (not .Joined) (not .OwnMsg) }}
         <div class="message-sender">{{ .Sender }}</div>
       {{ end }}
       <div class="message-text">{{ .Message }}</div>
