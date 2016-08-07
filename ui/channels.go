@@ -250,7 +250,7 @@ func SwitchTo(network, channel string) {
 		GetHistory(network, channel, 512)
 	}
 
-	jq("#switchnet-%s", network).AddClass("activenet")
+	jq(fmt.Sprintf("#switchnet-%s", network)).AddClass("activenet")
 	GetNetwork(network).RemoveClass("hidden")
 	chanObj.RemoveClass("hidden")
 	chanSwitcher := jq(fmt.Sprintf("#switchto-%s-%s", NetworkFilter(network), ChannelFilter(channel)))
