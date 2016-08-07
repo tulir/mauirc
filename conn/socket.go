@@ -157,13 +157,7 @@ func message(evt *js.Object) {
 			"Channel": msgData.Channel,
 			"Sender":  msgData.Sender,
 		})
-		/* TODO fix template invite
-		  sender: ed.object.sender,
-		  channel: ed.object.channel,
-		  accept: sprintf("acceptInvite('%s', '%s')", ed.object.network, ed.object.channel),
-		  ignore: sprintf("closeChannel('%s', '%s')", ed.object.network, ed.object.channel)
-
-		  TODO implement the following
+		/* TODO implement the following
 		$(sprintf("#switchto-%s-%s", ed.object.network.toLowerCase(), channelFilter(ed.object.channel))).addClass("new-messages")
 		*/
 	case messages.MsgRaw:
