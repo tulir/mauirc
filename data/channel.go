@@ -36,7 +36,12 @@ type Channel struct {
 
 // CreateChannel creates a channel
 func CreateChannel() *Channel {
-	return &Channel{}
+	return &Channel{
+		Userlist:      make([]string, 0),
+		UserlistPlain: make([]string, 0),
+		Notifications: NotificationAll,
+		MessageCache:  make(chan messages.Message),
+	}
 }
 
 // SetTopicData sets all topic-related variables

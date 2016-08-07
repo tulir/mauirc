@@ -39,7 +39,12 @@ type Network struct {
 
 // CreateNetwork creates a network
 func CreateNetwork() *Network {
-	return &Network{}
+	return &Network{
+		Channels:     make(ChannelList),
+		Highlights:   make(HighlightList, 0),
+		Scripts:      make(ScriptStore),
+		ChannelNames: make([]string, 0),
+	}
 }
 
 // SetNetData ...
