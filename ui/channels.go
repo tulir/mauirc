@@ -248,7 +248,7 @@ func SwitchTo(network, channel string) {
 	jq("#title").SetText(title)
 
 	chanObj := GetChannel(network, channel)
-	if chanData.HistoryFetched && chanObj.Find(".invite-wrapper").Length == 0 {
+	if !chanData.HistoryFetched && chanObj.Find(".invite-wrapper").Length == 0 {
 		GetHistory(network, channel, 512)
 	}
 
