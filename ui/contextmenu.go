@@ -17,11 +17,22 @@
 // Package ui contains UI-related functions
 package ui
 
-import ()
+import (
+	"fmt"
+	"maunium.net/go/mauirc/templates"
+)
 
 // ContextMessage shows the context menu for a message
-func ContextMessage(id int64) {
-
+func ContextMessage(x, y int, id int64) {
+	templates.Apply("contextmenu", "#contextmenu", map[string]map[string]string{
+		"Delete Message": map[string]string{
+			"OnClick": fmt.Sprintf("ui.contextmenu.click.message.delete('%d')", id),
+		},
+		"Copy Text": map[string]string{
+			"OnClick": fmt.Sprintf("ui.contextmenu.click.message.copy('%d')", id),
+		},
+	})
+	ShowContextMenu(x, y)
 }
 
 // ContextChannelSwitcher shows the context menu for a channel switcher
@@ -37,4 +48,19 @@ func ContextNetworkSwitcher(network string) {
 // ContextUserlistEntry shows the context menu for an userlist entry
 func ContextUserlistEntry(network, user string) {
 
+}
+
+// ShowContextMenu shows the context menu
+func ShowContextMenu(x, y int) {
+	jq("#contextmenu").SetCss(map[string]interface{}{
+		"top":  y,
+		"left": x,
+	})
+	jq("#contextmenu").RemoveClass("hidden")
+}
+
+// HideContextMenu hides the context menu
+func HideContextMenu() {
+	jq("#contextmenu").AddClass("hidden")
+	jq("#contextmenu").Empty()
 }
