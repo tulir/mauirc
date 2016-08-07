@@ -19,5 +19,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	class="userlist-entry userlist-user-entry"
 	onClick="ui.openPM('{{ .Network }}', '{ .Name }')"
 	data-simplename="{{ .Name }}"
-	onContextMenu="ui.contextmenu.userlistEntry('{{ .Network }}', '{{ .Name }}')"
+	onContextMenu="ui.contextmenu.userlistEntry('{{ .Network }}', '{{ .Name }}'); event.preventDefault()"
 >{{ .DisplayName }}</a>

@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div id="msgwrap-{{ .ID }}" class="{{ .WrapClass }}" data-id="{{ .ID }}" data-timestamp="{{ .Timestamp }}" data-sender="{{ .Sender }}">
-  <div id="msg-{{ .ID }}" class="{{ .Class }}" onContextMenu="ui.contextmenu.message('{{ .ID }}')">
+  <div id="msg-{{ .ID }}" class="{{ .Class }}" onContextMenu="ui.contextmenu.message('{{ .ID }}'); event.preventDefault()">
     {{ if .IsAction }}
       <div class="action-data">
         <div class="action-sender">{{ .Sender }}</div>
