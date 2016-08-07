@@ -44,6 +44,9 @@ var (
 	Messages   = make(chan messages.Container, 16)
 )
 
+// Version of mauIRC
+const Version = "2.0.0"
+
 func init() {
 	SocketPath = "wss://" + js.Global.Get("window").Get("location").Get("host").String() + "/socket"
 	if js.Global.Get("window").Get("location").Get("protocol").String() != "https:" {

@@ -20,16 +20,14 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 	"maunium.net/go/mauirc/conn"
+	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 )
-
-// VERSION of mauIRC
-const VERSION = "2.0.0"
 
 var jq = jquery.NewJQuery
 
 func main() {
-	fmt.Println("mauIRC", VERSION, "loading...")
+	fmt.Println("mauIRC", data.Version, "loading...")
 
 	fmt.Println("Loading templates")
 	templates.LoadAll()
