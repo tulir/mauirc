@@ -26,44 +26,64 @@ import (
 // ContextMessage shows the context menu for a message
 func ContextMessage(event *js.Object, id int64) {
 	templates.Apply("contextmenu", "#contextmenu", map[string]string{
-		"Delete Message": fmt.Sprintf("ui.contextmenu.click.message.delete('%d')", id),
-		"Copy Text":      fmt.Sprintf("ui.contextmenu.click.message.copy('%d')", id),
+		"Delete Message": fmt.Sprintf("ui.contextmenu.click.message('delete', '%d')", id),
+		"Copy Text":      fmt.Sprintf("ui.contextmenu.click.message('copy', '%d')", id),
 	})
 	ShowContextMenu(event)
+}
+
+// ContextMessageClick ...
+func ContextMessageClick(command string, id int64) {
+
 }
 
 // ContextChannelSwitcher shows the context menu for a channel switcher
 func ContextChannelSwitcher(event *js.Object, network, channel string) {
 	templates.Apply("contextmenu", "#contextmenu", map[string]string{
-		"Clear History": fmt.Sprintf("ui.contextmenu.click.channelSwitcher.clear('%s', '%s')", network, channel),
-		"Part Channel":  fmt.Sprintf("ui.contextmenu.click.channelSwitcher.part('%s', '%s')", network, channel),
+		"Clear History": fmt.Sprintf("ui.contextmenu.click.channelSwitcher('clear', '%s', '%s')", network, channel),
+		"Part Channel":  fmt.Sprintf("ui.contextmenu.click.channelSwitcher('part', '%s', '%s')", network, channel),
 	})
 	ShowContextMenu(event)
+}
+
+// ContextChannelSwitcherClick ...
+func ContextChannelSwitcherClick(command, network, channel string) {
+
 }
 
 // ContextNetworkSwitcher shows the context menu for a network switcher
 func ContextNetworkSwitcher(event *js.Object, network string) {
 	templates.Apply("contextmenu", "#contextmenu", map[string]string{
-		"Raw IO":           fmt.Sprintf("ui.contextmenu.click.networkSwitcher.rawIO('%s')", network),
-		"Oper Auth":        fmt.Sprintf("ui.contextmenu.click.networkSwitcher.operAuth('%s')", network),
-		"Connect":          fmt.Sprintf("ui.contextmenu.click.networkSwitcher.connect('%s')", network),
-		"Disconnect":       fmt.Sprintf("ui.contextmenu.click.networkSwitcher.disconnect('%s')", network),
-		"Force Disconnect": fmt.Sprintf("ui.contextmenu.click.networkSwitcher.forceDisonnect('%s')", network),
+		"Raw IO":           fmt.Sprintf("ui.rawio.open('%s')", network),
+		"Oper Auth":        fmt.Sprintf("ui.oper.open('%s')", network),
+		"Connect":          fmt.Sprintf("ui.contextmenu.click.networkSwitcher('connect', '%s')", network),
+		"Disconnect":       fmt.Sprintf("ui.contextmenu.click.networkSwitcher('disconnect', '%s')", network),
+		"Force Disconnect": fmt.Sprintf("ui.contextmenu.click.networkSwitcher('forcedisconnect', '%s')", network),
 	})
 	ShowContextMenu(event)
+}
+
+// ContextNetworkSwitcherClick ...
+func ContextNetworkSwitcherClick(command, network, channel string) {
+
 }
 
 // ContextUserlistEntry shows the context menu for an userlist entry
 func ContextUserlistEntry(event *js.Object, network, user string) {
 	templates.Apply("contextmenu", "#contextmenu", map[string]string{
-		"Open Query": fmt.Sprintf("ui.contextmenu.click.networkSwitcher.openQuery('%s', '%s')", network, user),
-		"Whois":      fmt.Sprintf("ui.contextmenu.click.networkSwitcher.whois('%s', '%s')", network, user),
-		"Give OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher.giveOp('%s', '%s')", network, user),
-		"Take OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher.takeOp('%s', '%s')", network, user),
-		"Kick":       fmt.Sprintf("ui.contextmenu.click.networkSwitcher.kick('%s', '%s')", network, user),
-		"Ban":        fmt.Sprintf("ui.contextmenu.click.networkSwitcher.ban('%s', '%s')", network, user),
+		"Open Query": fmt.Sprintf("ui.contextmenu.click.networkSwitcher('query', '%s', '%s')", network, user),
+		"Whois":      fmt.Sprintf("ui.contextmenu.click.networkSwitcher('whois', '%s', '%s')", network, user),
+		"Give OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher('giveop', '%s', '%s')", network, user),
+		"Take OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher('takeop', '%s', '%s')", network, user),
+		"Kick":       fmt.Sprintf("ui.contextmenu.click.networkSwitcher('kick', '%s', '%s')", network, user),
+		"Ban":        fmt.Sprintf("ui.contextmenu.click.networkSwitcher('ban', '%s', '%s')", network, user),
 	})
 	ShowContextMenu(event)
+}
+
+// ContextUserlistEntryClick ...
+func ContextUserlistEntryClick(command, network, user string) {
+
 }
 
 // ShowContextMenu shows the context menu

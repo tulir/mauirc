@@ -73,6 +73,12 @@ func init() {
 			"userlistEntry":   ContextUserlistEntry,
 			"hide":            HideContextMenu,
 			"show":            ShowContextMenu,
+			"click": map[string]interface{}{
+				"message":         ContextMessageClick,
+				"channelSwitcher": ContextChannelSwitcherClick,
+				"networkSwitcher": ContextNetworkSwitcherClick,
+				"userlistEntry":   ContextUserlistEntryClick,
+			},
 		},
 		"oper": map[string]interface{}{
 			"send": OperSend,
