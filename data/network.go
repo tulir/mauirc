@@ -32,7 +32,7 @@ type Network struct {
 	User         string
 	Realname     string
 	IP           string
-	Port         int
+	Port         uint16
 	SSL          bool
 	Connected    bool
 }
@@ -49,7 +49,13 @@ func CreateNetwork() *Network {
 
 // SetNetData ...
 func (net *Network) SetNetData(nd messages.NetData) {
-	// TODO implement setting nick, user, realname, ip, port, ssl and connected from struct
+	net.Nick = nd.Nick
+	net.User = nd.User
+	net.Realname = nd.Realname
+	net.IP = nd.IP
+	net.Port = nd.Port
+	net.SSL = nd.SSL
+	net.Connected = nd.Connected
 }
 
 // MustGetChannel gets or creates the channel with the given name
