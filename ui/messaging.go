@@ -20,7 +20,6 @@ package ui
 import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
-	"github.com/mvdan/xurls"
 	"github.com/sorcix/irc"
 	"html"
 	"maunium.net/go/mauirc-common/messages"
@@ -210,7 +209,7 @@ func Receive(msg messages.Message, isNew bool) {
 		wrapClass: []string{"message-wrapper"},
 		OwnMsg:    msg.OwnMsg,
 		Joined:    TryJoinMessage(msg),
-		Message:   xurls.Relaxed.ReplaceAllString(html.EscapeString(msg.Message), "<a href='$1'>$1</a>"),
+		Message:   util.Linkify(html.EscapeString(msg.Message)),
 		Timestamp: msg.Timestamp,
 		IsAction:  true,
 		Preview:   PreviewTemplateData{},
@@ -250,10 +249,7 @@ func Receive(msg messages.Message, isNew bool) {
 		msg.Sender = msg.Message[:index]
 		msg.Message = msg.Message[index+1:]
 		templateData.Sender = msg.Sender
-		templateData.Message = fmt.Sprintf(
-			"was kicked by <b>%s</b>: <b>%s</b>", kicker,
-			xurls.Relaxed.ReplaceAllString(html.EscapeString(msg.Message), "<a href='$1'>$1</a>"),
-		)
+		templateData.Message = fmt.Sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, util.Linkify(html.EscapeString(msg.Message)))
 		templateData.class = append(templateData.class, "secondary-action", "kick")
 		templateData.Clipboard = fmt.Sprintf("%s was kicked by %s: %s", msg.Sender, kicker, msg.Message)
 	case irc.MODE:

@@ -19,10 +19,23 @@ package util
 
 import (
 	"encoding/json"
+	"github.com/mvdan/xurls"
+	"net/url"
 )
 
 // MarshalString marshals the given interface into JSON and stringifies the byte array result
 func MarshalString(data interface{}) string {
 	dat, _ := json.Marshal(&data)
 	return string(dat)
+}
+
+// Linkify a string
+func Linkify(msg string) string {
+	return xurls.Relaxed.ReplaceAllStringFunc(msg, func(str string) string {
+		u, _ := url.Parse(str)
+		if len(u.Scheme) == 0 {
+			u.Scheme = "http"
+		}
+		return "<a target='_blank' href='" + u.String() + "'>" + str + "</a>"
+	})
 }
