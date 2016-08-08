@@ -43,7 +43,7 @@ func Autocomplete() {
 				if spIndex == -1 {
 					msgbox.SetVal(fmt.Sprintf("%s: %s", user, text[caretPos:]))
 				} else {
-					msgbox.SetVal(fmt.Sprintf("%s %s %s", user, text[:spIndex], text[caretPos:]))
+					msgbox.SetVal(fmt.Sprintf("%s %s %s", text[:spIndex], user, text[caretPos:]))
 				}
 				return
 			}
