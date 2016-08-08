@@ -18,6 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <input
 	class="userlist-entry userlist-invite-box"
 	id="userlist-invite-box"
-	onBlur="stopInvite()"
-	onKeyDown="if (event.keyCode === 13) { finishInvite() } else if (event.keyCode === 27) { stopInvite() } "
+	onBlur="ui.invite.stop()"
+	onKeyDown="if (event.keyCode === 13) { ui.invite.finish() } else if (event.keyCode === 27) { ui.invite.stop() } "
 >
