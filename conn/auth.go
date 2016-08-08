@@ -114,7 +114,7 @@ func Login() {
 func Register() {
 	jquery.Ajax(map[string]interface{}{
 		"type": "POST",
-		"url":  "/auth/regster",
+		"url":  "/auth/register",
 		"data": util.MarshalString(loginForm{Email: jq("#email").Val(), Password: jq("#password").Val()}),
 		"success": func() {
 			// TODO register success message
