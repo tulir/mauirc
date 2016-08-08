@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="settings-top-bar">
-  <button class="btn btn-leave-settings" type="button" id="leave-settings" onClick="settings.close()">
+  <button class="btn btn-leave-settings" type="button" id="leave-settings" onClick="ui.settings.close()">
     <span class="left-arrow">
 	 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
 	   <path fill="#FFFFFF" d="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z" />
@@ -26,15 +26,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 Close Settings
     </span>
   </button>
-  <button class="btn btn-part-channel" type="button" id="channel-part" onClick="settings.partAndClose()">Part Channel</button>
-  <button class="btn btn-clear-history" type="button" id="channel-clearhistory" onClick="settings.clearHistory()">Clear History</button>
+  <button class="btn btn-part-channel" type="button" id="channel-part" onClick="ui.settings.partChannel()">Part Channel</button>
+  <button class="btn btn-clear-history" type="button" id="channel-clearhistory" onClick="ui.settings.clearHistory()">Clear History</button>
 </div>
 
 <div class="settings-title">Channel Settings</div>
 <div class="settings-container channel-settings" id="channel-settings">
   <div class="settings-entry">
     <label class="settings-label" for="channel-notifications">Notifications</label>
-    <select class="settings-value" id="channel-notifications" onChange="settings.changeNotifications()">
+    <select class="settings-value" id="channel-notifications" onChange="ui.settings.change.notifications()">
 	 <option value="all">All messages</option>
 	 <option value="highlight">Highlights only</option>
 	 <option value="disabled">Disabled</option>
@@ -46,18 +46,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="settings-container network-settings" id="network-settings">
   <div class="settings-entry">
     <label class="settings-label" for="network-highlights">Highlight Words</label>
-    <input class="settings-value" id="network-highlights" type="text" autocomplete="off" onChange="settings.changeHighlights()" placeholder="Comma-separated list">
+    <input class="settings-value" id="network-highlights" type="text" autocomplete="off" onChange="ui.settings.change.highlights()" placeholder="Comma-separated list">
   </div>
 
   <div class="settings-entry">
     <label class="settings-label" for="network-highlights">Nickname</label>
     <input class="settings-value settings-inputfield" id="network-nickname" type="text" autocomplete="off" placeholder="Enter nick">
-    <button class="settings-value settings-inputbutton" id="network-nickchange" type="button" onClick="settings.changeNick()">Change</button>
+    <button class="settings-value settings-inputbutton" id="network-nickchange" type="button" onClick="ui.settings.change.nick()">Change</button>
   </div>
 
   <div class="settings-entry">
     <label class="settings-label" for="network-scripts">Edit Scripts</label>
-    <button class="settings-value" id="network-scripts" type="button" onClick="settings.scripts.edit()">Enter</button>
+    <button class="settings-value" id="network-scripts" type="button" onClick="ui.settings.scripts.edit()">Enter</button>
   </div>
 </div>
 
@@ -65,16 +65,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="settings-container mauirc-settings" id="mauirc-settings">
   <div class="settings-entry">
     <label class="settings-label" for="mauirc-networks">Network Manager</label>
-    <button class="settings-value" id="mauirc-networks" type="button" onClick="settings.networks.openEditor()">Enter</button>
+    <button class="settings-value" id="mauirc-networks" type="button" onClick="ui.settings.networks.openEditor()">Enter</button>
   </div>
 
   <div class="settings-entry">
     <label class="settings-label" for="mauirc-scripts">Edit Global Scripts</label>
-    <button class="settings-value" id="mauirc-scripts" type="button" onClick="settings.scripts.editGlobal()">Enter</button>
+    <button class="settings-value" id="mauirc-scripts" type="button" onClick="ui.settings.scripts.editGlobal()">Enter</button>
   </div>
 
   <div class="settings-entry">
     <label class="settings-label" for="mauirc-font">Font family</label>
-    <input class="settings-value" id="mauirc-font" type="text" autocomplete="off" onChange="settings.updateFont()" placeholder="Enter font name">
+    <input class="settings-value" id="mauirc-font" type="text" autocomplete="off" onChange="ui.settings.change.font()" placeholder="Enter font name">
   </div>
 </div>
