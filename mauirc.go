@@ -16,30 +16,30 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 	"maunium.net/go/mauirc/conn"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
+	"maunium.net/go/mauirc/util/console"
 )
 
 var jq = jquery.NewJQuery
 
 func main() {
-	fmt.Println("mauIRC", data.Version, "loading...")
+	console.Info("mauIRC", data.Version, "loading...")
 
-	fmt.Println("Loading templates")
+	console.Log("Loading templates")
 	templates.LoadAll()
 
-	fmt.Println("Checking notification permission")
+	console.Log("Checking notification permission")
 	js.Global.Get("Notification").Call("requestPermission")
 
-	fmt.Println("Applying templates")
+	console.Log("Applying templates")
 	templates.Apply("login", "#container", nil)
 	templates.Apply("settings", "#settings", nil)
 
-	fmt.Println("Init done")
+	console.Info("Init done")
 
 	conn.CheckAuth()
 }
