@@ -47,6 +47,7 @@ func Send() {
 	if msg[0] == '/' {
 		args := strings.Split(msg, " ")
 		cmd := strings.ToLower(args[0][1:])
+		args = args[1:]
 		switch cmd {
 		case "me":
 			obj = messages.Message{
