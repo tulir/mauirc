@@ -161,7 +161,7 @@ func OpenNetwork(network string) {
 
 	templates.Append("network", "#messages", network)
 	templates.Append("network-switcher", "#networks", network)
-	// CreateRawIO(network)
+	CreateRawIO(network)
 }
 
 // OpenChannel opens a channel
