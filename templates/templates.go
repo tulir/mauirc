@@ -40,7 +40,6 @@ func LoadAll() {
 	Load("login")
 	Load("main")
 	Load("message")
-	Load("message-preview")
 	Load("network")
 	Load("network-switcher")
 	Load("oper")

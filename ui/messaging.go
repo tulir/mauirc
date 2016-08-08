@@ -163,6 +163,7 @@ type MessageTemplateData struct {
 	IsAction  bool
 	ID        int64
 	Timestamp int64
+	Preview   PreviewTemplateData
 }
 
 // PreviewTemplateData contains more things
@@ -210,8 +211,22 @@ func Receive(msg messages.Message, isNew bool) {
 		Message:   msg.Message, // TODO linkify and escape html?
 		Timestamp: msg.Timestamp,
 		IsAction:  true,
+		Preview:   PreviewTemplateData{},
 	}
-	var joined bool
+
+	if msg.Preview != nil {
+		templateData.Preview.ID = msg.ID
+		if msg.Preview.Image != nil {
+			templateData.Preview.PreviewImage = true
+			templateData.Preview.Image = msg.Preview.Image.URL
+		}
+		if msg.Preview.Text != nil {
+			templateData.Preview.PreviewText = true
+			templateData.Preview.Title = msg.Preview.Text.Title
+			templateData.Preview.Description = msg.Preview.Text.Description
+			templateData.Preview.Sitename = msg.Preview.Text.SiteName
+		}
+	}
 
 	switch strings.ToUpper(msg.Command) {
 	case "ACTION":
@@ -263,9 +278,8 @@ func Receive(msg messages.Message, isNew bool) {
 		templateData.wrapClass = append(templateData.wrapClass, "own-message-wrapper")
 	}
 
-	if joined {
+	if templateData.Joined {
 		templateData.wrapClass = append(templateData.wrapClass, "message-joined")
-		templateData.Joined = true
 	}
 
 	templateData.Class = strings.Join(templateData.class, " ")
@@ -283,23 +297,6 @@ func Receive(msg messages.Message, isNew bool) {
 	}
 
 	msgObj := jq(fmt.Sprintf("#msg-%d", msg.ID))
-
-	if msg.Preview != nil {
-		previewData := PreviewTemplateData{
-			ID: msg.ID,
-		}
-		if msg.Preview.Image != nil {
-			previewData.PreviewImage = true
-			previewData.Image = msg.Preview.Image.URL
-		}
-		if msg.Preview.Text != nil {
-			previewData.PreviewText = true
-			previewData.Title = msg.Preview.Text.Title
-			previewData.Description = msg.Preview.Text.Description
-			previewData.Sitename = msg.Preview.Text.SiteName
-		}
-		templates.AppendObj("message-preview", msgObj, previewData)
-	}
 
 	match := GetHighlight(msg.Network, templateData.Message)
 
