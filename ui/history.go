@@ -31,6 +31,7 @@ import (
 // GetHistory gets n messages of the history of channel @ network
 func GetHistory(network, channel string, n int) {
 	data.MustGetChannel(network, channel).FetchingHistory = true
+	GetChannel(network, channel).SetHtml("<div class='loader-center-wrapper'><div class='loader'/></div>")
 	jquery.Ajax(map[string]interface{}{
 		"type": "GET",
 		"url":  fmt.Sprintf("/history/%s/%s/?n=%d", network, js.Global.Call("encodeURIComponent", channel).String(), n),

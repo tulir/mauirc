@@ -6,5 +6,5 @@ for stylesheet in \
     titlebar settings modal \
     whois oper rawio scripts \
     networks channels userlist \
-    contextmenu
+    contextmenu loader 
 do cat css/$stylesheet.css >> index.css; done
