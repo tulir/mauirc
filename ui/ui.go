@@ -93,6 +93,7 @@ func init() {
 		"networkFilter":       NetworkFilter,
 		"openChannelAdder":    OpenChannelAdder,
 		"openFullImageModal":  OpenFullImageModal,
+		"openPM":              OpenPM,
 	})
 }
 
