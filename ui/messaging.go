@@ -56,7 +56,7 @@ func Send() {
 				Command: "action",
 				Message: strings.Join(args, " "),
 			}
-		case irc.TOPIC:
+		case "topic":
 			fallthrough
 		case "title":
 			obj = messages.Message{
@@ -65,7 +65,7 @@ func Send() {
 				Command: irc.TOPIC,
 				Message: strings.Join(args, " "),
 			}
-		case irc.NICK:
+		case "nick":
 			fallthrough
 		case "name":
 			fallthrough
@@ -93,7 +93,7 @@ func Send() {
 					Message: strings.Join(args[1:], " "),
 				}
 			}
-		case irc.JOIN:
+		case "join":
 			if len(args) > 0 {
 				net := GetActiveNetwork()
 				ch := args[0]
@@ -107,11 +107,11 @@ func Send() {
 					Message: "Joining",
 				}
 			}
-		case irc.PART:
+		case "part":
 			fallthrough
 		case "leave":
 			fallthrough
-		case irc.QUIT:
+		case "quit":
 			fallthrough
 		case "exit":
 			net := GetActiveNetwork()
