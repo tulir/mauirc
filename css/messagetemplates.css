@@ -82,7 +82,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .user-action > .action-data > .action-sender::before {
-    content: "★";
+    content: "★ ";
+
     font-weight: bold;
 }
 
