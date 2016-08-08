@@ -28,6 +28,7 @@ import (
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/ui"
 	"maunium.net/go/mauirc/util"
+	"maunium.net/go/mauirc/util/console"
 	"strings"
 	"time"
 )
@@ -143,7 +144,7 @@ func message(evt *js.Object) {
 		*/
 	case messages.MsgNickChange:
 		msgData := messages.ParseNickChange(msg.Object)
-		fmt.Println("Nick changed to", msgData.Nick, "on", msgData.Network)
+		console.Log("Nick changed to", msgData.Nick, "on", msgData.Network)
 		data.GetNetwork(msgData.Network).Nick = msgData.Nick
 	case messages.MsgClear:
 		msgData := messages.ParseClearHistory(msg.Object)
@@ -206,8 +207,8 @@ func Reconnect() {
 			}
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
-			fmt.Println("Reconnect failed: HTTP", info["status"])
-			fmt.Println(info)
+			console.Error("Reconnect failed: HTTP", info["status"])
+			console.Error(info)
 			time.AfterFunc(10*time.Second, Reconnect)
 		},
 	})

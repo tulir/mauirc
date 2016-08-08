@@ -23,6 +23,7 @@ import (
 	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
+	"maunium.net/go/mauirc/util/console"
 	"regexp"
 	"strings"
 )
@@ -226,7 +227,7 @@ func SwitchToClear() {
 
 // SwitchTo switches to the given channel on the given network
 func SwitchTo(network, channel string) {
-	fmt.Printf("Switching to channel %s @ %s\n", channel, network)
+	console.Log("Switching to channel %s @ %s", channel, network)
 
 	SwitchToClear()
 	jq("#message-text").Focus()

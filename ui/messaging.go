@@ -26,6 +26,7 @@ import (
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/util"
+	"maunium.net/go/mauirc/util/console"
 	"strings"
 	"time"
 )
@@ -33,7 +34,7 @@ import (
 // Send messages
 func Send() {
 	if !data.Connected {
-		fmt.Println("Tried to send message without connection!")
+		console.Warn("Tried to send message without connection!")
 		return
 	}
 
@@ -340,7 +341,7 @@ func NotifyMessage(network, channel, sender, message string, highlight bool) {
 	hide := GetChannel(network, channel).HasClass("hidden")
 	if (notifs == data.NotificationAll || (notifs == data.NotificationHighlights && highlight)) && !js.Global.Get("document").Call("hasFocus").Bool() {
 		// TODO send notification
-		fmt.Println(message)
+		console.Info("Notification of", message)
 		if hide {
 			jq(fmt.Sprintf("#switchto-%s-%s", NetworkFilter(network), ChannelFilter(channel))).AddClass("new-messages")
 		}

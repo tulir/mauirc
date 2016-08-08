@@ -25,6 +25,7 @@ import (
 	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
+	"maunium.net/go/mauirc/util/console"
 )
 
 // GetHistory gets n messages of the history of channel @ network
@@ -59,8 +60,8 @@ func GetHistory(network, channel string, n int) {
 			ScrollDown()
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
-			fmt.Println("Failed to fetch history: HTTP", info["status"])
-			fmt.Println(info)
+			console.Error("Failed to fetch history: HTTP", info["status"])
+			console.Error(info)
 			data.MustGetChannel(network, channel).FetchingHistory = false
 			if len(GetActiveNetwork()) == 0 || len(GetActiveChannel()) == 0 {
 				return

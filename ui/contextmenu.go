@@ -23,6 +23,7 @@ import (
 	"maunium.net/go/mauirc-common/messages"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
+	"maunium.net/go/mauirc/util/console"
 )
 
 // ContextMessage shows the context menu for a message
@@ -48,7 +49,7 @@ func ContextMessageClick(command string, id int64) {
 		if textObj.Length == 0 {
 			textObj = thisObj.Find(".clipboard-data")
 			if textObj.Length == 0 {
-				fmt.Println("Failed to copy to clipboard: Text not found!")
+				console.Warn("Failed to copy to clipboard: Text not found!")
 				return
 			}
 		}

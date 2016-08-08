@@ -19,13 +19,13 @@ package conn
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 	"maunium.net/go/mauirc-common/errors"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
 	"maunium.net/go/mauirc/util"
+	"maunium.net/go/mauirc/util/console"
 )
 
 var jq = jquery.NewJQuery
@@ -40,7 +40,7 @@ func init() {
 
 // CheckAuth asks the server if the cookied authentication is valid
 func CheckAuth() {
-	fmt.Println("Checking authentication status...")
+	console.Log("Checking authentication status...")
 	jquery.Ajax(map[string]interface{}{
 		"type": "GET",
 		"url":  "/auth/check",
@@ -58,12 +58,12 @@ func CheckAuth() {
 				data.AuthFail = true
 				data.MessageContainerActive = false
 				templates.Apply("login", "#container", nil)
-				fmt.Println("Not logged in")
+				console.Log("Not logged in")
 			}
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
-			fmt.Println("Auth check failed: HTTP", info["status"])
-			fmt.Println(info)
+			console.Error("Auth check failed: HTTP", info["status"])
+			console.Error(info)
 			data.AuthFail = true
 			templates.Apply("login", "#container", nil)
 			jq("#error").RemoveClass("hidden")
@@ -87,7 +87,7 @@ func Login() {
 			jq("#auth-login").AddClass("disabled")
 			jq("#auth-register").AddClass("disabled")
 			jq("#auth-login").SetText("Connecting...")
-			fmt.Println("Successfully authenticated!")
+			console.Log("Successfully authenticated!")
 			Connect()
 		},
 		"error": func(info map[string]interface{}, textStatus, errorThrown string) {
@@ -103,8 +103,8 @@ func Login() {
 				jq("#error").SetText(err.Human)
 			}
 			jq("#error").RemoveClass("hidden")
-			fmt.Println("Authentication failed:", textStatus, errorThrown)
-			fmt.Println(info)
+			console.Error("Authentication failed:", textStatus, errorThrown)
+			console.Error(info)
 			data.AuthFail = true
 		},
 	})
@@ -132,8 +132,8 @@ func Register() {
 				jq("#error").SetText(err.Human)
 			}
 			jq("#error").RemoveClass("hidden")
-			fmt.Println("Register failed:", textStatus, errorThrown)
-			fmt.Println(info)
+			console.Error("Register failed:", textStatus, errorThrown)
+			console.Error(info)
 			data.AuthFail = true
 		},
 	})
