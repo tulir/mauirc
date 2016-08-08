@@ -371,10 +371,10 @@ func TryJoinMessage(msg messages.Message) bool {
 }
 
 // OpenFullImageModal ...
-func OpenFullImageModal(id int64) {
+func OpenFullImageModal(src string, id int64) {
 	templates.Apply("image-modal", "#modal", map[string]interface{}{
 		"ID":     id,
-		"Source": jq(fmt.Sprintf("#msg-%d > .message-preview", id)).Find(".preview-image-link > .preview-image").Attr("stc"),
+		"Source": src,
 	})
 	ShowModal()
 }

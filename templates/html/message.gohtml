@@ -37,7 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {{ if or .Preview.PreviewImage .Preview.PreviewText}}
       <div class="message-preview">
       	{{ if .Preview.PreviewImage }}
-      		<a class="preview-image-link {{ if not .Preview.PreviewText }} preview-full-size {{ end }}" href="javascript:void(0)" onClick="ui.openFullImageModal({{ .Preview.ID }})">
+      		<a href="javascript:void(0)"
+            class="preview-image-link {{ if not .Preview.PreviewText }} preview-full-size {{ end }}"
+            onClick="ui.openFullImageModal('{{ .Preview.Image }}', {{ .Preview.ID }})">
       			<img class="preview-image" src="{{ .Preview.Image }}" alt="Preview Image">
       		</a>
       	{{ end }}
