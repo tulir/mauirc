@@ -50,3 +50,14 @@ func ParseNotificationLevel(str string) NotificationLevel {
 		return NotificationAll
 	}
 }
+
+func (nl NotificationLevel) String() string {
+	switch nl {
+	case NotificationNone:
+		return "disabled"
+	case NotificationHighlights:
+		return "highlights"
+	default:
+		return "all"
+	}
+}
