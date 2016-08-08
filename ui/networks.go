@@ -37,7 +37,7 @@ func OpenNetworkEditor() {
 		templates.Append("settings-list-entry", "#network-list", map[string]interface{}{
 			"Name":    name,
 			"Class":   "network-list-button",
-			"OnClick": fmt.Sprintf("settings.networks.switch('%s')", name),
+			"OnClick": fmt.Sprintf("ui.settings.networks.switch('%s')", name),
 			"ID":      fmt.Sprintf("chnet-%s", name),
 		})
 	}
@@ -89,7 +89,7 @@ func NewNetwork() {
 	templates.Append("settings-list-entry", "#network-list", map[string]interface{}{
 		"Name":    name,
 		"Class":   "network-list-button",
-		"OnClick": fmt.Sprintf("settings.networks.switch('%s')", name),
+		"OnClick": fmt.Sprintf("ui.settings.networks.switch('%s')", name),
 		"ID":      fmt.Sprintf("chnet-%s", name),
 	})
 
@@ -119,6 +119,7 @@ type networkRequest struct {
 	Nick            string `json:"nick,omitempty"`
 	Connected       string `json:"connected,omitempty"`
 	SSL             string `json:"ssl,omitempty"`
+	SSLBool         bool   `json:"ssl,omitempty"`
 	IP              string `json:"ip,omitempty"`
 	Port            uint16 `json:"port,omitempty"`
 	ForceDisconnect bool   `json:"forcedisconnect,omitempty"`
@@ -126,21 +127,32 @@ type networkRequest struct {
 
 // SaveNetwork saves a network
 func SaveNetwork(net string) {
-	chnet := jq(fmt.Sprintf("#chnet-%s", net))
-	if chnet.HasClass("new-net") {
-		chnet.RemoveClass("new-net")
+	if net == "newnet" {
 		net = jq("#network-ed-name").Val()
+		if net == "newnet" {
+			return
+		}
+		chnet := jq(fmt.Sprintf("#chnet-newnet"))
 		chnet.SetAttr("id", net)
 		chnet.SetText(net)
+		chnet = jq(fmt.Sprintf("#chnet-%s", net))
 
 		port, _ := strconv.ParseUint(jq("#network-ed-port").Val(), 10, 16)
+		console.Log(util.MarshalString(networkRequest{
+			IP:       jq("#network-ed-addr").Val(),
+			Port:     uint16(port),
+			SSL:      jq("#network-ed-ssl").Attr("active"),
+			User:     jq("#network-ed-user").Val(),
+			Realname: jq("#network-ed-realname").Val(),
+			Nick:     jq("#network-ed-nick").Val(),
+		}))
 		jquery.Ajax(map[string]interface{}{
 			"type": "PUT",
 			"url":  fmt.Sprintf("/network/%s/", net),
 			"data": util.MarshalString(networkRequest{
 				IP:       jq("#network-ed-addr").Val(),
 				Port:     uint16(port),
-				SSL:      jq("#network-ed-ssl").Attr("active"),
+				SSLBool:  jq("#network-ed-ssl").Attr("active") == "true",
 				User:     jq("#network-ed-user").Val(),
 				Realname: jq("#network-ed-realname").Val(),
 				Nick:     jq("#network-ed-nick").Val(),
