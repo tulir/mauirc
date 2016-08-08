@@ -130,8 +130,8 @@ func ContextNetworkSwitcher(event *js.Object, network string) {
 }
 
 // ContextNetworkSwitcherClick ...
-func ContextNetworkSwitcherClick(command, network, channel string) {
-
+func ContextNetworkSwitcherClick(command, network string) {
+	// TODO implement with new network editing scheme
 }
 
 // ContextUserlistEntry shows the context menu for an userlist entry
