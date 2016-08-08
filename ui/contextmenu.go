@@ -137,10 +137,10 @@ func ContextNetworkSwitcherClick(command, network, channel string) {
 // ContextUserlistEntry shows the context menu for an userlist entry
 func ContextUserlistEntry(event *js.Object, network, user string) {
 	templates.Apply("contextmenu", "#contextmenu", map[string]string{
-		"Open Query": fmt.Sprintf("ui.contextmenu.click.networkSwitcher('query', '%s', '%s')", network, user),
+		"Open Query": fmt.Sprintf("ui.openPM('%s', '%s')", network, user),
 		"Whois":      fmt.Sprintf("ui.contextmenu.click.networkSwitcher('whois', '%s', '%s')", network, user),
-		"Give OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher('giveop', '%s', '%s')", network, user),
-		"Take OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher('takeop', '%s', '%s')", network, user),
+		"Give OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher('op', '%s', '%s')", network, user),
+		"Take OP":    fmt.Sprintf("ui.contextmenu.click.networkSwitcher('deop', '%s', '%s')", network, user),
 		"Kick":       fmt.Sprintf("ui.contextmenu.click.networkSwitcher('kick', '%s', '%s')", network, user),
 		"Ban":        fmt.Sprintf("ui.contextmenu.click.networkSwitcher('ban', '%s', '%s')", network, user),
 	})
@@ -149,7 +149,46 @@ func ContextUserlistEntry(event *js.Object, network, user string) {
 
 // ContextUserlistEntryClick ...
 func ContextUserlistEntryClick(command, network, user string) {
-
+	switch command {
+	case "whois":
+		data.Messages <- messages.Container{
+			Type: messages.MsgMessage,
+			Object: messages.Message{
+				Network: GetActiveNetwork(),
+				Channel: user,
+				Command: "whois",
+				Message: "whois",
+			},
+		}
+	case "op":
+		data.Messages <- messages.Container{
+			Type: messages.MsgMode,
+			Object: messages.Mode{
+				Network: GetActiveNetwork(),
+				Channel: GetActiveChannel(),
+				Message: fmt.Sprintf("+o %s", user),
+			},
+		}
+	case "deop":
+		data.Messages <- messages.Container{
+			Type: messages.MsgMode,
+			Object: messages.Mode{
+				Network: GetActiveNetwork(),
+				Channel: GetActiveChannel(),
+				Message: fmt.Sprintf("-o %s", user),
+			},
+		}
+	case "kick":
+		data.Messages <- messages.Container{
+			Type: messages.MsgKick,
+			Object: messages.Kick{
+				Network: GetActiveNetwork(),
+				Channel: GetActiveChannel(),
+				User:    user,
+				Message: "Get out",
+			},
+		}
+	}
 }
 
 // ShowContextMenu shows the context menu
