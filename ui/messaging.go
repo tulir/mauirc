@@ -233,7 +233,7 @@ func Receive(msg messages.Message, isNew bool) {
 
 	switch strings.ToUpper(msg.Command) {
 	case "ACTION":
-		templateData.class = append(templateData.class, "secondary-action", "user-action")
+		templateData.class = append(templateData.class, "user-action")
 		templateData.Clipboard = fmt.Sprintf("* %s %s", templateData.Sender, templateData.Message)
 	case irc.JOIN:
 		templateData.Message = fmt.Sprintf("joined %s", templateData.Message)
