@@ -84,7 +84,37 @@ func ContextChannelSwitcher(event *js.Object, network, channel string) {
 
 // ContextChannelSwitcherClick ...
 func ContextChannelSwitcherClick(command, network, channel string) {
-
+	switch command {
+	case "clear":
+		data.Messages <- messages.Container{
+			Type: messages.MsgClear,
+			Object: messages.ClearHistory{
+				Network: network,
+				Channel: channel,
+			},
+		}
+	case "part":
+		if channel[0] == '#' {
+			data.Messages <- messages.Container{
+				Type: messages.MsgMessage,
+				Object: messages.Message{
+					Network: network,
+					Channel: channel,
+					Command: "part",
+					Message: "Leaving",
+				},
+			}
+		} else {
+			data.Messages <- messages.Container{
+				Type: messages.MsgClose,
+				Object: messages.ClearHistory{
+					Network: network,
+					Channel: channel,
+				},
+			}
+		}
+		CloseChannel(network, channel)
+	}
 }
 
 // ContextNetworkSwitcher shows the context menu for a network switcher
