@@ -30,7 +30,7 @@ func Log(msg ...interface{}) {
 
 // Info calls console.info with the given arguments
 func Info(msg ...interface{}) {
-	console.Call("log", msg...)
+	console.Call("info", msg...)
 }
 
 // Warn calls console.warn with the given arguments
