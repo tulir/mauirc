@@ -41,7 +41,7 @@ func init() {
 
 	mousetrap.Invoke("mod+e p", func() {
 		if len(GetActiveNetwork()) > 0 && len(GetActiveChannel()) > 0 {
-			// TODO part and close
+			PartChannel()
 		}
 	})
 
