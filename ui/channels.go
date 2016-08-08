@@ -91,29 +91,23 @@ func OpenChannelAdder(network string) {
 	jq(fmt.Sprintf("#add-channel-%s", network)).AddClass("hidden")
 
 	adder := jq(fmt.Sprintf("#channel-adder-%s", network))
+	adder.Underlying().Call("easyAutocomplete", map[string]interface{}{
+		"data":        data.MustGetNetwork(network).ChannelNames,
+		"placeholder": "Nick or #channel",
+		"list": map[string]interface{}{
+			"maxNumberOfElements": 10,
+			"match":               map[string]interface{}{"enabled": true},
+			"sort":                map[string]interface{}{"enabled": true},
+			"onChooseEvent": func() {
+				FinishChannelAdding(network)
+			},
+			"showAnimation": map[string]interface{}{
+				"type": "slide",
+				"time": 400,
+			},
+		},
+	})
 	adder.Focus()
-	/* TODO: Autocomplete? Original JS implementation:
-	   adder.easyAutocomplete({
-	     data: data.getNetwork(network).getChannels(),
-	     placeholder: "Nick or #channel",
-	     list: {
-	       maxNumberOfElements: 10,
-	       match: { enabled: true },
-	       sort: {enabled: true },
-	       onChooseEvent: function() { finishNewChannel(network) },
-	       showAnimation: {
-	         type: "slide",
-	         time: 400,
-	         callback: function() {}
-	       },
-	       hideAnimation: {
-	         type: "slide",
-	         time: 400,
-	         callback: function() {}
-	       }
-	     }
-	   })
-	*/
 }
 
 // CancelChannelAdding closes the channel adder
