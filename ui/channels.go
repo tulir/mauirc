@@ -88,6 +88,7 @@ func OpenChannelAdder(network string) {
 	}
 
 	templates.Append("channel-adder", fmt.Sprintf("#chanswitchers-%s", network), network)
+	jq(fmt.Sprintf("#add-channel-%s", network)).AddClass("hidden")
 
 	adder := jq(fmt.Sprintf("#channel-adder-%s", network))
 	adder.Focus()
