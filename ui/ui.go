@@ -84,6 +84,11 @@ func init() {
 			"send": OperSend,
 			"open": OpenOper,
 		},
+		"title": map[string]interface{}{
+			"edit":   StartTitleEdit,
+			"stop":   StopTitleEdit,
+			"finish": FinishTitleEdit,
+		},
 		"getActiveChannel":    GetActiveChannel,
 		"getActiveNetwork":    GetActiveNetwork,
 		"getActiveChannelObj": GetActiveChannelObj,

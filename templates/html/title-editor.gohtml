@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	id="title-editor"
 	autocomplete="off"
 	placeholder="Enter the topic..."
-	onKeyDown="ui.title.finish(event.keyCode, event)"
-	onBlur="ui.title.finish(27)"
+	onKeyDown="if (event.keyCode == 13) { ui.title.finish(); event.preventDefault(); } else if (event.keyCode == 27) { ui.title.stop(); }"
+	onBlur="ui.title.stop()"
 	data-old-text="{{ .Title }}"
 	value="{{ .Title }}"
 >
