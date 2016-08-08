@@ -23,6 +23,8 @@ import (
 	"strings"
 )
 
+var commands = []string{"/me", "/topic", "/nick", "/msg", "/query", "/join", "/part", "/exit"}
+
 // Autocomplete things
 func Autocomplete() {
 	msgbox := jq("#message-text")
@@ -35,18 +37,25 @@ func Autocomplete() {
 	}
 
 	word := text[spIndex+1 : caretPos]
+
+	var acList []string
+	fmtStart := "%s %s"
+	fmtMid := "%s %s%s"
 	if word[0] == '/' {
-		// TODO command autocomplete
+		acList = commands
 	} else {
-		for _, user := range data.MustGetChannel(GetActiveNetwork(), GetActiveChannel()).UserlistPlain {
-			if strings.HasPrefix(strings.ToLower(user), word) {
-				if spIndex == -1 {
-					msgbox.SetVal(fmt.Sprintf("%s: %s", user, text[caretPos:]))
-				} else {
-					msgbox.SetVal(fmt.Sprintf("%s %s%s", text[:spIndex], user, text[caretPos:]))
-				}
-				return
+		fmtStart = "%s: %s"
+		acList = data.MustGetChannel(GetActiveNetwork(), GetActiveChannel()).UserlistPlain
+	}
+
+	for _, ac := range acList {
+		if strings.HasPrefix(strings.ToLower(ac), word) {
+			if spIndex == -1 {
+				msgbox.SetVal(fmt.Sprintf(fmtStart, ac, text[caretPos:]))
+			} else {
+				msgbox.SetVal(fmt.Sprintf(fmtMid, text[:spIndex], ac, text[caretPos:]))
 			}
+			return
 		}
 	}
 }
