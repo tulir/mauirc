@@ -63,12 +63,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .invite-wrapper {
+    width: 100%;
+    height: 100%;
+
     text-align: center;
 }
 
 .invite {
     position: absolute;
-    top: 50vh;
+    top: 50%;
     right: 0;
     left: 0;
 
@@ -81,6 +84,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     vertical-align: middle;
 
     border-radius: .25rem;;
+}
+
+.invite-text {
+    margin-top: 0;
+}
+
+.invite-btn {
+    padding: .75rem 2rem;
+
+    font-size: 1.25rem;
 }
 
 @media (min-width: 750px) {
