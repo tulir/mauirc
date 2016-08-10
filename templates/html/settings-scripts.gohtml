@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			Close Script Editor
 		</span>
 	</button>
-	<button class="btn btn-delete-script" type="button" id="script-tool-delete">Delete Script</button>
+	<button class="btn btn-delete-script" type="button" id="script-tool-delete" onClick="ui.settings.scripts.delete()">Delete Script</button>
 </div>
 
 <div class="script-list" id="script-list"></div>
@@ -37,8 +37,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="script-tools" id="script-tools">
 	<button class="btn script-tool script-tool-new" id="script-tool-new" type="button">New Script</button>
-	<button class="btn script-tool script-tool-save" id="script-tool-save" type="button">Save</button>
-	<button class="btn script-tool script-tool-rename" id="script-tool-rename" type="button">Rename</button>
+	<button class="btn script-tool script-tool-save" id="script-tool-save" type="button" onClick="ui.settings.scripts.save()">Save</button>
+	<button class="btn script-tool script-tool-rename" id="script-tool-rename" type="button" onClick="ui.settings.scripts.rename()">Rename</button>
 	<div class="script-name-wrapper">
 		<input class="textfield script-tool script-name" id="script-name" type="text" autocomplete="off" placeholder="Script name">
 	</div>
