@@ -33,7 +33,7 @@ func (ss ScriptStore) Get(name string) string {
 }
 
 // Rename the script with the given name
-func (ss ScriptStore) Rename(net, oldName, newName string, callback func()) {
+func (ss ScriptStore) Rename(net, oldName, newName string, callback func(net string)) {
 	jquery.Ajax(map[string]interface{}{
 		"type": "POST",
 		"url":  fmt.Sprintf("/script/%s/%s/", net, oldName),
@@ -43,7 +43,9 @@ func (ss ScriptStore) Rename(net, oldName, newName string, callback func()) {
 
 			ss[newName] = ss[oldName]
 			delete(ss, oldName)
-			callback()
+			if callback != nil {
+				callback(net)
+			}
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
 			console.Error("Failed to rename script: HTTP", info["status"])
@@ -53,7 +55,7 @@ func (ss ScriptStore) Rename(net, oldName, newName string, callback func()) {
 }
 
 // Put the given script under the given name
-func (ss ScriptStore) Put(net, name, script string, callback func()) {
+func (ss ScriptStore) Put(net, name, script string, callback func(net string)) {
 	jquery.Ajax(map[string]interface{}{
 		"type": "PUT",
 		"url":  fmt.Sprintf("/script/%s/%s/", net, name),
@@ -61,7 +63,9 @@ func (ss ScriptStore) Put(net, name, script string, callback func()) {
 		jquery.SUCCESS: func(data string) {
 			ss[name] = script
 			console.Log("Successfully updated script", name, "@", net)
-			callback()
+			if callback != nil {
+				callback(net)
+			}
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
 			console.Error("Failed to update script: HTTP", info["status"])
@@ -71,14 +75,16 @@ func (ss ScriptStore) Put(net, name, script string, callback func()) {
 }
 
 // Delete the script with the given name
-func (ss ScriptStore) Delete(net, name string, callback func()) {
+func (ss ScriptStore) Delete(net, name string, callback func(net string)) {
 	jquery.Ajax(map[string]interface{}{
 		"type": "DELETE",
 		"url":  fmt.Sprintf("/script/%s/%s/", net, name),
 		jquery.SUCCESS: func() {
 			delete(ss, name)
 			console.Log("Successfully deleted script", name, "@", net)
-			callback()
+			if callback != nil {
+				callback(net)
+			}
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
 			console.Error("Failed to delete script: HTTP", info["status"])
