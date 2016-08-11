@@ -113,7 +113,11 @@ func init() {
 				"open":   OpenScriptEditor,
 				"close":  CloseScriptEditor,
 				"switch": SwitchScript,
-				"new":    NewScript,
+				"new": map[string]interface{}{
+					"start":  StartNewScript,
+					"cancel": CancelNewScript,
+					"finish": FinishNewScript,
+				},
 				"delete": DeleteScript,
 				"rename": RenameScript,
 				"save":   SaveScript,

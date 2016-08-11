@@ -95,6 +95,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     height: 100%;
 }
 
+.script-adder {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+
+    color: white;
+    border: none;
+    background-color: var(--maunium-green);
+
+    font-size: 1rem;
+}
+
+.script-adder-wrapper {
+    border: none;
+    background-color: var(--maunium-green);
+}
+
 @media (min-width: 750px) {
     .settings-scripts {
         margin: .5rem .6rem;

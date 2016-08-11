@@ -62,18 +62,19 @@ func OpenScriptEditor(net string) {
 	})
 	jq("#script-list").Empty()
 	for name := range scripts {
-		templates.Append("settings-list-entry", "#script-list", map[string]interface{}{
-			"ID":      fmt.Sprintf("chscript-%s", name),
-			"Class":   "script-list-button",
-			"Name":    name,
-			"Network": net,
-			"OnClick": fmt.Sprintf("ui.settings.scripts.switch('%s', '%s')", net, name),
-		})
+		addScriptToList(net, name)
 	}
 
-	jq("#script-tool-new").Call("unbind", "click")
-	jq("#script-tool-new").Call("click", func() {
-		NewScript(net)
+	jq("#script-list").SetAttr("data-network", net)
+}
+
+func addScriptToList(net, name string) {
+	templates.Append("settings-list-entry", "#script-list", map[string]interface{}{
+		"ID":      fmt.Sprintf("chscript-%s", name),
+		"Class":   "script-list-button",
+		"Name":    name,
+		"Network": net,
+		"OnClick": fmt.Sprintf("ui.settings.scripts.switch('%s', '%s')", net, name),
 	})
 }
 
@@ -81,7 +82,6 @@ func OpenScriptEditor(net string) {
 func CloseScriptEditor() {
 	jq("#settings-main").RemoveClass("hidden")
 	jq("#settings-scripts").AddClass("hidden")
-	jq("#script-tool-new").Call("unbind", "click")
 	scripteditor.SetValue("")
 }
 
@@ -105,7 +105,7 @@ func SwitchScript(net, name string) {
 func SaveScript() {
 	selected := jq("#script-list > .selected-script")
 	name := selected.Attr("data-name")
-	net := selected.Attr("data-network")
+	net := jq("#script-list").Attr("data-network")
 	if len(net) == 0 || len(name) == 0 {
 		return
 	}
@@ -121,7 +121,7 @@ func SaveScript() {
 func DeleteScript() {
 	selected := jq("#script-list > .selected-script")
 	name := selected.Attr("data-name")
-	net := selected.Attr("data-network")
+	net := jq("#script-list").Attr("data-network")
 	if net == Global {
 		data.GlobalScripts.Delete(net, name, OpenScriptEditor)
 	} else {
@@ -133,7 +133,7 @@ func DeleteScript() {
 func RenameScript() {
 	selected := jq("#script-list > .selected-script")
 	name := selected.Attr("data-name")
-	net := selected.Attr("data-network")
+	net := jq("#script-list").Attr("data-network")
 	if net == Global {
 		data.GlobalScripts.Rename(net, name, jq("#script-name").Val(), OpenScriptEditor)
 	} else {
@@ -141,22 +141,33 @@ func RenameScript() {
 	}
 }
 
-// NewScript creates a new script
-func NewScript(net string) {
-	name := "new-script"
-	templates.Append("settings-list-entry", "#script-list", map[string]interface{}{
-		"ID":      fmt.Sprintf("chscript-%s", name),
-		"Class":   "script-list-button",
-		"Name":    name,
-		"Network": net,
-		"OnClick": fmt.Sprintf("ui.settings.scripts.switch('%s', '%s')", net, name),
-	})
+// StartNewScript ...
+func StartNewScript() {
+	fmt.Println("Starting...")
+	templates.Append("settings-object-adder", "#script-list", "script")
+	jq("#script-adder").Focus()
+}
+
+// CancelNewScript ...
+func CancelNewScript() {
+	fmt.Println("Cancelling...")
+	jq("#script-adder-wrapper").Remove()
+}
+
+// FinishNewScript ...
+func FinishNewScript() {
+	net := jq("#script-list").Attr("data-network")
+	name := jq("#script-adder").Val()
+	fmt.Println("Finishing...")
+
+	addScriptToList(net, name)
 
 	if net == Global {
-		data.GlobalScripts.Put(net, name, "", nil)
+		data.GlobalScripts.Put(net, name, "// A new script has born\n", nil)
 	} else {
-		data.MustGetNetwork(net).Scripts.Put(net, name, "", nil)
+		data.MustGetNetwork(net).Scripts.Put(net, name, "// A new script has born\n", nil)
 	}
 
 	SwitchScript(net, name)
+	CancelNewScript()
 }

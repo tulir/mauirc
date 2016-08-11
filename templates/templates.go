@@ -49,6 +49,7 @@ func LoadAll() {
 	Load("settings-networks")
 	Load("settings-scripts")
 	Load("settings-list-entry")
+	Load("settings-object-adder")
 	Load("title-editor")
 	Load("userlist-entry")
 	Load("userlist-invite-box")
