@@ -18,274 +18,146 @@
 package ui
 
 import (
-	"github.com/gopherjs/gopherjs/js"
+	"fmt"
 	"maunium.net/go/gopher-ace"
+	"maunium.net/go/mauirc/data"
+	"maunium.net/go/mauirc/templates"
+	"maunium.net/go/mauirc/util/console"
 )
 
-func OpenScriptEditor(net string, scripts map[string]string) {
+// Global is the global network name
+const Global = "global"
+
+var scripteditor ace.Editor
+
+// OpenScriptEditor opens the script editor
+func OpenScriptEditor(net string) {
+	var scripts data.ScriptStore
+	if net == "global" {
+		scripts = data.GlobalScripts
+	} else {
+		scripts = data.MustGetNetwork(net).Scripts
+	}
+
 	jq("#settings-main").AddClass("hidden")
 	jq("#settings-networks").AddClass("hidden")
 	jq("#settings-scripts").RemoveClass("hidden")
 
-	scripteditor := ace.Edit("script-editor")
-	scripteditor.Call("setOptions", map[string]interface{}{
+	scripteditor = ace.Edit("script-editor")
+	scripteditor.SetOptions(map[string]interface{}{
 		"fontFamily": "Fira Code",
 		"fontSize":   "11pt",
 	})
-	//scripteditor.GetSession().SetMode("ace/mode/golang")
-	//scripteditor.GetSession().SetUseWorker(false)
+	scripteditor.GetSession().SetMode("ace/mode/golang")
+	scripteditor.GetSession().SetUseWorker(false)
 	scripteditor.GetSession().SetUseWrapMode(true)
 	scripteditor.GetSession().SetUseSoftTabs(true)
+	scripteditor.Get("commands").Call("addCommand", map[string]interface{}{
+		"name": "save",
+		"bindKey": map[string]interface{}{
+			"win": "Ctrl-S",
+			"mac": "Command-S",
+		},
+		"exec":     SaveScript,
+		"readOnly": false,
+	})
+	jq("#script-list").Empty()
+	for name := range scripts {
+		templates.Append("settings-list-entry", "#script-list", map[string]interface{}{
+			"ID":      fmt.Sprintf("chscript-%s", name),
+			"Class":   "script-list-button",
+			"Name":    name,
+			"Network": net,
+			"OnClick": fmt.Sprintf("ui.settings.scripts.switch('%s', '%s')", net, name),
+		})
+	}
+
+	jq("#script-tool-new").Call("unbind", "click")
+	jq("#script-tool-new").Call("click", func() {
+		NewScript(net)
+	})
 }
 
-/*
-
-settings.scripts.openEditor = function (net, scripts) {
-  "use strict"
-  $("#settings-main").addClass("hidden")
-  $("#settings-networkeditor").addClass("hidden")
-  $("#settings-scripts").removeClass("hidden")
-
-  scripteditor = ace.edit("script-editor")
-  scripteditor.setOptions({
-    fontFamily: "Fira Code",
-    fontSize: "11pt"
-  })
-  scripteditor.setShowPrintMargin(false)
-  scripteditor.setTheme("ace/theme/chrome")
-  scripteditor.getSession().setMode("ace/mode/golang")
-  scripteditor.getSession().setUseWorker(false)
-  scripteditor.getSession().setUseWrapMode(true)
-  scripteditor.getSession().setUseSoftTabs(true)
-
-  scripteditor.commands.addCommand({
-      name: 'save',
-      bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
-      exec: function(editor) {
-        settings.scripts.save()
-      },
-      readOnly: false
-  })
-
-  $("#script-list").empty()
-  for (var key in scripts) {
-    if (scripts.hasOwnProperty(key)) {
-      $("#script-list").loadTemplate($("#template-settings-list-entry"), {
-        id: sprintf("chscript-%s", key),
-        class: "btn script-list-button",
-        name: key,
-        network: net,
-        onclick: sprintf("settings.scripts.switch('%s', '%s')", net, key)
-      }, {append: true, isFile: false, async: false})
-    }
-  }
-
-  $("#script-tool-new").unbind("click")
-  $("#script-tool-new").click(function() {
-    settings.scripts.new(net)
-  })
+// CloseScriptEditor closes the script editor
+func CloseScriptEditor() {
+	jq("#settings-main").RemoveClass("hidden")
+	jq("#settings-scripts").RemoveClass("hidden")
+	jq("#script-tool-new").Call("unbind", "click")
 }
 
-settings.scripts.closeEditor = function () {
-  "use strict"
-  $("#settings-main").removeClass("hidden")
-  $("#settings-networkeditor").addClass("hidden")
-  $("#settings-scripts").addClass("hidden")
+// SwitchScript switches the open script
+func SwitchScript(net, name string) {
+	var script string
+	if net == Global {
+		script = data.GlobalScripts.Get(name)
+	} else {
+		script = data.MustGetNetwork(net).Scripts.Get("name")
+	}
+
+	if len(script) == 0 {
+		console.Error("Script not found:", name, "@", net)
+		return
+	}
+
+	jq("#script-list > .selected-script").RemoveClass("selected-script")
+	jq(fmt.Sprintf("#chscript-%s", name)).AddClass("selected-script")
+
+	scripteditor.SetValue(script)
+	jq("#script-name").SetVal(name)
 }
 
-settings.scripts.switch = function (net, name) {
-  "use strict"
-  var script
-  if (net === "global") {
-    script = data.getGlobalScript(name)
-  } else {
-    script = data.getNetwork(net).getScript(name)
-  }
-  if (script === undefined) {
-    dbg("Script not found:", name, "@", net)
-    return
-  }
-  $("#script-list > .selected-script").removeClass("selected-script")
-  $(sprintf("#chscript-%s", name)).addClass("selected-script")
-
-  scripteditor.setValue(script, 1)
-  $("#script-name").val(name)
-
-  $("#script-tool-delete").unbind("click")
-  $("#script-tool-delete").click(function() {
-    settings.scripts.delete(net, name)
-  })
-
-  $("#script-tool-save").unbind("click")
-  $("#script-tool-save").click(function() {
-    settings.scripts.upload(net, name)
-  })
-
-  $("#script-tool-rename").unbind("click")
-  $("#script-tool-rename").click(function() {
-    settings.scripts.rename(net, name)
-  })
+// SaveScript saves the open script
+func SaveScript() {
+	selected := jq("#script-list > .selected-script")
+	name := selected.Attr("data-name")
+	net := selected.Attr("data-network")
+	if net == Global {
+		data.GlobalScripts.Put(net, name, scripteditor.GetValue(), OpenScriptEditor)
+	} else {
+		data.MustGetNetwork(net).Scripts.Put(net, name, scripteditor.GetValue(), OpenScriptEditor)
+	}
 }
 
-settings.scripts.save = function () {
-  "use strict"
-  var script = scripteditor.getValue()
-  var name = $("#script-list > .selected-script").attr("data-name")
-  var net = $("#script-list > .selected-script").attr("data-network")
-  if (net === "global") {
-    data.putGlobalScript(name, script)
-  } else {
-    data.getNetwork(net).putScript(name, script)
-  }
+// DeleteScript deletes a script
+func DeleteScript() {
+	selected := jq("#script-list > .selected-script")
+	name := selected.Attr("data-name")
+	net := selected.Attr("data-network")
+	if net == Global {
+		data.GlobalScripts.Delete(net, name, OpenScriptEditor)
+	} else {
+		data.MustGetNetwork(net).Scripts.Delete(net, name, OpenScriptEditor)
+	}
 }
 
-settings.scripts.new = function (net) {
-  "use strict"
-  var key = "new-script"
-  $("#script-list").loadTemplate($("#template-settings-list-entry"), {
-    id: sprintf("chscript-%s", key),
-    class: "btn script-list-button",
-    name: key,
-    network: net,
-    onclick: sprintf("settings.scripts.switch('%s', '%s')", net, key)
-  }, {append: true, isFile: false, async: false})
-
-  if (net === "global") {
-    data.putGlobalScript(key, "")
-  } else {
-    data.getNetwork(net).putScript(key, "")
-  }
-
-  settings.scripts.switch(net, key)
-  settings.scripts.upload(net, key)
+// RenameScript renames a script
+func RenameScript() {
+	selected := jq("#script-list > .selected-script")
+	name := selected.Attr("data-name")
+	net := selected.Attr("data-network")
+	if net == Global {
+		data.GlobalScripts.Rename(net, name, jq("#script-name").Val(), OpenScriptEditor)
+	} else {
+		data.MustGetNetwork(net).Scripts.Rename(net, name, jq("#script-name").Val(), OpenScriptEditor)
+	}
 }
 
-settings.scripts.upload = function (net, name) {
-  "use strict"
-  settings.scripts.save()
+// NewScript creates a new script
+func NewScript(net string) {
+	name := "new-script"
+	templates.Append("settings-list-entry", "#script-list", map[string]interface{}{
+		"ID":      fmt.Sprintf("chscript-%s", name),
+		"Class":   "script-list-button",
+		"Name":    name,
+		"Network": net,
+		"OnClick": fmt.Sprintf("ui.settings.scripts.switch('%s', '%s')", net, name),
+	})
 
-  if (net === "global") {
-    var script = data.getGlobalScript(name)
-  } else {
-    var script = data.getNetwork(net).getScript(name)
-  }
+	if net == Global {
+		data.GlobalScripts.Put(net, name, "", nil)
+	} else {
+		data.MustGetNetwork(net).Scripts.Put(net, name, "", nil)
+	}
 
-  $.ajax({
-    type: "PUT",
-    url: sprintf("/script/%s/%s/", net, name),
-    data: script,
-    success: function(data) {
-      "use strict"
-      dbg("Successfully updated script", name, "@", net)
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      "use strict"
-      dbg("Failed to update script", name, "@", net + ":", textStatus, errorThrown)
-      dbg(jqXHR)
-    }
-  })
+	SwitchScript(net, name)
 }
-
-settings.scripts.rename = function (net, name) {
-  "use strict"
-  var newName = $("#script-name").val()
-  $.ajax({
-    type: "POST",
-    url: sprintf("/script/%s/%s/", net, name),
-    data: sprintf("%s,%s", net, newName),
-    success: function() {
-      "use strict"
-      dbg("Successfully renamed script", name, "@", net, "to", newName)
-      if(net === "global") {
-        var script = data.getGlobalScript(name)
-        data.deleteGlobalScript(name)
-        data.putGlobalScript(newName, script)
-        settings.scripts.openEditor(net, data.getGlobalScripts())
-      } else {
-        var netw = data.getNetwork(net)
-        var script = netw.getScript(name)
-        netw.deleteScript(name)
-        netw.putScript(newName, script)
-        settings.scripts.openEditor(net, netw.getScripts())
-      }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      "use strict"
-      dbg("Failed to rename script", name, "@", net, "to", newName + ":", textStatus, errorThrown)
-      dbg(jqXHR)
-    }
-  })
-}
-
-settings.scripts.delete = function (net, name) {
-  "use strict"
-  $.ajax({
-    type: "DELETE",
-    url: sprintf("/script/%s/%s/", net, name),
-    success: function() {
-      "use strict"
-      dbg("Successfully deleted script", name, "@", net)
-      if (net === "global") {
-        data.deleteGlobalScript(name)
-        settings.scripts.openEditor(net, data.getGlobalScripts())
-      } else {
-        var netw = data.getNetwork(net)
-        netw.deleteScript(name)
-        settings.scripts.openEditor(net, netw.getScripts())
-      }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      "use strict"
-      dbg("Failed to delete script", name, "@", net + ":", textStatus, errorThrown)
-      dbg(jqXHR)
-    }
-  })
-}
-
-settings.scripts.edit = function () {
-  "use strict"
-  settings.scripts.openEditor(getActiveNetwork(), data.getNetwork(getActiveNetwork()).getScripts())
-}
-
-settings.scripts.editGlobal = function () {
-  "use strict"
-  settings.scripts.openEditor("global", data.getGlobalScripts())
-}
-
-settings.scripts.update = function(net, reload) {
-  "use strict"
-  dbg("Loading scripts for", net)
-  $.ajax({
-    type: "GET",
-    url: "/script/" + net,
-    dataType: "json",
-    success: function(scripts) {
-      "use strict"
-      if (isEmpty(scripts)) return
-      if (net === "global") {
-        scripts.forEach(function(val, i, arr) {
-          data.putGlobalScript(val.name, val.script)
-        })
-
-        if (reload) {
-          settings.scripts.editGlobal()
-        }
-      } else {
-        var netw = data.getNetwork(net)
-        scripts.forEach(function(val, i, arr) {
-          netw.putScript(val.name, val.script)
-        })
-
-        if (reload) {
-          settings.scripts.edit()
-        }
-      }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      "use strict"
-      dbg("Failed to get scripts of", net + ":", textStatus, errorThrown)
-      dbg(jqXHR)
-    }
-  })
-}
-*/
