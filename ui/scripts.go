@@ -97,7 +97,7 @@ func SwitchScript(net, name string) {
 	jq("#script-list > .selected-script").RemoveClass("selected-script")
 	jq(fmt.Sprintf("#chscript-%s", name)).AddClass("selected-script")
 
-	scripteditor.SetValue(script)
+	scripteditor.SetValuePos(script, 1)
 	jq("#script-name").SetVal(name)
 }
 
