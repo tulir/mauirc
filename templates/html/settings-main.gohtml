@@ -57,7 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   <div class="settings-entry">
     <label class="settings-label" for="network-scripts">Edit Scripts</label>
-    <button class="settings-value" id="network-scripts" type="button" onClick="ui.settings.scripts.edit()">Enter</button>
+    <button class="settings-value" id="network-scripts" type="button" onClick="ui.settings.scripts.open(ui.getActiveNetwork())">Enter</button>
   </div>
 </div>
 
@@ -70,7 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   <div class="settings-entry">
     <label class="settings-label" for="mauirc-scripts">Edit Global Scripts</label>
-    <button class="settings-value" id="mauirc-scripts" type="button" onClick="ui.settings.scripts.editGlobal()">Enter</button>
+    <button class="settings-value" id="mauirc-scripts" type="button" onClick="ui.settings.scripts.open('global')">Enter</button>
   </div>
 
   <div class="settings-entry">
