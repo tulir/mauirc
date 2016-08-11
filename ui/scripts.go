@@ -90,7 +90,7 @@ func SwitchScript(net, name string) {
 	if net == Global {
 		script = data.GlobalScripts.Get(name)
 	} else {
-		script = data.MustGetNetwork(net).Scripts.Get("name")
+		script = data.MustGetNetwork(net).Scripts.Get(name)
 	}
 
 	jq("#script-list > .selected-script").RemoveClass("selected-script")
