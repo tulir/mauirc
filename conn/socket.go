@@ -129,7 +129,7 @@ func message(evt *js.Object) {
 		msgData := messages.ParseNetData(msg.Object)
 		if ui.GetNetwork(msgData.Name).Length == 0 {
 			ui.OpenNetwork(msgData.Name)
-			// scripts.Update(msgData.Name, false) TODO
+			data.MustGetNetwork(msgData.Name).Scripts.Update(msgData.Name, nil)
 		}
 		data.MustGetNetwork(msgData.Name).SetNetData(msgData)
 		/* TODO
