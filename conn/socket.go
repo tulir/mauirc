@@ -129,9 +129,9 @@ func message(evt *js.Object) {
 		msgData := messages.ParseNetData(msg.Object)
 		if ui.GetNetwork(msgData.Name).Length == 0 {
 			ui.OpenNetwork(msgData.Name)
-			data.MustGetNetwork(msgData.Name).Scripts.Update(msgData.Name, nil)
 		}
 		data.MustGetNetwork(msgData.Name).SetNetData(msgData)
+		data.MustGetNetwork(msgData.Name).Scripts.Update(msgData.Name, nil)
 		/* TODO
 		ui.SetNetworkConnected(msgData.Name, msgData.Connected)
 
