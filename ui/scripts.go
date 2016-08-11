@@ -80,7 +80,7 @@ func addScriptToList(net, name string) {
 func CloseScriptEditor() {
 	jq("#settings-main").RemoveClass("hidden")
 	jq("#settings-scripts").AddClass("hidden")
-	scripteditor.SetValue("")
+	SwitchClearScript()
 }
 
 // SwitchScript switches the open script
@@ -97,6 +97,13 @@ func SwitchScript(net, name string) {
 
 	scripteditor.SetValuePos(script, 1)
 	jq("#script-name").SetVal(name)
+}
+
+// SwitchClearScript clears the open script
+func SwitchClearScript() {
+	jq("#script-list > .selected-script").RemoveClass("selected-script")
+	scripteditor.SetValue("")
+	jq("#script-name").SetVal("")
 }
 
 // SaveScript saves the open script
@@ -139,20 +146,20 @@ func RenameScript() {
 	}
 }
 
-// StartNewScript ...
+// StartNewScript opens the script adder
 func StartNewScript() {
 	fmt.Println("Starting...")
 	templates.Append("settings-object-adder", "#script-list", "script")
 	jq("#script-adder").Focus()
 }
 
-// CancelNewScript ...
+// CancelNewScript cancels adding a new script
 func CancelNewScript() {
 	fmt.Println("Cancelling...")
 	jq("#script-adder-wrapper").Remove()
 }
 
-// FinishNewScript ...
+// FinishNewScript creates the script with the name in the adder box and closes the adder
 func FinishNewScript() {
 	net := jq("#script-list").Attr("data-network")
 	name := jq("#script-adder").Val()
