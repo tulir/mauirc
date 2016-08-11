@@ -80,7 +80,7 @@ func OpenScriptEditor(net string) {
 // CloseScriptEditor closes the script editor
 func CloseScriptEditor() {
 	jq("#settings-main").RemoveClass("hidden")
-	jq("#settings-scripts").RemoveClass("hidden")
+	jq("#settings-scripts").AddClass("hidden")
 	jq("#script-tool-new").Call("unbind", "click")
 }
 
