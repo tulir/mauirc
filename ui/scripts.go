@@ -50,7 +50,7 @@ func OpenScriptEditor(net string) {
 	scripteditor.GetSession().SetMode("ace/mode/golang")
 	scripteditor.GetSession().SetUseWorker(false)
 	scripteditor.GetSession().SetUseWrapMode(true)
-	scripteditor.GetSession().SetUseSoftTabs(true)
+	scripteditor.GetSession().SetUseSoftTabs(false)
 	scripteditor.Get("commands").Call("addCommand", map[string]interface{}{
 		"name": "save",
 		"bindKey": map[string]interface{}{
@@ -82,6 +82,7 @@ func CloseScriptEditor() {
 	jq("#settings-main").RemoveClass("hidden")
 	jq("#settings-scripts").AddClass("hidden")
 	jq("#script-tool-new").Call("unbind", "click")
+	scripteditor.SetValue("")
 }
 
 // SwitchScript switches the open script
