@@ -18,6 +18,7 @@
 package data
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gopherjs/jquery"
 	"maunium.net/go/mauirc/util/console"
@@ -88,6 +89,42 @@ func (ss ScriptStore) Delete(net, name string, callback func(net string)) {
 		},
 		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
 			console.Error("Failed to delete script: HTTP", info["status"])
+			console.Error(info)
+		},
+	})
+}
+
+type script struct {
+	Name   string `json:"name"`
+	Script string `json:"script"`
+}
+
+// Update scripts from server
+func (ss ScriptStore) Update(net string, callback func(net string)) {
+	console.Log("Loading scripts for", net)
+	jquery.Ajax(map[string]interface{}{
+		"type": "GET",
+		"url":  fmt.Sprintf("/script/%s/", net),
+		jquery.SUCCESS: func(scriptsRaw string) {
+			var scripts []script
+			err := json.Unmarshal([]byte(scriptsRaw), &scripts)
+			if err != nil {
+				console.Error("Failed to unmarshal scripts:", err)
+				return
+			}
+
+			for _, script := range scripts {
+				ss[script.Name] = script.Script
+			}
+
+			console.Log("Successfully updated scripts for", net)
+
+			if callback != nil {
+				callback(net)
+			}
+		},
+		jquery.ERROR: func(info map[string]interface{}, textStatus, errorThrown string) {
+			console.Error("Failed to update scripts: HTTP", info["status"])
 			console.Error(info)
 		},
 	})
