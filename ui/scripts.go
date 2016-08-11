@@ -22,7 +22,6 @@ import (
 	"maunium.net/go/gopher-ace"
 	"maunium.net/go/mauirc/data"
 	"maunium.net/go/mauirc/templates"
-	"maunium.net/go/mauirc/util/console"
 )
 
 // Global is the global network name
@@ -94,11 +93,6 @@ func SwitchScript(net, name string) {
 		script = data.MustGetNetwork(net).Scripts.Get("name")
 	}
 
-	if len(script) == 0 {
-		console.Error("Script not found:", name, "@", net)
-		return
-	}
-
 	jq("#script-list > .selected-script").RemoveClass("selected-script")
 	jq(fmt.Sprintf("#chscript-%s", name)).AddClass("selected-script")
 
@@ -112,9 +106,9 @@ func SaveScript() {
 	name := selected.Attr("data-name")
 	net := selected.Attr("data-network")
 	if net == Global {
-		data.GlobalScripts.Put(net, name, scripteditor.GetValue(), OpenScriptEditor)
+		data.GlobalScripts.Put(net, name, scripteditor.GetValue(), nil)
 	} else {
-		data.MustGetNetwork(net).Scripts.Put(net, name, scripteditor.GetValue(), OpenScriptEditor)
+		data.MustGetNetwork(net).Scripts.Put(net, name, scripteditor.GetValue(), nil)
 	}
 }
 
