@@ -70,11 +70,9 @@ func OpenScriptEditor(net string) {
 
 func addScriptToList(net, name string) {
 	templates.Append("settings-list-entry", "#script-list", map[string]interface{}{
-		"ID":      fmt.Sprintf("chscript-%s", name),
-		"Class":   "script-list-button",
+		"Type":    "script",
 		"Name":    name,
 		"Network": net,
-		"OnClick": fmt.Sprintf("ui.settings.scripts.switch('%s', '%s')", net, name),
 	})
 }
 

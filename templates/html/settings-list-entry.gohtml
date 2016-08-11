@@ -17,9 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <button
 	type="button"
-	id="{{ .ID }}"
-	class="btn {{ .Class }}"
-	onClick="{{ .OnClick }}"
+	id="ch{{ .Type }}-{{ .Name }}"
+	class="btn {{ .Type }}-list-button"
+	{{ if .Network }}
+		onClick="ui.settings.{{ .Type }}s.switch('{{ .Network }}', '{{ .Name }}')"
+	{{ else }}
+		onClick="ui.settings.{{ .Type }}s.switch('{{ .Name }}')"
+	{{ end }}
 	data-name="{{ .Name }}"
-	data-network="{{ .Network }}"
 >{{ .Name }}</button>

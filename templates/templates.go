@@ -60,14 +60,20 @@ func LoadAll() {
 // Load the template with the given name
 func Load(name string) *template.Template {
 	templ := tmpl.New(name)
-	templ.Parse(jq(fmt.Sprintf("#template-%s", name)).Html())
+	_, err := templ.Parse(jq(fmt.Sprintf("#template-%s", name)).Html())
+	if err != nil {
+		fmt.Println(err)
+	}
 	return templ
 }
 
 // Apply the template with the given name and the given args to the given object
 func Apply(name, target string, args interface{}) {
 	var buf bytes.Buffer
-	tmpl.ExecuteTemplate(&buf, name, args)
+	err := tmpl.ExecuteTemplate(&buf, name, args)
+	if err != nil {
+		fmt.Println(err)
+	}
 	jq(target).SetHtml(buf.String())
 }
 
@@ -77,7 +83,10 @@ func Append(name, target string, args interface{}) {
 
 	var buf bytes.Buffer
 	buf.WriteString(jqtarget.Html())
-	tmpl.ExecuteTemplate(&buf, name, args)
+	err := tmpl.ExecuteTemplate(&buf, name, args)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	jq(target).SetHtml(buf.String())
 }
@@ -85,7 +94,10 @@ func Append(name, target string, args interface{}) {
 // ApplyObj applies the template with the given name to the given object
 func ApplyObj(name string, obj jquery.JQuery, args interface{}) {
 	var buf bytes.Buffer
-	tmpl.ExecuteTemplate(&buf, name, args)
+	err := tmpl.ExecuteTemplate(&buf, name, args)
+	if err != nil {
+		fmt.Println(err)
+	}
 	obj.SetHtml(buf.String())
 }
 

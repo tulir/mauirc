@@ -34,13 +34,17 @@ func OpenNetworkEditor() {
 	jq("#settings-networks").RemoveClass("hidden")
 
 	for name := range data.Networks {
-		templates.Append("settings-list-entry", "#network-list", map[string]interface{}{
-			"Name":    name,
-			"Class":   "network-list-button",
-			"OnClick": fmt.Sprintf("ui.settings.networks.switch('%s')", name),
-			"ID":      fmt.Sprintf("chnet-%s", name),
-		})
+		addNetworkToList(name)
 	}
+}
+
+func addNetworkToList(net string) {
+	console.Log(net)
+	templates.Append("settings-list-entry", "#network-list", map[string]interface{}{
+		"Type": "network",
+		"Name": net,
+	})
+	console.Log(jq(fmt.Sprintf("#chnetwork-%s", net)))
 }
 
 // CloseNetworkEditor closes the network editor
@@ -53,7 +57,7 @@ func CloseNetworkEditor() {
 
 // SwitchNetwork switches the network being edited
 func SwitchNetwork(net string) {
-	if jq(fmt.Sprintf("#chnet-%s", net)).HasClass("new-net") {
+	if jq(fmt.Sprintf("#chnetwork-%s", net)).HasClass("new-net") {
 		jq("#network-list .new-net").Remove()
 	}
 
@@ -70,7 +74,7 @@ func SwitchNetwork(net string) {
 	jq("#network-pane").SetAttr("data-network", net)
 
 	jq(".network-list .selected-network").RemoveClass("selected-network")
-	jq(fmt.Sprintf("#chnet-%s", net)).AddClass("selected-network")
+	jq(fmt.Sprintf("#chnetwork-%s", net)).AddClass("selected-network")
 
 	netData := data.MustGetNetwork(net)
 	jq("#network-ed-name").SetVal(net)
@@ -86,13 +90,7 @@ func SwitchNetwork(net string) {
 // NewNetwork ...
 func NewNetwork() {
 	name := "newnet"
-	templates.Append("settings-list-entry", "#network-list", map[string]interface{}{
-		"Name":    name,
-		"Class":   "network-list-button",
-		"OnClick": fmt.Sprintf("ui.settings.networks.switch('%s')", name),
-		"ID":      fmt.Sprintf("chnet-%s", name),
-	})
-
+	addNetworkToList(name)
 	SwitchNetwork(name)
 	jq("#network-ed-name").SetVal("")
 }
@@ -132,10 +130,10 @@ func SaveNetwork(net string) {
 		if net == "newnet" {
 			return
 		}
-		chnet := jq(fmt.Sprintf("#chnet-newnet"))
+		chnet := jq(fmt.Sprintf("#chnetwork-newnet"))
 		chnet.SetAttr("id", net)
 		chnet.SetText(net)
-		chnet = jq(fmt.Sprintf("#chnet-%s", net))
+		chnet = jq(fmt.Sprintf("#chnetwork-%s", net))
 
 		port, _ := strconv.ParseUint(jq("#network-ed-port").Val(), 10, 16)
 		console.Log(util.MarshalString(networkRequest{
