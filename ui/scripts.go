@@ -162,14 +162,17 @@ func FinishNewScript() {
 	net := jq("#script-list").Attr("data-network")
 	name := jq("#script-adder").Val()
 
-	addScriptToList(net, name)
-
 	if net == Global {
-		data.GlobalScripts.Put(net, name, "// A new script has born\n", nil)
+		data.GlobalScripts.Put(net, name, "// A new script has born\n", func(net string) {
+			addScriptToList(net, name)
+			SwitchScript(net, name)
+		})
 	} else {
-		data.MustGetNetwork(net).Scripts.Put(net, name, "// A new script has born\n", nil)
+		data.MustGetNetwork(net).Scripts.Put(net, name, "// A new script has born\n", func(net string) {
+			addScriptToList(net, name)
+			SwitchScript(net, name)
+		})
 	}
 
-	SwitchScript(net, name)
 	CancelNewScript()
 }
