@@ -65,6 +65,8 @@ func OpenScriptEditor(net string) {
 		addScriptToList(net, name)
 	}
 
+	SwitchClearScript()
+
 	jq("#script-list").SetAttr("data-network", net)
 }
 
