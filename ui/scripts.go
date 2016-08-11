@@ -106,6 +106,10 @@ func SaveScript() {
 	selected := jq("#script-list > .selected-script")
 	name := selected.Attr("data-name")
 	net := selected.Attr("data-network")
+	if len(net) == 0 || len(name) == 0 {
+		return
+	}
+
 	if net == Global {
 		data.GlobalScripts.Put(net, name, scripteditor.GetValue(), nil)
 	} else {
