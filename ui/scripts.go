@@ -148,14 +148,12 @@ func RenameScript() {
 
 // StartNewScript opens the script adder
 func StartNewScript() {
-	fmt.Println("Starting...")
 	templates.Append("settings-object-adder", "#script-list", "script")
 	jq("#script-adder").Focus()
 }
 
 // CancelNewScript cancels adding a new script
 func CancelNewScript() {
-	fmt.Println("Cancelling...")
 	jq("#script-adder-wrapper").Remove()
 }
 
@@ -163,7 +161,6 @@ func CancelNewScript() {
 func FinishNewScript() {
 	net := jq("#script-list").Attr("data-network")
 	name := jq("#script-adder").Val()
-	fmt.Println("Finishing...")
 
 	addScriptToList(net, name)
 
