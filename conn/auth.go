@@ -83,30 +83,14 @@ func Login() {
 		"type": "POST",
 		"url":  "/auth/login",
 		"data": util.MarshalString(loginForm{Email: jq("#email").Val(), Password: jq("#password").Val()}),
-		"success": func() {
+		jquery.SUCCESS: func() {
 			jq("#auth-login").AddClass("disabled")
 			jq("#auth-register").AddClass("disabled")
 			jq("#auth-login").SetText("Connecting...")
 			console.Log("Successfully authenticated!")
 			Connect()
 		},
-		"error": func(info map[string]interface{}, textStatus, errorThrown string) {
-			status, _ := info["status"].(int)
-			if status == 502 {
-				jq("#error").SetText("Can't connect to mauIRCd")
-			} else if status == 500 {
-				jq("#error").SetText("Can't connect to mauIRCd:<br>Server isn't feeling well")
-			} else {
-				var err errors.WebError
-				rawData, _ := info["responseText"].(string)
-				json.Unmarshal([]byte(rawData), &err)
-				jq("#error").SetText(err.Human)
-			}
-			jq("#error").RemoveClass("hidden")
-			console.Error("Authentication failed:", textStatus, errorThrown)
-			console.Error(info)
-			data.AuthFail = true
-		},
+		jquery.ERROR: authFailed,
 	})
 }
 
@@ -116,25 +100,27 @@ func Register() {
 		"type": "POST",
 		"url":  "/auth/register",
 		"data": util.MarshalString(loginForm{Email: jq("#email").Val(), Password: jq("#password").Val()}),
-		"success": func() {
+		jquery.SUCCESS: func() {
 			// TODO register success message
 		},
-		"error": func(info map[string]interface{}, textStatus, errorThrown string) {
-			status, _ := info["status"].(int)
-			if status == 502 {
-				jq("#error").SetText("Can't connect to mauIRCd")
-			} else if status == 500 {
-				jq("#error").SetText("Can't connect to mauIRCd:<br>Server isn't feeling well")
-			} else {
-				var err errors.WebError
-				rawData, _ := info["responseText"].(string)
-				json.Unmarshal([]byte(rawData), &err)
-				jq("#error").SetText(err.Human)
-			}
-			jq("#error").RemoveClass("hidden")
-			console.Error("Register failed:", textStatus, errorThrown)
-			console.Error(info)
-			data.AuthFail = true
-		},
+		jquery.ERROR: authFailed,
 	})
+}
+
+func authFailed(info map[string]interface{}, textStatus, errorThrown string) {
+	status, _ := info["status"].(int)
+	if status == 502 {
+		jq("#error").SetText("Can't connect to mauIRCd")
+	} else if status == 500 {
+		jq("#error").SetText("Can't connect to mauIRCd:<br>Server isn't feeling well")
+	} else {
+		var err errors.WebError
+		rawData, _ := info["responseText"].(string)
+		json.Unmarshal([]byte(rawData), &err)
+		jq("#error").SetText(err.Human)
+	}
+	jq("#error").RemoveClass("hidden")
+	console.Error("Register failed:", textStatus, errorThrown)
+	console.Error(info)
+	data.AuthFail = true
 }
