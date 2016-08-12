@@ -23,6 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	placeholder="Enter the topic..."
 	onKeyDown="if (event.keyCode == 13) { ui.title.finish(); event.preventDefault(); } else if (event.keyCode == 27) { ui.title.stop(); }"
 	onBlur="ui.title.stop()"
-	data-old-text="{{ .Title }}"
-	value="{{ .Title }}"
+	data-old-text="{{.}}"
+	value="{{.}}"
 >
