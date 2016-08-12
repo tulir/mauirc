@@ -95,7 +95,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     height: 100%;
 }
 
-.script-adder {
+.script-adder, .network-adder {
     box-sizing: border-box;
     width: 100%;
     padding: 0;
@@ -107,7 +107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     font-size: 1rem;
 }
 
-.script-adder-wrapper {
+.script-adder-wrapper, .network-adder-wrapper {
     border: none;
     background-color: var(--maunium-green);
 }

@@ -105,7 +105,11 @@ func init() {
 				"open":   OpenNetworkEditor,
 				"close":  CloseNetworkEditor,
 				"switch": SwitchNetwork,
-				"new":    NewNetwork,
+				"new": map[string]interface{}{
+					"start":  StartNewNetwork,
+					"cancel": CancelNewNetwork,
+					"finish": FinishNewNetwork,
+				},
 				"delete": DeleteNetwork,
 				"save":   SaveNetwork,
 			},

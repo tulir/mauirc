@@ -87,12 +87,23 @@ func SwitchNetwork(net string) {
 	jq("#network-ed-nick").SetVal(netData.Nick)
 }
 
-// NewNetwork ...
-func NewNetwork() {
-	name := "newnet"
+// StartNewNetwork opens the network adder
+func StartNewNetwork() {
+	templates.Append("settings-object-adder", "#network-list", "network")
+	jq("#network-adder").Focus()
+}
+
+// CancelNewNetwork cancels adding a new network
+func CancelNewNetwork() {
+	jq("#network-adder-wrapper").Remove()
+}
+
+// FinishNewNetwork ...
+func FinishNewNetwork() {
+	name := jq("#network-adder").Val()
+	CancelNewNetwork()
 	addNetworkToList(name)
 	SwitchNetwork(name)
-	jq("#network-ed-name").SetVal("")
 }
 
 // DeleteNetwork deletes a network
