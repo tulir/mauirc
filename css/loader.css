@@ -36,7 +36,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     transform: translateZ(0);
     animation: greenloader 1.1s infinite ease;
-    text-indent: -9999em;
 
     border-radius: 50%;
 
@@ -46,6 +45,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .loader.white {
     animation: whiteloader 1.1s infinite ease;
 }
+
+/*
+Loader keyframes made by Luke Haas (https://github.com/lukehaas/css-loaders) under the MIT license
+*/
 
 @keyframes greenloader {
     0%,
