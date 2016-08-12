@@ -212,6 +212,7 @@ func Receive(msg messages.Message, isNew bool) {
 		OwnMsg:    msg.OwnMsg,
 		Joined:    TryJoinMessage(msg),
 		Message:   util.Linkify(html.EscapeString(msg.Message)),
+		Clipboard: msg.Message,
 		Timestamp: msg.Timestamp,
 		IsAction:  true,
 		Preview:   PreviewTemplateData{},
@@ -341,8 +342,7 @@ func NotifyMessage(network, channel, sender, message string, highlight bool) {
 
 	hide := GetChannel(network, channel).HasClass("hidden")
 	if (notifs == data.NotificationAll || (notifs == data.NotificationHighlights && highlight)) && !js.Global.Get("document").Call("hasFocus").Bool() {
-		// TODO send notification
-		console.Info("Notification of", message)
+		SendNotification(network, channel, sender, message)
 		if hide {
 			jq(fmt.Sprintf("#switchto-%s-%s", NetworkFilter(network), ChannelFilter(channel))).AddClass("new-messages")
 		}
