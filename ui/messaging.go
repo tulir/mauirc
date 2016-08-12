@@ -238,13 +238,13 @@ func Receive(msg messages.Message, isNew bool) {
 		templateData.Clipboard = fmt.Sprintf("* %s %s", templateData.Sender, templateData.Message)
 	case irc.JOIN:
 		templateData.Message = fmt.Sprintf("joined %s", templateData.Message)
-		templateData.Clipboard = fmt.Sprintf("%s joined %s", templateData.Sender, templateData.Message)
+		templateData.Clipboard = fmt.Sprintf("%s %s", templateData.Sender, templateData.Message)
 		templateData.class = append(templateData.class, "secondary-action", "joinpart")
 	case irc.PART:
 		fallthrough
 	case irc.QUIT:
 		templateData.Message = fmt.Sprintf("left: %s", templateData.Message)
-		templateData.Clipboard = fmt.Sprintf("%s left: %s", templateData.Sender, templateData.Message)
+		templateData.Clipboard = fmt.Sprintf("%s %s", templateData.Sender, templateData.Message)
 		templateData.class = append(templateData.class, "secondary-action", "joinpart")
 	case irc.KICK:
 		index := strings.Index(msg.Message, ":")
