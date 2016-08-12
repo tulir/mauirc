@@ -9,8 +9,6 @@ A web-based UI-focused IRC client. Written in Go ([GopherJS](https://github.com/
 ### Packages
 You can find the basic minified sources from the [Release section](https://github.com/tulir293/mauirc/releases).
 
-Currently there are only releases for mauIRC 1.x, which was written directly in JS with jQuery. I'll make releases for 2.x as soon as it's functional.
-
 ### Compiling
 You can compile the code yourself using GopherJS. Once you have the [Go toolkit](https://golang.org/doc/install), simply use `go get -u github.com/gopherjs/gopherjs` to get the GopherJS toolkit.
 Then get the mauIRC sources using `go get -u maunium.net/go/mauirc` and use `make` in the mauIRC source directory.
