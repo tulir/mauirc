@@ -18,6 +18,7 @@
 package ui
 
 import (
+	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
 )
@@ -146,8 +147,11 @@ func ScrollDown() {
 }
 
 // SendNotification sends a notification to the desktop
-func SendNotification(user, message string) {
+func SendNotification(net, ch, user, message string) {
 	if js.Global.Get("Notification").Get("permission").String() == "granted" {
-		js.Global.Get("Notification").New(user, map[string]interface{}{"body": message, "icon": "/res/favicon.ico"})
+		notif := js.Global.Get("Notification").New(fmt.Sprintf("%s @ %s", user, ch), map[string]interface{}{"body": message, "icon": "/res/favicon.ico"})
+		notif.Set("onclick", func() {
+			SwitchTo(net, ch)
+		})
 	}
 }
