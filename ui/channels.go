@@ -66,7 +66,7 @@ func GetNetwork(network string) jquery.JQuery {
 	return jq(fmt.Sprintf("#net-%s", NetworkFilter(network)))
 }
 
-var chanfilter = regexp.MustCompile("([\\#\\*\\.])")
+var chanfilter = regexp.MustCompile(`([\#\*\.])`)
 
 // ChannelFilter filters the given channel name into a string usable in jQuery
 func ChannelFilter(channel string) string {

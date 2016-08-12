@@ -24,7 +24,7 @@ import (
 )
 
 var italicEncRegex = regexp.MustCompile("_([^_]*)_")
-var boldEncRegex = regexp.MustCompile("\\*([^\\*]*)\\*")
+var boldEncRegex = regexp.MustCompile(`\*([^\*]*)\*`)
 var underlineEncRegex = regexp.MustCompile("~([^~]*)~")
 var bothColorEncRegex = regexp.MustCompile("c(1[0-5]|[0-9])>([^<]*)<")
 var fgColorEncRegex = regexp.MustCompile("c(1[0-5]|[0-9]),(1[0-5]|[0-9])>([^<]*)<")
