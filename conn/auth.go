@@ -35,6 +35,9 @@ func init() {
 		"check":    CheckAuth,
 		"login":    Login,
 		"register": Register,
+		"forgotPassword": func() {
+			jq("#error").SetText("Password reset has not yet been implemented :/")
+		},
 	})
 }
 
