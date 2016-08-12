@@ -61,6 +61,7 @@ var colors = []string{
 var italicDecRegex = regexp.MustCompile("\x1D([^\x1D]*)?\x1D?")
 var boldDecRegex = regexp.MustCompile("\x02([^\x02]*)?\x02?")
 var underlineDecRegex = regexp.MustCompile("\x1F([^\x1F]*)?\x1F?")
+var monospaceDecRegex = regexp.MustCompile("`([^`]*)`")
 var bothColorDecRegex = regexp.MustCompile("\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?\x03?")
 var fgColorDecRegex = regexp.MustCompile("\x03(1[0-5]|[0-9])([^\x03]*)?\x03?")
 
@@ -69,6 +70,7 @@ func DecodeMessage(msg string) string {
 	msg = italicDecRegex.ReplaceAllString(msg, "<i>$1</i>")
 	msg = boldDecRegex.ReplaceAllString(msg, "<b>$1</b>")
 	msg = underlineDecRegex.ReplaceAllString(msg, "<u>$1</u>")
+	msg = monospaceDecRegex.ReplaceAllString(msg, "<tt>$1</tt>")
 	msg = bothColorDecRegex.ReplaceAllString(msg, "<span style='color: $1; background-color: $2;'>$3</span>")
 	msg = fgColorDecRegex.ReplaceAllString(msg, "<span style='color: $1;'>$2</span>")
 
