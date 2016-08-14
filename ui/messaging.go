@@ -344,13 +344,18 @@ func NotifyMessage(network, channel, sender, message string, highlight bool) {
 	if (notifs == data.NotificationAll || (notifs == data.NotificationHighlights && highlight)) && !js.Global.Get("document").Call("hasFocus").Bool() {
 		SendNotification(network, channel, sender, message)
 		if hide {
-			jq(fmt.Sprintf("#switchto-%s-%s", NetworkFilter(network), ChannelFilter(channel))).AddClass("new-messages")
+			ChannelHasNewMessages(network, channel)
 		}
 	}
 
 	if !hide {
 		ScrollDown()
 	}
+}
+
+// ChannelHasNewMessages adds the new-messages class to the channel switcher
+func ChannelHasNewMessages(network, channel string) {
+	jq(fmt.Sprintf("#switchto-%s-%s", NetworkFilter(network), ChannelFilter(channel))).AddClass("new-messages")
 }
 
 // TryJoinMessage tries to join the message with the one above

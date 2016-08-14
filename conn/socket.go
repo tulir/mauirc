@@ -170,9 +170,7 @@ func message(evt *js.Object) {
 			"Channel": msgData.Channel,
 			"Sender":  msgData.Sender,
 		})
-		/* TODO implement the following
-		$(sprintf("#switchto-%s-%s", ed.object.network.toLowerCase(), channelFilter(ed.object.channel))).addClass("new-messages")
-		*/
+		ui.ChannelHasNewMessages(msgData.Network, msgData.Channel)
 	case messages.MsgRaw:
 		msgData := messages.ParseRawMessage(msg.Object)
 		jq(fmt.Sprintf("#raw-output-%s", msgData.Network)).Append(fmt.Sprintf("<div class='rawoutmsg'>%s</div>", msgData.Message))
