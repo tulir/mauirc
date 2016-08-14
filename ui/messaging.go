@@ -283,7 +283,7 @@ func Receive(msg messages.Message, isNew bool) {
 	}
 
 	if templateData.Joined {
-		templateData.wrapClass = append(templateData.wrapClass, "message-joined")
+		templateData.wrapClass = append(templateData.wrapClass, "message-joined-with-prev")
 	}
 
 	templateData.Class = strings.Join(templateData.class, " ")
@@ -374,7 +374,7 @@ func TryJoinMessage(msg messages.Message) bool {
 		return false
 	}
 
-	prevMsg.AddClass("message-joined-prev")
+	prevMsg.AddClass("message-joined-with-next")
 	return true
 }
 

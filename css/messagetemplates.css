@@ -114,11 +114,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     display: inline;
 }
 
-.message-joined-prev {
+.message-joined-with-next {
     margin-bottom: 0;
 }
 
-.message-wrapper:last-of-type.message-joined-prev {
+.message-wrapper:last-of-type.message-joined-with-prev {
     margin-bottom: .75rem;
 }
 
