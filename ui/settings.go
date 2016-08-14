@@ -106,12 +106,14 @@ func ClearActiveHistory() {
 
 // ClearHistory clears the history of the given channel on the given network
 func ClearHistory(network, channel string) {
-	data.Messages <- messages.Container{
-		Type: messages.MsgClear,
-		Object: messages.ClearHistory{
-			Network: network,
-			Channel: channel,
-		},
+	if len(network) > 0 && len(channel) > 0 {
+		data.Messages <- messages.Container{
+			Type: messages.MsgClear,
+			Object: messages.ClearHistory{
+				Network: network,
+				Channel: channel,
+			},
+		}
 	}
 	CloseSettings()
 }
@@ -123,25 +125,27 @@ func PartActiveChannel() {
 
 // PartChannel leaves the given channel on the given network
 func PartChannel(network, channel string) {
-	if channel[0] == '#' {
-		data.Messages <- messages.Container{
-			Type: messages.MsgMessage,
-			Object: messages.Message{
-				Network: network,
-				Channel: channel,
-				Command: "part",
-				Message: "Leaving",
-			},
+	if len(network) > 0 && len(channel) > 0 {
+		if channel[0] == '#' {
+			data.Messages <- messages.Container{
+				Type: messages.MsgMessage,
+				Object: messages.Message{
+					Network: network,
+					Channel: channel,
+					Command: "part",
+					Message: "Leaving",
+				},
+			}
+		} else {
+			data.Messages <- messages.Container{
+				Type: messages.MsgClose,
+				Object: messages.ClearHistory{
+					Network: network,
+					Channel: channel,
+				},
+			}
 		}
-	} else {
-		data.Messages <- messages.Container{
-			Type: messages.MsgClose,
-			Object: messages.ClearHistory{
-				Network: network,
-				Channel: channel,
-			},
-		}
+		CloseChannel(network, channel)
 	}
-	CloseChannel(network, channel)
 	CloseSettings()
 }
