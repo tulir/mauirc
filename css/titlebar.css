@@ -79,7 +79,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     text-align: center;
 
     color: white;
-    border: none;
+    border: 1px dashed white;
+    border-radius: .25rem;
     background-color: var(--maunium-green);
 
     font-size: 1rem;
