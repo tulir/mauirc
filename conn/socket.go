@@ -102,7 +102,7 @@ func message(evt *js.Object) {
 		panic(err)
 	}
 
-	switch msg.Type { // TODO implement
+	switch msg.Type {
 	case messages.MsgMessage:
 		msgData := messages.ParseMessage(msg.Object)
 		chanData := data.MustGetChannel(msgData.Network, msgData.Channel)
