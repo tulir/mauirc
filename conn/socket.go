@@ -150,8 +150,15 @@ func message(evt *js.Object) {
 		msgData := messages.ParseClearHistory(msg.Object)
 		ui.GetChannel(msgData.Network, msgData.Channel).Empty()
 	case messages.MsgDelete:
-		// TODO check message joining
-		jq(fmt.Sprintf("#msgwrap-%s", msg.Object)).Remove()
+		obj := jq(fmt.Sprintf("#msgwrap-%s", msg.Object))
+		joinedWithNext := obj.HasClass("message-joined-prev")
+		joinedWithPrev := obj.HasClass("message-joined")
+		if joinedWithNext && !joinedWithPrev {
+			obj.Next().RemoveClass("message-joined")
+		} else if joinedWithPrev && !joinedWithNext {
+			obj.Prev().RemoveClass("message-joined-prev")
+		}
+		obj.Remove()
 	case messages.MsgWhois:
 		msgData := messages.ParseWhoisData(msg.Object)
 		ui.OpenWhoisModal(msgData)
