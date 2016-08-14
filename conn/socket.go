@@ -132,16 +132,7 @@ func message(evt *js.Object) {
 		}
 		data.MustGetNetwork(msgData.Name).SetNetData(msgData)
 		data.MustGetNetwork(msgData.Name).Scripts.Update(msgData.Name, nil)
-		/* TODO
 		ui.SetNetworkConnected(msgData.Name, msgData.Connected)
-
-		Original JS implementation:
-			if(ed.object.connected) {
-			  $(sprintf("#switchnet-%s", ed.object.name)).removeClass("disconnected")
-			} else {
-			  $(sprintf("#switchnet-%s", ed.object.name)).addClass("disconnected")
-			}
-		*/
 	case messages.MsgNickChange:
 		msgData := messages.ParseNickChange(msg.Object)
 		console.Log("Nick changed to", msgData.Nick, "on", msgData.Network)

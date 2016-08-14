@@ -292,3 +292,13 @@ func ToggleUserlistView() {
 		OpenMessageView()
 	}
 }
+
+// SetNetworkConnected sets the connected status of a network
+func SetNetworkConnected(net string, connected bool) {
+	net = NetworkFilter(net)
+	if connected {
+		jq(fmt.Sprintf("#switchnet-%s", net)).RemoveClass("disconnected")
+	} else {
+		jq(fmt.Sprintf("#switchnet-%s", net)).AddClass("disconnected")
+	}
+}
