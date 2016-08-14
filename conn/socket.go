@@ -122,7 +122,7 @@ func message(evt *js.Object) {
 		chanData.Notifications = data.ParseNotificationLevel("all") // FIXME
 		ui.OpenChannel(msgData.Network, msgData.Name, false)
 		if ui.GetActiveNetwork() == msgData.Network && ui.GetActiveChannel() == msgData.Name {
-			//ui.UpdateTitle() TODO
+			ui.UpdateTitle()
 			ui.UpdateUserlist()
 		}
 	case messages.MsgNetData:

@@ -232,17 +232,8 @@ func SwitchTo(network, channel string) {
 	SwitchToClear()
 	jq("#message-text").Focus()
 
-	var title string
-	chanData := data.MustGetChannel(network, channel)
-	if len(chanData.Topic) != 0 {
-		title = chanData.Topic
-	} else {
-		title = channel
-	}
-	jq("#title").SetText(title)
-
 	chanObj := GetChannel(network, channel)
-	if !chanData.HistoryFetched && chanObj.Find(".invite-wrapper").Length == 0 {
+	if !data.MustGetChannel(network, channel).HistoryFetched && chanObj.Find(".invite-wrapper").Length == 0 {
 		GetHistory(network, channel, 512)
 	}
 
@@ -252,6 +243,7 @@ func SwitchTo(network, channel string) {
 	chanSwitcher := jq(fmt.Sprintf("#switchto-%s-%s", NetworkFilter(network), ChannelFilter(channel)))
 	chanSwitcher.RemoveClass("new-messages")
 	chanSwitcher.AddClass("active")
+	UpdateTitle()
 	UpdateUserlist()
 	ScrollDown()
 }

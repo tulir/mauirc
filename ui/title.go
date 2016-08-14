@@ -38,7 +38,7 @@ func StartTitleEdit() {
 		jq("#title-editor").Focus()
 		titleEditClick = 0
 	} else {
-		titleEditClick = 0
+		titleEditClick = now
 	}
 }
 
@@ -59,4 +59,16 @@ func FinishTitleEdit() {
 		},
 	}
 	StopTitleEdit()
+}
+
+// UpdateTitle updates the title
+func UpdateTitle() {
+	var title string
+	chanData := data.MustGetChannel(GetActiveNetwork(), GetActiveChannel())
+	if len(chanData.Topic) != 0 {
+		title = chanData.Topic
+	} else {
+		title = GetActiveChannel()
+	}
+	jq("#title").SetText(title)
 }
