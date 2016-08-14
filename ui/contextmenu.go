@@ -77,45 +77,10 @@ func ContextMessageClick(command string, id int64) {
 // ContextChannelSwitcher shows the context menu for a channel switcher
 func ContextChannelSwitcher(event *js.Object, network, channel string) {
 	templates.Apply("contextmenu", "#contextmenu", map[string]string{
-		"Clear History": fmt.Sprintf("ui.contextmenu.click.channelSwitcher('clear', '%s', '%s')", network, channel),
-		"Part Channel":  fmt.Sprintf("ui.contextmenu.click.channelSwitcher('part', '%s', '%s')", network, channel),
+		"Clear History": fmt.Sprintf("ui.settings.clearHistory('%s', '%s')", network, channel),
+		"Part Channel":  fmt.Sprintf("ui.settings.partChannel('%s', '%s')", network, channel),
 	})
 	ShowContextMenu(event)
-}
-
-// ContextChannelSwitcherClick ...
-func ContextChannelSwitcherClick(command, network, channel string) {
-	switch command {
-	case "clear":
-		data.Messages <- messages.Container{
-			Type: messages.MsgClear,
-			Object: messages.ClearHistory{
-				Network: network,
-				Channel: channel,
-			},
-		}
-	case "part":
-		if channel[0] == '#' {
-			data.Messages <- messages.Container{
-				Type: messages.MsgMessage,
-				Object: messages.Message{
-					Network: network,
-					Channel: channel,
-					Command: "part",
-					Message: "Leaving",
-				},
-			}
-		} else {
-			data.Messages <- messages.Container{
-				Type: messages.MsgClose,
-				Object: messages.ClearHistory{
-					Network: network,
-					Channel: channel,
-				},
-			}
-		}
-		CloseChannel(network, channel)
-	}
 }
 
 // ContextNetworkSwitcher shows the context menu for a network switcher

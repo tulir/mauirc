@@ -76,7 +76,6 @@ func init() {
 			"show":            ShowContextMenu,
 			"click": map[string]interface{}{
 				"message":         ContextMessageClick,
-				"channelSwitcher": ContextChannelSwitcherClick,
 				"networkSwitcher": ContextNetworkSwitcherClick,
 				"userlistEntry":   ContextUserlistEntryClick,
 			},
@@ -91,11 +90,13 @@ func init() {
 			"finish": FinishTitleEdit,
 		},
 		"settings": map[string]interface{}{
-			"open":         OpenSettings,
-			"close":        CloseSettings,
-			"updateValues": UpdateValues,
-			"clearHistory": ClearHistory,
-			"partChannel":  PartChannel,
+			"open":               OpenSettings,
+			"close":              CloseSettings,
+			"updateValues":       UpdateValues,
+			"clearHistory":       ClearHistory,
+			"partChannel":        PartChannel,
+			"clearActiveHistory": ClearActiveHistory,
+			"partActiveChannel":  PartActiveChannel,
 			"change": map[string]interface{}{
 				"notifications": OnChangeNotifications,
 				"font":          OnChangeFont,

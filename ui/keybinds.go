@@ -40,9 +40,7 @@ func init() {
 	})
 
 	mousetrap.Invoke("mod+e p", func() {
-		if len(GetActiveNetwork()) > 0 && len(GetActiveChannel()) > 0 {
-			PartChannel()
-		}
+		PartActiveChannel()
 	})
 
 	mousetrap.Invoke("up up down down left right left right b a", func() {

@@ -99,26 +99,36 @@ func OnChangeFont() {
 	js.Global.Get("document").Get("body").Get("style").Set("fontFamily", jq("#mauirc-font").Val())
 }
 
-// ClearHistory clears the history
-func ClearHistory() {
+// ClearActiveHistory clears the history of the active channel
+func ClearActiveHistory() {
+	ClearHistory(GetActiveNetwork(), GetActiveChannel())
+}
+
+// ClearHistory clears the history of the given channel on the given network
+func ClearHistory(network, channel string) {
 	data.Messages <- messages.Container{
 		Type: messages.MsgClear,
 		Object: messages.ClearHistory{
-			Network: GetActiveNetwork(),
-			Channel: GetActiveChannel(),
+			Network: network,
+			Channel: channel,
 		},
 	}
 	CloseSettings()
 }
 
-// PartChannel leaves the channel
-func PartChannel() {
-	if GetActiveChannel()[0] == '#' {
+// PartActiveChannel leaves the active channel
+func PartActiveChannel() {
+	PartChannel(GetActiveNetwork(), GetActiveChannel())
+}
+
+// PartChannel leaves the given channel on the given network
+func PartChannel(network, channel string) {
+	if channel[0] == '#' {
 		data.Messages <- messages.Container{
 			Type: messages.MsgMessage,
 			Object: messages.Message{
-				Network: GetActiveNetwork(),
-				Channel: GetActiveChannel(),
+				Network: network,
+				Channel: channel,
 				Command: "part",
 				Message: "Leaving",
 			},
@@ -127,11 +137,11 @@ func PartChannel() {
 		data.Messages <- messages.Container{
 			Type: messages.MsgClose,
 			Object: messages.ClearHistory{
-				Network: GetActiveNetwork(),
-				Channel: GetActiveChannel(),
+				Network: network,
+				Channel: channel,
 			},
 		}
 	}
-	CloseChannel(GetActiveNetwork(), GetActiveChannel())
+	CloseChannel(network, channel)
 	CloseSettings()
 }
