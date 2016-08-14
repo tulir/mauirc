@@ -69,7 +69,6 @@ func Connect() {
 	data.Socket.AddEventListener("open", false, open)
 	data.Socket.AddEventListener("message", false, message)
 	data.Socket.AddEventListener("close", false, close)
-	data.Socket.AddEventListener("error", false, errorr)
 
 	go func() {
 		for msg := range data.Messages {
@@ -208,8 +207,4 @@ func Reconnect() {
 			time.AfterFunc(10*time.Second, Reconnect)
 		},
 	})
-}
-
-func errorr(evt *js.Object) {
-	// TODO do something here?
 }
