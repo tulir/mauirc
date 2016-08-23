@@ -1,7 +1,7 @@
 # mauIRC
 [![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
-[![GitHub release](https://img.shields.io/github/release/tulir293/mauirc.svg?style=flat-square)](https://github.com/tulir293/mauirc/releases)
-[![GitHub commits](https://img.shields.io/github/commits-since/tulir293/mauirc/v1.1.0.svg?style=flat-square)]()
+[![GitHub release](https://img.shields.io/github/release/tulir293/mauirc.svg?maxAge=600&style=flat-square)](https://github.com/tulir293/mauirc/releases)
+[![GitHub commits](https://img.shields.io/github/commits-since/tulir293/mauirc/v2.0.0.svg?maxAge=600&style=flat-square)]()
 
 A web-based UI-focused IRC client. Written in Go ([GopherJS](https://github.com/gopherjs/gopherjs)).
 
