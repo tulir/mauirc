@@ -233,6 +233,83 @@ func (templateData MessageTemplateData) parsePreview(preview *messages.Preview) 
 	}
 }
 
+func (templateData MessageTemplateData) parseMessageType(sender, command, message string) {
+	switch strings.ToUpper(command) {
+	case "ACTION":
+		templateData.class = append(templateData.class, "user-action")
+		templateData.Clipboard = fmt.Sprintf("* %s %s", templateData.Sender, templateData.Message)
+	case irc.JOIN:
+		templateData.Message = fmt.Sprintf("joined %s", templateData.Message)
+		templateData.Clipboard = fmt.Sprintf("%s %s", templateData.Sender, templateData.Message)
+		templateData.class = append(templateData.class, "secondary-action", "joinpart")
+	case irc.PART:
+		fallthrough
+	case irc.QUIT:
+		templateData.Message = fmt.Sprintf("left: %s", templateData.Message)
+		templateData.Clipboard = fmt.Sprintf("%s %s", templateData.Sender, templateData.Message)
+		templateData.class = append(templateData.class, "secondary-action", "joinpart")
+	case irc.KICK:
+		index := strings.Index(message, ":")
+		kicker := templateData.Sender
+		sender = message[:index]
+		message = message[index+1:]
+		templateData.Sender = sender
+		templateData.Message = fmt.Sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, util.Linkify(html.EscapeString(message)))
+		templateData.class = append(templateData.class, "secondary-action", "kick")
+		templateData.Clipboard = fmt.Sprintf("%s was kicked by %s: %s", sender, kicker, message)
+	case irc.MODE:
+		parts := strings.Split(message, " ")
+		if len(parts) > 0 {
+			templateData.Message = fmt.Sprintf("set mode <b>%s</b> for <b>%s</b>", parts[0], parts[1])
+			templateData.Clipboard = fmt.Sprintf("set mode %s for %s", parts[0], parts[1])
+		} else {
+			templateData.Message = fmt.Sprintf("set channel mode <b>%s</b>", parts[0])
+			templateData.Clipboard = fmt.Sprintf("set channel mode %s", parts[0])
+		}
+		templateData.class = append(templateData.class, "secondary-action", "modechange")
+	case irc.NICK:
+		templateData.Message = fmt.Sprintf("is now known as <b>%s</b>", message)
+		templateData.class = append(templateData.class, "secondary-action", "nickchange")
+		templateData.Clipboard = fmt.Sprintf("%s is now known as %s", sender, message)
+	case irc.TOPIC:
+		templateData.Message = fmt.Sprintf("changed the topic to <b>%s</b>", message)
+		templateData.class = append(templateData.class, "secondary-action", "topicchange")
+		templateData.Clipboard = fmt.Sprintf("%s changed the topic to %s", sender, message)
+	default:
+		templateData.IsAction = false
+	}
+}
+
+func (templateData MessageTemplateData) parseHighlight(net string) {
+	match := GetHighlight(net, templateData.Message)
+	if !templateData.IsAction && match != nil {
+		templateData.Highlight = true
+		templateData.class = append(templateData.class, "highlight")
+
+		templateData.Message = fmt.Sprintf("%s<span class='highlighted-text'>%s</span>%s",
+			templateData.Message[:match.Index],
+			templateData.Message[match.Index:match.Index+match.Length],
+			templateData.Message[match.Index+match.Length:],
+		)
+	}
+}
+
+func (templateData MessageTemplateData) updateTemplateVariables() {
+	if templateData.OwnMsg {
+		templateData.class = append(templateData.class, "own-message")
+		templateData.wrapClass = append(templateData.wrapClass, "own-message-wrapper")
+	}
+
+	if templateData.Joined {
+		templateData.wrapClass = append(templateData.wrapClass, "message-joined-with-prev")
+	}
+
+	templateData.Class = strings.Join(templateData.class, " ")
+	templateData.WrapClass = strings.Join(templateData.wrapClass, " ")
+
+	templateData.Message = util.DecodeMessage(templateData.Message)
+}
+
 func parseMessage(msg messages.Message) MessageTemplateData {
 	templateData := MessageTemplateData{
 		Sender:    msg.Sender,
@@ -252,77 +329,10 @@ func parseMessage(msg messages.Message) MessageTemplateData {
 	}
 
 	templateData.parsePreview(msg.Preview)
+	templateData.parseMessageType(msg.Sender, msg.Command, msg.Message)
+	templateData.parseHighlight(msg.Network)
+	templateData.updateTemplateVariables()
 
-	switch strings.ToUpper(msg.Command) {
-	case "ACTION":
-		templateData.class = append(templateData.class, "user-action")
-		templateData.Clipboard = fmt.Sprintf("* %s %s", templateData.Sender, templateData.Message)
-	case irc.JOIN:
-		templateData.Message = fmt.Sprintf("joined %s", templateData.Message)
-		templateData.Clipboard = fmt.Sprintf("%s %s", templateData.Sender, templateData.Message)
-		templateData.class = append(templateData.class, "secondary-action", "joinpart")
-	case irc.PART:
-		fallthrough
-	case irc.QUIT:
-		templateData.Message = fmt.Sprintf("left: %s", templateData.Message)
-		templateData.Clipboard = fmt.Sprintf("%s %s", templateData.Sender, templateData.Message)
-		templateData.class = append(templateData.class, "secondary-action", "joinpart")
-	case irc.KICK:
-		index := strings.Index(msg.Message, ":")
-		kicker := templateData.Sender
-		msg.Sender = msg.Message[:index]
-		msg.Message = msg.Message[index+1:]
-		templateData.Sender = msg.Sender
-		templateData.Message = fmt.Sprintf("was kicked by <b>%s</b>: <b>%s</b>", kicker, util.Linkify(html.EscapeString(msg.Message)))
-		templateData.class = append(templateData.class, "secondary-action", "kick")
-		templateData.Clipboard = fmt.Sprintf("%s was kicked by %s: %s", msg.Sender, kicker, msg.Message)
-	case irc.MODE:
-		parts := strings.Split(msg.Message, " ")
-		if len(parts) > 0 {
-			templateData.Message = fmt.Sprintf("set mode <b>%s</b> for <b>%s</b>", parts[0], parts[1])
-			templateData.Clipboard = fmt.Sprintf("set mode %s for %s", parts[0], parts[1])
-		} else {
-			templateData.Message = fmt.Sprintf("set channel mode <b>%s</b>", parts[0])
-			templateData.Clipboard = fmt.Sprintf("set channel mode %s", parts[0])
-		}
-		templateData.class = append(templateData.class, "secondary-action", "modechange")
-	case irc.NICK:
-		templateData.Message = fmt.Sprintf("is now known as <b>%s</b>", msg.Message)
-		templateData.class = append(templateData.class, "secondary-action", "nickchange")
-		templateData.Clipboard = fmt.Sprintf("%s is now known as %s", msg.Sender, msg.Message)
-	case irc.TOPIC:
-		templateData.Message = fmt.Sprintf("changed the topic to <b>%s</b>", msg.Message)
-		templateData.class = append(templateData.class, "secondary-action", "topicchange")
-		templateData.Clipboard = fmt.Sprintf("%s changed the topic to %s", msg.Sender, msg.Message)
-	default:
-		templateData.IsAction = false
-	}
-
-	match := GetHighlight(msg.Network, templateData.Message)
-	if !templateData.IsAction && match != nil {
-		templateData.Highlight = true
-		templateData.class = append(templateData.class, "highlight")
-
-		templateData.Message = fmt.Sprintf("%s<span class='highlighted-text'>%s</span>%s",
-			templateData.Message[:match.Index],
-			templateData.Message[match.Index:match.Index+match.Length],
-			templateData.Message[match.Index+match.Length:],
-		)
-	}
-
-	if msg.OwnMsg {
-		templateData.class = append(templateData.class, "own-message")
-		templateData.wrapClass = append(templateData.wrapClass, "own-message-wrapper")
-	}
-
-	if templateData.Joined {
-		templateData.wrapClass = append(templateData.wrapClass, "message-joined-with-prev")
-	}
-
-	templateData.Class = strings.Join(templateData.class, " ")
-	templateData.WrapClass = strings.Join(templateData.wrapClass, " ")
-
-	templateData.Message = util.DecodeMessage(templateData.Message)
 	return templateData
 }
 
