@@ -210,7 +210,7 @@ func Receive(msg messages.Message, isNew bool) {
 		templates.AppendObj("message", loadedTempl, templateData)
 		oldMsgWrap.ReplaceWith(loadedTempl.Children(":first"))
 	} else {
-		templates.AppendObj("message", ch, templateData)
+		go templates.AppendObj("message", ch, templateData)
 	}
 
 	if isNew {
@@ -229,7 +229,7 @@ func parseMessage(msg messages.Message) *MessageTemplateData {
 		Highlight: false,
 		OwnMsg:    msg.OwnMsg,
 		Joined:    TryJoinMessage(msg),
-		Message:   util.Linkify(html.EscapeString(msg.Message)),
+		Message:   html.EscapeString(msg.Message), //util.Linkify(html.EscapeString(msg.Message)),
 		Clipboard: msg.Message,
 		Timestamp: msg.Timestamp,
 		IsAction:  true,
