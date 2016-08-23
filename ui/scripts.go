@@ -62,7 +62,7 @@ func OpenScriptEditor(net string) {
 	})
 	jq("#script-list").Empty()
 	for name := range scripts {
-		addScriptToList(net, name)
+		addScriptToList(name)
 	}
 
 	SwitchClearScript()
@@ -70,11 +70,11 @@ func OpenScriptEditor(net string) {
 	jq("#script-list").SetAttr("data-network", net)
 }
 
-func addScriptToList(net, name string) {
+func addScriptToList(name string) {
 	templates.Append("settings-list-entry", "#script-list", map[string]interface{}{
 		"Type":    "script",
 		"Name":    name,
-		"Network": net,
+		"Network": jq("#script-list").Attr("data-network"),
 	})
 }
 
@@ -86,7 +86,8 @@ func CloseScriptEditor() {
 }
 
 // SwitchScript switches the open script
-func SwitchScript(net, name string) {
+func SwitchScript(name string) {
+	net := jq("#script-list").Attr("data-network")
 	var script string
 	if net == Global {
 		script = data.GlobalScripts.Get(name)
@@ -159,20 +160,25 @@ func CancelNewScript() {
 	jq("#script-adder-wrapper").Remove()
 }
 
+const defaultScript = `// A new script has born
+func OnMessage() {
+	// TODO: Create a message handler here
+}`
+
 // FinishNewScript creates the script with the name in the adder box and closes the adder
 func FinishNewScript() {
 	net := jq("#script-list").Attr("data-network")
 	name := jq("#script-adder").Val()
 
 	if net == Global {
-		data.GlobalScripts.Put(net, name, "// A new script has born\n", func(net string) {
-			addScriptToList(net, name)
-			SwitchScript(net, name)
+		data.GlobalScripts.Put(net, name, defaultScript, func(net string) {
+			addScriptToList(name)
+			SwitchScript(name)
 		})
 	} else {
 		data.MustGetNetwork(net).Scripts.Put(net, name, "// A new script has born\n", func(net string) {
-			addScriptToList(net, name)
-			SwitchScript(net, name)
+			addScriptToList(name)
+			SwitchScript(name)
 		})
 	}
 
