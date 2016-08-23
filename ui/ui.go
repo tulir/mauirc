@@ -129,6 +129,7 @@ func init() {
 				"save":   SaveScript,
 			},
 		},
+		"getHistory":          GetHistory,
 		"getActiveChannel":    GetActiveChannel,
 		"getActiveNetwork":    GetActiveNetwork,
 		"getActiveChannelObj": GetActiveChannelObj,
