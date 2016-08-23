@@ -202,7 +202,9 @@ func Receive(msg messages.Message, isNew bool) {
 		ch = GetChannel(msg.Network, msg.Channel)
 	}
 
+	start := time.Now()
 	templateData := parseMessage(msg)
+	fmt.Println("Parse duration:", time.Since(start))
 
 	oldMsgWrap := jq(fmt.Sprintf("#msgwrap-%d", msg.ID))
 	if oldMsgWrap.Length != 0 {
@@ -218,8 +220,8 @@ func Receive(msg messages.Message, isNew bool) {
 	}
 }
 
-func parseMessage(msg messages.Message) MessageTemplateData {
-	templateData := MessageTemplateData{
+func parseMessage(msg messages.Message) *MessageTemplateData {
+	templateData := &MessageTemplateData{
 		Sender:    msg.Sender,
 		Date:      time.Unix(msg.Timestamp, 0).Format("15:04:05"),
 		DateFull:  time.Unix(msg.Timestamp, 0).Format("Monday, 2 Jan 2006 (MST)"),
@@ -235,7 +237,6 @@ func parseMessage(msg messages.Message) MessageTemplateData {
 		IsAction:  true,
 		Preview:   PreviewTemplateData{},
 	}
-
 	templateData.parsePreview(msg.Preview)
 	templateData.parseMessageType(msg.Sender, msg.Command, msg.Message)
 	templateData.parseHighlight(msg.Network)
@@ -244,7 +245,7 @@ func parseMessage(msg messages.Message) MessageTemplateData {
 	return templateData
 }
 
-func (templateData MessageTemplateData) parsePreview(preview *messages.Preview) {
+func (templateData *MessageTemplateData) parsePreview(preview *messages.Preview) {
 	if preview != nil {
 		if preview.Image != nil {
 			templateData.Preview.PreviewImage = true
@@ -259,7 +260,7 @@ func (templateData MessageTemplateData) parsePreview(preview *messages.Preview) 
 	}
 }
 
-func (templateData MessageTemplateData) parseMessageType(sender, command, message string) {
+func (templateData *MessageTemplateData) parseMessageType(sender, command, message string) {
 	switch strings.ToUpper(command) {
 	case "ACTION":
 		templateData.class = append(templateData.class, "user-action")
@@ -306,7 +307,7 @@ func (templateData MessageTemplateData) parseMessageType(sender, command, messag
 	}
 }
 
-func (templateData MessageTemplateData) parseHighlight(net string) {
+func (templateData *MessageTemplateData) parseHighlight(net string) {
 	match := GetHighlight(net, templateData.Message)
 	if !templateData.IsAction && match != nil {
 		templateData.Highlight = true
@@ -320,7 +321,7 @@ func (templateData MessageTemplateData) parseHighlight(net string) {
 	}
 }
 
-func (templateData MessageTemplateData) updateTemplateVariables() {
+func (templateData *MessageTemplateData) updateTemplateVariables() {
 	if templateData.OwnMsg {
 		templateData.class = append(templateData.class, "own-message")
 		templateData.wrapClass = append(templateData.wrapClass, "own-message-wrapper")
