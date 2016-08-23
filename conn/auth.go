@@ -123,7 +123,7 @@ func authFailed(info map[string]interface{}, textStatus, errorThrown string) {
 		jq("#error").SetText(err.Human)
 	}
 	jq("#error").RemoveClass("hidden")
-	console.Error("Register failed:", textStatus, errorThrown)
+	console.Error("Auth failed:", textStatus, errorThrown)
 	console.Error(info)
 	data.AuthFail = true
 }
