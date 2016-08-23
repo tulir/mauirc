@@ -69,42 +69,35 @@ func Load(name string) *template.Template {
 
 // Apply the template with the given name and the given args to the given object
 func Apply(name, target string, args interface{}) {
-	var buf bytes.Buffer
-	err := tmpl.ExecuteTemplate(&buf, name, args)
-	if err != nil {
-		fmt.Println(err)
-	}
-	jq(target).SetHtml(buf.String())
+	ApplyObj(name, jq(target), args)
 }
 
 // Append the template with the given name and the given args to the given object
 func Append(name, target string, args interface{}) {
-	var jqtarget = jq(target)
-
-	var buf bytes.Buffer
-	buf.WriteString(jqtarget.Html())
-	err := tmpl.ExecuteTemplate(&buf, name, args)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	jq(target).SetHtml(buf.String())
+	AppendObj(name, jq(target), args)
 }
 
 // ApplyObj applies the template with the given name to the given object
 func ApplyObj(name string, obj jquery.JQuery, args interface{}) {
-	var buf bytes.Buffer
-	err := tmpl.ExecuteTemplate(&buf, name, args)
+	dat, err := ApplyString(name, args)
 	if err != nil {
 		fmt.Println(err)
 	}
-	obj.SetHtml(buf.String())
+	obj.SetHtml(dat)
 }
 
 // AppendObj appends the template with the given name to the given object
 func AppendObj(name string, obj jquery.JQuery, args interface{}) {
+	dat, err := ApplyString(name, args)
+	if err != nil {
+		fmt.Println(err)
+	}
+	obj.Append(dat)
+}
+
+// ApplyString executes the template into a string and returns the string
+func ApplyString(name string, args interface{}) (string, error) {
 	var buf bytes.Buffer
-	buf.WriteString(obj.Html())
-	tmpl.ExecuteTemplate(&buf, name, args)
-	obj.SetHtml(buf.String())
+	err := tmpl.ExecuteTemplate(&buf, name, args)
+	return buf.String(), err
 }
