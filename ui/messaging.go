@@ -178,7 +178,6 @@ type PreviewTemplateData struct {
 	Title        string
 	Sitename     string
 	Description  string
-	ID           int64
 }
 
 // Receive messages
@@ -219,6 +218,21 @@ func Receive(msg messages.Message, isNew bool) {
 	}
 }
 
+func (templateData MessageTemplateData) parsePreview(preview *messages.Preview) {
+	if preview != nil {
+		if preview.Image != nil {
+			templateData.Preview.PreviewImage = true
+			templateData.Preview.Image = preview.Image.URL
+		}
+		if preview.Text != nil {
+			templateData.Preview.PreviewText = true
+			templateData.Preview.Title = preview.Text.Title
+			templateData.Preview.Description = preview.Text.Description
+			templateData.Preview.Sitename = preview.Text.SiteName
+		}
+	}
+}
+
 func parseMessage(msg messages.Message) MessageTemplateData {
 	templateData := MessageTemplateData{
 		Sender:    msg.Sender,
@@ -237,19 +251,7 @@ func parseMessage(msg messages.Message) MessageTemplateData {
 		Preview:   PreviewTemplateData{},
 	}
 
-	if msg.Preview != nil {
-		templateData.Preview.ID = msg.ID
-		if msg.Preview.Image != nil {
-			templateData.Preview.PreviewImage = true
-			templateData.Preview.Image = msg.Preview.Image.URL
-		}
-		if msg.Preview.Text != nil {
-			templateData.Preview.PreviewText = true
-			templateData.Preview.Title = msg.Preview.Text.Title
-			templateData.Preview.Description = msg.Preview.Text.Description
-			templateData.Preview.Sitename = msg.Preview.Text.SiteName
-		}
-	}
+	templateData.parsePreview(msg.Preview)
 
 	switch strings.ToUpper(msg.Command) {
 	case "ACTION":
