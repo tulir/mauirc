@@ -45,7 +45,7 @@ var (
 )
 
 // Version of mauIRC
-const Version = "2.0.0 Beta 1"
+const Version = "2.0.0"
 
 func init() {
 	SocketPath = "wss://" + js.Global.Get("window").Get("location").Get("host").String() + "/socket"
