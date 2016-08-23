@@ -218,6 +218,32 @@ func Receive(msg messages.Message, isNew bool) {
 	}
 }
 
+func parseMessage(msg messages.Message) MessageTemplateData {
+	templateData := MessageTemplateData{
+		Sender:    msg.Sender,
+		Date:      time.Unix(msg.Timestamp, 0).Format("15:04:05"),
+		DateFull:  time.Unix(msg.Timestamp, 0).Format("Monday, 2 Jan 2006 (MST)"),
+		ID:        msg.ID,
+		class:     []string{"message"},
+		wrapClass: []string{"message-wrapper"},
+		Highlight: false,
+		OwnMsg:    msg.OwnMsg,
+		Joined:    TryJoinMessage(msg),
+		Message:   util.Linkify(html.EscapeString(msg.Message)),
+		Clipboard: msg.Message,
+		Timestamp: msg.Timestamp,
+		IsAction:  true,
+		Preview:   PreviewTemplateData{},
+	}
+
+	templateData.parsePreview(msg.Preview)
+	templateData.parseMessageType(msg.Sender, msg.Command, msg.Message)
+	templateData.parseHighlight(msg.Network)
+	templateData.updateTemplateVariables()
+
+	return templateData
+}
+
 func (templateData MessageTemplateData) parsePreview(preview *messages.Preview) {
 	if preview != nil {
 		if preview.Image != nil {
@@ -308,32 +334,6 @@ func (templateData MessageTemplateData) updateTemplateVariables() {
 	templateData.WrapClass = strings.Join(templateData.wrapClass, " ")
 
 	templateData.Message = util.DecodeMessage(templateData.Message)
-}
-
-func parseMessage(msg messages.Message) MessageTemplateData {
-	templateData := MessageTemplateData{
-		Sender:    msg.Sender,
-		Date:      time.Unix(msg.Timestamp, 0).Format("15:04:05"),
-		DateFull:  time.Unix(msg.Timestamp, 0).Format("Monday, 2 Jan 2006 (MST)"),
-		ID:        msg.ID,
-		class:     []string{"message"},
-		wrapClass: []string{"message-wrapper"},
-		Highlight: false,
-		OwnMsg:    msg.OwnMsg,
-		Joined:    TryJoinMessage(msg),
-		Message:   util.Linkify(html.EscapeString(msg.Message)),
-		Clipboard: msg.Message,
-		Timestamp: msg.Timestamp,
-		IsAction:  true,
-		Preview:   PreviewTemplateData{},
-	}
-
-	templateData.parsePreview(msg.Preview)
-	templateData.parseMessageType(msg.Sender, msg.Command, msg.Message)
-	templateData.parseHighlight(msg.Network)
-	templateData.updateTemplateVariables()
-
-	return templateData
 }
 
 // GetHighlight gets the first highlight match
