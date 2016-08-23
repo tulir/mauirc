@@ -277,6 +277,17 @@ func Receive(msg messages.Message, isNew bool) {
 		templateData.IsAction = false
 	}
 
+	match := GetHighlight(msg.Network, templateData.Message)
+	if !templateData.IsAction && match != nil {
+		templateData.class = append(templateData.class, "highlight")
+
+		templateData.Message = fmt.Sprintf("%s<span class='highlighted-text'>%s</span>%s",
+			templateData.Message[:match.Index],
+			templateData.Message[match.Index:match.Index+match.Length],
+			templateData.Message[match.Index+match.Length:],
+		)
+	}
+
 	if msg.OwnMsg {
 		templateData.class = append(templateData.class, "own-message")
 		templateData.wrapClass = append(templateData.wrapClass, "own-message-wrapper")
@@ -298,19 +309,6 @@ func Receive(msg messages.Message, isNew bool) {
 		oldMsgWrap.ReplaceWith(loadedTempl.Children(":first"))
 	} else {
 		templates.AppendObj("message", ch, templateData)
-	}
-
-	msgObj := jq(fmt.Sprintf("#msg-%d", msg.ID))
-
-	match := GetHighlight(msg.Network, templateData.Message)
-
-	if !templateData.IsAction && match != nil {
-		msgObj.Find(".message-text").SetHtml(fmt.Sprintf("%s<span class='highlighted-text'>%s</span>%s",
-			templateData.Message[:match.Index],
-			templateData.Message[match.Index:match.Index+match.Length],
-			templateData.Message[match.Index+match.Length:],
-		))
-		msgObj.AddClass("highlight")
 	}
 
 	if isNew {
