@@ -161,11 +161,26 @@ func ContextUserlistEntryClick(command, network, user string) {
 func ShowContextMenu(event *js.Object) {
 	event.Call("stopPropagation")
 	event.Call("preventDefault")
-	jq("#contextmenu").SetCss(map[string]interface{}{
-		"top":  event.Get("pageY").Int(),
-		"left": event.Get("pageX").Int(),
+
+	ctxMenu := jq("#contextmenu")
+
+	x := event.Get("pageX").Int()
+	y := event.Get("pageY").Int()
+	width := jq(js.Global.Get("window")).Width()
+	height := jq(js.Global.Get("window")).Height()
+
+	if x+ctxMenu.Width() > width {
+		x -= ctxMenu.Width()
+	}
+	if y+ctxMenu.Height() > height {
+		y -= ctxMenu.Height()
+	}
+
+	ctxMenu.SetCss(map[string]interface{}{
+		"top":  y,
+		"left": x,
 	})
-	jq("#contextmenu").RemoveClass("hidden")
+	ctxMenu.RemoveClass("hidden")
 }
 
 // HideContextMenu hides the context menu
