@@ -161,6 +161,7 @@ type MessageTemplateData struct {
 	Class     string
 	WrapClass string
 	Clipboard string
+	Highlight bool
 	OwnMsg    bool
 	Joined    bool
 	IsAction  bool
@@ -202,6 +203,23 @@ func Receive(msg messages.Message, isNew bool) {
 		ch = GetChannel(msg.Network, msg.Channel)
 	}
 
+	templateData := parseMessage(msg)
+
+	oldMsgWrap := jq(fmt.Sprintf("#msgwrap-%d", msg.ID))
+	if oldMsgWrap.Length != 0 {
+		loadedTempl := jq("<div></div>")
+		templates.AppendObj("message", loadedTempl, templateData)
+		oldMsgWrap.ReplaceWith(loadedTempl.Children(":first"))
+	} else {
+		templates.AppendObj("message", ch, templateData)
+	}
+
+	if isNew {
+		NotifyMessage(msg.Network, msg.Channel, templateData.Sender, templateData.Clipboard, templateData.Highlight)
+	}
+}
+
+func parseMessage(msg messages.Message) MessageTemplateData {
 	templateData := MessageTemplateData{
 		Sender:    msg.Sender,
 		Date:      time.Unix(msg.Timestamp, 0).Format("15:04:05"),
@@ -209,6 +227,7 @@ func Receive(msg messages.Message, isNew bool) {
 		ID:        msg.ID,
 		class:     []string{"message"},
 		wrapClass: []string{"message-wrapper"},
+		Highlight: false,
 		OwnMsg:    msg.OwnMsg,
 		Joined:    TryJoinMessage(msg),
 		Message:   util.Linkify(html.EscapeString(msg.Message)),
@@ -279,6 +298,7 @@ func Receive(msg messages.Message, isNew bool) {
 
 	match := GetHighlight(msg.Network, templateData.Message)
 	if !templateData.IsAction && match != nil {
+		templateData.Highlight = true
 		templateData.class = append(templateData.class, "highlight")
 
 		templateData.Message = fmt.Sprintf("%s<span class='highlighted-text'>%s</span>%s",
@@ -301,19 +321,7 @@ func Receive(msg messages.Message, isNew bool) {
 	templateData.WrapClass = strings.Join(templateData.wrapClass, " ")
 
 	templateData.Message = util.DecodeMessage(templateData.Message)
-
-	oldMsgWrap := jq(fmt.Sprintf("#msgwrap-%d", msg.ID))
-	if oldMsgWrap.Length != 0 {
-		loadedTempl := jq("<div></div>")
-		templates.AppendObj("message", loadedTempl, templateData)
-		oldMsgWrap.ReplaceWith(loadedTempl.Children(":first"))
-	} else {
-		templates.AppendObj("message", ch, templateData)
-	}
-
-	if isNew {
-		NotifyMessage(msg.Network, msg.Channel, templateData.Sender, templateData.Clipboard, match != nil)
-	}
+	return templateData
 }
 
 // GetHighlight gets the first highlight match
