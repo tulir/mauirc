@@ -160,13 +160,18 @@ func CancelNewScript() {
 	jq("#script-adder-wrapper").Remove()
 }
 
+const defaultScript = `// A new script has born
+func OnMessage() {
+	// TODO: Create a message handler here
+}`
+
 // FinishNewScript creates the script with the name in the adder box and closes the adder
 func FinishNewScript() {
 	net := jq("#script-list").Attr("data-network")
 	name := jq("#script-adder").Val()
 
 	if net == Global {
-		data.GlobalScripts.Put(net, name, "// A new script has born\n", func(net string) {
+		data.GlobalScripts.Put(net, name, defaultScript, func(net string) {
 			addScriptToList(name)
 			SwitchScript(name)
 		})
