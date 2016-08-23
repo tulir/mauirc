@@ -202,9 +202,7 @@ func Receive(msg messages.Message, isNew bool) {
 		ch = GetChannel(msg.Network, msg.Channel)
 	}
 
-	start := time.Now()
 	templateData := parseMessage(msg)
-	fmt.Println("Parse duration:", time.Since(start))
 
 	oldMsgWrap := jq(fmt.Sprintf("#msgwrap-%d", msg.ID))
 	if oldMsgWrap.Length != 0 {
