@@ -19,12 +19,11 @@ package ui
 
 import (
 	"github.com/gopherjs/gopherjs/js"
+	"maunium.net/go/gopher-mousetrap"
 )
 
-var mousetrap = js.Global.Get("Mousetrap").Get("bind")
-
 func init() {
-	mousetrap.Invoke("mod+e r", func() {
+	mousetrap.Bind("mod+e r", func() {
 		if jq("#raw-io").HasClass("hidden") {
 			OpenRawIO(GetActiveNetwork())
 		} else {
@@ -32,18 +31,18 @@ func init() {
 		}
 	})
 
-	mousetrap.Invoke("mod+e n", func() {
+	mousetrap.Bind("mod+e n", func() {
 		net := GetActiveNetwork()
 		if len(net) > 0 {
 			OpenChannelAdder(net)
 		}
 	})
 
-	mousetrap.Invoke("mod+e p", func() {
+	mousetrap.Bind("mod+e p", func() {
 		PartActiveChannel()
 	})
 
-	mousetrap.Invoke("up up down down left right left right b a", func() {
+	mousetrap.Bind("up up down down left right left right b a", func() {
 		js.Global.Call("alert", "Sorry, I haven't made an easter egg yet :/")
 	})
 }
