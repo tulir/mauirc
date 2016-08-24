@@ -108,7 +108,7 @@ func message(evt *js.Object) {
 		if chanData.FetchingHistory {
 			chanData.MessageCache <- msgData
 		} else {
-			go ui.Receive(msgData, true)
+			ui.Receive(msgData, true)
 		}
 	case messages.MsgChanList:
 		msgData := messages.ParseChanList(msg.Object)

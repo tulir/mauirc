@@ -42,7 +42,7 @@ func GetHistory(network, channel string, n int) {
 			json.Unmarshal([]byte(rawData), &histData)
 
 			for i := len(histData) - 1; i >= 0; i-- {
-				go Receive(histData[i], false)
+				Receive(histData[i], false)
 			}
 
 			chanData := data.MustGetChannel(network, channel)
@@ -50,7 +50,7 @@ func GetHistory(network, channel string, n int) {
 			for {
 				select {
 				case obj := <-chanData.MessageCache:
-					go Receive(obj, true)
+					Receive(obj, true)
 				default:
 					break Loop
 				}
