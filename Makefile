@@ -25,10 +25,9 @@ package-max: build package-existing
 package-existing: res/ index.js index.css index.html templates.html
 	tar cvfJ mauirc.tar.xz res/ index.js index.css index.html templates.html
 
-
-gitpull:
-	git pull
-update: clean gitpull build-min
+goget:
+	go get -u
+update: clean goget build-min
 
 
 clean:
