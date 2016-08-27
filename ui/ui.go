@@ -69,6 +69,7 @@ func init() {
 		},
 		"contextmenu": map[string]interface{}{
 			"message":         ContextMessage,
+			"channel":         ContextChannel,
 			"channelSwitcher": ContextChannelSwitcher,
 			"networkSwitcher": ContextNetworkSwitcher,
 			"userlistEntry":   ContextUserlistEntry,

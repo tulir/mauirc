@@ -26,12 +26,32 @@ import (
 	"maunium.net/go/mauirc/util/console"
 )
 
+// ContextChannel shows the context menu for a channel message container
+func ContextChannel(event *js.Object) {
+	if GetActiveChannelObj().Find(".message-wrapper > .selected").Length > 0 {
+		templates.Apply("contextmenu", "#contextmenu", map[string]string{
+			"Delete Selected":       "ui.selection.delete()",
+			"Copy Text of Selected": "ui.selection.copy()",
+		})
+		ShowContextMenu(event)
+	}
+}
+
 // ContextMessage shows the context menu for a message
 func ContextMessage(event *js.Object, id int64) {
-	templates.Apply("contextmenu", "#contextmenu", map[string]string{
-		"Delete Message": fmt.Sprintf("ui.contextmenu.click.message('delete', '%d')", id),
-		"Copy Text":      fmt.Sprintf("ui.contextmenu.click.message('copy', '%d')", id),
-	})
+	if GetActiveChannelObj().Find(".message-wrapper > .selected").Length > 0 && jq("#message-wrapper-%d", id).HasClass("selected") {
+		templates.Apply("contextmenu", "#contextmenu", map[string]string{
+			"Deselect":              fmt.Sprintf("ui.selection.unselect('%d')", id),
+			"Delete Selected":       "ui.selection.delete()",
+			"Copy Text of Selected": "ui.selection.copy()",
+		})
+	} else {
+		templates.Apply("contextmenu", "#contextmenu", map[string]string{
+			"Select":    fmt.Sprintf("ui.selection.select('%d')", id),
+			"Delete":    fmt.Sprintf("ui.contextmenu.click.message('delete', '%d')", id),
+			"Copy Text": fmt.Sprintf("ui.contextmenu.click.message('copy', '%d')", id),
+		})
+	}
 	ShowContextMenu(event)
 }
 
