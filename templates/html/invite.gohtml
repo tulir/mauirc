@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="invite-wrapper">
 	<div class="invite">
-		<h2 class="invite-text">You have been invited to <span>{{ .Channel }}</span> by <span>{{ .Sender }}</span>.</h2>
+		<h2 class="invite-text">You have been invited to <b>{{ .Channel }}</b> by <b>{{ .Sender }}</b>.</h2>
 		<button class="btn invite-btn" onClick="ui.channels.close('{{ .Network }}', '{{ .Channel }}')">Ignore</button>
 		<button class="btn invite-btn" onClick="ui.invite.accept('{{ .Network }}', '{{ .Channel }}')">Accept</button>
 	</div>
