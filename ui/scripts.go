@@ -163,7 +163,8 @@ func CancelNewScript() {
 const defaultScript = `// A new script has born
 func OnMessage() {
 	// TODO: Create a message handler here
-}`
+}
+`
 
 // FinishNewScript creates the script with the name in the adder box and closes the adder
 func FinishNewScript() {
@@ -176,7 +177,7 @@ func FinishNewScript() {
 			SwitchScript(name)
 		})
 	} else {
-		data.MustGetNetwork(net).Scripts.Put(net, name, "// A new script has born\n", func(net string) {
+		data.MustGetNetwork(net).Scripts.Put(net, name, defaultScript, func(net string) {
 			addScriptToList(name)
 			SwitchScript(name)
 		})
