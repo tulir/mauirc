@@ -2,19 +2,19 @@ build: build-js build-css build-html
 build-min: build-min-js build-min-css build-min-html
 
 
-build-js: $(shell find -name "*.go")
+build-js: $(shell find . -name "*.go")
 	gopherjs build -o index.js
-build-min-js: $(shell find -name "*.go")
+build-min-js: $(shell find . -name "*.go")
 	gopherjs build -mo index.js
 
 
-build-html: $(shell find -name "*.gohtml")
+build-html: $(shell find . -name "*.gohtml")
 	./build/html.sh
-build-min-html: $(shell find -name "*.gohtml")
+build-min-html: $(shell find . -name "*.gohtml")
 	./build/html.min.sh
 
 
-build-css: $(shell find -name "*.css")
+build-css: $(shell find . -name "*.css")
 	./build/css.sh
 build-min-css: build-css
 	cleancss -o index.css index.css
