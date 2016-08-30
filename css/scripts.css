@@ -27,6 +27,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     margin: .5rem .1rem;
 }
 
+.script-navigator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 2.5rem;
+    width:
+}
+
 .script-list {
     position: absolute;
     top: 0;
@@ -112,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     background-color: var(--maunium-green);
 }
 
-@media (min-width: 750px) {
+/*@media (min-width: 750px) {
     .settings-scripts {
         margin: .5rem .6rem;
     }
@@ -146,7 +154,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .script-pane {
         left: 8.4rem;
     }
-}
+}*/
 
 .script-name {
     position: relative;
@@ -155,7 +163,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     height: 100%;
 }
 
-@media (min-width: 1200px) {
+/*@media (min-width: 1200px) {
     .settings-scripts {
         margin: .5rem 1.8rem;
     }
@@ -171,4 +179,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     .settings-scripts {
         margin: .5rem 3.2rem;
     }
-}
+}*/
