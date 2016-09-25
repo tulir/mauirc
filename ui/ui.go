@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
+	"time"
 )
 
 var jq = jquery.NewJQuery
@@ -149,8 +150,13 @@ func ScrollDown() {
 	jq("#messages").SetScrollTop(jq("#messages").Underlying().Index(0).Get("scrollHeight").Int())
 }
 
+var previousNotification = time.Now().Unix()
+
 // SendNotification sends a notification to the desktop
 func SendNotification(net, ch, user, message string) {
+	if previousNotification+2 < time.Now().Unix() {
+		return
+	}
 	if js.Global.Get("Notification").Get("permission").String() == "granted" {
 		notif := js.Global.Get("Notification").New(fmt.Sprintf("%s @ %s", user, ch), map[string]interface{}{"body": message, "icon": "/res/favicon.ico"})
 		notif.Set("onclick", func() {
