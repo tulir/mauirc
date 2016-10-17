@@ -31,8 +31,6 @@ var scripteditor ace.Editor
 
 // OpenScriptEditor opens the script editor
 func OpenScriptEditor(net string) {
-	var scripts data.ScriptStore
-
 	jq("#settings-main").AddClass("hidden")
 	jq("#settings-networks").AddClass("hidden")
 	jq("#settings-scripts").RemoveClass("hidden")
@@ -56,11 +54,16 @@ func OpenScriptEditor(net string) {
 		"readOnly": false,
 	})
 
-	SwitchClearScript()
+	jq("#script-network-list").Empty()
+	for name := range data.Networks {
+		addNetworkToScriptList(name)
+	}
 
-	jq("#script-list").SetAttr("data-network", net)
+	SwitchClearScript()
+	SwitchScriptsNetwork(net)
 }
 
+// SwitchScriptsNetwork switches the network
 func SwitchScriptsNetwork(net string) {
 	var scripts data.ScriptStore
 	if net == Global {
@@ -73,6 +76,13 @@ func SwitchScriptsNetwork(net string) {
 	for name := range scripts {
 		addScriptToList(net, name)
 	}
+}
+
+func addNetworkToScriptList(net string) {
+	templates.Append("settings-list-entry", "#script-network-list", map[string]interface{}{
+		"Type": "script-network",
+		"Name": net,
+	})
 }
 
 func addScriptToList(net, name string) {
@@ -174,7 +184,6 @@ func OnMessage() {
 // FinishNewScript creates the script with the name in the adder box and closes the adder
 func FinishNewScript() {
 	net := jq("#script-network-list.active").Attr("data-name")
-	net := jq("#script-list").Attr("data-network")
 	name := jq("#script-adder").Val()
 
 	if net == Global {
