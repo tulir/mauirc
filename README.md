@@ -1,15 +1,20 @@
 # mauIRC
-[![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![License](http://img.shields.io/:license-gpl3-brightgreen.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![GitHub release](https://img.shields.io/github/release/tulir293/mauirc.svg?maxAge=600&style=flat-square)](https://github.com/tulir293/mauirc/releases)
-[![GitHub commits](https://img.shields.io/github/commits-since/tulir293/mauirc/v2.0.0.svg?maxAge=600&style=flat-square)]()
+![GitHub commits](https://img.shields.io/github/commits-since/tulir293/mauirc/v2.0.0.svg?maxAge=600&style=flat-square)
+![Rewrites](https://img.shields.io/:number%20of%20code%20rewrites-2-yellow.svg?style=flat-square)
 
-A web-based UI-focused IRC client. Written in Go ([GopherJS](https://github.com/gopherjs/gopherjs)).
+A web-based UI-focused IRC client. Originally written in JavaScript/CSS/HTML, previously written in Go/CSS/GoHTML, now written in ES6/SCSS/(HTML with Handlebars)
 
 ## Setup
 ### Packages
 You can find the basic minified sources from the [Release section](https://github.com/tulir293/mauirc/releases).
 
 ### Compiling
+#### Post-2.1
+Install required packages with `npm install` and run `make`
+
+#### Pre-2.1
 You can compile the code yourself using GopherJS. Once you have the [Go toolkit](https://golang.org/doc/install), simply use `go get -u github.com/gopherjs/gopherjs` to get the GopherJS toolkit.
 Then get the mauIRC sources using `go get -u maunium.net/go/mauirc` and use `make` in the mauIRC source directory.
 
