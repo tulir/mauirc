@@ -8,7 +8,6 @@ production: handlebars-min static-files-min scss-min-autoprefixer js-min
 	@echo "All done!"
 
 handlebars=./node_modules/.bin/handlebars
-markdown=./node_modules/.bin/marked
 htmlmin=./node_modules/.bin/html-minifier
 scss=./node_modules/.bin/node-sass
 postcss=./node_modules/.bin/postcss
@@ -16,7 +15,6 @@ babel=./node_modules/.bin/babel
 jsdoc=./node_modules/.bin/jsdoc
 
 scssArgs=--output dist style/index.scss --quiet
-markdownArgs=--gfm --tables --breaks --sanitize --smart-lists -i {}
 handlebarsArgs=-e "html" -f dist/templates.js ./pages/*.html
 htmlminArgs=--html5 --collapse-boolean-attributes --remove-tag-whitespace \
 	--collapse-inline-tag-whitespace --remove-attribute-quotes \
