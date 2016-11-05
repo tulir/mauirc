@@ -12,7 +12,15 @@ You can find the basic minified sources from the [Release section](https://githu
 
 ### Compiling
 #### Post-2.1
-Install required packages with `npm install` and run `make`
+Install required packages with `npm install` and use `make` to compile everything.
+
+Make targets:
+* `default` - Compile everything without any compatibility patches/minification
+* `compatibility` - Same as `default`, but with Babel (ES6 compat) and Autoprefixer (CSS compat)
+* `minify` - Same as `default`, but minify code
+* `production` - `compatibility` and `minify` combined
+* `package` - Package `LICENSE`, the output of `production` and `package.json` into a `.tar.xz` archive.
+* `package-with-dependencies` - Same as `package`, but include the necessary npm packages instead of `package.json`
 
 #### Pre-2.1
 You can compile the code yourself using GopherJS. Once you have the [Go toolkit](https://golang.org/doc/install), simply use `go get -u github.com/gopherjs/gopherjs` to get the GopherJS toolkit.
