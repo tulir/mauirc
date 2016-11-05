@@ -2,7 +2,7 @@
 [![License](http://img.shields.io/:license-gpl3-brightgreen.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![GitHub release](https://img.shields.io/github/release/tulir293/mauirc.svg?maxAge=600&style=flat-square)](https://github.com/tulir293/mauirc/releases)
 ![GitHub commits](https://img.shields.io/github/commits-since/tulir293/mauirc/v2.0.0.svg?maxAge=600&style=flat-square)
-![Rewrites](https://img.shields.io/:number%20of%20code%20rewrites-2-yellow.svg?style=flat-square)
+![Rewrites](https://img.shields.io/:number%20of%20complete%20rewrites-2-yellow.svg?style=flat-square)
 
 A web-based UI-focused IRC client. Originally written in JavaScript/CSS/HTML, previously written in Go/CSS/GoHTML, now written in ES6/SCSS/(HTML with Handlebars)
 
