@@ -15,6 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @import "vars";
 
+@font-face {
+    font-family: "Fira Code";
+
+    src: url("firacode.otf");
+}
+
+tt, pre, code {
+	font-family: "Fira Code", monospace;
+}
+
 body {
 	color: $text-color;
 	background-color: $background-color;
