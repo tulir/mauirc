@@ -13,10 +13,25 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
+.container {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 
-@import "components/loader";
+	background-color: $green;
+}
 
-@import "pages/index";
+.loading-box {
+	padding-top: 20vh;
+
+	text-align: center;
+
+	p, h1 {
+		margin-top: 0;
+		margin-bottom: 0;
+
+		color: white;
+	}
+}

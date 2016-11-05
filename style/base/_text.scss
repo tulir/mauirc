@@ -13,10 +13,46 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
+@import "vars";
 
-@import "components/loader";
+body {
+	color: $text-color;
+	background-color: $background-color;
 
-@import "pages/index";
+	font-family: $font-stack;
+	font-size: 16px;
+}
+
+h1 {
+	font-size: 40px;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+h3 {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+p {
+	color: $text-color;
+
+	font-size: 16px;
+}
+
+a {
+	text-decoration: none;
+
+	color: initial;
+	color: $text-color;
+
+	font-weight: bold;
+}
+
+a:hover {
+	text-decoration: underline;
+}

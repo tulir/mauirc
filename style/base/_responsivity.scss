@@ -13,10 +13,52 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
+@import "vars";
 
-@import "components/loader";
+@mixin hidden-down($downFrom) {
+	@media screen and (max-width: $downFrom - 1) {
+		display: none;
+	}
+}
 
-@import "pages/index";
+@mixin hidden-up($upFrom) {
+	@media screen and (min-width: $upFrom) {
+		display: none;
+	}
+}
+
+.hidden-xs-down {
+	@include hidden-down($extrasmall)
+}
+
+.hidden-sm-down {
+	@include hidden-down($small)
+}
+
+.hidden-md-down {
+	@include hidden-down($medium)
+}
+
+.hidden-lg-down {
+	@include hidden-down($large)
+}
+
+.hidden-xl-down, .hidden-xs-up, .hidden {
+	display: none;
+}
+
+.hidden-sm-up {
+	@include hidden-up($extrasmall);
+}
+
+.hidden-md-up {
+	@include hidden-up($small);
+}
+
+.hidden-lg-up {
+	@include hidden-up($medium);
+}
+
+.hidden-xs-up {
+	@include hidden-up($large);
+}
