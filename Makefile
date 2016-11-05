@@ -25,6 +25,7 @@ jsFiles=js/main.js
 
 dist-dir:
 	@mkdir -p dist
+	@cd dist/ && ln -sf ../node_modules && cd ..
 
 static-files:
 	@echo "Copying static files"
@@ -45,7 +46,7 @@ handlebars-min: dist-dir
 	@$(handlebars) -m $(handlebarsArgs)
 
 scss: dist-dir
-	@echo "Adding prefixes to CSS"
+	@echo "Compiling SCSS"
 	@$(scss) --source-map-embed --output-style expanded --indent-type tab $(scssArgs)
 
 scss-autoprefixer: scss
@@ -53,10 +54,12 @@ scss-autoprefixer: scss
 	@$(postcss) $(postcssArgs) -o dist/index.css dist/index.css
 
 scss-min: dist-dir
-	@echo "Adding prefixes to CSS"
+	@echo "Compiling and minifying SCSS"
 	@$(scss) --output-style compressed $(scssArgs)
 
-scss-min-autoprefixer: scss-min scss-autoprefixer
+scss-min-autoprefixer: scss-min
+	@echo "Adding prefixes to compiled and minified SCSS"
+	@$(postcss) $(postcssArgs) -o dist/index.css dist/index.css
 
 js: dist-dir
 	@echo "Concatenating JavaScript files"
@@ -81,17 +84,23 @@ clean:
 
 package: production
 	@echo "Packaging for production"
-	@tar cfJ mauirc.tar.xz dist res index.html LICENSE package.json
+	@cp package.json LICENSE dist
+	@rm -f dist/node_modules
+	@cd dist && rm -f node_modules && \
+		tar cfJ mauirc.tar.xz * && mv mauirc.tar.xz ..
+		&& ln -sf ../node_modules && cd ..
+	@rm -f dist/package.json dist/LICENSE
 	@echo "Extract mauirc.tar.xz somewhere and run \`npm install --production\`"
 
-
-package-with-npm: production
-	@echo "Packaging for production (with npm packages)"
-	@tar cfJ mauirc.tar.xz dist res index.html LICENSE \
-		node_modules/jquery/dist/jquery.min.js \
-		node_modules/marked/marked.min.js \
-		node_modules/handlebars/dist/handlebars.runtime.min.js \
-		node_modules/moment/min/moment.min.js node_modules/moment/locale/fi.js \
-		node_modules/normalize.css/normalize.css \
-		node_modules/hashmux/dist/hashmux.min.js
+package-with-dependencies: production
+	@echo "Packaging for production (with dependencies)"
+	@rm -f dist/node_modules
+	@cd dist && rm -f node_modules && \
+		tar cfJ mauirc.tar.xz * \
+			../node_modules/jquery/dist/jquery.min.js \
+			../node_modules/handlebars/dist/handlebars.runtime.min.js \
+			../node_modules/moment/min/moment.min.js ../node_modules/moment/locale/fi.js \
+			../node_modules/normalize.css/normalize.css \
+			../node_modules/hashmux/dist/hashmux.min.js && mv mauirc.tar.xz .. \
+		&& ln -sf ../node_modules && cd ..
 	@echo "Extract mauirc.tar.xz anywhere"
