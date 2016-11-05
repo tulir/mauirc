@@ -22,8 +22,8 @@ class mauIRC {
 	}
 
 	load() {
-		registerPathHandlers()
-		activateEvents()
+		this.registerPathHandlers()
+		this.activateEvents()
 	}
 
 	registerEventHandler(evt, scope, func) {
