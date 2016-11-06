@@ -15,17 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Auth {
-	constructor(apiAddress) {
+	constructor(ranssi, apiAddress) {
 		this.apiAddress = apiAddress
 		this.authenticated = false
 		this.checkFailed = false
+		this.checked = false
+
+		// TODO ranssi.registerEventHandler("auth.register:click", () => )
+		ranssi.registerEventHandler("auth.login:click", () => this.login)
 	}
 
-	get enticated() {
-		return this.authenticated
-	}
+	check() {
+		if (this.checkFailed) {
+			window.location.hash = "#/login"
+			return
+		}
 
-	checkAnd(callback) {
 		console.log("Checking authentication status...")
 		jQuery.ajax({
 			type: "GET",
@@ -36,34 +41,42 @@ class Auth {
 			this.checkFailed = false
 			this.authenticated = data.authenticated
 			if (data.authenticated) {
-				callback(true)
+				console.log("Already logged in!")
+				window.location.hash = "#/chat"
 			} else {
-				callback(false)
+				console.log("Not logged in.")
+				window.location.hash = "#/login"
 			}
 		})
 		.fail((info, status, error) => {
 			console.error("Auth check failed: HTTP " + info.status)
 			console.error(info)
+			window.location.hash = "#/login"
 			this.checkFailed = true
-			callback(false)
 		})
+		.always(() => this.checked = true)
 	}
 
-	login(email, password, callback) {
+	login() {
 		jQuery.ajax({
 			type: "POST",
 			url: "/auth/login",
-			data: JSON.stringify({email: email, password: password})
+			data: JSON.stringify({
+				email: $("#email").val(),
+				password: $("#password").val()
+			})
 		})
 		.done(data => {
 			this.checkFailed = false
 			this.authenticated = true
-			callback(true)
+			window.location.hash = "#/chat"
 		})
 		.fail((info, status, error) => {
 			this.checkFailed = false
 			this.authenticated = false
-			callback(false)
+			console.error("Login failed")
+			console.error(info)
 		})
+		.always(() => this.checked = true)
 	}
 }

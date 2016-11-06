@@ -19,7 +19,7 @@ class mauIRC {
 	constructor() {
 		this.container = $("#container")
 		this.router = new Hashmux()
-		this.auth = new Auth()
+		this.auth = new Auth(this)
 	}
 
 	load() {
@@ -27,9 +27,9 @@ class mauIRC {
 		this.activateEvents()
 	}
 
-	registerEventHandler(evt, scope, func) {
-		$(document).on("ranssi." + evt, (event, source) => {
-			scope[func]()
+	registerEventHandler(evt, func) {
+		$(document).on("mauirc." + evt, (event, source) => {
+			func()
 			source.stopPropagation()
 		})
 	}
@@ -52,27 +52,14 @@ class mauIRC {
 			}))
 		)
 
-		this.router.handle("/", () => {
-			if (!this.auth.enticated) {
-				if (this.auth.checkFailed) {
-					window.location.hash = "#/login"
-				} else {
-					this.auth.checkAnd(authed => {
-						if (authed) {
-							console.log("Authenticated!")
-							// TODO connect
-						} else {
-							window.location.hash = "#/login"
-						}
-					})
-				}
+		this.router.handle("/", () => this.auth.check())
+		this.router.handle("/login", () => {
+			if (!this.auth.checked) {
+				window.location.hash = "#/"
 			} else {
-				window.location.hash = "#/login"
+				$("#container").html(Handlebars.templates.login())
 			}
 		})
-		this.router.handle("/login", () =>
-			$("#container").html(Handlebars.templates.login())
-		)
 		this.router.listen()
 	}
 }
