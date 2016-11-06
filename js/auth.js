@@ -23,6 +23,7 @@ class Auth {
 
 		// TODO ranssi.registerEventHandler("auth.register:click", () => )
 		ranssi.registerEventHandler("auth.login:click", () => this.login)
+		ranssi.registerEventHandler("auth.forgot:click", () => this.forgot)
 	}
 
 	check() {
@@ -78,5 +79,9 @@ class Auth {
 			console.error(info)
 		})
 		.always(() => this.checked = true)
+	}
+
+	forgot() {
+		// TODO request reset link to email
 	}
 }

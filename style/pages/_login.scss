@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @import "../base/vars";
 
-.auth {
+.auth, .forgot-password {
 	width: 25rem;
 	margin: auto;
 	margin-top: 20vh;
@@ -83,6 +83,10 @@
 				float: right;
 
 				margin-right: 1px;
+			}
+
+			&.full {
+				width: 100%;
 			}
 		}
 	}

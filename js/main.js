@@ -60,6 +60,9 @@ class mauIRC {
 				$("#container").html(Handlebars.templates.login())
 			}
 		})
+		this.router.handle("/forgot-password", () =>
+			$("#container").html(Handlebars.templates.forgotPassword())
+		)
 		this.router.listen()
 	}
 }
