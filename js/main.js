@@ -19,6 +19,7 @@ class mauIRC {
 	constructor() {
 		this.container = $("#container")
 		this.router = new Hashmux()
+		this.auth = new Auth()
 	}
 
 	load() {
@@ -51,10 +52,27 @@ class mauIRC {
 			}))
 		)
 
-		// TODO
-		//   /
-		//   /login
-		//   /settings
+		this.router.handle("/", () => {
+			if (!this.auth.enticated) {
+				if (this.auth.checkFailed) {
+					window.location.hash = "#/login"
+				} else {
+					this.auth.checkAnd(authed => {
+						if (authed) {
+							console.log("Authenticated!")
+							// TODO connect
+						} else {
+							window.location.hash = "#/login"
+						}
+					})
+				}
+			} else {
+				window.location.hash = "#/login"
+			}
+		})
+		this.router.handle("/login", () =>
+			$("#container").html(Handlebars.templates.login())
+		)
 		this.router.listen()
 	}
 }
