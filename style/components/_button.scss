@@ -13,14 +13,35 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
+@import "../base/vars";
 
-@import "components/loader";
-@import "components/button";
-@import "components/switch";
-@import "components/textfield";
+.btn {
+	box-sizing: border-box;
+	padding: .375rem 1rem;
 
-@import "pages/index";
-@import "pages/error";
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+
+	color: white;
+	border: none;
+	border-radius: .25rem;
+	outline: none;
+	background-color: $green;
+
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.btn:-moz-focusring {
+	outline: none;
+}
+
+.btn:hover {
+	background-color: $blue;
+}

@@ -13,14 +13,55 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
+@import "../base/vars";
 
-@import "components/loader";
-@import "components/button";
-@import "components/switch";
-@import "components/textfield";
+.switch {
+	width: 4rem;
+	height: 2rem;
 
-@import "pages/index";
-@import "pages/error";
+	cursor: pointer;
+
+	border: .0625rem solid $secondary-text-color;
+	border-radius: .25rem;
+	background-color: white;
+
+	input {
+		display: none;
+	}
+
+	.switch-box {
+		width: 50%;
+		height: 100%;
+
+		transition: .4s;
+		text-align: center;
+
+		border-radius: .25rem;
+		background-color: var(--maunium-blue);
+
+		.switch[active=true] & {
+			transform: translateX(100%);
+
+			background-color: $green;
+		}
+	}
+
+	.switch-box-text {
+		position: relative;
+		top: 50%;
+
+		transform: translateY(-50%);
+
+		color: white;
+
+		font-size: 1rem;
+
+		&:after {
+			content: "No";
+		}
+
+		.switch[active=true] .switch-box &:after {
+			content: "Yes";
+		}
+	}
+}
