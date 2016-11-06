@@ -37,7 +37,7 @@ class mauIRC {
 		let ranssi = this
 		$("*[data-event]").click(function(event) {
 			$(document).trigger(
-				"ranssi." + this.getAttribute("data-event") + ":click",
+				"mauirc." + this.getAttribute("data-event") + ":click",
 				[event, ranssi]
 			)
 		})
