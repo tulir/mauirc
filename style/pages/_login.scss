@@ -1,0 +1,103 @@
+// mauIRC - The original mauIRC web frontend
+// Copyright (C) 2016 Tulir Asokan
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+@import "../base/vars";
+
+.auth {
+	width: 25rem;
+	margin: auto;
+	margin-top: 20vh;
+	padding-bottom: 2rem;
+
+	text-align: center;
+
+	border-radius: .25rem;
+	background-color: white;
+
+	h1 {
+		margin: 0;
+		padding-top: 2rem;
+		padding-bottom: 1rem;
+
+		color: $green;
+	}
+
+	form {
+		width: 20rem;
+		margin: auto;
+		padding-bottom: 4rem;
+
+		.textfield {
+			display: block;
+
+			box-sizing: border-box;
+			width: 100%;
+			margin: .5rem auto;
+			padding: 1rem;
+
+			border: 1px solid $secondary-content;
+			border-radius: .25rem;
+
+			font-size: 1rem;
+
+			&:focus {
+				border: 2px solid $blue;
+			}
+
+			&:invalid {
+				border: 2px solid $red;
+				box-shadow: none;
+			}
+		}
+
+		.btn {
+			display: inline-block;
+
+			box-sizing: border-box;
+			width: calc(50% - .25rem);
+			padding: 1rem;
+
+			border-radius: .25rem;
+
+			font-size: 1rem;
+
+			&.left {
+				float: left;
+
+				margin-left: 1px;
+			}
+
+			&.right {
+				float: right;
+
+				margin-right: 1px;
+			}
+		}
+	}
+
+	.footer-link {
+		color: $secondary-text-color;
+
+		font-weight: normal;
+	}
+
+	@media screen and (min-width: $medium) {
+		width: 35rem;
+
+		form {
+			width: 30rem;
+		}
+	}
+}
