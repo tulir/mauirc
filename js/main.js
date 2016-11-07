@@ -36,7 +36,7 @@ class mauIRC {
 
 	activateEvents() {
 		let ranssi = this
-		$("*[data-event]").click(function(event) {
+		$(document).on("click", "*[data-event]", function(event) {
 			$(document).trigger(
 				"mauirc." + this.getAttribute("data-event") + ":click",
 				[event, ranssi]
