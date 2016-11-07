@@ -15,15 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Auth {
-	constructor(ranssi, apiAddress) {
+	constructor(mauirc, apiAddress) {
 		this.apiAddress = apiAddress
 		this.authenticated = false
 		this.checkFailed = false
 		this.checked = false
 
-		// TODO ranssi.registerEventHandler("auth.register:click", () => )
-		ranssi.registerEventHandler("auth.login:click", () => this.login())
-		ranssi.registerEventHandler("auth.forgot:click", () => this.forgot())
+		// TODO mauirc.registerEventHandler("auth.register:click", () => )
+		mauirc.registerEventHandler("auth.login:click", () => this.login())
+		mauirc.registerEventHandler("auth.forgot:click", () => this.forgot())
 	}
 
 	get enticated() {
