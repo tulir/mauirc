@@ -21,6 +21,7 @@ class mauIRC {
 		this.container = $("#container")
 		this.router = new Hashmux()
 		this.auth = new Auth(this)
+		this.conn = new Connection()
 	}
 
 	applyTemplate(name, args) {
@@ -62,13 +63,23 @@ class mauIRC {
 		})
 
 		this.router.handle("/", () => this.auth.check())
-		this.router.handle("/login", () => {
-			if (!this.auth.checked) {
+		this.router.handle("/login", () =>
+			this.auth.checked ?
+				this.applyTemplate("login") :
 				window.location.hash = "#/"
-			} else {
-				this.applyTemplate("login")
-			}
-		})
+		)
+		this.router.handle("/chat", () =>
+			this.conn.ected ?
+				this.applyTemplate("chat") :
+				window.location.hash = "#/connect"
+		)
+		this.router.handle("/connect", () =>
+			this.conn.ected ?
+				window.location.hash = "#/chat" :
+				this.auth.enticated ?
+					this.conn.ect() :
+					window.location.hash = "#/login"
+		)
 		this.router.handle("/forgot-password", () =>
 			this.applyTemplate("forgotPassword")
 		)

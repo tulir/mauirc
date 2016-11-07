@@ -26,6 +26,10 @@ class Auth {
 		ranssi.registerEventHandler("auth.forgot:click", () => this.forgot())
 	}
 
+	get enticated() {
+		return this.authenticated
+	}
+
 	check() {
 		if (this.checkFailed) {
 			window.location.hash = "#/login"
@@ -43,7 +47,7 @@ class Auth {
 			this.authenticated = data.authenticated
 			if (data.authenticated) {
 				console.log("Already logged in!")
-				window.location.hash = "#/chat"
+				window.location.hash = "#/connect"
 			} else {
 				console.log("Not logged in.")
 				window.location.hash = "#/login"
@@ -70,7 +74,7 @@ class Auth {
 		.done(data => {
 			this.checkFailed = false
 			this.authenticated = true
-			window.location.hash = "#/chat"
+			window.location.hash = "#/connect"
 		})
 		.fail((info, status, error) => {
 			this.checkFailed = false
