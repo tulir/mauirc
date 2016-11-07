@@ -17,9 +17,14 @@ const VERSION = "2.1.0"
 
 class mauIRC {
 	constructor() {
+		Handlebars.partials = Handlebars.templates
 		this.container = $("#container")
 		this.router = new Hashmux()
 		this.auth = new Auth(this)
+	}
+
+	applyTemplate(name, args) {
+		this.container.html(Handlebars.templates[name](args))
 	}
 
 	load() {
@@ -45,23 +50,27 @@ class mauIRC {
 	}
 
 	registerPathHandlers() {
-		this.router.handleError(404, data =>
-			$("#container").html(Handlebars.templates.error({
-				error: "Page not found",
-				data: data.data
-			}))
-		)
+		this.router.handleError(404, data => {
+			if (Handlebars.templates.hasOwnProperty(data.page.substr(1))) {
+				this.applyTemplate(data.page.substr(1))
+			} else {
+				this.applyTemplate("error", {
+					error: "Page not found",
+					data: data.data
+				})
+			}
+		})
 
 		this.router.handle("/", () => this.auth.check())
 		this.router.handle("/login", () => {
 			if (!this.auth.checked) {
 				window.location.hash = "#/"
 			} else {
-				$("#container").html(Handlebars.templates.login())
+				this.applyTemplate("login")
 			}
 		})
 		this.router.handle("/forgot-password", () =>
-			$("#container").html(Handlebars.templates.forgotPassword())
+			this.applyTemplate("forgotPassword")
 		)
 		this.router.listen()
 	}
