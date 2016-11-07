@@ -18,6 +18,15 @@ class Connection {
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.connected = false
+		this.socket = undefined
+	}
+
+	get socketAddr() {
+		if (window.location.protocol.startsWith("https")) {
+			return "wss://" + window.location.host + "/socket"
+		} else {
+			return "ws://" + window.location.host + "/socket"
+		}
 	}
 
 	ect() { this.connect() }
@@ -25,8 +34,14 @@ class Connection {
 		return this.connected
 	}
 
+	onMessage(data) {
+		// TODO handle messages
+		console.log(data)
+	}
+
 	connect() {
 		this.mauirc.applyTemplate("connecting")
-		// TODO connect
+		this.socket = new WebSocket(this.socketAddr)
+		this.socket.onmessage = event => this.onMessage(JSON.parse(event.data))
 	}
 }
