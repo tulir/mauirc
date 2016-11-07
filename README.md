@@ -10,6 +10,9 @@ A web-based UI-focused IRC client. Originally written in JavaScript/CSS/HTML, pr
 ### Packages
 You can find the basic minified sources from the [Release section](https://github.com/tulir293/mauirc/releases).
 
+### Development
+You should use [CSSComb](http://csscomb.com/), [ESLint](http://eslint.org/) and [Sass Lint](https://www.npmjs.com/package/sass-lint) with the config files in the root of the repository.
+
 ### Compiling
 #### Post-2.1
 Install required packages with `npm install` and use `make` to compile everything.
