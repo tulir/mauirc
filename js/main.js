@@ -21,7 +21,7 @@ class mauIRC {
 		this.container = $("#container")
 		this.router = new Hashmux()
 		this.auth = new Auth(this)
-		this.conn = new Connection()
+		this.conn = new Connection(this)
 	}
 
 	applyTemplate(name, args) {

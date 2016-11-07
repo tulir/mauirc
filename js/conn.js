@@ -15,16 +15,18 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Connection {
-	constructor() {
+	constructor(mauirc) {
+		this.mauirc = mauirc
 		this.connected = false
 	}
 
-	ect() { connect() }
+	ect() { this.connect() }
 	get ected() {
 		return this.connected
 	}
 
 	connect() {
+		this.mauirc.applyTemplate("connecting")
 		// TODO connect
 	}
 }
