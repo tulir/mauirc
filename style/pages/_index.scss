@@ -13,6 +13,7 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+@import "../base/vars";
 
 .container {
 	position: fixed;
@@ -22,6 +23,35 @@
 	left: 0;
 
 	background-color: $green;
+}
+
+@media screen and (max-width: $toosmall) {
+	.container {
+		top: 100%;
+
+		overflow: hidden;
+	}
+
+	body {
+		padding-top: 10vh;
+
+		text-align: center;
+
+		&::after {
+			display: inline;
+
+			content: "Your screen is too small!";
+
+			font-size: 2rem;
+			font-weight: bold;
+
+			@media screen and (max-width: 120px) {
+				content: "WTF MAN?!";
+				word-wrap: break-word;
+				word-break: break-all;
+			}
+		}
+	}
 }
 
 .loading-box {
