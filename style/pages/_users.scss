@@ -13,18 +13,11 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
+@import "../base/vars";
 
-@import "components/loader";
-@import "components/button";
-@import "components/switch";
-@import "components/textfield";
+.users {
+	width: 100%;
+	height: 100%;
 
-@import "pages/index";
-@import "pages/login";
-@import "pages/error";
-@import "pages/chat";
-@import "pages/channels";
-@import "pages/users";
+	background-color: $green;
+}
