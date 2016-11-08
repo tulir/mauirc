@@ -22,7 +22,44 @@
 	background-color: $green;
 
 	.network {
-		.channel {
+		box-sizing: border-box;
+		width: 100%;
+
+		.name {
+			padding: .25rem;
+
+			color: white;
+
+			font-size: 1.5rem;
+			font-weight: bold;
+		}
+
+		.channels {
+			box-sizing: border-box;
+			width: 100%;
+			padding: .5rem .25rem .5rem .75rem;
+
+			.channel {
+				box-sizing: border-box;
+				width: 100%;
+				padding: .25rem;
+
+				color: white;
+				border-radius: .25rem;
+				background-color: $green;
+
+				font-size: 1rem;
+
+				&.active {
+					color: $green;
+					background-color: white;
+				}
+
+				&.highlight, &:hover {
+					color: white;
+					background-color: $blue;
+				}
+			}
 		}
 	}
 }

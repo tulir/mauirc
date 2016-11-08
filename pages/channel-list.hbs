@@ -22,11 +22,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="channel-list" id="networks">
 	{{#each networks}}
 		<div class="network" data-network="{{this.name}}">
-			{{#each this.channels}}
-				<div class="channel" data-network="{{../name}}" data-channel="{{this.name}}">
-					{{this.name}}
-				</div>
-			{{/each}}
+			<div class="name">
+				{{this.name}}
+			</div>
+			<div class="channels">
+				{{#each this.channels}}
+					<div class="channel" data-network="{{../name}}" data-channel="{{this.name}}">
+						{{this.name}}
+					</div>
+				{{/each}}
+			</div>
 		</div>
 	{{/each}}
 </div>
