@@ -30,8 +30,17 @@ class Connection {
 	}
 
 	ect() { this.connect() }
-	get ected() {
-		return this.connected
+	get ected() { return this.connected }
+	get ection() { return this.socket }
+
+	onConnect() {
+		this.connected = true
+		window.location.hash = "#/chat"
+	}
+
+	onDisconnect() {
+		this.connected = false
+		window.location.hash = "#/connect"
 	}
 
 	onMessage(data) {
@@ -43,5 +52,7 @@ class Connection {
 		this.mauirc.applyTemplate("connecting")
 		this.socket = new WebSocket(this.socketAddr)
 		this.socket.onmessage = event => this.onMessage(JSON.parse(event.data))
+		this.socket.onopen = event => this.onConnect()
+		this.socket.onclose = event => this.onDisconnect()
 	}
 }
