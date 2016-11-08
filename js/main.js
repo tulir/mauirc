@@ -18,20 +18,28 @@ const VERSION = "2.1.0"
 
 // Fixes to Handlebars
 Handlebars.partials = Handlebars.templates
-Handlebars.registerHelper('ifCond', function(val1, operator, val2, options) {
+
+function ifCond(val1, operator, val2) {
 	switch(operator) {
-	case "==":  return (v1 == v2  ? options.fn(this) : options.inverse(this))
-	case "!=":  return (v1 != v2  ? options.fn(this) : options.inverse(this))
-	case "===": return (v1 === v2 ? options.fn(this) : options.inverse(this))
-	case "!==": return (v1 !== v2 ? options.fn(this) : options.inverse(this))
-	case "<":   return (v1 < v2   ? options.fn(this) : options.inverse(this))
-	case ">":   return (v1 > v2   ? options.fn(this) : options.inverse(this))
-	case "<=":  return (v1 <= v2  ? options.fn(this) : options.inverse(this))
-	case ">=":  return (v1 >= v2  ? options.fn(this) : options.inverse(this))
-	case "&&":  return (v1 && v2  ? options.fn(this) : options.inverse(this))
-	case "||":  return (v1 || v2  ? options.fn(this) : options.inverse(this))
-	default:    return options.inverse(this)
+	case "==":  return (v1 == v2  ? true : false)
+	case "!=":  return (v1 != v2  ? true : false)
+	case "===": return (v1 === v2 ? true : false)
+	case "!==": return (v1 !== v2 ? true : false)
+	case "<":   return (v1 < v2   ? true : false)
+	case ">":   return (v1 > v2   ? true : false)
+	case "<=":  return (v1 <= v2  ? true : false)
+	case ">=":  return (v1 >= v2  ? true : false)
+	case "&&":  return (v1 && v2  ? true : false)
+	case "||":  return (v1 || v2  ? true : false)
+	default:    return false
 	}
+}
+
+Handlebars.registerHelper("ifCond", function(val1, operator, val2, options) {
+	ifCond(val1, operator, val2) ? options.fn(this) : options.inverse(this)
+})
+Handlebars.registerHelper("unlessCond", function(val1, operator, val2, options) {
+	ifCond(val1, operator, val2) ? options.inverse(this) : options.fn(this)
 })
 
 // Request notification permission
