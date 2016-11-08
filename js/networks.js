@@ -29,7 +29,7 @@ class DataStore {
 
 	getNetwork(name) {
 		if (!this.networks.hasOwnProperty(name)) {
-			this.putNetwork(new NetworkStore(this.mauirc, name))
+			this.putNetwork(new NetworkStore(this, name))
 		}
 		return this.networks[name]
 	}
@@ -79,9 +79,7 @@ class DataStore {
 		let net
 		switch(type) {
 		case "chandata":
-			let chan = new ChannelStore(
-				this.mauirc, this.getNetwork(data.network), data.name
-			)
+			let chan = new ChannelStore(this.getNetwork(data.network), data.name)
 			chan.topic = data.topic
 			chan.topicsetat = data.topicsetat
 			chan.topicsetby = data.topicsetby
@@ -106,8 +104,8 @@ class DataStore {
 }
 
 class NetworkStore {
-	constructor(mauirc, datastore, name) {
-		this.mauirc = mauirc
+	constructor(datastore, name) {
+		this.mauirc = datastore.mauirc
 		this.datastore = datastore
 		this.name = name
 		this.ip = ""
@@ -155,7 +153,7 @@ class NetworkStore {
 
 	getChannel(name) {
 		if (!this.channels.hasOwnProperty(name)) {
-			this.putChannel(new ChannelStore(this.mauirc, this, name))
+			this.putChannel(new ChannelStore(this, name))
 		}
 
 		return this.channels[name]
@@ -167,8 +165,8 @@ class NetworkStore {
 }
 
 class ChannelStore {
-	constructor(mauirc, network, name) {
-		this.mauirc = mauirc
+	constructor(network, name) {
+		this.mauirc = network.mauirc
 		this.name = name
 		this.network = network
 		this.users = []
