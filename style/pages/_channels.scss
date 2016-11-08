@@ -15,9 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @import "../base/vars";
 
-.channels {
+.channel-list {
 	width: 100%;
 	height: 100%;
 
 	background-color: $green;
+
+	.network {
+		.channel {
+		}
+	}
 }
