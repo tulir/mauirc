@@ -18,4 +18,12 @@ class Messaging {
 	constructor(mauirc) {
 		this.mauirc = mauirc
 	}
+
+	receive(message) {
+		console.log(message)
+	}
+
+	send(message) {
+		this.mauirc.conn.send("message", message)
+	}
 }
