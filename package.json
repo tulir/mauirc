@@ -19,7 +19,8 @@
 		"jquery": "3.1.1",
 		"moment": "2.15.2",
 		"hashmux": "2.0.3",
-		"handlebars": "4.0.5"
+		"handlebars": "4.0.5",
+        "sprintf-js": "1.0.3"
 	},
 	"devDependencies": {
 		"node-sass": "3.11.2",
