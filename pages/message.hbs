@@ -15,6 +15,58 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="message">
-	
+<div
+	id="msgwrap-{{id}}"
+	class="{{wrapClass}}"
+	data-id="{{id}}"
+	data-timestamp="{{timestamp}}"
+	data-sender="{{sender}}"
+	>
+	<div id="msg-{{id}}" class="{{class}}">
+		{{#if isAction}}
+			<div class="action-data">
+				<div class="action-sender">{{sender}}</div>
+				<div class="action-text">{{message}}</div>
+				<div class="clipboard-data hidden">{{clipboard}}</div>
+			</div>
+		{{else}}
+			{{#unlessCond joined "or" ownMsg}}
+				<div class="sender">{{sender}}</div>
+			{{/unlessCond}}
+			<div class="text">{{message}}</div>
+		{{/if}}
+		<div class="date" title="{{dateFull}}">{{date}}</div>
+
+		{{#ifCond preview.hasImage "or" preview.hasText}}
+			<div class="preview">
+				{{#if preview.hasImage}}
+					<div
+						class="
+							image-link
+							{{#unless preview.hasText}}preview-full-size{{/unless}}
+						"
+						todo="open image modal on click"
+					>
+						<img
+							class="image"
+							src="{{preview.image}}"
+							alt="Preview Image"
+						>
+					</div>
+				{{/if}}
+				{{#if preview.hasText}}
+					<div
+						class="
+							info
+							{{#unless preview.hasImage}}preview-full-size{{/unless}}
+						"
+					>
+						<div class="title">{{preview.title}}</div>
+						<div class="sitename">{{preview.sitename}}</div>
+						<div class="description">{{preview.description}}</div>
+					</div>
+				{{/if}}
+			</div>
+		{{/ifCond}}
+	</div>
 </div>
