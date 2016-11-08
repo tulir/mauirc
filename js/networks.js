@@ -68,13 +68,6 @@ class DataStore {
 		chanlist.find(".network .channel.active").removeClass("active")
 	}
 
-	closeChatAreas() {
-		let chat = this.getChatArea()
-		chat.find(".network-container:not(.hidden)").addClass("hidden")
-		chat.find(".network-container > .channel-container:not(.hidden)")
-			.addClass("hidden")
-	}
-
 	process(type, data) {
 		let net
 		switch(type) {
@@ -122,31 +115,13 @@ class NetworkStore {
 	getChanlistEntry() {
 		let chanlist = this.datastore.getChanlist()
 		if (chanlist === undefined) {
-			return
+			return undefined
 		}
 
 		let network = chanlist.find(".network[data-name='" + this.name + "']")
 		if (network.length === 0) {
 			this.mauirc.appendTemplate("chanlist-network", this, chanlist)
 			network = chanlist.find(".network[data-name='" + this.name + "']")
-		}
-		return network
-	}
-
-	getChatAreaEntry() {
-		let chat = this.datastore.getChatArea()
-		if (chat === undefined) {
-			return
-		}
-
-		let network = chat.find(
-			".network-container[data-name='" + this.name + "']"
-		)
-		if (network.length === 0) {
-			this.mauirc.appendTemplate("chat-network", this, chat)
-			network = chat.find(
-				".network-container[data-name='" + this.name + "']"
-			)
 		}
 		return network
 	}
@@ -174,10 +149,16 @@ class ChannelStore {
 		this.topicsetat = 0
 		this.topicsetby = ""
 		this.modes = undefined
+
+		this.hasNewMessages = false
+		this.messages = {}
 	}
 
 	getChanlistEntry() {
 		let network = this.network.getChanlistEntry()
+		if (network === undefined) {
+			return undefined
+		}
 
 		let channel = network.find(
 			".channels > .channel[data-name='" + this.name + "']"
@@ -194,21 +175,43 @@ class ChannelStore {
 		return channel
 	}
 
-	getChatAreaEntry() {
-		let chat = this.network.getChatAreaEntry()
-
-		let channel = chat.find(
-			".channel-container" +
-			"[data-name='" + this.name + "']"
-		)
-		if (channel.length === 0) {
-			this.mauirc.appendTemplate("chat-channel", this, chat)
-			let channel = chat.find(
-				".channel-container" +
-				"[data-name='" + this.name + "']"
-			)
+	enterChat() {
+		let chat = this.network.datastore.getChatArea()
+		if (chat === undefined) {
+			return
 		}
-		return channel
+
+		this.hasNewMessages = false
+
+		if (chat.attr("data-network") === this.network.name &&
+			chat.attr("data-channel") === this.name) {
+			return
+		}
+
+		chat.attr("data-network", this.network.name)
+		chat.attr("data-channel", this.name)
+		chat.empty()
+
+		for (message of this.messages) {
+			this.mauirc.appendTemplate("chat-message", message, chat)
+		}
+	}
+
+	receiveMessage(message) {
+		this.messages[message.id] = message
+		let chat = this.network.datastore.getChatArea()
+		if (chat !== undefined) {
+			if (chat.attr("data-network") === message.network
+				&& chat.attr("data-channel") === message.channel) {
+				this.mauirc.appendTemplate("chat-message", message, chat)
+			} else {
+				this.hasNewMessages = true
+				this.getChanlistEntry().addClass("notification")
+			}
+		} else {
+			this.hasNewMessages = true
+			message.notify()
+		}
 	}
 
 	open() {
