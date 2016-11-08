@@ -13,21 +13,7 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
-@import "base/util";
+@import "../base/vars";
 
-@import "components/loader";
-@import "components/button";
-@import "components/switch";
-@import "components/textfield";
-
-@import "pages/index";
-@import "pages/login";
-@import "pages/error";
-@import "pages/chat";
-@import "pages/chanlist";
-@import "pages/userlist";
-@import "pages/message";
-@import "pages/raw";
+.chat > .message {
+}
