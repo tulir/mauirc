@@ -23,5 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div class="users-container">
 		{{> userlist inline=true users=users}}
 	</div>
-	<div class="chat"></div>
+	<div class="chat">
+		{{#each networks}}
+			{{> chat-network this}}
+		{{/each}}
+	</div>
 </div>
