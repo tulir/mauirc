@@ -46,10 +46,12 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
-	
+
 	.chat {
 		width: auto;
 		height: 100%;
+
+		background-color: white;
 	}
 
 	.channels-container {
@@ -70,8 +72,11 @@
 		display: none;
 	}
 
-	@include chat-containers($small, 8rem, 0);
-	@include chat-containers($medium, 10rem, 8rem);
-	@include chat-containers($large, 12rem, 10rem);
-	@include chat-containers($extralarge, 14rem, 12rem);
+	// Prevent CSSComb from moving includes up
+	& {
+		@include chat-containers($small, 8rem, 0);
+		@include chat-containers($medium, 10rem, 8rem);
+		@include chat-containers($large, 12rem, 10rem);
+		@include chat-containers($extralarge, 14rem, 12rem);
+	}
 }
