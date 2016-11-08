@@ -59,6 +59,13 @@ class Connection {
 		case "raw":
 			this.mauirc.raw.receive(data.object)
 			break
+		case "chandata":
+		case "chanlist":
+		case "netdata":
+			this.mauirc.data.process(data.type, data.object)
+			break
+		default:
+			console.log(data)
 		}
 	}
 

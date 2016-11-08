@@ -41,6 +41,7 @@ class mauIRC {
 		this.conn = new Connection(this)
 		this.msg = new Messaging(this)
 		this.raw = new RawMessaging(this)
+		this.data = new DataStore()
 	}
 
 	applyTemplate(name, args) {
@@ -113,9 +114,6 @@ class mauIRC {
 				this.auth.enticated ?
 					window.location.hash = "#/connect" :
 					window.location.hash = "#/login"
-		)
-		this.router.handle("/forgot-password", () =>
-			this.applyTemplate("forgotPassword")
 		)
 		this.router.listen()
 	}
