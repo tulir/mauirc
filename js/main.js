@@ -29,7 +29,9 @@ function ifCond(val1, operator, val2) {
 	case ">":   return (v1 > v2   ? true : false)
 	case "<=":  return (v1 <= v2  ? true : false)
 	case ">=":  return (v1 >= v2  ? true : false)
+	case "and":
 	case "&&":  return (v1 && v2  ? true : false)
+	case "or":
 	case "||":  return (v1 || v2  ? true : false)
 	default:    return false
 	}
