@@ -15,9 +15,26 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const VERSION = "2.1.0"
 
+// Fixes to Handlebars
+Handlebars.partials = Handlebars.templates
+Handlebars.registerHelper('ifCond', function(val1, operator, val2, options) {
+	switch(operator) {
+	case "==":  return (v1 == v2  ? options.fn(this) : options.inverse(this))
+	case "!=":  return (v1 != v2  ? options.fn(this) : options.inverse(this))
+	case "===": return (v1 === v2 ? options.fn(this) : options.inverse(this))
+	case "!==": return (v1 !== v2 ? options.fn(this) : options.inverse(this))
+	case "<":   return (v1 < v2   ? options.fn(this) : options.inverse(this))
+	case ">":   return (v1 > v2   ? options.fn(this) : options.inverse(this))
+	case "<=":  return (v1 <= v2  ? options.fn(this) : options.inverse(this))
+	case ">=":  return (v1 >= v2  ? options.fn(this) : options.inverse(this))
+	case "&&":  return (v1 && v2  ? options.fn(this) : options.inverse(this))
+	case "||":  return (v1 || v2  ? options.fn(this) : options.inverse(this))
+	default:    return options.inverse(this)
+	}
+})
+
 class mauIRC {
 	constructor() {
-		Handlebars.partials = Handlebars.templates
 		this.container = $("#container")
 		this.router = new Hashmux()
 		this.auth = new Auth(this)
