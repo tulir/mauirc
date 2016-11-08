@@ -23,6 +23,7 @@ class mauIRC {
 		this.auth = new Auth(this)
 		this.conn = new Connection(this)
 		this.msg = new Messaging(this)
+		this.raw = new RawMessaging(this)
 	}
 
 	applyTemplate(name, args) {
@@ -46,6 +47,12 @@ class mauIRC {
 		$("#container").on("click", "*[data-event]", function(event) {
 			$("#eventcontainer").trigger(
 				"mauirc." + this.getAttribute("data-event") + ":click",
+				[event, mauirc]
+			)
+		})
+		$("#container").on("submit", "*[data-event][data-event-type='submit']", function(event) {
+			$("#eventcontainer").trigger(
+				"mauirc." + this.getAttribute("data-event") + ":submit",
 				[event, mauirc]
 			)
 		})
@@ -81,6 +88,13 @@ class mauIRC {
 				window.location.hash = "#/chat" :
 				this.auth.enticated ?
 					this.conn.ect() :
+					window.location.hash = "#/login"
+		)
+		this.router.handle("/raw/{network}", data =>
+			this.conn.ected ?
+				this.raw.open(data.network) :
+				this.auth.enticated ?
+					window.location.hash = "#/connect" :
 					window.location.hash = "#/login"
 		)
 		this.router.handle("/forgot-password", () =>

@@ -16,13 +16,13 @@
 @import "vars";
 
 @font-face {
-    font-family: "Fira Code";
+	font-family: "Fira Code";
 
-    src: url("firacode.otf");
+	src: url("firacode.otf");
 }
 
 tt, pre, code {
-	font-family: "Fira Code", monospace;
+	font-family: $font-stack-mono;
 }
 
 body {

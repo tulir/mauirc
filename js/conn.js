@@ -33,6 +33,14 @@ class Connection {
 	get ected() { return this.connected }
 	get ection() { return this.socket }
 
+	send(type, object) {
+		if (object === null || object === undefined) {
+			return
+		}
+
+		this.socket.send(JSON.stringify({type: type, object: object}))
+	}
+
 	onConnect() {
 		this.connected = true
 		window.location.hash = "#/chat"
@@ -44,8 +52,14 @@ class Connection {
 	}
 
 	onMessage(data) {
-		// TODO handle messages
-		console.log(data)
+		switch(data.type) {
+		case "message":
+			this.mauirc.msg.receive(data.object)
+			break
+		case "raw":
+			this.mauirc.raw.receive(data.object)
+			break
+		}
 	}
 
 	connect() {
