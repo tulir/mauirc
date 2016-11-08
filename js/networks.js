@@ -176,11 +176,15 @@ class ChannelStore {
 		return channel
 	}
 
-	enterChat() {
+	open() {
 		let chat = this.network.datastore.getChatArea()
 		if (chat === undefined) {
 			return
 		}
+
+		this.network.datastore.deselectChanlistEntries()
+		this.network.getChanlistEntry().addClass("active")
+		this.network.getChatAreaEntry().removeClass("hidden")
 
 		this.hasNewMessages = false
 
@@ -213,15 +217,5 @@ class ChannelStore {
 			this.hasNewMessages = true
 			message.notify()
 		}
-	}
-
-	open() {
-		this.network.datastore.closeChatAreas()
-		this.getChanlistEntry().addClass("active")
-		this.getChatAreaEntry().removeClass("hidden")
-
-		this.network.datastore.deselectChanlistEntries()
-		this.network.getChanlistEntry().addClass("active")
-		this.network.getChatAreaEntry().removeClass("hidden")
 	}
 }
