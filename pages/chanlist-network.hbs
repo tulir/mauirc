@@ -15,12 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-{{#unless inline}}
-	{{> topbar channels=true}}
-{{/unless}}
-
-<div class="channel-list" id="networks">
-	{{#each networks}}
-		{{> chanlist-channel name=this.name channels=this.channels}}
-	{{/each}}
+<div class="network" data-name="{{this.name}}">
+	<div class="name">
+		{{name}}
+	</div>
+	<div class="channels">
+		{{#each channels}}
+			{{> chanlist-channel name=this.name network=../name}}
+		{{/each}}
+	</div>
 </div>
