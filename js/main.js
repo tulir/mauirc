@@ -76,6 +76,24 @@ class mauIRC {
 		})
 	}
 
+	verifyConnection(func) {
+		if (this.conn.ected) {
+			if (func !== undefined) {
+				func()
+			}
+			return true
+		} else {
+			if (this.auth.enticated) {
+				window.location.hash = "#/connect"
+			} else if (this.auth.checked) {
+				window.location.hash = "#/login"
+			} else {
+				this.auth.check()
+			}
+			return false
+		}
+	}
+
 	registerPathHandlers() {
 		this.router.handleError(404, data => {
 			if (Handlebars.templates.hasOwnProperty(data.page.substr(1))) {
@@ -94,13 +112,6 @@ class mauIRC {
 				this.applyTemplate("login") :
 				window.location.hash = "#/"
 		)
-		this.router.handle("/chat", () =>
-			this.conn.ected ?
-				this.applyTemplate("chat", {networks: this.data.networks}) :
-				this.auth.enticated ?
-					window.location.hash = "#/connect" :
-					window.location.hash = "#/login"
-		)
 		this.router.handle("/connect", () =>
 			this.conn.ected ?
 				window.location.hash = "#/chat" :
@@ -108,12 +119,13 @@ class mauIRC {
 					this.conn.ect() :
 					window.location.hash = "#/login"
 		)
+		this.router.handle("/chat", () =>
+			this.verifyConnection(() =>
+				this.applyTemplate("chat", {networks: this.data.networks})
+			)
+		)
 		this.router.handle("/raw/{network}", data =>
-			this.conn.ected ?
-				this.raw.open(data.network) :
-				this.auth.enticated ?
-					window.location.hash = "#/connect" :
-					window.location.hash = "#/login"
+			this.verifyConnection(() => this.raw.open(data.network))
 		)
 		this.router.listen()
 	}
