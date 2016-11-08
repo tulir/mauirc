@@ -33,6 +33,9 @@ Handlebars.registerHelper('ifCond', function(val1, operator, val2, options) {
 	}
 })
 
+// Request notification permission
+Notification.requestPermission()
+
 class mauIRC {
 	constructor() {
 		this.container = $("#container")
