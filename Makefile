@@ -15,7 +15,7 @@ babel=./node_modules/.bin/babel
 jsdoc=./node_modules/.bin/jsdoc
 
 scssArgs=--output dist style/index.scss --quiet
-handlebarsArgs=-e "hbs" -f dist/templates.js ./pages/*.hbs
+handlebarsArgs=-e "hbs" -f dist/templates.js ./pages
 htmlminArgs=--html5 --collapse-boolean-attributes --remove-tag-whitespace \
 	--collapse-inline-tag-whitespace --remove-attribute-quotes \
 	--remove-comments --remove-empty-attributes --remove-redundant-attributes
@@ -25,13 +25,17 @@ jsFiles=js/networks.js js/conn.js js/auth.js js/rawio.js js/messaging.js js/main
 
 dist-dir:
 	@mkdir -p dist
-	@cd dist/ && ln -sf ../node_modules && cd ..
+	@mkdir -p dist/lib
 
 static-files:
 	@echo "Copying static files"
 	@sed -e "s/<!-- This is replaced with res\/header\.html in the Makefile -->/`sed 's:/:\\/:g' res/header.html`/" index.html > dist/index.html
 	@cp res/favicon.ico dist/
 	@cp res/firacode.otf dist/
+	@cp node_modules/jquery/dist/jquery.min.js dist/lib/jquery.js
+	@cp node_modules/handlebars/dist/handlebars.runtime.min.js dist/lib/handlebars.js
+	@cp node_modules/hashmux/dist/hashmux.min.js dist/lib/hashmux.js
+	@cp node_modules/normalize.css/normalize.css dist/lib/normalize.css
 
 static-files-min: static-files
 	@echo "Minifying HTML files"
@@ -80,27 +84,14 @@ docs: dist-dir
 
 clean:
 	@echo "Cleaning working directory"
-	rm -rf dist ranssi.tar.xz
+	rm -rf dist mauirc.tar.xz
 
 package: production
 	@echo "Packaging for production"
 	@cp package.json LICENSE dist
-	@rm -f dist/node_modules
-	@cd dist && rm -f node_modules && \
-		tar cfJ mauirc.tar.xz * && mv mauirc.tar.xz ..
-		&& ln -sf ../node_modules && cd ..
-	@rm -f dist/package.json dist/LICENSE
-	@echo "Extract mauirc.tar.xz somewhere and run \`npm install --production\`"
-
-package-with-dependencies: production
-	@echo "Packaging for production (with dependencies)"
-	@rm -f dist/node_modules
-	@cd dist && rm -f node_modules && \
-		tar cfJ mauirc.tar.xz * \
-			../node_modules/jquery/dist/jquery.min.js \
-			../node_modules/handlebars/dist/handlebars.runtime.min.js \
-			../node_modules/moment/min/moment.min.js ../node_modules/moment/locale/fi.js \
-			../node_modules/normalize.css/normalize.css \
-			../node_modules/hashmux/dist/hashmux.min.js && mv mauirc.tar.xz .. \
-		&& ln -sf ../node_modules && cd ..
+	@cd dist
+	@tar cfJ mauirc.tar.xz *
+	@rm -f package.json LICENSE
+	@mv mauirc.tar.xz ..
+	@cd ..
 	@echo "Extract mauirc.tar.xz anywhere"

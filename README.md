@@ -18,12 +18,11 @@ You should use [CSSComb](http://csscomb.com/), [ESLint](http://eslint.org/) and 
 Install required packages with `npm install` and use `make` to compile everything.
 
 Make targets:
-* `default` - Compile everything without any compatibility patches/minification
+* `default` - Compile everything without any compatibility patches/minification. Also copies required compiled/minified dependencies from `node_modules` to `dist/lib`
 * `compatibility` - Same as `default`, but with Babel (ES6 compat) and Autoprefixer (CSS compat)
 * `minify` - Same as `default`, but minify code
 * `production` - `compatibility` and `minify` combined
-* `package` - Package `LICENSE`, the output of `production` and `package.json` into a `.tar.xz` archive.
-* `package-with-dependencies` - Same as `package`, but include the necessary npm packages instead of `package.json`
+* `package` - Package `LICENSE` and the output of `production` into a `.tar.xz` archive.
 
 #### Pre-2.1
 You can compile the code yourself using GopherJS. Once you have the [Go toolkit](https://golang.org/doc/install), simply use `go get -u github.com/gopherjs/gopherjs` to get the GopherJS toolkit.
