@@ -34,7 +34,7 @@ class mauIRC {
 	}
 
 	registerEventHandler(evt, func) {
-		$(document).on("mauirc." + evt, (event, source) => {
+		$("#eventcontainer").on("mauirc." + evt, (event, source) => {
 			func()
 			source.stopPropagation()
 		})
@@ -43,7 +43,7 @@ class mauIRC {
 	activateEvents() {
 		let mauirc = this
 		$(document).on("click", "*[data-event]", function(event) {
-			$(document).trigger(
+			$("#eventcontainer").trigger(
 				"mauirc." + this.getAttribute("data-event") + ":click",
 				[event, mauirc]
 			)
