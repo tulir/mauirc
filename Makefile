@@ -33,6 +33,7 @@ static-files:
 	@cp res/favicon.ico dist/
 	@cp res/firacode.otf dist/
 	@cp node_modules/jquery/dist/jquery.min.js dist/lib/jquery.js
+	@cp node_modules/moment/min/moment.min.js dist/lib/moment.js
 	@cp node_modules/handlebars/dist/handlebars.runtime.min.js dist/lib/handlebars.js
 	@cp node_modules/hashmux/dist/hashmux.min.js dist/lib/hashmux.js
 	@cp node_modules/normalize.css/normalize.css dist/lib/normalize.css
