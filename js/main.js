@@ -42,7 +42,7 @@ class mauIRC {
 
 	activateEvents() {
 		let mauirc = this
-		$(document).on("click", "*[data-event]", function(event) {
+		$("#container").on("click", "*[data-event]", function(event) {
 			$("#eventcontainer").trigger(
 				"mauirc." + this.getAttribute("data-event") + ":click",
 				[event, mauirc]
