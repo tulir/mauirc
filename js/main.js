@@ -44,8 +44,18 @@ class mauIRC {
 		this.data = new DataStore(this)
 	}
 
-	applyTemplate(name, args) {
-		this.container.html(Handlebars.templates[name](args))
+	applyTemplate(name, args, object) {
+		if (object === undefined) {
+			object = this.container
+		}
+		object.html(Handlebars.templates[name](args))
+	}
+
+	appendTemplate(name, args, object) {
+		if (object === undefined) {
+			object = this.container
+		}
+		object.append(Handlebars.templates[name](args))
 	}
 
 	load() {
