@@ -125,10 +125,10 @@ class NetworkStore {
 			return
 		}
 
-		let network = chanlist.find(".network[data-name=" + this.name + "]")
+		let network = chanlist.find(".network[data-name='" + this.name + "']")
 		if (network.length === 0) {
-			chanlist.append(Handlebars.templates["chanlist-network"], this)
-			network = chanlist.find(".network[data-name=" + this.name + "]")
+			this.mauirc.appendTemplate("chanlist-network", this, chanlist)
+			network = chanlist.find(".network[data-name='" + this.name + "']")
 		}
 		return network
 	}
@@ -140,12 +140,12 @@ class NetworkStore {
 		}
 
 		let network = chat.find(
-			".network-container[data-name=" + this.name + "]"
+			".network-container[data-name='" + this.name + "']"
 		)
 		if (network.length === 0) {
-			chat.append(Handlebars.templates["chat-network"], this)
+			this.mauirc.appendTemplate("chat-network", this, chat)
 			network = chat.find(
-				".network-container[data-name=" + this.name + "]"
+				".network-container[data-name='" + this.name + "']"
 			)
 		}
 		return network
@@ -180,32 +180,32 @@ class ChannelStore {
 		let network = this.network.getChanlistEntry()
 
 		let channel = network.find(
-			".channels > .channel[data-name=" + this.name + "]"
+			".channels > .channel[data-name='" + this.name + "']"
 		)
 		if (channel.length === 0) {
-			networks.append(Handlebars.templates["chanlist-channel"], {
+			this.mauirc.appendTemplate("chanlist-channel", {
 				name: this.name,
 				network: this.network.name
-			})
+			}, networks)
 			let channel = network.find(
-				".channels > .channel[data-name=" + this.name + "]"
+				".channels > .channel[data-name='" + this.name + "']"
 			)
 		}
 		return channel
 	}
 
 	getChatAreaEntry() {
-		let network = this.network.getChatAreaEntry()
+		let chat = this.network.getChatAreaEntry()
 
 		let channel = chat.find(
 			".channel-container" +
-			"[data-name=" + this.name + "]"
+			"[data-name='" + this.name + "']"
 		)
-		if (network.length === 0) {
-			chat.append(Handlebars.templates["chat-channel"], this)
+		if (channel.length === 0) {
+			this.mauirc.appendTemplate("chat-channel", this, chat)
 			let channel = chat.find(
 				".channel-container" +
-				"[data-name=" + this.name + "]"
+				"[data-name='" + this.name + "']"
 			)
 		}
 		return channel
