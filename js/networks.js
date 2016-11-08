@@ -184,7 +184,6 @@ class ChannelStore {
 
 		this.network.datastore.deselectChanlistEntries()
 		this.network.getChanlistEntry().addClass("active")
-		this.network.getChatAreaEntry().removeClass("hidden")
 
 		this.hasNewMessages = false
 
@@ -197,8 +196,8 @@ class ChannelStore {
 		chat.attr("data-channel", this.name)
 		chat.empty()
 
-		for (message of this.messages) {
-			this.mauirc.appendTemplate("chat-message", message, chat)
+		for (id in this.messages) {
+			this.mauirc.appendTemplate("chat-message", this.messages[id], chat)
 		}
 	}
 
