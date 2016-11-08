@@ -41,7 +41,7 @@ class mauIRC {
 		this.conn = new Connection(this)
 		this.msg = new Messaging(this)
 		this.raw = new RawMessaging(this)
-		this.data = new DataStore()
+		this.data = new DataStore(this)
 	}
 
 	applyTemplate(name, args) {
@@ -54,24 +54,23 @@ class mauIRC {
 	}
 
 	registerEventHandler(evt, func) {
-		$("#eventcontainer").on("mauirc." + evt, (event, source) => {
-			func()
-			source.stopPropagation()
+		$("#eventcontainer").on("mauirc." + evt, (event, sourceEvent, obj) => {
+			func(obj, sourceEvent, event)
+			sourceEvent.stopPropagation()
 		})
 	}
 
 	activateEvents() {
-		let mauirc = this
 		$("#container").on("click", "*[data-event]", function(event) {
 			$("#eventcontainer").trigger(
 				"mauirc." + this.getAttribute("data-event") + ":click",
-				[event, mauirc]
+				[event, this]
 			)
 		})
 		$("#container").on("submit", "*[data-event][data-event-type='submit']", function(event) {
 			$("#eventcontainer").trigger(
 				"mauirc." + this.getAttribute("data-event") + ":submit",
-				[event, mauirc]
+				[event, this]
 			)
 		})
 	}
