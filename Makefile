@@ -15,7 +15,7 @@ babel=./node_modules/.bin/babel
 jsdoc=./node_modules/.bin/jsdoc
 
 scssArgs=--output dist style/index.scss --quiet
-handlebarsArgs=-e "html" -f dist/templates.js ./pages/*.html
+handlebarsArgs=-e "hbs" -f dist/templates.js ./pages/*.hbs
 htmlminArgs=--html5 --collapse-boolean-attributes --remove-tag-whitespace \
 	--collapse-inline-tag-whitespace --remove-attribute-quotes \
 	--remove-comments --remove-empty-attributes --remove-redundant-attributes
