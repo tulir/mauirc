@@ -71,7 +71,9 @@ class mauIRC {
 		this.router.handle("/chat", () =>
 			this.conn.ected ?
 				this.applyTemplate("chat") :
-				window.location.hash = "#/connect"
+				this.auth.enticated ?
+					window.location.hash = "#/connect" :
+					window.location.hash = "#/login"
 		)
 		this.router.handle("/connect", () =>
 			this.conn.ected ?
