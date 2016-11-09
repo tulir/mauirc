@@ -28,19 +28,19 @@
 }
 
 .hidden-xs-down {
-	@include hidden-down($extrasmall)
+	@include hidden-down($extrasmall);
 }
 
 .hidden-sm-down {
-	@include hidden-down($small)
+	@include hidden-down($small);
 }
 
 .hidden-md-down {
-	@include hidden-down($medium)
+	@include hidden-down($medium);
 }
 
 .hidden-lg-down {
-	@include hidden-down($large)
+	@include hidden-down($large);
 }
 
 .hidden-xl-down, .hidden-xs-up, .hidden {
