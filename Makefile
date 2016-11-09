@@ -15,13 +15,18 @@ babel=./node_modules/.bin/babel
 jsdoc=./node_modules/.bin/jsdoc
 
 scssArgs=--output dist style/index.scss --quiet
+scssMinArgs=--output-style compressed
+scssMaxArgs=--source-map-embed --output-style expanded --indent-type tab
 handlebarsArgs=-e "hbs" -f dist/templates.js ./pages
 htmlminArgs=--html5 --collapse-boolean-attributes --remove-tag-whitespace \
 	--collapse-inline-tag-whitespace --remove-attribute-quotes \
 	--remove-comments --remove-empty-attributes --remove-redundant-attributes
 postcssArgs=--use autoprefixer --autoprefixer.browsers "> 0.25%"
+headersReplace=<!-- This is replaced with res\/header\.html in the Makefile -->
+headers=sed 's:/:\\/:g' res/header.html
 
-jsFiles=js/data.js js/conn.js js/auth.js js/rawio.js js/messaging.js js/message.js js/main.js
+jsFiles=js/data.js js/conn.js js/auth.js js/rawio.js js/messaging.js \
+	js/message.js js/main.js
 
 dist-dir:
 	@mkdir -p dist
@@ -29,7 +34,7 @@ dist-dir:
 
 static-files:
 	@echo "Copying static files"
-	@sed -e "s/<!-- This is replaced with res\/header\.html in the Makefile -->/`sed 's:/:\\/:g' res/header.html`/" index.html > dist/index.html
+	@sed -e "s/$(headersReplace)/`$(headers)`/" index.html > dist/index.html
 	@cp res/favicon.ico dist/
 	@cp res/firacode.otf dist/
 	@cp node_modules/jquery/dist/jquery.min.js dist/lib/jquery.js
@@ -55,7 +60,7 @@ handlebars-min: dist-dir
 
 scss: dist-dir
 	@echo "Compiling SCSS"
-	@$(scss) --source-map-embed --output-style expanded --indent-type tab $(scssArgs)
+	@$(scss) $(scssMaxArgs) $(scssArgs)
 
 scss-autoprefixer: scss
 	@echo "Adding prefixes to compiled SCSS"
@@ -63,7 +68,7 @@ scss-autoprefixer: scss
 
 scss-min: dist-dir
 	@echo "Compiling and minifying SCSS"
-	@$(scss) --output-style compressed $(scssArgs)
+	@$(scss) $(scssMinArgs) $(scssArgs)
 
 scss-min-autoprefixer: scss-min
 	@echo "Adding prefixes to compiled and minified SCSS"
