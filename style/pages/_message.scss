@@ -53,8 +53,17 @@
 			background-color: $extralight-green;
 		}
 
-		&.user-action > .action > .sender::before {
-			content: "★ ";
+		&.secondary-action {
+			color: $secondary-text-color;
+			border: 1px dashed $green;
+		}
+
+		&.user-action > .action > .sender {
+			color: $text-color;
+
+			&::before {
+				content: "★ ";
+			}
 		}
 
 		.action {
@@ -62,8 +71,6 @@
 
 			.sender {
 				display: inline;
-
-				color: black;
 
 				font-weight: bold;
 			}
