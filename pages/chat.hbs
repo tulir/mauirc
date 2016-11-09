@@ -28,7 +28,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			{{> message this}}
 		{{/each}}
 	</div>
-	<div class="input-container">
-		<input type="text" placeholder="Write your message...">
+	<form class="input-container" data-event="chat" data-event-type="submit">
+		<input
+			type="text"
+			id="chat-input"
+			autocomplete="off"
+			placeholder="Write your message..."
+		>
 	</div>
 </div>

@@ -18,6 +18,16 @@
 class Messaging {
 	constructor(mauirc) {
 		this.mauirc = mauirc
+		mauirc.registerEventHandler("chat:submit", () => {
+			let chat = mauirc.data.getChatArea()
+			this.send({
+				message: $("#chat-input").val(),
+				command: "privmsg",
+				channel: chat.attr("data-channel"),
+				network: chat.attr("data-network")
+			})
+			$("#chat-input").val("")
+		})
 	}
 
 	receive(message) {
