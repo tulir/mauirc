@@ -21,15 +21,19 @@
 	src: url("firacode.otf");
 }
 
-tt, pre, code {
-	font-family: $font-stack-mono;
+* {
+	font-family: $font-stack !important;
+}
+
+tt, pre, code, %monospace {
+	font-family: $font-stack-mono !important;
 }
 
 body {
 	color: $text-color;
 	background-color: $background-color;
 
-	font-family: $font-stack;
+	font-family: $font-stack !important;
 	font-size: 16px;
 }
 
