@@ -54,10 +54,7 @@ class Message {
 			return undefined
 		}
 
-		let msg = chat.find(sprintf(
-			".message-wrapper[data-id=%s] > .message[data-id=%s]",
-			this.id, this.id
-		))
+		let msg = chat.find(sprintf(".message-wrapper[data-id=%s]", this.id))
 		if (msg.length === 0) {
 			return undefined
 		}
