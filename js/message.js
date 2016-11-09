@@ -76,7 +76,7 @@ class Message {
 		this.wrapClassArr = ["message-wrapper"]
 		this.highlight = false
 		this.ownMsg = data.ownMsg
-		this.tryJoin()
+		this.joined = this.tryJoin()
 		this.message = linkifyHtml(escapeHtml(data.message))
 		this.plain = data.message
 		this.isAction = true
@@ -96,7 +96,9 @@ class Message {
 				prevMsgUI.addClass("joined")
 				prevMsgUI.addClass("next")
 			}
+			return true
 		}
+		return false
 	}
 
 	parsePreview(preview) {
@@ -126,17 +128,17 @@ class Message {
 			this.plain = "* " + this.sender + " " + this.message
 			return
 		case "join":
-			this.classArr = this.classArr.append(["secondary-action", "joinpart"])
+			this.classArr = this.classArr.concat(["secondary-action", "joinpart"])
 			this.message = "joined " + this.message
 			return
 		case "part":
 		case "quit":
-			this.classArr = this.classArr.append(["secondary-action", "joinpart"])
+			this.classArr = this.classArr.concat(["secondary-action", "joinpart"])
 			this.message = "left: " + this.message
 			this.plain = this.sender + " " + this.message
 			return
 		case "kick":
-			this.classArr = this.classArr.append(["secondary-action", "kick"])
+			this.classArr = this.classArr.concat(["secondary-action", "kick"])
 			let index = unescapedMessage.indexOf(":")
 			let kicker = this.sender
 			let sender = unescapedMessage.substr(0, index)
@@ -152,7 +154,7 @@ class Message {
 			)
 			return
 		case "mode":
-			this.classArr = this.classArr.append(["secondary-action", "modechange"])
+			this.classArr = this.classArr.concat(["secondary-action", "modechange"])
 			let parts = message.split(" ")
 			if (parts.length > 1) {
 				this.message = sprintf(
@@ -167,12 +169,12 @@ class Message {
 			}
 			return
 		case "nick":
-			this.classArr = this.classArr.append(["secondary-action", "nickchange"])
+			this.classArr = this.classArr.concat(["secondary-action", "nickchange"])
 			this.message = sprintf("is now known as <b>%s</b>", unescapedMessage)
 			this.plain = sprintf("%s is now known as %s", unescapedMessage)
 			return
 		case "topic":
-			this.classArr = this.classArr.append(["secondary-action", "nickchange"])
+			this.classArr = this.classArr.concat(["secondary-action", "nickchange"])
 			this.message = sprintf(
 				"changed the topic to <b>%s</b>", unescapedMessage
 			)

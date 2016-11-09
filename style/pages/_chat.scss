@@ -15,26 +15,26 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @import "../base/vars";
 
-@mixin chat-containers($size, $right_width, $left_width) {
+@mixin chat-containers($size, $left_width, $right_width) {
 	@media screen and (min-width: $size) {
 		.chat {
 			right: $right_width;
 			left: $left_width;
 		}
 
-		@if $right_width != 0 {
+		@if $left_width != 0 {
 			.channels-container {
 				display: block;
 
-				width: $right_width;
+				width: $left_width;
 			}
 		}
 
-		@if $left_width != 0 {
+		@if $right_width != 0 {
 			.users-container {
 				display: block;
 
-				width: $left_width;
+				width: $right_width;
 			}
 		}
 	}
@@ -48,8 +48,13 @@
 	left: 0;
 
 	.chat {
-		width: auto;
-		height: 100%;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+
+		box-sizing: border-box;
 
 		background-color: white;
 	}

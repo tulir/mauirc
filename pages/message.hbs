@@ -30,9 +30,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<div class="clipboard-data hidden">{{clipboard}}</div>
 			</div>
 		{{else}}
-			{{#unlessCond joined "or" ownMsg}}
+			{{#unless joined}}{{#unless ownMsg}}
 				<div class="sender">{{sender}}</div>
-			{{/unlessCond}}
+			{{/unless}}{{/unless}}
 			<div class="text">{{message}}</div>
 		{{/if}}
 		<div class="date" title="{{dateFull}}">{{date}}</div>
