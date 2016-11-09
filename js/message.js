@@ -72,7 +72,7 @@ class Message {
 		this.classArr = []
 		this.wrapClassArr = []
 		this.highlight = false
-		this.ownMsg = data.ownMsg
+		this.ownMsg = data.ownmsg
 		this.joined = this.tryJoin()
 		this.message = linkifyHtml(escapeHtml(data.message))
 		this.plain = data.message
