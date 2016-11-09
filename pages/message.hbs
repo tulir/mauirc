@@ -26,14 +26,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{{#if isAction}}
 			<div class="action-data">
 				<div class="action-sender">{{sender}}</div>
-				<div class="action-text">{{message}}</div>
+				<div class="action-text">{{{message}}}</div>
 				<div class="clipboard-data hidden">{{clipboard}}</div>
 			</div>
 		{{else}}
 			{{#unless joined}}{{#unless ownMsg}}
 				<div class="sender">{{sender}}</div>
 			{{/unless}}{{/unless}}
-			<div class="text">{{message}}</div>
+			<div class="text">{{{message}}}</div>
 		{{/if}}
 		<div class="date" title="{{dateFull}}">{{date}}</div>
 
