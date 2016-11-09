@@ -36,6 +36,9 @@
 
 		&.self {
 			background-color: $light-green;
+			&::after {
+				content: " (you)";
+			}
 		}
 
 		&:hover {
