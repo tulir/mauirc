@@ -189,6 +189,9 @@ class DataStore {
 			net.realname = data.realname
 			net.ssl = data.ssl
 			net.user = data.user
+			for (let chan in net.channels) {
+				net.channels[chan].updateOwnUser()
+			}
 			break
 		}
 	}
@@ -246,7 +249,7 @@ class ChannelStore {
 		this.datastore = network.datastore
 		this.name = name
 		this.network = network
-		this.users = []
+		this.userlist = {}
 		this.topic = ""
 		this.topicsetat = 0
 		this.topicsetby = ""
@@ -255,6 +258,34 @@ class ChannelStore {
 		this.historyFetched = false
 		this.hasNewMessages = false
 		this.messages = {}
+	}
+
+	updateOwnUser() {
+		for (let nick in this.users) {
+			if (nick === this.network.nick) {
+				this.users[nick].own = "self"
+				return
+			}
+		}
+	}
+
+	set users(val) {
+		for (let elem of val) {
+			let plain = elem
+			let list = elem
+			if (/^[~&@%+]/.exec(elem)) {
+				plain = elem.substr(1)
+			}
+			this.userlist[plain] = {
+				name: plain,
+				listName: list,
+				own: this.network.nick === plain ? "self" : ""
+			}
+		}
+	}
+
+	get users() {
+		return this.userlist
 	}
 
 	getChanlistEntry() {
