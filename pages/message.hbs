@@ -24,9 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	>
 	<div id="msg-{{id}}" class="message {{class}}">
 		{{#if isAction}}
-			<div class="action-data">
-				<div class="action-sender">{{sender}}</div>
-				<div class="action-text">{{{message}}}</div>
+			<div class="action">
+				<div class="sender">{{sender}}</div>
+				<div class="text">{{{message}}}</div>
 				<div class="clipboard-data hidden">{{clipboard}}</div>
 			</div>
 		{{else}}
@@ -35,7 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			{{/unless}}{{/unless}}
 			<div class="text">{{{message}}}</div>
 		{{/if}}
-		<div class="date" title="{{dateFull}}">{{date}}</div>
+		<div class="date-wrap">
+			<div class="date" title="{{dateFull}}">{{date}}</div>
+		</div>
 
 		<div class="preview">{{#if preview.hasImage}}
 			<div class="image {{#unless preview.hasText}}full-size{{/unless}}"
