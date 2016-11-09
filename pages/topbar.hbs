@@ -18,7 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {{#unless in-container}}<div class="standalone topbar-container">{{/unless}}
 
 <div class="topbar">
-
+	<span id="topic" data-event="topic">{{topic}}</span>
+	<input type="text" class="topic-edit" id="topic-edit" value="{{topic}}">
 </div>
 
 {{#unless in-container}}</div>{{/unless}}
