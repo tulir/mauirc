@@ -53,14 +53,14 @@
 
 				@include pointerCursor();
 
-				&.active {
-					color: $green;
-					background-color: white;
-				}
-
 				&.notification, &:hover {
 					color: white;
 					background-color: $blue;
+				}
+
+				&.active {
+					color: $green;
+					background-color: white;
 				}
 			}
 		}
