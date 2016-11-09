@@ -28,7 +28,7 @@
 		}
 
 		@if $left_width != 0 {
-			.channels-container {
+			.chanlist-container {
 				display: block;
 
 				width: $left_width;
@@ -36,7 +36,7 @@
 		}
 
 		@if $right_width != 0 {
-			.users-container {
+			.userlist-container {
 				display: block;
 
 				width: $right_width;
@@ -97,7 +97,7 @@
 		}
 	}
 
-	.channels-container {
+	.chanlist-container {
 		position: absolute;
 		top: 0;
 		bottom: 3rem;
@@ -106,7 +106,7 @@
 		display: none;
 	}
 
-	.users-container {
+	.userlist-container {
 		position: absolute;
 		top: 2.5rem;
 		right: 0;

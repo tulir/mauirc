@@ -18,4 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {{#unless inline}}
 	{{> topbar users=true}}
 {{/unless}}
-<div class="userlist" id="userlist"></div>
+<div class="userlist" id="userlist">
+	{{#each users}}
+		<div class="user" data-event="user" data-name="{{this}}">
+			{{this}}
+		</div>
+	{{/each}}
+</div>

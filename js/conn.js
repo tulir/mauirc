@@ -55,7 +55,7 @@ class Connection {
 	onMessage(data) {
 		switch(data.type) {
 		case "message":
-			this.mauirc.msg.receive(data.object)
+			this.mauirc.data.receive(data.object)
 			break
 		case "raw":
 			this.mauirc.raw.receive(data.object)

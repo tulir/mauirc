@@ -29,7 +29,6 @@ class mauIRC {
 		this.events = new EventSystem(this)
 		this.auth = new Auth(this)
 		this.conn = new Connection(this)
-		this.msg = new Messaging(this)
 		this.raw = new RawMessaging(this)
 		this.data = new DataStore(this)
 	}
@@ -92,7 +91,7 @@ class mauIRC {
 					window.location.hash = "#/login"
 		)
 		this.router.handle("/chat", () =>
-			this.verifyConnection(() => this.msg.openChat())
+			this.verifyConnection(() => this.data.openChat())
 		)
 		this.router.handle("/raw/{network}", data =>
 			this.verifyConnection(() => this.raw.open(data.network))
