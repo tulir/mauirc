@@ -25,9 +25,10 @@ function escapeHtml(str) {
 }
 
 class Message {
-	constructor(channel, data, previousID) {
+	constructor(channel, data, previousID, isNew) {
 		this.channel = channel
 		this.previousID = previousID
+		this.isNew = isNew
 		this.initialize(data)
 		this.parsePreview(data.preview)
 		this.parseMessageType(data.command, data.message)
@@ -186,7 +187,7 @@ class Message {
 	}
 
 	notify() {
-		if (!Notification.permission === "granted") {
+		if (!this.isNew || !Notification.permission === "granted") {
 			return
 		}
 		new Notification(sprintf("%s @ %s", this.sender, this.channel), {

@@ -228,7 +228,7 @@ class ChannelStore {
 	}
 
 	receiveMessage(data) {
-		let message = new Message(this, data, this.previousMessageID())
+		let message = new Message(this, data, this.previousMessageID(), true)
 		this.messages[message.id] = message
 		let chat = this.network.datastore.getChatArea()
 		if (chat !== undefined) {
