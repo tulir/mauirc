@@ -15,8 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }}
-{{> topbar chat=true}}
 <div class="chat-container" id="chat-container">
+	<div class="topbar-container">
+		{{> topbar chat=true in-container=true}}
+	</div>
 	<div class="channels-container">
 		{{> chanlist inline=true networks=networks}}
 	</div>
