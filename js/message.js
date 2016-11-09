@@ -72,8 +72,8 @@ class Message {
 		this.date = momentDate.format("HH:mm:ss")
 		this.dateFull = momentDate.format("dddd, D MMM YYYY")
 		this.id = data.id
-		this.classArr = ["message"]
-		this.wrapClassArr = ["message-wrapper"]
+		this.classArr = []
+		this.wrapClassArr = []
 		this.highlight = false
 		this.ownMsg = data.ownMsg
 		this.joined = this.tryJoin()
