@@ -35,9 +35,12 @@
 	}
 
 	& > .message {
+		position: relative;
+
 		display: inline-block;
 
 		box-sizing: border-box;
+		min-width: 20%;
 		max-width: 70%;
 		padding: .25rem .5rem;
 
@@ -48,6 +51,26 @@
 			background-color: $extralight-green;
 		}
 
+		&.user-action > .action > .sender::before {
+			content: "★ ";
+		}
+
+		.action {
+			display: inline-block;
+
+			.sender {
+				display: inline;
+
+				color: black;
+
+				font-weight: bold;
+			}
+
+			.text {
+				display: inline;
+			}
+		}
+
 		.sender {
 			color: $secondary-text-color;
 		}
@@ -56,12 +79,21 @@
 			display: inline-block;
 		}
 
-		.date {
-			display: inline-block;
+		.date-wrap {
+			display: block;
+			float: right;
 
-			color: $secondary-text-color;
+			margin-left: .25rem;
 
-			font-size: .75rem;
+			.date {
+				position: relative;
+
+				display: inline;
+
+				color: $secondary-text-color;
+
+				font-size: .7rem;
+			}
 		}
 	}
 }
