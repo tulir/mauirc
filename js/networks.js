@@ -217,6 +217,7 @@ class ChannelStore {
 	previousMessageID() {
 		let prevID = -1
 		for (let id in this.messages) {
+			id = +id
 			if (prevID < id) {
 				prevID = id
 			}
