@@ -16,16 +16,44 @@
 "use strict"
 
 class Message {
-	constructor(mauirc, data) {
+	constructor(channel, data, previousID) {
+		this.channel = channel
+		this.previousID = previousID
 		this.initialize(data)
 		this.parsePreview(data.preview)
 		this.parseMessageType(data.command, data.message)
 		this.parseHighlight(data.network)
-		this.updateTemplateVariables()
+
+		if (this.ownMsg) {
+			this.classArr.push("own")
+			this.wrapClassArr.push("own")
+		}
+		// TODO this.message = decodeMessage(this.message)
 	}
 
-	save() {
-		mauirc.data.getChannel(data.network, data.channel).receiveMessage(this)
+	get class() {
+		return this.classArr.join(" ")
+	}
+
+	get wrapClass() {
+		return this.wrapClassArr.join(" ")
+	}
+
+	getUIElement() {
+		let chat = this.channel.getChatArea()
+		if (chat === undefined) {
+			return undefined
+		}
+
+		let msg = chat.find(sprintf(
+			".message-wrapper[data-id=%s] > .message[data-id=%s]",
+			this.id, this.id
+		))
+		if (msg.length === 0) {
+			return undefined
+		}
+
+		return msg
 	}
 
 	initialize(data) {
@@ -33,10 +61,10 @@ class Message {
 		this.sender = data.sender
 		this.timestamp = data.timestamp
 		this.date = momentDate.format("HH:mm:ss")
-		this.dateFull = momentDate.format("dddd, D MMM YYYY (z)")
+		this.dateFull = momentDate.format("dddd, D MMM YYYY")
 		this.id = data.id
-		this.class = ["message"]
-		this.wrapClass = ["message-wrapper"]
+		this.classArr = ["message"]
+		this.wrapClassArr = ["message-wrapper"]
 		this.highlight = false
 		this.ownMsg = data.ownMsg
 		this.tryJoin()
@@ -44,6 +72,23 @@ class Message {
 		this.message = data.message
 		this.plain = data.message
 		this.isAction = true
+	}
+
+	tryJoin() {
+		let prevMsg = this.channel.messages[this.previousID]
+		if (prevMsg !== undefined && prevMsg.sender === this.sender) {
+			if (!prevMsg.wrapClass.includes("joined")) {
+				prevMsg.wrapClassArr.push("joined")
+			}
+			prevMsg.wrapClassArr.push("next")
+			this.wrapClassArr.push("joined")
+			this.wrapClassArr.push("prev")
+			let prevMsgUI = prevMsg.getUIElement()
+			if (prevMsgUI !== undefined) {
+				prevMsgUI.addClass("joined")
+				prevMsgUI.addClass("next")
+			}
+		}
 	}
 
 	parsePreview(preview) {
@@ -66,37 +111,24 @@ class Message {
 		// TODO highlights
 	}
 
-	updateTemplateVariables() {
-		if (this.ownMsg) {
-			this.class.push("own")
-			this.wrapClass.push("own")
-		}
-		if (this.joined) {
-			this.wrapClass.push("joined-with-prev")
-		}
-		this.class = this.class.join(" ")
-		this.wrapClass = this.wrapClass.join(" ")
-		// TODO this.message = decodeMessage(this.message)
-	}
-
 	parseMessageType(command, unescapedMessage) {
 		switch(command.toLowerCase()) {
 		case "action":
-			this.class.push("user-action")
+			this.classArr.push("user-action")
 			this.plain = "* " + this.sender + " " + this.message
 			return
 		case "join":
-			this.class = this.class.append(["secondary-action", "joinpart"])
+			this.classArr = this.classArr.append(["secondary-action", "joinpart"])
 			this.message = "joined " + this.message
 			return
 		case "part":
 		case "quit":
-			this.class = this.class.append(["secondary-action", "joinpart"])
+			this.classArr = this.classArr.append(["secondary-action", "joinpart"])
 			this.message = "left: " + this.message
 			this.plain = this.sender + " " + this.message
 			return
 		case "kick":
-			this.class = this.class.append(["secondary-action", "kick"])
+			this.classArr = this.classArr.append(["secondary-action", "kick"])
 			let index = unescapedMessage.indexOf(":")
 			let kicker = this.sender
 			let sender = unescapedMessage.substr(0, index)
@@ -112,7 +144,7 @@ class Message {
 			)
 			return
 		case "mode":
-			this.class = this.class.append(["secondary-action", "modechange"])
+			this.classArr = this.classArr.append(["secondary-action", "modechange"])
 			let parts = message.split(" ")
 			if (parts.length > 1) {
 				this.message = sprintf(
@@ -127,12 +159,12 @@ class Message {
 			}
 			return
 		case "nick":
-			this.class = this.class.append(["secondary-action", "nickchange"])
+			this.classArr = this.classArr.append(["secondary-action", "nickchange"])
 			this.message = sprintf("is now known as <b>%s</b>", unescapedMessage)
 			this.plain = sprintf("%s is now known as %s", unescapedMessage)
 			return
 		case "topic":
-			this.class = this.class.append(["secondary-action", "nickchange"])
+			this.classArr = this.classArr.append(["secondary-action", "nickchange"])
 			this.message = sprintf(
 				"changed the topic to <b>%s</b>", unescapedMessage
 			)

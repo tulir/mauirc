@@ -176,6 +176,18 @@ class ChannelStore {
 		return channel
 	}
 
+	getChatArea() {
+		let chat = this.network.datastore.getChatArea()
+		if (chat === undefined) {
+			return undefined
+		}
+
+		if (chat.attr("data-network") === this.network.name &&
+			chat.attr("data-channel") === this.name) {
+			return chat
+		}
+	}
+
 	open() {
 		let chat = this.network.datastore.getChatArea()
 		if (chat === undefined) {
@@ -201,7 +213,20 @@ class ChannelStore {
 		}
 	}
 
-	receiveMessage(message) {
+	previousMessageID() {
+		let prevID = -1
+		for (let id in this.messages) {
+			if (prevID < id) {
+				prevID = id
+			}
+		}
+		return prevID
+	}
+
+	receiveMessage(data) {
+		console.log(data)
+		let message = new Message(this, data, this.previousMessageID())
+		console.log(message)
 		this.messages[message.id] = message
 		let chat = this.network.datastore.getChatArea()
 		if (chat !== undefined) {

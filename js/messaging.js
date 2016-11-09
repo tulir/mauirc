@@ -21,10 +21,9 @@ class Messaging {
 	}
 
 	receive(message) {
-		console.log(message)
 		let chan = this.mauirc.data.getChannel(message.network, message.channel)
 		chan.open()
-		// TODO process message and add to `chan`
+		chan.receiveMessage(message)
 	}
 
 	send(message) {
