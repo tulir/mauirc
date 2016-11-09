@@ -102,7 +102,7 @@ class Message {
 		this.preview = {hasText: false, hasImage: false}
 		if (preview !== null && preview !== undefined) {
 			if (preview.hasOwnProperty("image") && preview.image !== null) {
-				this.preview.hasText = true
+				this.preview.hasImage = true
 				this.preview.image = preview.image.url
 			}
 			if (preview.hasOwnProperty("text") && preview.text !== null) {
