@@ -53,7 +53,7 @@ class DataStore {
 			this.getChannel(
 				chan.getAttribute("data-network"),
 				chan.getAttribute("data-name")
-			).open(chan)
+			).open(true)
 		})
 
 		mauirc.events.submit("chat", () => {
@@ -360,9 +360,15 @@ class ChannelStore {
 		return true
 	}
 
-	open() {
-		let chat = this.network.datastore.getChatArea()
+	open(force) {
+		let chat = this.datastore.getChatArea()
 		if (chat === undefined) {
+			if (force) {
+				this.datastore.current.network = this.network.name
+				this.datastore.current.channel = this.name
+				this.fetchHistory(512)
+				this.datastore.openChat()
+			}
 			return
 		}
 
