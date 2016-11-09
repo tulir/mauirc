@@ -21,7 +21,7 @@ htmlminArgs=--html5 --collapse-boolean-attributes --remove-tag-whitespace \
 	--remove-comments --remove-empty-attributes --remove-redundant-attributes
 postcssArgs=--use autoprefixer --autoprefixer.browsers "> 0.25%"
 
-jsFiles=js/networks.js js/conn.js js/auth.js js/rawio.js js/messaging.js js/message.js js/main.js
+jsFiles=js/data.js js/conn.js js/auth.js js/rawio.js js/messaging.js js/message.js js/main.js
 
 dist-dir:
 	@mkdir -p dist
