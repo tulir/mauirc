@@ -38,14 +38,15 @@ class EventSystem {
 	}
 
 	activate() {
+		let eventContainer = this.eventContainer
 		this.mauirc.container.on("click", "*[data-event]", function(event) {
-			this.eventContainer.trigger(
+			eventContainer.trigger(
 				"mauirc." + this.getAttribute("data-event") + ":click",
 				[event, this]
 			)
 		})
 		this.mauirc.container.on("submit", "*[data-event][data-event-type='submit']", function(event) {
-			this.eventContainer.trigger(
+			eventContainer.trigger(
 				"mauirc." + this.getAttribute("data-event") + ":submit",
 				[event, this]
 			)
