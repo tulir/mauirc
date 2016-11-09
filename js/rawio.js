@@ -19,7 +19,7 @@ class RawMessaging {
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.data = {}
-		mauirc.registerEventHandler("rawio:submit", () => {
+		mauirc.events.submit("rawio", () => {
 			this.send($("#rawio").attr("data-network"), $("#rawio-input").val())
 			$("#rawio-input").val("")
 		})

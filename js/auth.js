@@ -23,8 +23,8 @@ class Auth {
 		this.checked = false
 
 		// TODO mauirc.registerEventHandler("auth.register:click", () => )
-		mauirc.registerEventHandler("auth.login:click", () => this.login())
-		mauirc.registerEventHandler("auth.forgot:click", () => this.forgot())
+		mauirc.events.click("auth.login", () => this.login())
+		mauirc.events.click("auth.forgot", () => this.forgot())
 	}
 
 	get enticated() {

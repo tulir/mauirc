@@ -26,6 +26,7 @@ class mauIRC {
 	constructor() {
 		this.container = $("#container")
 		this.router = new Hashmux()
+		this.events = new EventSystem(this)
 		this.auth = new Auth(this)
 		this.conn = new Connection(this)
 		this.msg = new Messaging(this)
@@ -47,33 +48,6 @@ class mauIRC {
 		object.append(Handlebars.templates[name](args))
 	}
 
-	load() {
-		this.registerPathHandlers()
-		this.activateEvents()
-	}
-
-	registerEventHandler(evt, func) {
-		$("#eventcontainer").on("mauirc." + evt, (event, sourceEvent, obj) => {
-			func(obj, sourceEvent, event)
-			sourceEvent.stopPropagation()
-		})
-	}
-
-	activateEvents() {
-		$("#container").on("click", "*[data-event]", function(event) {
-			$("#eventcontainer").trigger(
-				"mauirc." + this.getAttribute("data-event") + ":click",
-				[event, this]
-			)
-		})
-		$("#container").on("submit", "*[data-event][data-event-type='submit']", function(event) {
-			$("#eventcontainer").trigger(
-				"mauirc." + this.getAttribute("data-event") + ":submit",
-				[event, this]
-			)
-		})
-	}
-
 	verifyConnection(func) {
 		if (this.conn.ected) {
 			if (func !== undefined) {
@@ -92,7 +66,7 @@ class mauIRC {
 		}
 	}
 
-	registerPathHandlers() {
+	listen() {
 		this.router.handleError(404, data => {
 			if (Handlebars.templates.hasOwnProperty(data.page.substr(1))) {
 				this.applyTemplate(data.page.substr(1))
@@ -118,9 +92,7 @@ class mauIRC {
 					window.location.hash = "#/login"
 		)
 		this.router.handle("/chat", () =>
-			this.verifyConnection(() =>
-				this.applyTemplate("chat", {networks: this.data.networks})
-			)
+			this.verifyConnection(() => this.msg.openChat())
 		)
 		this.router.handle("/raw/{network}", data =>
 			this.verifyConnection(() => this.raw.open(data.network))
@@ -130,4 +102,4 @@ class mauIRC {
 }
 
 let $mauirc = new mauIRC()
-$mauirc.load()
+$mauirc.listen()

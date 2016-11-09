@@ -20,8 +20,7 @@ class DataStore {
 		this.mauirc = mauirc
 		this.networks = {}
 
-
-		mauirc.registerEventHandler("chanlist-channel:click", chan => {
+		mauirc.events.click("chanlist-channel", chan => {
 			this.getChannel(
 				chan.getAttribute("data-network"),
 				chan.getAttribute("data-name")
@@ -30,6 +29,10 @@ class DataStore {
 	}
 
 	getNetwork(name) {
+		if (name === undefined || name.length === 0) {
+			return undefined
+		}
+
 		if (!this.networks.hasOwnProperty(name)) {
 			this.putNetwork(new NetworkStore(this, name))
 		}
@@ -41,6 +44,11 @@ class DataStore {
 	}
 
 	getChannel(net, name) {
+		if (net === undefined || net.length === 0 ||
+			name === undefined || name.length === 0) {
+			return undefined
+		}
+
 		return this.getNetwork(net).getChannel(name)
 	}
 
@@ -129,10 +137,13 @@ class NetworkStore {
 	}
 
 	getChannel(name) {
+		if (name === undefined || name.length === 0) {
+			return undefined
+		}
+
 		if (!this.channels.hasOwnProperty(name)) {
 			this.putChannel(new ChannelStore(this, name))
 		}
-
 		return this.channels[name]
 	}
 

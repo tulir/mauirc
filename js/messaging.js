@@ -17,8 +17,12 @@
 
 class Messaging {
 	constructor(mauirc) {
+		this.current = {
+			network: "",
+			channel: ""
+		}
 		this.mauirc = mauirc
-		mauirc.registerEventHandler("chat:submit", () => {
+		mauirc.events.submit("chat", () => {
 			let chat = mauirc.data.getChatArea()
 			this.send({
 				message: $("#chat-input").val(),
@@ -28,6 +32,36 @@ class Messaging {
 			})
 			$("#chat-input").val("")
 		})
+
+		mauirc.events.click("vswitch.chat", () => this.openChat())
+		mauirc.events.click("vswitch.channels", () => this.openChanlist())
+		mauirc.events.click("vswitch.users", () => this.openUserlist())
+	}
+
+	openChat() {
+		let chan = this.mauirc.data.getChannel(
+			this.current.network, this.current.channel
+		)
+		if (chan === undefined) {
+			chan = {users: [], messages: []}
+		}
+		this.mauirc.applyTemplate("chat", {
+			networks: this.mauirc.data.networks,
+			users: chan.users,
+			messages: chan.messages,
+			network: this.current.network,
+			channel: this.current.channel,
+		})
+	}
+
+	openUserlist() {
+		this.mauirc.applyTemplate("userlist", this.mauirc.data.getChannel(
+			this.current.network, this.current.channel
+		))
+	}
+
+	openChanlist() {
+		this.mauirc.applyTemplate("chanlist", this.mauirc.data)
 	}
 
 	receive(message) {

@@ -13,6 +13,8 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+@import "../base/vars";
+@import "../base/responsivity";
 
 .standalone-topbar-container {
 	position: fixed;
@@ -20,7 +22,7 @@
 	right: 0;
 	left: 0;
 
-	height: 2rem;
+	height: 2.5rem;
 }
 
 .topbar {
@@ -29,4 +31,71 @@
 	height: 100%;
 
 	background-color: $green;
+
+	.arrow, .enter-settings {
+		display: inline-block;
+
+		box-sizing: border-box;
+		width: 7rem;
+		height: 100%;
+
+		color: white;
+
+		@include pointerCursor;
+
+		span, img {
+			position: absolute;
+			top: 50%;
+
+			transform: translateY(-50%);
+
+			font-weight: bold;
+		}
+		&.left {
+			float: left;
+			span {
+				left: 2rem;
+			}
+			img {
+				left: .25rem;
+			}
+		}
+		&.right {
+			float: right;
+			span {
+				right: 2rem;
+			}
+			img {
+				right: .25rem;
+			}
+		}
+	}
+	.enter-settings {
+		display: none;
+
+		img {
+			margin-right: .5rem;
+		}
+	}
+
+	& {
+		@include display-up($small) {
+			.enter-channels {
+				display: none;
+			}
+		}
+		@include display-up($medium) {
+			.enter-settings {
+				display: inline-block;
+			}
+
+			.enter-users {
+				display: none;
+			}
+		}
+	}
+
+	.topic-edit {
+		display: none;
+	}
 }

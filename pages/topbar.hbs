@@ -18,8 +18,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {{#unless in-container}}<div class="standalone topbar-container">{{/unless}}
 
 <div class="topbar">
-	<span id="topic" data-event="topic">{{topic}}</span>
-	<input type="text" class="topic-edit" id="topic-edit" value="{{topic}}">
+	{{#if chat}}
+		<span id="topic" data-event="topic">{{topic}}</span>
+		<input type="text" class="topic-edit" id="topic-edit" value="{{topic}}">
+
+		<div class="left arrow enter-channels" data-event="vswitch.channels">
+			<img src="img/left-arrow.svg"><span>Channels</span>
+		</div>
+		<div class="right arrow enter-users" data-event="vswitch.users">
+			<span>Users</span><img src="img/right-arrow.svg">
+		</div>
+		<div class="enter-settings right"><img src="img/settings.svg"></div>
+	{{else if users}}
+		<div class="left arrow enter-chat" data-event="vswitch.chat">
+			<img src="img/left-arrow.svg"><span>Chat</span>
+		</div>
+		<div class="enter-settings right"><img src="img/settings.svg"></div>
+	{{else if channels}}
+		<div class="right arrow enter-chat" data-event="vswitch.chat">
+			<span>Chat</span><img src="img/right-arrow.svg">
+		</div>
+	{{/if}}
 </div>
 
 {{#unless in-container}}</div>{{/unless}}

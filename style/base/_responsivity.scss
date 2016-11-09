@@ -27,6 +27,18 @@
 	}
 }
 
+@mixin display-up($upFrom) {
+	@media screen and (min-width: $upFrom) {
+		@content;
+	}
+}
+
+@mixin display-down($downFrom) {
+	@media screen and (max-width: $downFrom) {
+		@content;
+	}
+}
+
 .hidden-xs-down {
 	@include hidden-down($extrasmall);
 }
