@@ -20,6 +20,7 @@ class DataStore {
 		this.mauirc = mauirc
 		this.networks = {}
 
+
 		mauirc.registerEventHandler("chanlist-channel:click", chan => {
 			this.getChannel(
 				chan.getAttribute("data-network"),
@@ -197,6 +198,7 @@ class ChannelStore {
 
 		this.network.datastore.deselectChanlistEntries()
 		this.network.getChanlistEntry().addClass("active")
+		this.getChanlistEntry().addClass("active")
 
 		this.hasNewMessages = false
 
