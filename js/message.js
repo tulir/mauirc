@@ -15,6 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
 
+function escapeHtml(str) {
+	return str
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;")
+}
+
 class Message {
 	constructor(channel, data, previousID) {
 		this.channel = channel
@@ -68,8 +77,7 @@ class Message {
 		this.highlight = false
 		this.ownMsg = data.ownMsg
 		this.tryJoin()
-		// TODO this.message = linkify(escapeHTML(data.message))
-		this.message = data.message
+		this.message = linkifyHtml(escapeHtml(data.message))
 		this.plain = data.message
 		this.isAction = true
 	}
@@ -136,7 +144,7 @@ class Message {
 			this.sender = sender
 			this.message = sprintf(
 				"was kicked by <b>%s</b>: <b>%s</b>",
-				kicker, unescapedMessage // TODO linkify&escape message
+				kicker, linkifyHtml(escapeHtml(unescapedMessage))
 			)
 			this.plain = sprintf(
 				"was kicked by %s: %s",
