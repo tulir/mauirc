@@ -152,6 +152,7 @@ class ChannelStore {
 		this.topicsetby = ""
 		this.modes = undefined
 
+		this.historyFetched = false
 		this.hasNewMessages = false
 		this.messages = {}
 	}
@@ -190,6 +191,40 @@ class ChannelStore {
 		return undefined
 	}
 
+	fetchHistory(num, force) {
+		if (this.historyFetched && !force) {
+			return false
+		}
+
+		jQuery.ajax({
+			type: "GET",
+			url: sprintf("/history/%s/%s/?n=%d",
+				this.network.name,
+				encodeURIComponent(this.name),
+				num
+			),
+			dataType: "json"
+		})
+		.done(data => {
+			let chat = this.getChatArea()
+			for (let msgData of data.reverse()) {
+				let message = new Message(this, msgData, this.previousMessageID(), false)
+				this.messages[message.id] = message
+				if (chat !== undefined) {
+					this.mauirc.appendTemplate("message", message, chat)
+				}
+			}
+			this.historyFetched = true
+		})
+		.fail((info, status, error) => {
+			console.error("Failed to fetch history: HTTP", info.status)
+			console.error(info)
+
+			// TODO show error?
+		})
+		return true
+	}
+
 	open() {
 		let chat = this.network.datastore.getChatArea()
 		if (chat === undefined) {
@@ -211,8 +246,10 @@ class ChannelStore {
 		chat.attr("data-channel", this.name)
 		chat.empty()
 
-		for (let id in this.messages) {
-			this.mauirc.appendTemplate("message", this.messages[id], chat)
+		if (!this.fetchHistory(512)) {
+			for (let id in this.messages) {
+				this.mauirc.appendTemplate("message", this.messages[id], chat)
+			}
 		}
 	}
 
