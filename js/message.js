@@ -15,15 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
 
-function escapeHtml(str) {
-	return str
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&apos;")
-}
-
 class Message {
 	constructor(channel, data, previousID, isNew) {
 		this.channel = channel
@@ -39,6 +30,15 @@ class Message {
 			this.wrapClassArr.push("own")
 		}
 		// TODO this.message = decodeMessage(this.message)
+	}
+
+	static escapeHtml(str) {
+		return str
+			.replace(/&/g, "&amp;")
+			.replace(/</g, "&lt;")
+			.replace(/>/g, "&gt;")
+			.replace(/"/g, "&quot;")
+			.replace(/'/g, "&apos;")
 	}
 
 	get class() {
@@ -75,7 +75,7 @@ class Message {
 		this.highlight = false
 		this.ownMsg = data.ownmsg
 		this.joined = this.tryJoin()
-		this.message = linkifyHtml(escapeHtml(data.message))
+		this.message = linkifyHtml(Message.escapeHtml(data.message))
 		this.plain = data.message
 		this.isAction = true
 	}
@@ -144,7 +144,7 @@ class Message {
 			this.sender = sender
 			this.message = sprintf(
 				"was kicked by <b>%s</b>: <b>%s</b>",
-				kicker, linkifyHtml(escapeHtml(unescapedMessage))
+				kicker, linkifyHtml(Message.escapeHtml(unescapedMessage))
 			)
 			this.plain = sprintf(
 				"was kicked by %s: %s",
