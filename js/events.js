@@ -18,7 +18,7 @@
 class EventSystem {
 	constructor(mauirc) {
 		this.mauirc = mauirc
-		this.eventContainer = $("#eventcontainer")
+		this.eventContainer = $("<div id='eventcontainer'></div>")
 		this.activate()
 	}
 
