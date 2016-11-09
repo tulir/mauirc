@@ -18,6 +18,7 @@
 class EventSystem {
 	constructor(mauirc) {
 		this.mauirc = mauirc
+		this.eventContainer = $("#eventcontainer")
 		this.activate()
 	}
 
@@ -30,7 +31,7 @@ class EventSystem {
 	}
 
 	on(evt, func) {
-		$("#eventcontainer").on("mauirc." + evt, (event, sourceEvent, obj) => {
+		this.eventContainer.on("mauirc." + evt, (event, sourceEvent, obj) => {
 			func(obj, sourceEvent, event)
 			sourceEvent.stopPropagation()
 		})
@@ -38,13 +39,13 @@ class EventSystem {
 
 	activate() {
 		this.mauirc.container.on("click", "*[data-event]", function(event) {
-			$("#eventcontainer").trigger(
+			this.eventContainer.trigger(
 				"mauirc." + this.getAttribute("data-event") + ":click",
 				[event, this]
 			)
 		})
 		this.mauirc.container.on("submit", "*[data-event][data-event-type='submit']", function(event) {
-			$("#eventcontainer").trigger(
+			this.eventContainer.trigger(
 				"mauirc." + this.getAttribute("data-event") + ":submit",
 				[event, this]
 			)
