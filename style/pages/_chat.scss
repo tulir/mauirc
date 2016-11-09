@@ -23,6 +23,10 @@
 			left: $left_width;
 		}
 
+		.topbar-container {
+			left: $left_width;
+		}
+
 		@if $left_width != 0 {
 			.channels-container {
 				display: block;
@@ -50,7 +54,7 @@
 
 	.chat {
 		position: absolute;
-		top: 0;
+		top: 2rem;
 		right: 0;
 		bottom: 3rem;
 		left: 0;
@@ -104,11 +108,15 @@
 
 	.users-container {
 		position: absolute;
-		top: 0;
+		top: 2rem;
 		right: 0;
 		bottom: 3rem;
 
 		display: none;
+
+		&.hidden ~ .chat, &.hidden ~ .input-container {
+			right: 0;
+		}
 	}
 
 	// Prevent CSSComb from moving includes up
