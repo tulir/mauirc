@@ -18,7 +18,7 @@
 class EventSystem {
 	constructor(mauirc) {
 		this.mauirc = mauirc
-		this.eventContainer = $("<div id='eventcontainer'></div>")
+		this.handlers = {}
 		this.activate()
 	}
 
@@ -31,25 +31,33 @@ class EventSystem {
 	}
 
 	on(evt, func) {
-		this.eventContainer.on("mauirc." + evt, (event, sourceEvent, obj) => {
-			func(obj, sourceEvent, event)
-			sourceEvent.stopPropagation()
-		})
+		if (!this.handlers.hasOwnProperty(evt)) {
+			this.handlers[evt] = []
+		}
+		this.handlers[evt].push(func)
+	}
+
+	exec(evt, source, obj) {
+		if (!this.handlers.hasOwnProperty(evt)) {
+			return
+		}
+
+		source.stopPropagation()
+
+		for (let func of this.handlers[evt]) {
+			func(obj, source)
+		}
 	}
 
 	activate() {
-		let eventContainer = this.eventContainer
+		let evsys = this
 		this.mauirc.container.on("click", "*[data-event]", function(event) {
-			eventContainer.trigger(
-				"mauirc." + this.getAttribute("data-event") + ":click",
-				[event, this]
-			)
+			let evt = this.getAttribute("data-event") + ":click"
+			evsys.exec(evt, event, this)
 		})
 		this.mauirc.container.on("submit", "*[data-event][data-event-type='submit']", function(event) {
-			eventContainer.trigger(
-				"mauirc." + this.getAttribute("data-event") + ":submit",
-				[event, this]
-			)
+			let evt = this.getAttribute("data-event") + ":submit"
+			evsys.exec(evt, event, this)
 		})
 	}
 }
