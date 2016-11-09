@@ -72,6 +72,7 @@ class DataStore {
 		let chan = this.getChannel(message.network, message.channel)
 		chan.open()
 		chan.receiveMessage(message)
+		this.scrollDown()
 	}
 
 	openChat() {
@@ -86,6 +87,14 @@ class DataStore {
 			network: this.current.network,
 			channel: this.current.channel,
 		})
+		this.scrollDown()
+	}
+
+	scrollDown() {
+		let chat = this.getChatArea()
+		if (chat !== undefined) {
+			chat.scrollTop(chat.prop("scrollHeight"))
+		}
 	}
 
 	openUserlist() {
@@ -349,6 +358,7 @@ class ChannelStore {
 					this.mauirc.appendTemplate("message", message, chat)
 				}
 			}
+			this.datastore.scrollDown()
 			this.historyFetched = true
 		})
 		.fail((info, status, error) => {
@@ -393,6 +403,7 @@ class ChannelStore {
 			}
 		}
 		this.updateUserlist()
+		this.datastore.scrollDown()
 	}
 
 	updateUserlist() {
