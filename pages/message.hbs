@@ -41,13 +41,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			{{#if preview.hasImage}}
 				<div
 					class="
-						image-link
-						{{#unless preview.hasText}}preview-full-size{{/unless}}
+						image
+						{{#unless preview.hasText}}full-size{{/unless}}
 					"
 					todo="open image modal on click"
 				>
 					<img
-						class="image"
 						src="{{preview.image}}"
 						alt="Preview Image"
 					>
@@ -56,8 +55,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			{{#if preview.hasText}}
 				<div
 					class="
-						info
-						{{#unless preview.hasImage}}preview-full-size{{/unless}}
+						text
+						{{#unless preview.hasImage}}full-size{{/unless}}
 					"
 				>
 					<div class="title">{{preview.title}}</div>
