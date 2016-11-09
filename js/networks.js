@@ -186,6 +186,7 @@ class ChannelStore {
 			chat.attr("data-channel") === this.name) {
 			return chat
 		}
+		return undefined
 	}
 
 	open() {
@@ -208,8 +209,8 @@ class ChannelStore {
 		chat.attr("data-channel", this.name)
 		chat.empty()
 
-		for (id in this.messages) {
-			this.mauirc.appendTemplate("chat-message", this.messages[id], chat)
+		for (let id in this.messages) {
+			this.mauirc.appendTemplate("message", this.messages[id], chat)
 		}
 	}
 
@@ -224,15 +225,13 @@ class ChannelStore {
 	}
 
 	receiveMessage(data) {
-		console.log(data)
 		let message = new Message(this, data, this.previousMessageID())
-		console.log(message)
 		this.messages[message.id] = message
 		let chat = this.network.datastore.getChatArea()
 		if (chat !== undefined) {
-			if (chat.attr("data-network") === message.network
-				&& chat.attr("data-channel") === message.channel) {
-				this.mauirc.appendTemplate("chat-message", message, chat)
+			if (chat.attr("data-network") === data.network
+				&& chat.attr("data-channel") === data.channel) {
+				this.mauirc.appendTemplate("message", message, chat)
 			} else {
 				this.hasNewMessages = true
 				this.getChanlistEntry().addClass("notification")

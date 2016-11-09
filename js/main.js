@@ -19,7 +19,7 @@ const VERSION = "2.1.0"
 // Fixes to Handlebars
 Handlebars.partials = Handlebars.templates
 
-function ifCond(val1, operator, val2) {
+function ifCond(v1, operator, v2) {
 	switch(operator) {
 	case "==":  return (v1 == v2  ? true : false)
 	case "!=":  return (v1 != v2  ? true : false)
