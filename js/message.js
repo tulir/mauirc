@@ -190,7 +190,7 @@ class Message {
 		if (!this.isNew || !Notification.permission === "granted") {
 			return
 		}
-		new Notification(sprintf("%s @ %s", this.sender, this.channel), {
+		new Notification(sprintf("%s @ %s", this.sender, this.channel.name), {
 			body: this.plain,
 			icon: "favicon.ico"
 		})
