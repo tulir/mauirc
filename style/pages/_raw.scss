@@ -34,8 +34,9 @@
 
 		color: black;
 
-		font-family: $font-stack-mono;
 		font-size: .75rem;
+
+		@extend %monospace;
 	}
 
 	.input {
