@@ -25,8 +25,8 @@ postcssArgs=--use autoprefixer --autoprefixer.browsers "> 0.25%"
 headersReplace=<!-- This is replaced with res\/header\.html in the Makefile -->
 headers=sed 's:/:\\/:g' res/header.html
 
-jsFiles=js/events.js js/data.js js/conn.js js/auth.js js/rawio.js \
-	js/message.js js/main.js
+jsFiles=js/events.js js/contextmenu.js js/data.js js/conn.js js/auth.js \
+	js/rawio.js js/message.js js/main.js
 
 dist-dir:
 	@mkdir -p dist

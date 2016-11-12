@@ -26,6 +26,9 @@ class mauIRC {
 	constructor() {
 		this.container = $("#container")
 		this.router = new Hashmux()
+		this.contextmenu = new ContextmenuHandler(
+			$("#contextmenu"), Handlebars.templates.contextmenu
+		)
 		this.events = new EventSystem(this)
 		this.auth = new Auth(this)
 		this.conn = new Connection(this)
