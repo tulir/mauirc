@@ -30,6 +30,10 @@ class EventSystem {
 		this.on(evt + ":submit", func)
 	}
 
+	contextmenu(evt, func) {
+		this.on(evt + ":contextmenu", func)
+	}
+
 	on(evt, func) {
 		if (!this.handlers.hasOwnProperty(evt)) {
 			this.handlers[evt] = []
@@ -49,15 +53,24 @@ class EventSystem {
 		}
 	}
 
+	execRaw(evtType, obj, source) {
+		this.exec(obj.getAttribute("data-event") + ":" + evtType, source, obj)
+	}
+
 	activate() {
 		let evsys = this
-		this.mauirc.container.on("click", "*[data-event]", function(event) {
-			let evt = this.getAttribute("data-event") + ":click"
-			evsys.exec(evt, event, this)
+		this.mauirc.container.on("click",
+			"*[data-event][data-listen~='click']," +
+			"*[data-event]:not([data-listen])", function(event) {
+			evsys.execRaw("click", this, event)
 		})
-		this.mauirc.container.on("submit", "*[data-event][data-event-type='submit']", function(event) {
-			let evt = this.getAttribute("data-event") + ":submit"
-			evsys.exec(evt, event, this)
+		this.mauirc.container.on("submit",
+			"*[data-event][data-listen~='submit']", function(event) {
+			evsys.execRaw("submit", this, event)
+		})
+		this.mauirc.container.on("contextmenu",
+			"*[data-event][data-listen~='contextmenu']", function(event) {
+			evsys.execRaw("contextmenu", this, event)
 		})
 	}
 }
