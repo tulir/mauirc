@@ -87,7 +87,7 @@ js-min: dist-dir
 docs: dist-dir
 	@echo "Generating JSDocs"
 	@mkdir -p dist/docs
-	@$(jsdoc) -d dist/docs
+	@$(jsdoc) -d dist/docs js/main.js
 
 clean:
 	@echo "Cleaning working directory"
