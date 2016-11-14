@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
+const $ = require("jquery")
 
-class ContextmenuHandler {
+module.exports = class ContextmenuHandler {
 	constructor(div, template) {
 		this.container = div
 		let ths = this

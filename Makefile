@@ -7,17 +7,18 @@ minify: handlebars-min static-files-min scss-min js-min
 production: handlebars-min static-files-min scss-min-autoprefixer js-min
 	@echo "All done!"
 
+browserify=./node_modules/.bin/browserify
 handlebars=./node_modules/.bin/handlebars
 htmlmin=./node_modules/.bin/html-minifier
 scss=./node_modules/.bin/node-sass
 postcss=./node_modules/.bin/postcss
-babel=./node_modules/.bin/babel
 jsdoc=./node_modules/.bin/jsdoc
 
+browserifyArgs=--outfile dist/index.js -e js/main.js
 scssArgs=--output dist style/index.scss --quiet
 scssMinArgs=--output-style compressed
 scssMaxArgs=--source-map-embed --output-style expanded --indent-type tab
-handlebarsArgs=-e "hbs" -f dist/templates.js ./pages
+handlebarsArgs=-e "hbs" -f dist/templates.tmp.js ./pages
 htmlminArgs=--html5 --collapse-boolean-attributes --remove-tag-whitespace \
 	--collapse-inline-tag-whitespace --remove-attribute-quotes \
 	--remove-comments --remove-empty-attributes --remove-redundant-attributes
@@ -25,39 +26,35 @@ postcssArgs=--use autoprefixer --autoprefixer.browsers "> 0.25%"
 headersReplace=<!-- This is replaced with res\/header\.html in the Makefile -->
 headers=sed 's:/:\\/:g' res/header.html
 
-jsFiles=js/events.js js/contextmenu.js js/data.js js/conn.js js/auth.js \
-	js/rawio.js js/message.js js/main.js
-
 dist-dir:
 	@mkdir -p dist
-	@mkdir -p dist/lib
 
-static-files:
+static-files: dist-dir
 	@echo "Copying static files"
 	@sed -e "s/$(headersReplace)/`$(headers)`/" index.html > dist/index.html
 	@cp res/favicon.ico dist/
 	@cp res/firacode.otf dist/
 	@cp -r res/img/ dist/
-	@cp node_modules/jquery/dist/jquery.min.js dist/lib/jquery.js
-	@cp node_modules/moment/min/moment.min.js dist/lib/moment.js
-	@cp node_modules/sprintf-js/dist/sprintf.min.js dist/lib/sprintf.js
-	@cp node_modules/linkifyjs/dist/linkify.min.js dist/lib/linkify.js
-	@cp node_modules/linkifyjs/dist/linkify-html.min.js dist/lib/linkify-html.js
-	@cp node_modules/handlebars/dist/handlebars.runtime.min.js dist/lib/handlebars.js
-	@cp node_modules/hashmux/dist/hashmux.min.js dist/lib/hashmux.js
-	@cp node_modules/normalize.css/normalize.css dist/lib/normalize.css
+	@cp node_modules/normalize.css/normalize.css dist/normalize.css
 
 static-files-min: static-files
 	@echo "Minifying HTML files"
-	@cat dist/index.html | $(htmlmin) $(htmlminArgs) > dist/index.html
+	@cat dist/index.html | $(htmlmin) $(htmlminArgs) > dist/index.min.html
+	@mv -f dist/index.min.html dist/index.html
 
 handlebars: dist-dir
 	@echo "Compiling Handlebars templates"
 	@$(handlebars) $(handlebarsArgs)
+	@cat node_modules/handlebars/dist/handlebars.runtime.min.js \
+		dist/templates.tmp.js > dist/templates.js
+	@rm -f dist/templates.tmp.js
 
 handlebars-min: dist-dir
 	@echo "Compiling minified Handlebars templates"
 	@$(handlebars) -m $(handlebarsArgs)
+	@cat node_modules/handlebars/dist/handlebars.runtime.min.js \
+		dist/templates.tmp.js > dist/templates.js
+	@rm -f dist/templates.tmp.js
 
 scss: dist-dir
 	@echo "Compiling SCSS"
@@ -76,16 +73,16 @@ scss-min-autoprefixer: scss-min
 	@$(postcss) $(postcssArgs) -o dist/index.css dist/index.css
 
 js: dist-dir
-	@echo "Concatenating JavaScript files"
-	@cat $(jsFiles) > dist/index.js
+	@echo "Browserifying JavaScript files"
+	@$(browserify) --debug $(browserifyArgs)
 
 js-babel: dist-dir
-	@echo "Babelifying JavaScript files"
-	@$(babel) --no-comments -s inline -o dist/index.js $(jsFiles)
+	@echo "Browserifying and babelifying JavaScript files"
+	@$(browserify) -t babelify $(browserifyArgs)
 
 js-min: dist-dir
-	@echo "Babelifying and minifying JavaScript files"
-	@$(babel) --presets babili --no-comments -o dist/index.js $(jsFiles)
+	@echo "Browserifying, babelifying and minifying JavaScript files"
+	@$(browserify) -t babelify -t uglifyify $(browserifyArgs)
 
 docs: dist-dir
 	@echo "Generating JSDocs"

@@ -1,41 +1,43 @@
 {
-    "name": "mauirc",
-    "version": "2.1.0",
-    "description": "A web-based UI-focused IRC client.",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tulir/mauirc.git"
-    },
-    "keywords": ["mau", "irc", "web"],
-    "author": "Tulir Asokan <tulir@maunium.net>",
-    "license": "GPL-3.0",
-    "bugs": {
-        "url": "https://github.com/tulir/mauirc/issues"
-    },
-    "homepage": "https://github.com/tulir/mauirc#readme",
-
+	"name": "mauirc",
+	"version": "2.1.0",
+	"description": "A web-based UI-focused IRC client.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tulir/mauirc.git"
+	},
+	"keywords": ["mau", "irc", "mauirc", "web"],
+	"author": "Tulir Asokan <tulir@maunium.net>",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/tulir/mauirc/issues"
+	},
+	"homepage": "https://github.com/tulir/mauirc#readme",
+	"install": "make",
 	"dependencies": {
 		"normalize.css": "5.0.0",
 		"jquery": "3.1.1",
-		"moment": "2.15.2",
-		"hashmux": "2.0.3",
-		"handlebars": "4.0.5",
-        "sprintf-js": "1.0.3",
-        "linkifyjs": "2.1.3"
-	},
-	"devDependencies": {
-		"node-sass": "3.11.2",
-		"html-minifier": "3.1.0",
-        "postcss-cli-simple": "1.0.1",
-		"autoprefixer": "6.5.1",
-		"babel-cli": "6.18.0",
+		"moment": "2.16.0",
+		"hashmux": "2.1.0",
+		"handlebars": "4.0.6",
+		"sprintf-js": "1.0.3",
+		"linkifyjs": "2.1.3",
+
+		"node-sass": "3.12.2",
+		"html-minifier": "3.1.1",
+		"postcss-cli-simple": "1.0.1",
+		"autoprefixer": "6.5.3",
 		"babel-core": "6.18.2",
 		"babel-preset-es2015": "6.18.0",
 		"babel-preset-es2016": "6.16.0",
 		"babel-preset-es2017": "6.16.0",
 		"babel-preset-stage-3": "6.17.0",
 		"babel-preset-babili": "0.0.8",
-		"jsdoc": "3.4.2"
+		"browserify": "13.1.1",
+		"babelify": "7.3.0",
+		"uglifyify": "3.0.4",
+		"uglifyjs": "2.4.10",
+		"jsdoc": "3.4.3"
 	},
 	"babel": {
 		"presets": ["es2015", "es2016", "es2017", "stage-3"]

@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
 
-class Connection {
+module.exports = class Connection {
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.connected = false
@@ -74,7 +74,7 @@ class Connection {
 		this.mauirc.applyTemplate("connecting")
 		this.socket = new WebSocket(this.socketAddr)
 		this.socket.onmessage = event => this.onMessage(JSON.parse(event.data))
-		this.socket.onopen = event => this.onConnect()
-		this.socket.onclose = event => this.onDisconnect()
+		this.socket.onopen = () => this.onConnect()
+		this.socket.onclose = () => this.onDisconnect()
 	}
 }

@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
+const $ = require("jquery")
 
-class Auth {
+module.exports = class Auth {
 	constructor(mauirc, apiAddress) {
 		this.apiAddress = apiAddress
 		this.authenticated = false
@@ -38,7 +39,7 @@ class Auth {
 		}
 
 		console.log("Checking authentication status...")
-		jQuery.ajax({
+		$.ajax({
 			type: "GET",
 			url: "/auth/check",
 			dataType: "json"
@@ -54,7 +55,7 @@ class Auth {
 				window.location.hash = "#/login"
 			}
 		})
-		.fail((info, status, error) => {
+		.fail(info => {
 			console.error("Auth check failed: HTTP " + info.status)
 			console.error(info)
 			window.location.hash = "#/login"
@@ -64,7 +65,7 @@ class Auth {
 	}
 
 	login() {
-		jQuery.ajax({
+		$.ajax({
 			type: "POST",
 			url: "/auth/login",
 			data: JSON.stringify({
@@ -72,12 +73,12 @@ class Auth {
 				password: $("#password").val()
 			})
 		})
-		.done(data => {
+		.done(() => {
 			this.checkFailed = false
 			this.authenticated = true
 			window.location.hash = "#/connect"
 		})
-		.fail((info, status, error) => {
+		.fail(info => {
 			this.checkFailed = false
 			this.authenticated = false
 			console.error("Login failed")

@@ -14,8 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
+const { sprintf } = require("sprintf-js")
+const Message = require("./message")
+const $ = require("jquery")
 
-class DataStore {
+module.exports = class DataStore {
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.networks = {}
@@ -57,7 +60,7 @@ class DataStore {
 		})
 
 		mauirc.events.submit("chat", () => {
-			let chat = this.getChatArea()
+			//let chat = this.getChatArea()
 			this.mauirc.conn.send("message", {
 				message: $("#chat-input").val(),
 				command: "privmsg",
@@ -175,10 +178,10 @@ class DataStore {
 	}
 
 	process(type, data) {
-		let net
+		let net, chan
 		switch(type) {
 		case "chandata":
-			let chan = this.getChannel(data.network, data.name)
+			chan = this.getChannel(data.network, data.name)
 			chan.topic = data.topic
 			chan.topicsetat = data.topicsetat
 			chan.topicsetby = data.topicsetby
@@ -186,6 +189,7 @@ class DataStore {
 			chan.modes = data.modes
 			chan.updateUserlist()
 			this.updateChanlist()
+			break
 		case "chanlist":
 			this.getNetwork(data.network).chanlist = data.list
 			break
@@ -310,8 +314,8 @@ class ChannelStore {
 			this.mauirc.appendTemplate("chanlist-channel", {
 				name: this.name,
 				network: this.network.name
-			}, networks)
-			let channel = network.find(
+			}, this.datastore.networks)
+			channel = network.find(
 				".channels > .channel[data-name='" + this.name + "']"
 			)
 		}
@@ -336,7 +340,7 @@ class ChannelStore {
 			return false
 		}
 
-		jQuery.ajax({
+		$.ajax({
 			type: "GET",
 			url: sprintf("/history/%s/%s/?n=%d",
 				this.network.name,
@@ -361,7 +365,7 @@ class ChannelStore {
 			this.datastore.scrollDown()
 			this.historyFetched = true
 		})
-		.fail((info, status, error) => {
+		.fail(info => {
 			console.error("Failed to fetch history: HTTP", info.status)
 			console.error(info)
 

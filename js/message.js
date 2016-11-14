@@ -14,8 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
+const { sprintf } = require("sprintf-js")
+const moment = require("moment")
+const linkifyHtml = require("linkifyjs/html")
 
-class Message {
+module.exports = class Message {
 	constructor(channel, data, previousID, isNew) {
 		this.channel = channel
 		this.previousID = previousID
@@ -116,6 +119,7 @@ class Message {
 	}
 
 	parseHighlight(network) {
+		console.log(network)
 		// TODO highlights
 	}
 
@@ -135,12 +139,12 @@ class Message {
 			this.message = "left: " + this.message
 			this.plain = this.sender + " " + this.message
 			return
-		case "kick":
+		case "kick": {
 			this.classArr = this.classArr.concat(["secondary-action", "kick"])
 			let index = unescapedMessage.indexOf(":")
 			let kicker = this.sender
 			let sender = unescapedMessage.substr(0, index)
-			let message = unescapedMessage.substr(index+1)
+			unescapedMessage = unescapedMessage.substr(index+1)
 			this.sender = sender
 			this.message = sprintf(
 				"was kicked by <b>%s</b>: <b>%s</b>",
@@ -151,9 +155,10 @@ class Message {
 				kicker, unescapedMessage
 			)
 			return
-		case "mode":
+		}
+		case "mode": {
 			this.classArr = this.classArr.concat(["secondary-action", "modechange"])
-			let parts = message.split(" ")
+			let parts = unescapedMessage.split(" ")
 			if (parts.length > 1) {
 				this.message = sprintf(
 					"set mode <b>%s</b> for <b>%s</b>", parts[0], parts[1]
@@ -166,6 +171,7 @@ class Message {
 				this.plain = sprintf("set channel mode %s", parts[0])
 			}
 			return
+		}
 		case "nick":
 			this.classArr = this.classArr.concat(["secondary-action", "nickchange"])
 			this.message = sprintf("is now known as <b>%s</b>", unescapedMessage)

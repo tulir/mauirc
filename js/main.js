@@ -14,7 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
-const VERSION = "2.1.0"
+const { Hashmux } = require("hashmux")
+const $ = require("jquery")
+const ContextmenuHandler = require("./contextmenu")
+const EventSystem = require("./events")
+const Auth = require("./auth")
+const Connection = require("./conn")
+const RawMessaging = require("./rawio")
+const DataStore = require("./data")
+/*
+	global Handlebars
+*/
+
+global.VERSION = "2.1.0"
 
 // Fixes to Handlebars
 Handlebars.partials = Handlebars.templates

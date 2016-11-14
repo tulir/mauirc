@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 "use strict"
 
-class EventSystem {
+module.exports = class EventSystem {
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.handlers = {}
