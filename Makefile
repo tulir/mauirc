@@ -104,12 +104,21 @@ package: production
 	@echo "Extract mauirc.tar.xz anywhere"
 
 
-lint: sass-lint eslint
+lint-scss=./node_modules/.bin/sass-lint -c .sass-lint.yml -s scss
+lint-html=./node_modules/.bin/htmlhint -c .htmlhintrc
+lint-js=./node_modules/.bin/eslint -c .eslintrc.json
+
+lint: htmlhint sass-lint eslint
+
+htmlhint:
+	@echo "Linting Handlebars and index.html templates"
+	@$(lint-html) index.html pages/*.hbs
+
+sass-lint:
+	@echo "Full SCSS linting not yet implemented (use editor plugin)"
+	#@echo "Linting SCSS files"
+	#@$(lint-scss) style/components/button style/components/loader
 
 eslint:
 	@echo "Linting JavaScript files"
-	@./node_modules/.bin/eslint -c .eslintrc.json js/
-
-sass-lint:
-	@echo "Linting SCSS files"
-	@./node_modules/.bin/sass-lint -c .sass-lint.yml -s scss style/index.scss
+	@$(lint-js) js/
