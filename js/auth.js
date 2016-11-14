@@ -23,7 +23,7 @@ module.exports = class Auth {
 		this.checkFailed = false
 		this.checked = false
 
-		// TODO mauirc.registerEventHandler("auth.register:click", () => )
+		// TODO mauirc.events.click("auth.register", () => )
 		mauirc.events.click("auth.login", () => this.login())
 		mauirc.events.click("auth.forgot", () => this.forgot())
 	}
