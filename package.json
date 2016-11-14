@@ -19,7 +19,6 @@
 		"moment": "2.16.0",
 		"hashmux": "2.1.0",
 		"handlebars": "4.0.6",
-		"sprintf-js": "1.0.3",
 		"linkifyjs": "2.1.3",
 
 		"node-sass": "3.12.2",
@@ -31,8 +30,14 @@
 		"babel-preset-es2016": "6.16.0",
 		"browserify": "13.1.1",
 		"babelify": "7.3.0",
+		"strictify": "0.2.0",
 		"uglifyify": "3.0.4",
-		"uglifyjs": "2.4.10",
+		"uglifyjs": "2.4.10"
+	},
+	"devDependencies": {
+		"eslint": "3.9.1",
+		"eslint-config-airbnb-base": "10.0.1",
+		"eslint-plugin-import": "2.2.0",
 		"jsdoc": "3.4.3"
 	},
 	"scripts": {

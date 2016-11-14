@@ -13,8 +13,6 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"use strict"
-const { sprintf } = require("sprintf-js")
 const moment = require("moment")
 const linkifyHtml = require("linkifyjs/html")
 
@@ -53,12 +51,12 @@ module.exports = class Message {
 	}
 
 	getUIElement() {
-		let chat = this.channel.getChatArea()
+		const chat = this.channel.getChatArea()
 		if (chat === undefined) {
 			return undefined
 		}
 
-		let msg = chat.find(sprintf(".message-wrapper[data-id=%s]", this.id))
+		const msg = chat.find(`.message-wrapper[data-id=${this.id}]`)
 		if (msg.length === 0) {
 			return undefined
 		}
@@ -67,7 +65,7 @@ module.exports = class Message {
 	}
 
 	initialize(data) {
-		let momentDate = moment.unix(data.timestamp)
+		const momentDate = moment.unix(data.timestamp)
 		this.sender = data.sender
 		this.timestamp = data.timestamp
 		this.date = momentDate.format("HH:mm:ss")
@@ -84,7 +82,7 @@ module.exports = class Message {
 	}
 
 	tryJoin() {
-		let prevMsg = this.channel.messages[this.previousID]
+		const prevMsg = this.channel.messages[this.previousID]
 		if (prevMsg !== undefined && prevMsg.sender === this.sender) {
 			if (!prevMsg.wrapClass.includes("joined")) {
 				prevMsg.wrapClassArr.push("joined")
@@ -92,7 +90,7 @@ module.exports = class Message {
 			prevMsg.wrapClassArr.push("next")
 			this.wrapClassArr.push("joined")
 			this.wrapClassArr.push("prev")
-			let prevMsgUI = prevMsg.getUIElement()
+			const prevMsgUI = prevMsg.getUIElement()
 			if (prevMsgUI !== undefined) {
 				prevMsgUI.addClass("joined")
 				prevMsgUI.addClass("next")
@@ -103,7 +101,7 @@ module.exports = class Message {
 	}
 
 	parsePreview(preview) {
-		this.preview = {hasText: false, hasImage: false}
+		this.preview = { hasText: false, hasImage: false }
 		if (preview !== null && preview !== undefined) {
 			if (preview.hasOwnProperty("image") && preview.image !== null) {
 				this.preview.hasImage = true
@@ -119,76 +117,71 @@ module.exports = class Message {
 	}
 
 	parseHighlight(network) {
-		console.log(network)
+		console.log(network, this.preview)
 		// TODO highlights
 	}
 
 	parseMessageType(command, unescapedMessage) {
-		switch(command.toLowerCase()) {
+		switch (command.toLowerCase()) {
 		case "action":
 			this.classArr.push("user-action")
-			this.plain = "* " + this.sender + " " + this.message
+			this.plain = `* ${this.sender} ${this.message}`
 			return
 		case "join":
-			this.classArr = this.classArr.concat(["secondary-action", "joinpart"])
-			this.message = "joined " + this.message
+			this.classArr.push("secondary-action")
+			this.classArr.push("joinpart")
+			this.message = `joined ${this.message}`
+			this.plain = `${this.sender} ${this.message}`
 			return
 		case "part":
 		case "quit":
-			this.classArr = this.classArr.concat(["secondary-action", "joinpart"])
-			this.message = "left: " + this.message
-			this.plain = this.sender + " " + this.message
+			this.classArr.push("secondary-action")
+			this.classArr.push("joinpart")
+			this.message = `left: ${this.message}`
+			this.plain = `${this.sender} ${this.message}`
 			return
 		case "kick": {
 			this.classArr = this.classArr.concat(["secondary-action", "kick"])
-			let index = unescapedMessage.indexOf(":")
-			let kicker = this.sender
-			let sender = unescapedMessage.substr(0, index)
-			unescapedMessage = unescapedMessage.substr(index+1)
+			const index = unescapedMessage.indexOf(":")
+			const kicker = this.sender
+			const sender = unescapedMessage.substr(0, index)
+			const newMessage = unescapedMessage.substr(index + 1)
 			this.sender = sender
-			this.message = sprintf(
-				"was kicked by <b>%s</b>: <b>%s</b>",
-				kicker, linkifyHtml(Message.escapeHtml(unescapedMessage))
-			)
-			this.plain = sprintf(
-				"was kicked by %s: %s",
-				kicker, unescapedMessage
-			)
+			this.message = `was kicked by <b>${kicker}</b>: <b>${
+				linkifyHtml(Message.escapeHtml(newMessage))
+			}</b>`
+			this.plain = `was kicked by ${kicker}: ${newMessage}`
 			return
 		}
 		case "mode": {
-			this.classArr = this.classArr.concat(["secondary-action", "modechange"])
-			let parts = unescapedMessage.split(" ")
+			this.classArr.push("secondary-action")
+			this.classArr.push("modechange")
+			const parts = unescapedMessage.split(" ")
 			if (parts.length > 1) {
-				this.message = sprintf(
-					"set mode <b>%s</b> for <b>%s</b>", parts[0], parts[1]
-				)
-				this.plain = sprintf(
-					"set mode %s for %s", parts[0], parts[1]
-				)
+				this.message = `set mode <b>${parts[0]}</b> for <b>${
+					parts[1]}</b>`
+				this.plain = `set mode ${parts[0]} for ${parts[1]}"`
 			} else {
-				this.message = sprintf("set channel mode <b>%s</b>", parts[0])
-				this.plain = sprintf("set channel mode %s", parts[0])
+				this.message = `set channel mode <b>${parts[0]}</b>`
+				this.plain = `set channel mode ${parts[0]}`
 			}
 			return
 		}
 		case "nick":
-			this.classArr = this.classArr.concat(["secondary-action", "nickchange"])
-			this.message = sprintf("is now known as <b>%s</b>", unescapedMessage)
-			this.plain = sprintf("%s is now known as %s", unescapedMessage)
+			this.classArr.push("secondary-action")
+			this.classArr.push("nickchange")
+			this.message = `is now known as <b>${unescapedMessage}</b>`
+			this.plain = `${this.sender} is now known as ${unescapedMessage}`
 			return
 		case "topic":
-			this.classArr = this.classArr.concat(["secondary-action", "nickchange"])
-			this.message = sprintf(
-				"changed the topic to <b>%s</b>", unescapedMessage
-			)
-			this.plain = sprintf(
-				"%s changed the topic to %s", unescapedMessage
-			)
+			this.classArr.push("secondary-action")
+			this.classArr.push("topicchange")
+			this.message = `changed the topic to <b>${unescapedMessage}</b>`
+			this.plain = `${this.sender} changed the topic to ${
+				unescapedMessage}`
 			return
 		default:
 			this.isAction = false
-			return
 		}
 	}
 
@@ -196,9 +189,9 @@ module.exports = class Message {
 		if (!this.isNew || !Notification.permission === "granted") {
 			return
 		}
-		new Notification(sprintf("%s @ %s", this.sender, this.channel.name), {
+		new Notification(`${this.sender} @ ${this.channel.name}`, {
 			body: this.plain,
-			icon: "favicon.ico"
+			icon: "favicon.ico",
 		})
 	}
 }

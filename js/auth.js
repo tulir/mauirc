@@ -13,7 +13,6 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"use strict"
 const $ = require("jquery")
 
 module.exports = class Auth {
@@ -42,7 +41,7 @@ module.exports = class Auth {
 		$.ajax({
 			type: "GET",
 			url: "/auth/check",
-			dataType: "json"
+			dataType: "json",
 		})
 		.done(data => {
 			this.checkFailed = false
@@ -56,7 +55,7 @@ module.exports = class Auth {
 			}
 		})
 		.fail(info => {
-			console.error("Auth check failed: HTTP " + info.status)
+			console.error(`Auth check failed: HTTP ${info.status}`)
 			console.error(info)
 			window.location.hash = "#/login"
 			this.checkFailed = true
@@ -70,8 +69,8 @@ module.exports = class Auth {
 			url: "/auth/login",
 			data: JSON.stringify({
 				email: $("#email").val(),
-				password: $("#password").val()
-			})
+				password: $("#password").val(),
+			}),
 		})
 		.done(() => {
 			this.checkFailed = false
@@ -88,6 +87,7 @@ module.exports = class Auth {
 	}
 
 	forgot() {
+		console.log(this)
 		// TODO request reset link to email
 	}
 }

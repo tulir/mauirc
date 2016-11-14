@@ -13,8 +13,6 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"use strict"
-
 module.exports = class Connection {
 	constructor(mauirc) {
 		this.mauirc = mauirc
@@ -22,12 +20,11 @@ module.exports = class Connection {
 		this.socket = undefined
 	}
 
-	get socketAddr() {
+	static get socketAddr() {
 		if (window.location.protocol.startsWith("https")) {
-			return "wss://" + window.location.host + "/socket"
-		} else {
-			return "ws://" + window.location.host + "/socket"
+			return `wss://${window.location.host}/socket`
 		}
+		return `ws://${window.location.host}/socket`
 	}
 
 	ect() { this.connect() }
@@ -39,7 +36,7 @@ module.exports = class Connection {
 			return
 		}
 
-		this.socket.send(JSON.stringify({type: type, object: object}))
+		this.socket.send(JSON.stringify({ type, object }))
 	}
 
 	onConnect() {
@@ -53,7 +50,7 @@ module.exports = class Connection {
 	}
 
 	onMessage(data) {
-		switch(data.type) {
+		switch (data.type) {
 		case "message":
 			this.mauirc.data.receive(data.object)
 			break

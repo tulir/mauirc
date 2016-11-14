@@ -13,7 +13,6 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"use strict"
 const $ = require("jquery")
 
 module.exports = class RawMessaging {
@@ -32,17 +31,17 @@ module.exports = class RawMessaging {
 		}
 
 		this.mauirc.applyTemplate("rawio", {
-			network: network,
-			data: this.data[network]
+			network,
+			data: this.data[network],
 		})
 	}
 
 	push(network, message) {
 		this.data[network].push(message)
 
-		let rawio = $("#rawio")
+		const rawio = $("#rawio")
 		if (rawio.length !== 0) {
-			rawio.find(".output").append(message + "<br>")
+			rawio.find(".output").append(`${message}<br>`)
 		}
 	}
 
@@ -51,14 +50,11 @@ module.exports = class RawMessaging {
 			this.data[payload.network] = []
 		}
 
-		this.push(payload.network, "<-- " + payload.message)
+		this.push(payload.network, `<-- ${payload.message}`)
 	}
 
 	send(network, message) {
-		this.push(network, "--> " + message)
-		this.mauirc.conn.send("raw", {
-			network: network,
-			message: message
-		})
+		this.push(network, `--> ${message}`)
+		this.mauirc.conn.send("raw", { network, message })
 	}
 }

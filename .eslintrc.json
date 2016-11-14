@@ -4,27 +4,47 @@
 		"commonjs": true,
 		"es6": true
 	},
-	"extends": "eslint:recommended",
+	"extends": "airbnb-base",
 	"parserOptions": {
 		"sourceType": "module"
 	},
 	"rules": {
-		"indent": [
-			"error",
-			"tab"
-		],
-		"linebreak-style": [
-			"error",
-			"unix"
-		],
-		"quotes": [
-			"error",
-			"double"
-		],
-		"semi": [
-			"error",
-			"never"
-		],
-		"no-console": 0
+		"indent": ["error", "tab"],
+		"quotes": ["error", "double"],
+		"semi": ["error", "never"],
+		"comma-dangle": ["error", "always-multiline"],
+		"max-len": ["warn", 80],
+		"require-jsdoc": ["off", {"require": {
+            "FunctionDeclaration": true,
+            "MethodDefinition": true,
+            "ClassDeclaration": true
+        }}],
+		"valid-jsdoc": "warn",
+		"camelcase": ["error", {"properties": "always"}],
+		"space-before-function-paren": ["error", "never"],
+		"func-style": ["warn", "declaration", {"allowArrowFunctions": true}],
+		"id-length": ["warn", {"max": 25, "exceptions": ["i", "x", "y", "$"]}],
+		"import/no-nodejs-modules": "error",
+		"import/order": ["warn", {
+			"groups": ["builtin", "external", "internal", "parent", "sibling",
+				"index"],
+			"newlines-between": "never"
+		}],
+		"arrow-body-style": ["error", "as-needed"],
+		"complexity": ["warn", 11],
+		"func-names": "off",
+		"no-continue": "off",
+		"default-case": "off",
+		"no-plusplus": "off",
+		"no-use-before-define": "off",
+		"no-restricted-syntax": "off",
+		"no-return-assign": "off",
+		"no-param-reassign": "off",
+		"arrow-parens": "off",
+		"no-nested-ternary": "off",
+		"no-new": "off",
+		"no-tabs": "off",
+		"no-prototype-builtins": "off",
+		"no-console": "off"
 	}
 }

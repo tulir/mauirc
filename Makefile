@@ -14,7 +14,7 @@ scss=./node_modules/.bin/node-sass
 postcss=./node_modules/.bin/postcss
 jsdoc=./node_modules/.bin/jsdoc
 
-browserifyArgs=--outfile dist/index.js -e js/main.js
+browserifyArgs=-t strictify --outfile dist/index.js -e js/main.js
 scssArgs=--output dist style/index.scss --quiet
 scssMinArgs=--output-style compressed
 scssMaxArgs=--source-map-embed --output-style expanded --indent-type tab

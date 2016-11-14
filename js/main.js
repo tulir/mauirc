@@ -13,7 +13,6 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"use strict"
 const { Hashmux } = require("hashmux")
 const $ = require("jquery")
 const ContextmenuHandler = require("./contextmenu")
@@ -68,16 +67,15 @@ class mauIRC {
 				func()
 			}
 			return true
-		} else {
-			if (this.auth.enticated) {
-				window.location.hash = "#/connect"
-			} else if (this.auth.checked) {
-				window.location.hash = "#/login"
-			} else {
-				this.auth.check()
-			}
-			return false
 		}
+		if (this.auth.enticated) {
+			window.location.hash = "#/connect"
+		} else if (this.auth.checked) {
+			window.location.hash = "#/login"
+		} else {
+			this.auth.check()
+		}
+		return false
 	}
 
 	listen() {
@@ -87,23 +85,23 @@ class mauIRC {
 			} else {
 				this.applyTemplate("error", {
 					error: "Page not found",
-					data: data.data
+					data: data.data,
 				})
 			}
 		})
 
 		this.router.handle("/", () => this.auth.check())
 		this.router.handle("/login", () =>
-			this.auth.checked ?
+			(this.auth.checked ?
 				this.applyTemplate("login") :
-				window.location.hash = "#/"
+				window.location.hash = "#/")
 		)
 		this.router.handle("/connect", () =>
-			this.conn.ected ?
+			(this.conn.ected ?
 				window.location.hash = "#/chat" :
-				this.auth.enticated ?
+				(this.auth.enticated ?
 					this.conn.ect() :
-					window.location.hash = "#/login"
+					window.location.hash = "#/login"))
 		)
 		this.router.handle("/chat", () =>
 			this.verifyConnection(() => this.data.openChat())
@@ -115,5 +113,5 @@ class mauIRC {
 	}
 }
 
-let $mauirc = new mauIRC()
+const $mauirc = new mauIRC()
 $mauirc.listen()
