@@ -102,3 +102,14 @@ package: production
 	@mv mauirc.tar.xz ..
 	@cd ..
 	@echo "Extract mauirc.tar.xz anywhere"
+
+
+lint: sass-lint eslint
+
+eslint:
+	@echo "Linting JavaScript files"
+	@./node_modules/.bin/eslint -c .eslintrc.json js/
+
+sass-lint:
+	@echo "Linting SCSS files"
+	@./node_modules/.bin/sass-lint -c .sass-lint.yml -s scss style/index.scss
