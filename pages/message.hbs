@@ -40,9 +40,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 
 		<div class="preview">{{#if preview.hasImage}}
-			<div class="image {{#unless preview.hasText}}full-size{{/unless}}"
-				todo="open image modal on click">
-				<img src="{{preview.image}}" alt="Preview Image">
+			<div
+				class="image {{#unless preview.hasImage}}full-size{{/unless}}"
+				data-event="preview.image">
+				<img src="{{preview.image}}" alt="Preview Image"/>
 			</div>
 		{{/if}}{{#if preview.hasText}}
 			<div class="text {{#unless preview.hasImage}}full-size{{/unless}}">

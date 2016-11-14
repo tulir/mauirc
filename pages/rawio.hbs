@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="rawio" id="rawio" data-network="{{network}}">
 	<div class="output">
 		{{#each data}}
-			{{this}}<br>
+			{{this}}<br/>
 		{{/each}}
 	</div>
 	<form class="input" data-event="rawio" data-listen="submit">
@@ -27,6 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			id="rawio-input"
 			autocomplete="off"
 			placeholder="Enter raw IRC command"
-		>
-	</div>
+		/>
+	</form>
 </div>
