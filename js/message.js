@@ -117,7 +117,7 @@ module.exports = class Message {
 	}
 
 	parseHighlight(network) {
-		console.log(network, this.preview)
+		void (network, this.preview)
 		// TODO highlights
 	}
 

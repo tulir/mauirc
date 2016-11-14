@@ -87,7 +87,7 @@ module.exports = class Auth {
 	}
 
 	forgot() {
-		console.log(this)
+		void (this)
 		// TODO request reset link to email
 	}
 }
