@@ -33,6 +33,7 @@
 		}],
 		"arrow-body-style": ["error", "as-needed"],
 		"complexity": ["warn", 11],
+		"no-void": "off",
 		"func-names": "off",
 		"no-continue": "off",
 		"default-case": "off",
