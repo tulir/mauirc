@@ -69,7 +69,7 @@ module.exports = class Connection {
 
 	connect() {
 		this.mauirc.applyTemplate("connecting")
-		this.socket = new WebSocket(this.socketAddr)
+		this.socket = new WebSocket(Connection.socketAddr)
 		this.socket.onmessage = event => this.onMessage(JSON.parse(event.data))
 		this.socket.onopen = () => this.onConnect()
 		this.socket.onclose = () => this.onDisconnect()
