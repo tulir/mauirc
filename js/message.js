@@ -16,6 +16,47 @@
 const moment = require("moment")
 const linkifyHtml = require("linkifyjs/html")
 
+const encoders = [
+	{ // Italic
+		regex: /_([^_]*)_/g,
+		replacement: "\x1D$1\x1D",
+	}, { // Bold
+		regex: /\*([^*]*)\*/g,
+		replacement: "\x02$1\x02",
+	}, { // Underline
+		regex: /~([^~]*)~/g,
+		replacement: "\x1F$1\x1F",
+	}, { // Background & Foreground color
+		regex: /c(1[0-5]|[0-9])>([^<]*)</g,
+		replacement: "\x03$1$2",
+	}, { // Foreground color only
+		regex: /c(1[0-5]|[0-9]),(1[0-5]|[0-9])>([^<]*)</g,
+		replacement: "\x03$1,$2$3",
+	},
+]
+
+const decoders = [
+	{ // Italic
+		regex: /\x1D([^\x1D]*)?\x1D?/g,
+		replacement: "<i>$1</i>",
+	}, { // Bold
+		regex: /"\x02([^\x02]*)?\x02?"/g,
+		replacement: "<b>$1</b>",
+	}, { // Underline
+		regex: /"\x1F([^\x1F]*)?\x1F?"/g,
+		replacement: "<u>$1</u>",
+	}, { // Monospace
+		regex: /"`([^`]*)`"/g,
+		replacement: "<tt>$1</tt>",
+	}, { // Background & Foreground color
+		regex: /"\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?\x03?"/g,
+		replacement: "<span style='color: $1; background-color: $2;'>$3</span>",
+	}, { // Foreground color only
+		regex: /"\x03(1[0-5]|[0-9])([^\x03]*)?\x03?"/g,
+		replacement: "<span style='color: $1;'>$2</span>",
+	},
+]
+
 module.exports = class Message {
 	constructor(channel, data, previousID, isNew) {
 		this.channel = channel
@@ -30,7 +71,7 @@ module.exports = class Message {
 			this.classArr.push("own")
 			this.wrapClassArr.push("own")
 		}
-		// TODO this.message = decodeMessage(this.message)
+		this.message = Message.decodeIRC(this.message)
 	}
 
 	static escapeHtml(str) {
@@ -40,6 +81,20 @@ module.exports = class Message {
 			.replace(/>/g, "&gt;")
 			.replace(/"/g, "&quot;")
 			.replace(/'/g, "&apos;")
+	}
+
+	static encodeIRC(str) {
+		for (const enc of encoders) {
+			str = str.replace(enc.regex, enc.replacement)
+		}
+		return str
+	}
+
+	static decodeIRC(str) {
+		for (const dec of decoders) {
+			str = str.replace(dec.regex, dec.replacement)
+		}
+		return str
 	}
 
 	get class() {
