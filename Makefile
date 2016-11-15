@@ -35,7 +35,6 @@ static-files: dist-dir
 	@cp res/favicon.ico dist/
 	@cp res/firacode.otf dist/
 	@cp -r res/img/ dist/
-	@cp node_modules/normalize.css/normalize.css dist/normalize.css
 
 static-files-min: static-files
 	@echo "Minifying HTML files"
