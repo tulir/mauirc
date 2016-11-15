@@ -9,18 +9,16 @@
 		"sourceType": "module",
 		"ecmaVersion": 6
 	},
+	"plugins": [
+		"jsdoc",
+		"import"
+	],
 	"rules": {
 		"indent": ["error", "tab"],
 		"quotes": ["error", "double"],
 		"semi": ["error", "never"],
 		"comma-dangle": ["error", "always-multiline"],
 		"max-len": ["warn", 80],
-		"require-jsdoc": ["off", {"require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true
-        }}],
-		"valid-jsdoc": "warn",
 		"camelcase": ["error", {"properties": "always"}],
 		"space-before-function-paren": ["error", "never"],
 		"func-style": ["warn", "declaration", {"allowArrowFunctions": true}],
@@ -38,6 +36,33 @@
 			"capIsNew": true,
 			"newIsCapExceptions": ["mauIRC"]
 		}],
+
+		"require-jsdoc": ["error", {"require": {
+            "FunctionDeclaration": true,
+            "MethodDefinition": true,
+            "ClassDeclaration": true
+        }}],
+		"valid-jsdoc": ["warn", {
+			"requireReturn": false,
+			"requireParamDescription": true,
+			"requireReturnDescription": true,
+			"preferType": {
+				"object": "Object",
+				"jquery": "JQuery"
+			}
+		}],
+		"jsdoc/check-param-names": "error",
+		"jsdoc/check-tag-names": "error",
+		"jsdoc/check-types": "error",
+		"jsdoc/newline-after-description": ["warn", "always"],
+		"jsdoc/require-description-complete-sentence": "warn",
+		"jsdoc/require-hyphen-before-param-description": "off",
+		"jsdoc/require-param": "error",
+		"jsdoc/require-param-description": "warn",
+		"jsdoc/require-param-type": "warn",
+		"jsdoc/require-returns-description": "warn",
+		"jsdoc/require-returns-type": "warn",
+
 		"no-control-regex": "off",
 		"no-void": "off",
 		"func-names": "off",
