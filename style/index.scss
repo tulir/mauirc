@@ -25,6 +25,8 @@
 @import "components/switch";
 @import "components/textfield";
 
+@import "lib/contextmenu";
+
 @import "pages/index";
 @import "pages/login";
 @import "pages/error";
@@ -34,4 +36,3 @@
 @import "pages/chat";
 @import "pages/message";
 @import "pages/raw";
-@import "pages/contextmenu";
