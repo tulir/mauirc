@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
+const modal = require("../lib/modal")
 const NetworkStore = require("./network")
 const MiscFunctions = require("./misc")
 
@@ -63,6 +64,12 @@ module.exports = class DataStore {
 				network: this.current.network,
 			})
 			$("#chat-input").val("")
+		})
+
+		mauirc.events.click("preview.image", obj => {
+			$("#modal").html(`<img src=${obj.getAttribute("data-src")
+				} class='modal-content'/>`)
+			modal.open()
 		})
 	}
 
