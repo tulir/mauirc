@@ -15,10 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
 const NetworkStore = require("./network")
+const MiscFunctions = require("./misc")
 
 module.exports = class DataStore {
 	constructor(mauirc) {
 		this.mauirc = mauirc
+		this.func = new MiscFunctions(mauirc)
 		this.networks = {}
 
 		this.current = {
@@ -50,6 +52,13 @@ module.exports = class DataStore {
 		mauirc.events.click("vswitch.channels", () => this.openChanlist())
 		mauirc.events.click("vswitch.users", () => this.openUserlist())
 
+		mauirc.events.contextmenu("chanlist-channel", (chan, event) => {
+			this.mauirc.contextmenu.open(this.getChannel(
+				chan.getAttribute("data-network"),
+				chan.getAttribute("data-name")
+			).contextmenu, event)
+		})
+
 		mauirc.events.click("chanlist-channel", chan => {
 			this.getChannel(
 				chan.getAttribute("data-network"),
@@ -58,7 +67,6 @@ module.exports = class DataStore {
 		})
 
 		mauirc.events.submit("chat", () => {
-			// const chat = this.getChatArea()
 			this.mauirc.conn.send("message", {
 				message: $("#chat-input").val(),
 				command: "privmsg",
@@ -106,18 +114,22 @@ module.exports = class DataStore {
 
 	updateChanlist() {
 		const chat = this.getChatArea()
-		if (chat === undefined) {
-			return
-		}
 
-		const chanlist = chat.parent().find(".chanlist-container")
+		let chanlist
+		let inline
+		if (chat === undefined) {
+			chanlist = this.mauirc.container.find(".channel-list")
+			inline = false
+		} else {
+			chanlist = chat.parent().find(".chanlist-container")
+			inline = true
+		}
 		if (chanlist.length === 0) {
 			return
 		}
 
 		this.mauirc.applyTemplate("chanlist", {
-			inline: true,
-			networks: this.networks,
+			inline, networks: this.networks,
 		}, chanlist)
 	}
 
@@ -169,6 +181,15 @@ module.exports = class DataStore {
 		return chat
 	}
 
+	closeChatArea() {
+		this.current.network = ""
+		this.current.channel = ""
+		const chat = this.getChatArea()
+		if (chat !== undefined) {
+			chat.empty()
+		}
+	}
+
 	deselectChanlistEntries() {
 		const chanlist = this.getChanlist()
 		chanlist.find(".network.active").removeClass("active")
@@ -187,7 +208,6 @@ module.exports = class DataStore {
 			chan.users = data.userlist
 			chan.modes = data.modes
 			chan.updateUserlist()
-			this.updateChanlist()
 			break
 		case "chanlist":
 			this.getNetwork(data.network).chanlist = data.list

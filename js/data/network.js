@@ -56,7 +56,15 @@ module.exports = class NetworkStore {
 		return this.channels[name]
 	}
 
+	deleteChannel(name) {
+		if (this.channels.hasOwnProperty(name)) {
+			delete this.channels[name]
+		}
+		this.datastore.updateChanlist()
+	}
+
 	putChannel(channel) {
 		this.channels[channel.name] = channel
+		this.datastore.updateChanlist()
 	}
 }

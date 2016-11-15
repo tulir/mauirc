@@ -60,6 +60,21 @@ module.exports = class ChannelStore {
 		return this.userlist
 	}
 
+	get contextmenu() {
+		return {
+			clear: {
+				name: "Clear History",
+				exec: () =>
+					this.datastore.func.clear(this.name, this.network.name),
+			},
+			part: {
+				name: "Part Channel",
+				exec: () =>
+					this.datastore.func.part(this.name, this.network.name),
+			},
+		}
+	}
+
 	getChanlistEntry() {
 		const network = this.network.getChanlistEntry()
 		if (network === undefined) {
@@ -82,7 +97,7 @@ module.exports = class ChannelStore {
 	}
 
 	getChatArea() {
-		const chat = this.network.datastore.getChatArea()
+		const chat = this.datastore.getChatArea()
 		if (chat === undefined) {
 			return undefined
 		}
@@ -92,6 +107,18 @@ module.exports = class ChannelStore {
 			return chat
 		}
 		return undefined
+	}
+
+	destroy() {
+		if (this.getChatArea() !== undefined) {
+			this.datastore.closeChatArea()
+		}
+
+		this.networks.delete(this.name)
+	}
+
+	clearHistory() {
+		void ("TODO", this)
 	}
 
 	fetchHistory(num, force) {
