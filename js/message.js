@@ -160,7 +160,9 @@ module.exports = class Message {
 		if (preview !== null && preview !== undefined) {
 			if (preview.hasOwnProperty("image") && preview.image !== null) {
 				this.preview.hasImage = true
-				this.preview.image = preview.image.url
+				this.preview.image = preview.image.url.replace(
+					/^http:/, "https:"
+				)
 			}
 			if (preview.hasOwnProperty("text") && preview.text !== null) {
 				this.preview.hasText = true
