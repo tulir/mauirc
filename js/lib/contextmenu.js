@@ -64,13 +64,13 @@ module.exports = class ContextmenuHandler {
 
 	click(event, object) {
 		const id = object.getAttribute("data-context-id")
-		this.close()
 		event.stopPropagation()
 		this.funcs[id](id)
+		this.close()
 	}
 
 	close() {
 		this.container.empty()
-		this.funcs = []
+		this.funcs = {}
 	}
 }
