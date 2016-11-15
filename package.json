@@ -44,9 +44,6 @@
 		"eslint-plugin-import": "2.2.0",
 		"jsdoc": "3.4.3"
 	},
-	"scripts": {
-		"install": "make"
-	},
 	"babel": {
 		"presets": ["es2015", "es2016"]
 	}
