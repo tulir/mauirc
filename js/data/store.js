@@ -58,7 +58,7 @@ module.exports = class DataStore {
 
 		mauirc.events.contextmenu("chanlist.network", (net, event) =>
 			this.mauirc.contextmenu.open(this.getNetwork(
-				net.getAttribute("data-name")
+				$(net).parent().attr("data-name")
 			).contextmenu, event)
 		)
 

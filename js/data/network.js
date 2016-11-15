@@ -36,16 +36,20 @@ module.exports = class NetworkStore {
 			load: {
 				name: "Load history",
 				exec: () => {
-					for (const chan of this.channels) {
-						chan.fetchHistory(512, false)
+					for (const chan in this.channels) {
+						if (this.channels.hasOwnProperty(chan)) {
+							this.channels[chan].fetchHistory(512, false)
+						}
 					}
 				},
 			},
 			reload: {
 				name: "Reload History",
 				exec: () => {
-					for (const chan of this.channels) {
-						chan.fetchHistory(512, true)
+					for (const chan in this.channels) {
+						if (this.channels.hasOwnProperty(chan)) {
+							this.channels[chan].fetchHistory(512, true)
+						}
 					}
 				},
 			},

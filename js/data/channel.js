@@ -135,6 +135,8 @@ module.exports = class ChannelStore {
 			return false
 		}
 
+		console.log(`Fetching history for ${this.name}@${this.network.name}`)
+
 		$.ajax({
 			type: "GET",
 			url: `/history/${this.network.name}/${
