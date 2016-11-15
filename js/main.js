@@ -20,7 +20,7 @@ const EventSystem = require("./events")
 const Auth = require("./auth")
 const Connection = require("./conn")
 const RawMessaging = require("./rawio")
-const DataStore = require("./data")
+const DataStore = require("./data/store")
 /*
 	global Handlebars
 */
