@@ -18,7 +18,7 @@ browserifyArgs=-t strictify --outfile dist/index.js -e js/main.js
 scssArgs=--output dist style/index.scss --quiet
 scssMinArgs=--output-style compressed
 scssMaxArgs=--source-map-embed --output-style expanded --indent-type tab
-handlebarsArgs=-e "hbs" -f dist/templates.tmp.js ./pages
+handlebarsArgs=-e "hbs" ./pages >> dist/templates.js
 htmlminArgs=--html5 --collapse-boolean-attributes --remove-tag-whitespace \
 	--collapse-inline-tag-whitespace --remove-attribute-quotes \
 	--remove-comments --remove-empty-attributes --remove-redundant-attributes
@@ -41,19 +41,16 @@ static-files-min: static-files
 	@cat dist/index.html | $(htmlmin) $(htmlminArgs) > dist/index.min.html
 	@mv -f dist/index.min.html dist/index.html
 
-handlebars: dist-dir
+handlebars-runtime: dist-dir
+	@cat node_modules/handlebars/dist/handlebars.runtime.min.js > dist/templates.js
+
+handlebars: handlebars-runtime
 	@echo "Compiling Handlebars templates"
 	@$(handlebars) $(handlebarsArgs)
-	@cat node_modules/handlebars/dist/handlebars.runtime.min.js \
-		dist/templates.tmp.js > dist/templates.js
-	@rm -f dist/templates.tmp.js
 
-handlebars-min: dist-dir
+handlebars-min: handlebars-runtime
 	@echo "Compiling minified Handlebars templates"
 	@$(handlebars) -m $(handlebarsArgs)
-	@cat node_modules/handlebars/dist/handlebars.runtime.min.js \
-		dist/templates.tmp.js > dist/templates.js
-	@rm -f dist/templates.tmp.js
 
 scss: dist-dir
 	@echo "Compiling SCSS"
