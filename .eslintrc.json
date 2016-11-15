@@ -33,6 +33,11 @@
 		}],
 		"arrow-body-style": ["error", "as-needed"],
 		"complexity": ["warn", 11],
+		"new-cap": ["warn", {
+			"newIsCap": true,
+			"capIsNew": true,
+			"newIsCapExceptions": ["mauIRC"]
+		}],
 		"no-void": "off",
 		"func-names": "off",
 		"no-continue": "off",
