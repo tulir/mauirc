@@ -67,6 +67,10 @@ module.exports = class ChannelStore {
 				exec: () =>
 					this.datastore.func.clear(this.name, this.network.name),
 			},
+			reload: {
+				name: "Reload History",
+				exec: () => this.fetchHistory(512, true),
+			},
 			part: {
 				name: "Part Channel",
 				exec: () =>
@@ -121,8 +125,13 @@ module.exports = class ChannelStore {
 		void ("TODO", this)
 	}
 
-	fetchHistory(num, force) {
-		if (this.historyFetched && !force) {
+	fetchHistory(num, reload) {
+		if (reload) {
+			this.historyFetched = false
+			this.messages = {}
+		}
+
+		if (this.historyFetched) {
 			return false
 		}
 
