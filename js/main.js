@@ -21,9 +21,7 @@ const Auth = require("./auth")
 const Connection = require("./conn")
 const RawMessaging = require("./rawio")
 const DataStore = require("./data/store")
-/*
-	global Handlebars
-*/
+/* global Handlebars */
 
 global.VERSION = "2.1.0"
 
