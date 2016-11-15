@@ -67,7 +67,7 @@
 	}
 
 	.topbar-container {
-		@extend .standalone-topbar-container;
+		@extend %topbar-container-base;
 
 		& {
 			position: absolute;

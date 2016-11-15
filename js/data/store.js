@@ -48,22 +48,11 @@ module.exports = class DataStore {
 			},
 		}
 
-		mauirc.events.click("vswitch.chat", () => this.openChat())
-		mauirc.events.click("vswitch.channels", () => this.openChanlist())
-		mauirc.events.click("vswitch.users", () => this.openUserlist())
-
 		mauirc.events.contextmenu("chanlist-channel", (chan, event) => {
 			this.mauirc.contextmenu.open(this.getChannel(
 				chan.getAttribute("data-network"),
 				chan.getAttribute("data-name")
 			).contextmenu, event)
-		})
-
-		mauirc.events.click("chanlist-channel", chan => {
-			this.getChannel(
-				chan.getAttribute("data-network"),
-				chan.getAttribute("data-name")
-			).open(true)
 		})
 
 		mauirc.events.submit("chat", () => {
@@ -84,18 +73,25 @@ module.exports = class DataStore {
 		this.scrollDown()
 	}
 
-	openChat() {
-		let chan = this.getChannel(this.current.network, this.current.channel)
-		if (chan === undefined) {
-			chan = { users: [], messages: [] }
+	openChat(net, chan) {
+		let chanObj = { users: [], messages: [], onOpen: () => void (0) }
+		if (net !== undefined && chan !== undefined &&
+			net.length !== 0 && chan.length !== 0) {
+			chanObj = this.tryGetChannel(net, chan)
+			if (chanObj === undefined) {
+				chanObj = { users: [], messages: [], onOpen: () => void (0) }
+			}
 		}
 		this.mauirc.applyTemplate("chat", {
 			networks: this.mauirc.data.networks,
-			users: chan.users,
-			messages: chan.messages,
-			network: this.current.network,
-			channel: this.current.channel,
+			users: chanObj.users,
+			messages: chanObj.messages,
+			network: net,
+			channel: chan,
 		})
+		this.current.network = net
+		this.current.channel = chan
+		chanObj.onOpen()
 		this.scrollDown()
 	}
 
@@ -106,9 +102,11 @@ module.exports = class DataStore {
 		}
 	}
 
-	openUserlist() {
+	openUserlist(net, chan) {
 		this.mauirc.applyTemplate("userlist", {
-			users: this.getChannel(this.current.network, this.current.channel),
+			users: this.tryGetChannel(net, chan).users,
+			network: this.current.network,
+			channel: this.current.channel,
 		})
 	}
 
@@ -129,12 +127,19 @@ module.exports = class DataStore {
 		}
 
 		this.mauirc.applyTemplate("chanlist", {
-			inline, networks: this.networks,
+			inline,
+			networks: this.networks,
+			network: this.current.network,
+			channel: this.current.channel,
 		}, chanlist)
 	}
 
 	openChanlist() {
-		this.mauirc.applyTemplate("chanlist", this)
+		this.mauirc.applyTemplate("chanlist", {
+			networks: this.networks,
+			network: this.current.network,
+			channel: this.current.channel,
+		})
 	}
 
 	getNetwork(name) {
@@ -148,6 +153,13 @@ module.exports = class DataStore {
 		return this.networks[name]
 	}
 
+	tryGetNetwork(name) {
+		if (this.networks.hasOwnProperty(name)) {
+			return this.networks[name]
+		}
+		return undefined
+	}
+
 	putNetwork(network) {
 		this.networks[network.name] = network
 	}
@@ -159,6 +171,13 @@ module.exports = class DataStore {
 		}
 
 		return this.getNetwork(net).getChannel(name)
+	}
+
+	tryGetChannel(net, name) {
+		if (this.networks.hasOwnProperty(net)) {
+			return this.networks[net].tryGetChannel(name)
+		}
+		return undefined
 	}
 
 	putChannel(net, name) {

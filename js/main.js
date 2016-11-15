@@ -47,6 +47,10 @@ class mauIRC {
 		this.conn = new Connection(this)
 		this.raw = new RawMessaging(this)
 		this.data = new DataStore(this)
+
+		this.container.on("click", "*[data-href]:not([data-listen~='click'])",
+			function() { window.location.hash = this.getAttribute("data-href") }
+		)
 	}
 
 	applyTemplate(name, args, object) {
@@ -105,12 +109,25 @@ class mauIRC {
 					this.conn.ect() :
 					window.location.hash = "#/login"))
 		)
-		this.router.handle("/chat", () =>
+		this.router.handle("/channels", () =>
+			this.verifyConnection(() => this.data.openChanlist())
+		)
+		this.router.handle("/chat/{network}/{channel}", data =>
+			this.verifyConnection(() =>
+				this.data.openChat(data.network, data.channel))
+		)
+		this.router.handle("/chat/", () =>
 			this.verifyConnection(() => this.data.openChat())
 		)
+		this.router.handle("/users/{network}/{channel}", data =>
+			this.verifyConnection(() =>
+				this.data.openUserlist(data.network, data.channel))
+		)
+		this.router.handle("/users//", () => window.location.href = "#/chat")
 		this.router.handle("/raw/{network}", data =>
 			this.verifyConnection(() => this.raw.open(data.network))
 		)
+		this.router.handle("/raw/", () => window.location.href = "#/chat")
 		this.router.listen()
 	}
 }

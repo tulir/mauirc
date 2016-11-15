@@ -159,28 +159,13 @@ module.exports = class ChannelStore {
 		return true
 	}
 
-	open(force) {
+	onOpen() {
 		const chat = this.datastore.getChatArea()
-		if (chat === undefined) {
-			if (force) {
-				this.datastore.current.network = this.network.name
-				this.datastore.current.channel = this.name
-				this.fetchHistory(512)
-				this.datastore.openChat()
-			}
-			return
-		}
-
-		this.network.datastore.deselectChanlistEntries()
+		this.datastore.deselectChanlistEntries()
 		this.network.getChanlistEntry().addClass("active")
 		this.getChanlistEntry().addClass("active")
 
 		this.hasNewMessages = false
-
-		if (this.datastore.current.network === this.network.name &&
-			this.datastore.current.channel === this.name) {
-			return
-		}
 
 		this.datastore.current.network = this.network.name
 		this.datastore.current.channel = this.name

@@ -56,6 +56,13 @@ module.exports = class NetworkStore {
 		return this.channels[name]
 	}
 
+	tryGetChannel(name) {
+		if (this.channels.hasOwnProperty(name)) {
+			return this.channels[name]
+		}
+		return undefined
+	}
+
 	deleteChannel(name) {
 		if (this.channels.hasOwnProperty(name)) {
 			delete this.channels[name]
