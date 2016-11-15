@@ -31,6 +31,28 @@ module.exports = class NetworkStore {
 		this.chanlist = []
 	}
 
+	get contextmenu() {
+		return {
+			load: {
+				name: "Load history",
+				exec: () => {
+					for (const chan of this.channels) {
+						chan.fetchHistory(512, false)
+					}
+				},
+			},
+			reload: {
+				name: "Reload History",
+				exec: () => {
+					for (const chan of this.channels) {
+						chan.fetchHistory(512, true)
+					}
+				},
+			},
+			// TODO remaining contextmenu entries
+		}
+	}
+
 	getChanlistEntry() {
 		const chanlist = this.datastore.getChanlist()
 		if (chanlist === undefined) {

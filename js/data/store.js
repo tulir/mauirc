@@ -49,12 +49,18 @@ module.exports = class DataStore {
 			},
 		}
 
-		mauirc.events.contextmenu("chanlist-channel", (chan, event) => {
+		mauirc.events.contextmenu("chanlist.channel", (chan, event) =>
 			this.mauirc.contextmenu.open(this.getChannel(
 				chan.getAttribute("data-network"),
 				chan.getAttribute("data-name")
 			).contextmenu, event)
-		})
+		)
+
+		mauirc.events.contextmenu("chanlist.network", (net, event) =>
+			this.mauirc.contextmenu.open(this.getNetwork(
+				net.getAttribute("data-name")
+			).contextmenu, event)
+		)
 
 		mauirc.events.submit("chat", () => {
 			this.mauirc.conn.send("message", {
