@@ -38,6 +38,7 @@
 			"capIsNew": true,
 			"newIsCapExceptions": ["mauIRC"]
 		}],
+		"no-control-regex": "off",
 		"no-void": "off",
 		"func-names": "off",
 		"no-continue": "off",
