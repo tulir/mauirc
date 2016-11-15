@@ -14,32 +14,75 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module.exports = class EventSystem {
+/**
+ * An event system. See the {@link EventSystem} class for more info.
+ *
+ * @module lib/events
+ */
+class EventSystem {
+	/**
+	 * Create an event system.
+	 *
+	 * @param {JQuery} container The container to bind the event listeners to.
+	 */
 	constructor(container) {
 		this.container = container
 		this.handlers = {}
 		this.activate()
 	}
 
+	/**
+	 * Register a click event listener.
+	 *
+	 * @param {string} evt The name of the event.
+	 * @param {func} func The function to execute when the event is triggered.
+	 */
 	click(evt, func) {
-		this.on(`${evt}:click`, func)
+		this.on("click", evt, func)
 	}
 
+	/**
+	 * Register a submit event listener.
+	 *
+	 * @param {string} evt The name of the event.
+	 * @param {func} func The function to execute when the event is triggered.
+	 */
 	submit(evt, func) {
-		this.on(`${evt}:submit`, func)
+		this.on("submit", evt, func)
 	}
 
+	/**
+	 * Register a contextmenu event listener.
+	 *
+	 * @param {string} evt The name of the event.
+	 * @param {func} func The function to execute when the event is triggered.
+	 */
 	contextmenu(evt, func) {
-		this.on(`${evt}:contextmenu`, func)
+		this.on("contextmenu", evt, func)
 	}
 
-	on(evt, func) {
+	/**
+	 * Register an event listener.
+	 *
+	 * @param {string} type The type of the event.
+	 * @param {string} evt The name of the event.
+	 * @param {func} func The function to execute when the event is triggered.
+	 */
+	on(type, evt, func) {
+		evt = `${evt}:${type}`
 		if (!this.handlers.hasOwnProperty(evt)) {
 			this.handlers[evt] = []
 		}
 		this.handlers[evt].push(func)
 	}
 
+	/**
+	 * Trigger an event.
+	 *
+	 * @param {string} evt The name and type of the event (name:type).
+	 * @param {Event} source The source DOM event that caused this event.
+	 * @param {DOM} obj The DOM object that this event happened on.
+	 */
 	exec(evt, source, obj) {
 		if (!this.handlers.hasOwnProperty(evt)) {
 			return
@@ -52,10 +95,20 @@ module.exports = class EventSystem {
 		}
 	}
 
+	/**
+	 * Fetch the name of the event from the DOM object and trigger the event.
+	 *
+	 * @param {string} evtType The type of the event.
+	 * @param {DOM} obj The DOM object that this event happened on.
+	 * @param {Event} source The source DOM event that caused this event.
+	 */
 	execRaw(evtType, obj, source) {
 		this.exec(`${obj.getAttribute("data-event")}:${evtType}`, source, obj)
 	}
 
+	/**
+	 * Register jQuery event handlers.
+	 */
 	activate() {
 		const evsys = this
 		this.container.on("click",
@@ -79,3 +132,5 @@ module.exports = class EventSystem {
 		)
 	}
 }
+
+module.exports = EventSystem

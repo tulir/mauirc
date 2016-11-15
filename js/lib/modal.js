@@ -15,11 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
 
+/**
+ * Modal handler module.
+ *
+ * @module lib/modal
+ */
 module.exports = {
+	/**
+	 * Open the modal container.
+	 */
 	open() {
 		$("#modal-container").removeClass("hidden")
 	},
 
+	/**
+	 * Close the modal container and empty the modal.
+	 */
 	close() {
 		$("#modal-container").addClass("hidden")
 		$("#modal").empty()

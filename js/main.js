@@ -31,7 +31,13 @@ Handlebars.partials = Handlebars.templates
 // Request notification permission
 Notification.requestPermission()
 
+/**
+ * Main mauIRC class
+ */
 class mauIRC {
+	/**
+	 * Create a new instance of mauIRC.
+	 */
 	constructor() {
 		this.container = $("#container")
 
@@ -51,6 +57,15 @@ class mauIRC {
 		)
 	}
 
+		/**
+		 * Override the contents of the object with a template.
+		 *
+		 * @param {string} name The name of the template to use.
+		 * @param {Object} [args] The arguments to give to the template.
+		 * @param {JQuery} [object] The object to apply the template to.
+		 *                          If undefined, {@linkcode div#container}
+		 *                          will be used.
+		 */
 	applyTemplate(name, args, object) {
 		if (object === undefined) {
 			object = this.container
@@ -58,6 +73,15 @@ class mauIRC {
 		object.html(Handlebars.templates[name](args))
 	}
 
+	/**
+	 * Append the contents of a template to the object.
+	 *
+	 * @param {string} name The name of the template to use.
+	 * @param {Object} [args] The arguments to give to the template.
+	 * @param {JQuery} [object] The object to append the template to.
+	 *                          If undefined, {@linkcode div#container}
+	 *                          will be used.
+	 */
 	appendTemplate(name, args, object) {
 		if (object === undefined) {
 			object = this.container
@@ -65,6 +89,12 @@ class mauIRC {
 		object.append(Handlebars.templates[name](args))
 	}
 
+	/**
+	 * Verify that a connection to the server has been established.
+	 *
+	 * @param {func} [func] The function to call if connected.
+	 * @returns {boolean} Whether or not the connection is open.
+	 */
 	verifyConnection(func) {
 		if (this.conn.ected) {
 			if (func !== undefined) {
@@ -82,6 +112,9 @@ class mauIRC {
 		return false
 	}
 
+	/**
+	 * Register Hashmux handlers and activate the location hash change listener.
+	 */
 	listen() {
 		this.router.handleError(404, data => {
 			if (Handlebars.templates.hasOwnProperty(data.page.substr(1))) {

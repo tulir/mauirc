@@ -57,23 +57,42 @@ const decoders = [
 	},
 ]
 
-module.exports = class Message {
-	constructor(channel, data, previousID, isNew) {
+/**
+ * A message object.
+ */
+class Message {
+	/**
+	 * Parse a Message from a server-sent object.
+	 *
+	 * @param {string} channel The name of the channel the message is on.
+	 * @param {Object} [data] The data to parse the message from.
+	 * @param {Integer} prevID The ID of the previous message on the channel.
+	 * @param {bool} isNew Whether or not this is not from history.
+	 */
+	constructor(channel, data, prevID, isNew) {
 		this.channel = channel
-		this.previousID = previousID
+		this.previousID = prevID
 		this.isNew = isNew
-		this.initialize(data)
-		this.parsePreview(data.preview)
-		this.parseMessageType(data.command, data.message)
-		this.parseHighlight(data.network)
+		if (data !== undefined) {
+			this.initialize(data)
+			this.parsePreview(data.preview)
+			this.parseMessageType(data.command, data.message)
+			this.parseHighlight(data.network)
 
-		if (this.ownMsg) {
-			this.classArr.push("own")
-			this.wrapClassArr.push("own")
+			if (this.ownMsg) {
+				this.classArr.push("own")
+				this.wrapClassArr.push("own")
+			}
+			this.message = Message.decodeIRC(this.message)
 		}
-		this.message = Message.decodeIRC(this.message)
 	}
 
+	/**
+	 * Escape HTML special characters.
+	 *
+	 * @param {string} str The string to escape.
+	 * @returns {string} A escaped string.
+	 */
 	static escapeHtml(str) {
 		return str
 			.replace(/&/g, "&amp;")
@@ -83,6 +102,12 @@ module.exports = class Message {
 			.replace(/'/g, "&apos;")
 	}
 
+	/**
+	 * Encode human-writable formatting into IRC format.
+	 *
+	 * @param {string} str The string to encode.
+	 * @returns {string} A string with the same formattings in IRC encoding.
+	 */
 	static encodeIRC(str) {
 		for (const enc of encoders) {
 			str = str.replace(enc.regex, enc.replacement)
@@ -90,6 +115,12 @@ module.exports = class Message {
 		return str
 	}
 
+	/**
+	 * Decode IRC-encoded formattings into HTML.
+	 *
+	 * @param {string} str The string to decode.
+	 * @returns {string} A string with the same formattings as HTML.
+	 */
 	static decodeIRC(str) {
 		for (const dec of decoders) {
 			str = str.replace(dec.regex, dec.replacement)
@@ -97,14 +128,30 @@ module.exports = class Message {
 		return str
 	}
 
+	/**
+	 * Get the classes for this message object.
+	 *
+	 * @returns {string} The HTML class attribute value.
+	 */
 	get class() {
 		return this.classArr.join(" ")
 	}
 
+	/**
+	 * Get the classes for the wrapper of this message object.
+	 *
+	 * @returns {string} The HTML class attribute value for the wrapper.
+	 */
 	get wrapClass() {
 		return this.wrapClassArr.join(" ")
 	}
 
+	/**
+	 * Get the jQuery DOM element wrapping this message.
+	 *
+	 * @returns {JQuery|undefined} The jQuery DOM element,
+	 *                             or undefined if not found.
+	 */
 	getUIElement() {
 		const chat = this.channel.getChatArea()
 		if (chat === undefined) {
@@ -119,6 +166,11 @@ module.exports = class Message {
 		return msg
 	}
 
+	/**
+	 * Initialize the message with server-sent data.
+	 *
+	 * @param {Object} data The data to initialize the message with.
+	 */
 	initialize(data) {
 		const momentDate = moment.unix(data.timestamp)
 		this.sender = data.sender
@@ -136,6 +188,12 @@ module.exports = class Message {
 		this.isAction = true
 	}
 
+	/**
+	 * Try to join this message with the previous message if both messages were
+	 * sent by the same user.
+	 *
+	 * @returns {bool} Whether or not joining was successful.
+	 */
 	tryJoin() {
 		const prevMsg = this.channel.messages[this.previousID]
 		if (prevMsg !== undefined && prevMsg.sender === this.sender) {
@@ -155,6 +213,11 @@ module.exports = class Message {
 		return false
 	}
 
+		/**
+		 * Parse preview data.
+		 *
+		 * @param {Object} preview The data.
+		 */
 	parsePreview(preview) {
 		this.preview = { hasText: false, hasImage: false }
 		if (preview !== null && preview !== undefined) {
@@ -173,11 +236,21 @@ module.exports = class Message {
 		}
 	}
 
+	/**
+	 * TODO docs & implementation.
+	 *
+	 * @param {Object} network TODO???.
+	 */
 	parseHighlight(network) {
 		void (network, this.preview)
-		// TODO highlights
 	}
 
+	/**
+	 * Parse the message type and apply appropriate classes and other details.
+	 *
+	 * @param {string} command The IRC command of the message.
+	 * @param {string} unescapedMessage The unescaped/linkified message.
+	 */
 	parseMessageType(command, unescapedMessage) {
 		switch (command.toLowerCase()) {
 		case "action":
@@ -242,6 +315,10 @@ module.exports = class Message {
 		}
 	}
 
+	/**
+	 * Create a desktop notification of this message.
+	 * Does nothing if {@#isNew} is false.
+	 */
 	notify() {
 		if (!this.isNew || !Notification.permission === "granted") {
 			return
@@ -252,3 +329,5 @@ module.exports = class Message {
 		})
 	}
 }
+
+module.exports = Message

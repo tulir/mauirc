@@ -14,13 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module.exports = class Connection {
+/**
+ * Connection handler.
+ */
+class Connection {
+	/**
+	 * Create a connection handler.
+	 *
+	 * @param {mauIRC} mauirc The mauIRC object to use.
+	 */
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.connected = false
 		this.socket = undefined
 	}
 
+	/**
+	 * Get the address to the WebSocket.
+	 *
+	 * @returns {string} The address.
+	 */
 	static get socketAddr() {
 		if (window.location.protocol.startsWith("https")) {
 			return `wss://${window.location.host}/socket`
@@ -28,10 +41,31 @@ module.exports = class Connection {
 		return `ws://${window.location.host}/socket`
 	}
 
+	/**
+	 * Shorthand for {@link Connection#connect}.
+	 */
 	ect() { this.connect() }
+
+	/**
+	 * Shorthand for {@link Connection#connected}.
+	 *
+	 * @returns {bool} Whether or not a connection has been established.
+	 */
 	get ected() { return this.connected }
+
+	/**
+	 * Shorthand for {@link Connection#socket}.
+	 *
+	 * @returns {WebSocket} The WebSocket object.
+	 */
 	get ection() { return this.socket }
 
+	/**
+	 * Send a message through the socket.
+	 *
+	 * @param {string} type The type of the message.
+	 * @param {string} [object] The data of the message.
+	 */
 	send(type, object) {
 		if (object === null || object === undefined) {
 			return
@@ -40,16 +74,27 @@ module.exports = class Connection {
 		this.socket.send(JSON.stringify({ type, object }))
 	}
 
+	/**
+	 * Given as the {@linkcode onopen} callback for the WebSocket.
+	 */
 	onConnect() {
 		this.connected = true
 		window.location.hash = "#/chat"
 	}
 
+	/**
+	 * Given as the {@linkcode onclose} callback for the WebSocket.
+	 */
 	onDisconnect() {
 		this.connected = false
 		window.location.hash = "#/connect"
 	}
 
+	/**
+	 * Given as the {@linkcode onmessage} callback for the WebSocket.
+	 *
+	 * @param {Object} data The data that came from the server.
+	 */
 	onMessage(data) {
 		switch (data.type) {
 		case "message":
@@ -68,6 +113,9 @@ module.exports = class Connection {
 		}
 	}
 
+	/**
+	 * Try to connect to the server.
+	 */
 	connect() {
 		this.mauirc.applyTemplate("connecting")
 		this.socket = new WebSocket(Connection.socketAddr)
@@ -76,3 +124,5 @@ module.exports = class Connection {
 		this.socket.onclose = () => this.onDisconnect()
 	}
 }
+
+module.exports = Connection

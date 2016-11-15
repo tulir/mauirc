@@ -15,7 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
 
-module.exports = class RawMessaging {
+/**
+ * Raw messaging handler.
+ */
+class RawMessaging {
+	/**
+	 * Create a raw messaging handler.
+	 *
+	 * @param {mauIRC} mauirc The mauIRC object to use.
+	 */
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.data = {}
@@ -25,6 +33,11 @@ module.exports = class RawMessaging {
 		})
 	}
 
+	/**
+	 * Open the raw IO view for the given network.
+	 *
+	 * @param {string} network The name of the network.
+	 */
 	open(network) {
 		if (!this.data.hasOwnProperty(network)) {
 			this.data[network] = []
@@ -36,6 +49,12 @@ module.exports = class RawMessaging {
 		})
 	}
 
+	/**
+	 * Push a message to the cache and to the UI (if open).
+	 *
+	 * @param {string} network The network to push the message to.
+	 * @param {string} message The message to push.
+	 */
 	push(network, message) {
 		this.data[network].push(message)
 
@@ -45,6 +64,11 @@ module.exports = class RawMessaging {
 		}
 	}
 
+	/**
+	 * Handle a received raw message.
+	 *
+	 * @param {Object} payload The data received from the server.
+	 */
 	receive(payload) {
 		if (!this.data.hasOwnProperty(payload.network)) {
 			this.data[payload.network] = []
@@ -53,8 +77,16 @@ module.exports = class RawMessaging {
 		this.push(payload.network, `<-- ${payload.message}`)
 	}
 
+	/**
+	 * Send a raw message to the given network.
+	 *
+	 * @param {string} network The network to send the message to.
+	 * @param {string} message The message to send.
+	 */
 	send(network, message) {
 		this.push(network, `--> ${message}`)
 		this.mauirc.conn.send("raw", { network, message })
 	}
 }
+
+module.exports = RawMessaging

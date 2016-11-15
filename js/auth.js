@@ -15,9 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
 
-module.exports = class Auth {
-	constructor(mauirc, apiAddress) {
-		this.apiAddress = apiAddress
+/**
+ * Authentication system.
+ */
+class Auth {
+	/**
+	 * Create an authentication system.
+	 *
+	 * @param {mauIRC} mauirc The mauIRC object to use.
+	 */
+	constructor(mauirc) {
 		this.authenticated = false
 		this.checkFailed = false
 		this.checked = false
@@ -27,10 +34,18 @@ module.exports = class Auth {
 		mauirc.events.click("auth.forgot", () => this.forgot())
 	}
 
+	/**
+	 * Shorthand for {@link Auth#authenticated}.
+	 *
+	 * @returns {bool} Whether or not the user has authenticated.
+	 */
 	get enticated() {
 		return this.authenticated
 	}
 
+	/**
+	 * Send a request to check if the user has authenticated.
+	 */
 	check() {
 		if (this.checkFailed) {
 			window.location.hash = "#/login"
@@ -63,13 +78,22 @@ module.exports = class Auth {
 		.always(() => this.checked = true)
 	}
 
-	login() {
+	/**
+	 * Try to log in.
+	 *
+	 * @param {string} [email] The email to log in using. If not given, the
+	 *                         value of {@linkcode div#email} will be used.
+	 * @param {string} [password] The password to log in using. If not given,
+	 *                            the value of {@linkcode div#email} will be
+	 *                            used.
+	 */
+	login(email, password) {
 		$.ajax({
 			type: "POST",
 			url: "/auth/login",
 			data: JSON.stringify({
-				email: $("#email").val(),
-				password: $("#password").val(),
+				email: email || $("#email").val(),
+				password: password || $("#password").val(),
 			}),
 		})
 		.done(() => {
@@ -86,8 +110,14 @@ module.exports = class Auth {
 		.always(() => this.checked = true)
 	}
 
+	/**
+	 * Send a request to get a password reset link.
+	 *
+	 * TODO implement.
+	 */
 	forgot() {
 		void (this)
-		// TODO request reset link to email
 	}
 }
+
+module.exports = Auth

@@ -15,7 +15,19 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
 
-module.exports = class ContextmenuHandler {
+/**
+ * Context menu handler.
+ *
+ * @module lib/contextmenu
+ */
+class ContextmenuHandler {
+	/**
+	 * Create a context menu handler.
+	 *
+	 * @param {JQuery} div The container to use for the context menus.
+	 * @param {func} template The function to generate the HTML of context menu
+	 *                        entries.
+	 */
 	constructor(div, template) {
 		this.container = div
 		const cmxHandler = this
@@ -28,6 +40,14 @@ module.exports = class ContextmenuHandler {
 		this.funcs = {}
 	}
 
+	/**
+	 * Open a context menu.
+	 *
+	 * @param {Object} data The context menu specification.
+	 * @param {Event} event The DOM event, or optionally an object with the
+	 *                      fields {@linkplain pageX} and {@linkplain pageY}
+	 *                      indicating where the user clicked.
+	 */
 	open(data, event) {
 		const templateData = []
 		for (const key in data) {
@@ -44,8 +64,12 @@ module.exports = class ContextmenuHandler {
 
 		this.container.html(this.template(templateData))
 
-		event.stopPropagation()
-		event.preventDefault()
+		if (typeof event.stopPropagation === "function") {
+			event.stopPropagation()
+		}
+		if (typeof event.preventDefault === "function") {
+			event.preventDefault()
+		}
 		let x = event.pageX
 		let y = event.pageY
 
@@ -62,6 +86,13 @@ module.exports = class ContextmenuHandler {
 		})
 	}
 
+	/**
+	 * An internal contextmenu click handler.
+	 *
+	 * @private
+	 * @param {Event} event The DOM click event.
+	 * @param {DOM} object The DOM object clicked.
+	 */
 	click(event, object) {
 		const id = object.getAttribute("data-context-id")
 		event.stopPropagation()
@@ -69,8 +100,13 @@ module.exports = class ContextmenuHandler {
 		this.close()
 	}
 
+	/**
+	 * Close the context menu.
+	 */
 	close() {
 		this.container.empty()
 		this.funcs = {}
 	}
 }
+
+module.exports = ContextmenuHandler
