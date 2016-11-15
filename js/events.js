@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module.exports = class EventSystem {
-	constructor(mauirc) {
-		this.mauirc = mauirc
+	constructor(container) {
+		this.container = container
 		this.handlers = {}
 		this.activate()
 	}
@@ -58,20 +58,20 @@ module.exports = class EventSystem {
 
 	activate() {
 		const evsys = this
-		this.mauirc.container.on("click",
+		this.container.on("click",
 			"*[data-event][data-listen~='click']," +
 			"*[data-event]:not([data-listen])",
 			function(event) {
 				evsys.execRaw("click", this, event)
 			}
 		)
-		this.mauirc.container.on("submit",
+		this.container.on("submit",
 			"*[data-event][data-listen~='submit']",
 			function(event) {
 				evsys.execRaw("submit", this, event)
 			}
 		)
-		this.mauirc.container.on("contextmenu",
+		this.container.on("contextmenu",
 			"*[data-event][data-listen~='contextmenu']",
 			function(event) {
 				evsys.execRaw("contextmenu", this, event)

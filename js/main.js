@@ -36,11 +36,13 @@ Notification.requestPermission()
 class mauIRC {
 	constructor() {
 		this.container = $("#container")
+
 		this.router = new Hashmux()
 		this.contextmenu = new ContextmenuHandler(
 			$("#contextmenu"), Handlebars.templates.contextmenu
 		)
-		this.events = new EventSystem(this)
+		this.events = new EventSystem(this.container)
+
 		this.auth = new Auth(this)
 		this.conn = new Connection(this)
 		this.raw = new RawMessaging(this)
