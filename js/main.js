@@ -115,5 +115,5 @@ class mauIRC {
 	}
 }
 
-const $mauirc = new mauIRC()
-$mauirc.listen()
+global.$mauirc = new mauIRC()
+global.$mauirc.listen()
