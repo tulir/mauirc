@@ -10,30 +10,49 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-//
+
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "../node_modules/normalize.css/normalize";
+@import "../base/vars";
+@import "../base/util";
 
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
-@import "base/util";
+.modal-container {
+	position: fixed;
+	z-index: 97;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 
-@import "components/loader";
-@import "components/button";
-@import "components/switch";
-@import "components/textfield";
+	text-align: center;
 
-@import "lib/contextmenu";
-@import "lib/modal";
+	background-color: rgba(black, .75);
 
-@import "pages/index";
-@import "pages/login";
-@import "pages/error";
-@import "pages/topbar";
-@import "pages/chanlist";
-@import "pages/userlist";
-@import "pages/chat";
-@import "pages/message";
-@import "pages/raw";
+	.modal {
+		position: relative;
+		z-index: 98;
+
+		display: inline-block;
+		overflow-y: auto;
+
+		box-sizing: border-box;
+		width: auto;
+		max-width: 90vw;
+		height: auto;
+		max-height: 90vh;
+		margin: 50vh 5vw;
+
+		transform: translateY(-50%);
+		vertical-align: middle;
+
+		border-radius: .25rem;
+		background-color: white;
+
+		.modal-content {
+			box-sizing: border-box;
+			max-width: calc(90vw - .5rem);
+			max-height: calc(90vh - .5rem);
+			padding: .5rem;
+		}
+	}
+}

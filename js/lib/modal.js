@@ -13,27 +13,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-@import "../node_modules/normalize.css/normalize";
+const $ = require("jquery")
 
-@import "base/vars";
-@import "base/text";
-@import "base/responsivity";
-@import "base/util";
+module.exports = {
+	open() {
+		$("#modal-container").removeClass("hidden")
+	},
 
-@import "components/loader";
-@import "components/button";
-@import "components/switch";
-@import "components/textfield";
+	close() {
+		$("#modal-container").addClass("hidden")
+		$("#modal").empty()
+	},
+}
 
-@import "lib/contextmenu";
-@import "lib/modal";
-
-@import "pages/index";
-@import "pages/login";
-@import "pages/error";
-@import "pages/topbar";
-@import "pages/chanlist";
-@import "pages/userlist";
-@import "pages/chat";
-@import "pages/message";
-@import "pages/raw";
+$("#modal").click(event => event.stopPropagation())
+$("#modal-container").click(() => module.exports.close())
