@@ -22,6 +22,8 @@ module.exports = class ContextmenuHandler {
 		this.container.on("click", "*[data-context-id]", function(event) {
 			cmxHandler.click(event, this)
 		})
+		$(document).contextmenu(() => this.close())
+		$(document).click(event => (event.which === 1 ? this.close() : 0))
 		this.template = template
 		this.funcs = {}
 	}
