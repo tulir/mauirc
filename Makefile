@@ -1,4 +1,4 @@
-default: handlebars static-files scss js
+default: handlebars static-files scss js docs
 	@echo "All done!"
 compatibility: handlebars static-files scss-autoprefixer js-babel
 	@echo "All done!"
@@ -83,7 +83,7 @@ js-min: dist-dir
 docs: dist-dir
 	@echo "Generating JSDocs"
 	@mkdir -p dist/docs
-	@$(jsdoc) -d dist/docs js/main.js
+	@$(jsdoc) -d dist/docs js/*.js
 
 clean:
 	@echo "Cleaning working directory"
