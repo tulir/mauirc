@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const { Hashmux } = require("hashmux")
 const $ = require("jquery")
-const ContextmenuHandler = require("./contextmenu")
-const EventSystem = require("./events")
+const ContextmenuHandler = require("./lib/contextmenu")
+const EventSystem = require("./lib/events")
 const Auth = require("./auth")
 const Connection = require("./conn")
 const RawMessaging = require("./rawio")
