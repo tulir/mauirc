@@ -57,15 +57,15 @@ class mauIRC {
 		)
 	}
 
-		/**
-		 * Override the contents of the object with a template.
-		 *
-		 * @param {string} name The name of the template to use.
-		 * @param {Object} [args] The arguments to give to the template.
-		 * @param {JQuery} [object] The object to apply the template to.
-		 *                          If undefined, {@linkcode div#container}
-		 *                          will be used.
-		 */
+	/**
+	 * Override the contents of the object with a template.
+	 *
+	 * @param {string} name The name of the template to use.
+	 * @param {Object} [args] The arguments to give to the template.
+	 * @param {JQuery} [object] The object to apply the template to.
+	 *                          If undefined, {@linkcode div#container}
+	 *                          will be used.
+	 */
 	applyTemplate(name, args, object) {
 		if (object === undefined) {
 			object = this.container
