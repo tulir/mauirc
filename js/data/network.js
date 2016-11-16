@@ -15,7 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const ChannelStore = require("./channel")
 
-module.exports = class NetworkStore {
+/**
+ * Network data storage.
+ */
+class NetworkStore {
 	constructor(datastore, name) {
 		this.mauirc = datastore.mauirc
 		this.datastore = datastore
@@ -101,3 +104,5 @@ module.exports = class NetworkStore {
 		this.datastore.updateChanlist()
 	}
 }
+
+module.exports = NetworkStore

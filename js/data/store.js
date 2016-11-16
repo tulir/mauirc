@@ -18,7 +18,15 @@ const modal = require("../lib/modal")
 const NetworkStore = require("./network")
 const MiscFunctions = require("./misc")
 
-module.exports = class DataStore {
+/**
+ * Data storage and processing system
+ */
+class DataStore {
+	/**
+	 * Create an instance of DataStore.
+	 *
+	 * @param {mauIRC} mauirc The mauIRC object to use.
+	 */
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.func = new MiscFunctions(mauirc)
@@ -79,6 +87,11 @@ module.exports = class DataStore {
 		})
 	}
 
+	/**
+	 * Handle a server-sent message object.
+	 *
+	 * @param {Object} message The data sent by the server.
+	 */
 	receive(message) {
 		const chan = this.getChannel(message.network, message.channel)
 		chan.open()
@@ -86,6 +99,12 @@ module.exports = class DataStore {
 		this.scrollDown()
 	}
 
+	/**
+	 * Open the chat view.
+	 *
+	 * @param {string} net The network to open.
+	 * @param {string} chan The channel to open.
+	 */
 	openChat(net, chan) {
 		let chanObj = { users: [], messages: [], onOpen: () => void (0) }
 		if (net !== undefined && chan !== undefined &&
@@ -108,6 +127,9 @@ module.exports = class DataStore {
 		this.scrollDown()
 	}
 
+	/**
+	 * If open, scroll to the bottom of the chat area.
+	 */
 	scrollDown() {
 		const chat = this.getChatArea()
 		if (chat !== undefined) {
@@ -115,6 +137,12 @@ module.exports = class DataStore {
 		}
 	}
 
+	/**
+	 * Open a standalone userlist.
+	 *
+	 * @param {string} net The network to open.
+	 * @param {string} chan The channel to open.
+	 */
 	openUserlist(net, chan) {
 		this.mauirc.applyTemplate("userlist", {
 			users: this.tryGetChannel(net, chan).users,
@@ -123,6 +151,9 @@ module.exports = class DataStore {
 		})
 	}
 
+	/**
+	 * If the channel list is open, update it.
+	 */
 	updateChanlist() {
 		const chat = this.getChatArea()
 
@@ -147,6 +178,9 @@ module.exports = class DataStore {
 		}, chanlist)
 	}
 
+	/**
+	 * Open a standalone channel list.
+	 */
 	openChanlist() {
 		this.mauirc.applyTemplate("chanlist", {
 			networks: this.networks,
@@ -155,6 +189,14 @@ module.exports = class DataStore {
 		})
 	}
 
+	/**
+	 * Get the data of a network.
+	 *
+	 * @param {string} name The name of the network.
+	 * @returns {NetworkStore} The network object. If the network doesn't exist,
+	 *                         it will be created and returned. If no name was
+	 *                         given, this will return {@linkcode undefined}.
+	 */
 	getNetwork(name) {
 		if (name === undefined || name.length === 0) {
 			return undefined
@@ -166,6 +208,14 @@ module.exports = class DataStore {
 		return this.networks[name]
 	}
 
+	/**
+	 * Try to get the data of a network.
+	 *
+	 * @param {string} name The name of the network.
+	 * @returns {NetworkStore} The network object. If no network by the given
+	 *                         name is found, this will return
+	 *                         {@linkcode undefined}.
+	 */
 	tryGetNetwork(name) {
 		if (this.networks.hasOwnProperty(name)) {
 			return this.networks[name]
@@ -173,10 +223,25 @@ module.exports = class DataStore {
 		return undefined
 	}
 
+	/**
+	 * Store a network object.
+	 *
+	 * @param {NetworkStore} network The network object.
+	 */
 	putNetwork(network) {
 		this.networks[network.name] = network
 	}
 
+	/**
+	 * Get the data of a channel.
+	 *
+	 * @param {string} net The name of the network.
+	 * @param {string} name The name of the channel.
+	 * @returns {ChannelStore} The channel object. If the channel or network
+	 *                         doesn't exist, they will be created and returned.
+	 *                         If no network or name was given, this will
+	 *                         return {@linkcode undefined}.
+	 */
 	getChannel(net, name) {
 		if (net === undefined || net.length === 0 ||
 			name === undefined || name.length === 0) {
@@ -186,6 +251,15 @@ module.exports = class DataStore {
 		return this.getNetwork(net).getChannel(name)
 	}
 
+	/**
+	 * Try to get the data of a channel.
+	 *
+	 * @param {string} net The name of the network.
+	 * @param {string} name The name of the channel.
+	 * @returns {ChannelStore} The channel object. If no network or channel by
+	 *                         the given names is found, this will return
+	 *                         {@linkcode undefined}.
+	 */
 	tryGetChannel(net, name) {
 		if (this.networks.hasOwnProperty(net)) {
 			return this.networks[net].tryGetChannel(name)
@@ -193,10 +267,23 @@ module.exports = class DataStore {
 		return undefined
 	}
 
-	putChannel(net, name) {
-		this.getNetwork(net).putChannel(name)
+	/**
+	 * Store a channel object.
+	 *
+	 * @param {string} net The name of the network to put the channel in.
+	 * @param {ChannelStore} chan The channel object.
+	 */
+	putChannel(net, chan) {
+		this.getNetwork(net).putChannel(chan)
 	}
 
+	/**
+	 * Get the channel list UI element.
+	 *
+	 * @returns {JQuery|undefined} The JQuery DOM object for
+	 *                             {@linkcode div#networks}, or undefined if it
+	 *                             isn't currently on the page.
+	 */
 	getChanlist() {
 		const chanlist = this.mauirc.container.find("#networks")
 		if (chanlist.length === 0) {
@@ -205,6 +292,13 @@ module.exports = class DataStore {
 		return chanlist
 	}
 
+	/**
+	 * Get the chat area UI element.
+	 *
+	 * @returns {JQuery} The JQuery DOM object for
+	 *                   {@linkcode div.chat-container > div.chat}, or undefined
+	 *                   if it isn't currently on the page.
+	 */
 	getChatArea() {
 		const chat = this.mauirc.container.find(".chat-container > .chat")
 		if (chat.length === 0) {
@@ -213,6 +307,9 @@ module.exports = class DataStore {
 		return chat
 	}
 
+	/**
+	 * Close the chat area.
+	 */
 	closeChatArea() {
 		this.current.network = ""
 		this.current.channel = ""
@@ -222,12 +319,21 @@ module.exports = class DataStore {
 		}
 	}
 
+	/**
+	 * Deselect currently selected channels in the channel list.
+	 */
 	deselectChanlistEntries() {
 		const chanlist = this.getChanlist()
 		chanlist.find(".network.active").removeClass("active")
 		chanlist.find(".network .channel.active").removeClass("active")
 	}
 
+	/**
+	 * Process a data-related message from the server.
+	 *
+	 * @param {string} type The type of the message.
+	 * @param {Object} data The data from the server.
+	 */
 	process(type, data) {
 		let net
 		let chan
@@ -263,3 +369,5 @@ module.exports = class DataStore {
 		}
 	}
 }
+
+module.exports = DataStore
