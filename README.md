@@ -4,7 +4,7 @@
 ![GitHub commits](https://img.shields.io/github/commits-since/tulir/mauirc/v2.0.1.svg?maxAge=600&style=flat-square)
 ![Rewrites](https://img.shields.io/:number%20of%20complete%20rewrites-2-yellow.svg?style=flat-square)
 
-A web-based UI-focused IRC client. Originally written in ES5/CSS/HTML, previously written in Go/CSS/GoHTML, now written in ES6/SCSS/(HTML with Handlebars)
+A web-based UI-focused IRC client. Originally written in ES5/CSS/(HTML with jQuery Templates), previously written in Go/CSS/GoHTML, now written in ES6/SCSS/(HTML with Handlebars)
 
 ## Setup
 ### Packages
