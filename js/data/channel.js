@@ -43,6 +43,9 @@ module.exports = class ChannelStore {
 	}
 
 	set users(val) {
+		if (val === null) {
+			return
+		}
 		for (const elem of val) {
 			let plain = elem
 			if (/^[~&@%+]/.exec(elem)) {

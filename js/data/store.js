@@ -94,7 +94,6 @@ class DataStore {
 	 */
 	receive(message) {
 		const chan = this.getChannel(message.network, message.channel)
-		chan.open()
 		chan.receiveMessage(message)
 		this.scrollDown()
 	}
