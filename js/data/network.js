@@ -37,7 +37,7 @@ class NetworkStore {
 	get contextmenu() {
 		return {
 			load: {
-				name: "Load history",
+				name: "Load all history",
 				exec: () => {
 					for (const chan in this.channels) {
 						if (this.channels.hasOwnProperty(chan)) {
@@ -47,7 +47,7 @@ class NetworkStore {
 				},
 			},
 			reload: {
-				name: "Reload History",
+				name: "Reload all History",
 				exec: () => {
 					for (const chan in this.channels) {
 						if (this.channels.hasOwnProperty(chan)) {
@@ -55,6 +55,10 @@ class NetworkStore {
 						}
 					}
 				},
+			},
+			rawio: {
+				name: "Raw IO",
+				exec: () => window.location.href = `#/raw/${this.name}`,
 			},
 			// TODO remaining contextmenu entries
 		}
