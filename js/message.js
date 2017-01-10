@@ -362,23 +362,82 @@ class Message {
 	}
 
 	/**
+	 * Select this message object (highlight and action grouping).
+	 */
+	select() {
+		$(`#msg-${this.id}`).addClass("selected")
+	}
+
+	/**
+	 * Deselect this message object.
+	 */
+	deselect() {
+		$(`#msg-${this.id}`).removeClass("selected")
+	}
+
+	/**
+	 * Run a certain Message class function for each selected message.
+	 *
+	 * @param {string} funcName The name of the function to execute.
+	 */
+	forEachSelected(funcName) {
+		const channel = this.channel
+		$(".selected").each(function() {
+			const message =
+				channel.messages[+this.parentElement.getAttribute("data-id")]
+			message[funcName]()
+		})
+	}
+
+	/**
+	 * Get the context menu object for this message that should be used when you
+	 * have multiple messages selected.
+	 *
+	 * @returns {ContextMenuData} The contextmenu data, or undefined if no
+	 *                            messages are selected.
+	 */
+	get selectedContextmenu() {
+		if ($(".selected").length === 0) {
+			return undefined
+		}
+
+		const ctxMenu = {}
+
+		if ($(`#msg-${this.id}`).hasClass("selected")) {
+			ctxMenu.deselect = {
+				name: "Deselect",
+				exec: () => this.deselect(),
+			}
+		} else {
+			ctxMenu.deselect = {
+				name: "Select",
+				exec: () => this.select(),
+			}
+		}
+
+		ctxMenu.deselectAll = {
+			name: "Deselect all",
+			exec: () => this.forEachSelected("deselect"),
+		}
+
+		ctxMenu.delete = {
+			name: "Delete selected",
+			exec: () => this.forEachSelected("delete"),
+		}
+
+		return ctxMenu
+	}
+
+	/**
 	 * Get the context menu object for this message.
 	 *
 	 * @returns {ContextMenuData} The contextmenu data.
 	 */
 	get contextmenu() {
 		return {
-			delete: {
-				name: "Delete Message",
-				exec: () => this.delete(),
-			},
-			reply: {
-				name: "Reply to sender",
-				exec: () => {
-					$("#chat-input").val(
-							`${this.sender}: ${$("#chat-input").val()}`)
-					$("#chat-input").focus()
-				},
+			select: {
+				name: "Select",
+				exec: () => this.select(),
 			},
 			copy: {
 				name: "Copy text",
@@ -412,6 +471,22 @@ class Message {
 					}
 				},
 			},
+			reply: {
+				name: "Reply (highlight)",
+				exec: () => {
+					$("#chat-input").val(
+							`${this.sender}: ${$("#chat-input").val()}`)
+					$("#chat-input").focus()
+				},
+			},
+			delete: {
+				name: "Delete",
+				exec: () => this.delete(),
+			},
+			/*hide: {
+				name: "Hide",
+				exec: () => this.destroy(),
+			},*/
 		}
 	}
 }
