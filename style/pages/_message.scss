@@ -53,6 +53,10 @@
 			background-color: $extralight-green;
 		}
 
+		&.selected {
+			background-color: $light-blue;
+		}
+
 		&.secondary-action {
 			color: $secondary-text-color;
 			border: 1px dashed $green;
@@ -132,7 +136,7 @@
 		}
 
 		&:not(.full-size) {
-			max-width: calc(100% - 8rem);
+			max-width: calc(100% - 10.5rem);
 		}
 	}
 
