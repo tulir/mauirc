@@ -34,7 +34,7 @@
 		text-align: right;
 	}
 
-	& > .message {
+	> .message {
 		position: relative;
 
 		display: inline-block;
@@ -110,6 +110,7 @@
 .chat > .message-wrapper > .message > .preview {
 	min-width: 20rem;
 	margin-top: .25rem;
+	padding: .5rem;
 
 	border-top: 1px solid $secondary-content;
 
@@ -147,11 +148,13 @@
 			max-height: 100%;
 		}
 
-		&:not(.full-size) > img {
+		&:not(.full-size) {
 			float: right;
 
-			max-width: 7.5rem;
-			max-height: 7.5rem;
+			> img {
+				max-width: 7.5rem;
+				max-height: 7.5rem;
+			}
 		}
 	}
 
