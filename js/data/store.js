@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
+const Message = require("../message")
 const modal = require("../lib/modal")
 const NetworkStore = require("./network")
 
@@ -83,7 +84,7 @@ class DataStore {
 
 		mauirc.events.submit("chat", () => {
 			this.mauirc.conn.send("message", {
-				message: $("#chat-input").val(),
+				message: Message.encodeIRC($("#chat-input").val()),
 				command: "privmsg",
 				channel: this.current.channel,
 				network: this.current.network,
