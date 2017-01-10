@@ -380,6 +380,38 @@ class Message {
 					$("#chat-input").focus()
 				},
 			},
+			copy: {
+				name: "Copy text",
+				exec: () => {
+					const obj = $(`#msgwrap-${this.id}`)
+					let textObj = obj.find(".message > .text")
+					if (textObj.length === 0) {
+						textObj = obj.find(".clipboard-data")
+						if (textObj.length === 0) {
+							console.warn("Failed to copy: Text not found!")
+							return
+						}
+					}
+
+					let wasHidden = false
+					if (textObj.hasClass("hidden")) {
+						textObj.removeClass("hidden")
+						wasHidden = true
+					}
+
+					const selection = window.getSelection()
+					const range = document.createRange()
+					range.selectNodeContents(textObj[0])
+					selection.removeAllRanges()
+					selection.addRange(range)
+					document.execCommand("copy")
+					selection.removeAllRanges()
+
+					if (wasHidden) {
+						textObj.addClass("hidden")
+					}
+				},
+			},
 		}
 	}
 }
