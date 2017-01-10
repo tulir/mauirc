@@ -1,6 +1,6 @@
 # mauIRC
 [![License](http://img.shields.io/:license-gpl3-brightgreen.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
-[![GitHub release](https://img.shields.io/github/release/tulir/mauirc.svg?maxAge=600&style=flat-square)](https://github.com/tulir293/mauirc/releases)
+[![GitHub release](https://img.shields.io/github/release/tulir/mauirc.svg?maxAge=600&style=flat-square)](https://github.com/tulir/mauirc/releases)
 ![GitHub commits](https://img.shields.io/github/commits-since/tulir/mauirc/v2.0.1.svg?maxAge=600&style=flat-square)
 ![Rewrites](https://img.shields.io/:number%20of%20complete%20rewrites-2-yellow.svg?style=flat-square)
 
