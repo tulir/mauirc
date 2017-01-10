@@ -87,8 +87,10 @@ class DataStore {
 		})
 
 		mauirc.events.click("preview.image", obj => {
-			$("#modal").html(`<img src=${obj.getAttribute("data-src")
-				} class='modal-content'/>`)
+			$("<img>")
+				.attr("src", obj.getAttribute("data-src"))
+				.addClass("modal-content")
+				.appendTo($("#modal"))
 			modal.open()
 		})
 	}
