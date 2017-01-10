@@ -52,6 +52,8 @@ class mauIRC {
 		this.raw = new RawMessaging(this)
 		this.data = new DataStore(this)
 
+		this.nextPage = "#/chat"
+
 		this.container.on("click", "*[data-href]:not([data-listen~='click'])",
 			function() { window.location.hash = this.getAttribute("data-href") }
 		)
@@ -102,9 +104,12 @@ class mauIRC {
 			}
 			return true
 		}
+
+		this.nextPage = window.location.hash
 		if (this.auth.enticated) {
 			window.location.hash = "#/connect"
 		} else if (this.auth.checked) {
+			this.nextPage = "#/chat"
 			window.location.hash = "#/login"
 		} else {
 			this.auth.check()
@@ -135,7 +140,7 @@ class mauIRC {
 		)
 		this.router.handle("/connect", () =>
 			(this.conn.ected ?
-				window.location.hash = "#/chat" :
+				window.location.hash = this.nextPage || "#/chat" :
 				(this.auth.enticated ?
 					this.conn.ect() :
 					window.location.hash = "#/login"))

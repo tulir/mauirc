@@ -66,12 +66,14 @@ class Auth {
 				window.location.hash = "#/connect"
 			} else {
 				console.log("Not logged in.")
+				this.mauirc.nextPage = "#/chat"
 				window.location.hash = "#/login"
 			}
 		})
 		.fail(info => {
 			console.error(`Auth check failed: HTTP ${info.status}`)
 			console.error(info)
+			this.mauirc.nextPage = "#/chat"
 			window.location.hash = "#/login"
 			this.checkFailed = true
 		})

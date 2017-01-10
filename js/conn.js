@@ -79,7 +79,7 @@ class Connection {
 	 */
 	onConnect() {
 		this.connected = true
-		window.location.hash = "#/chat"
+		window.location.hash = this.mauirc.nextPage || "#/chat"
 	}
 
 	/**
@@ -87,6 +87,7 @@ class Connection {
 	 */
 	onDisconnect() {
 		this.connected = false
+		this.mauirc.nextPage = "#/chat"
 		window.location.hash = "#/connect"
 	}
 
