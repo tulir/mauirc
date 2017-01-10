@@ -139,20 +139,20 @@
 	.image {
 		box-sizing: border-box;
 		padding: .25rem;
-		padding-top: .5rem;
 
 		@include pointerCursor;
 
 		&.full-size > img {
 			max-width: 100%;
 			max-height: 100%;
+			padding: 0;
 		}
 
 		&:not(.full-size) {
 			float: right;
 
 			> img {
-				max-width: 7.5rem;
+				max-width: 10rem;
 				max-height: 7.5rem;
 			}
 		}
