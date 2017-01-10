@@ -108,6 +108,9 @@ class Connection {
 		case "netdata":
 			this.mauirc.data.process(data.type, data.object)
 			break
+		case "delete":
+			this.mauirc.data.getMessage(data.object).destroy()
+			break
 		default:
 			console.log(data)
 		}

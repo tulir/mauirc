@@ -77,8 +77,10 @@ class Message {
 		this.channel = channel
 		this.previousID = prevID
 		this.isNew = isNew
+
 		if (data !== undefined) {
 			this.initialize(data)
+			this.register()
 			this.parsePreview(data.preview)
 			this.parseMessageType(data.command, data.message)
 			this.parseHighlight(data.network)
@@ -190,6 +192,16 @@ class Message {
 		this.message = linkifyHtml(Message.escapeHtml(data.message))
 		this.plain = data.message
 		this.isAction = true
+	}
+
+	/**
+	 * Register this message into the data store messagePointers array.
+	 */
+	register() {
+		this.datastore.messagePointers[this.id] = {
+			network: this.network.name,
+			channel: this.channel.name,
+		}
 	}
 
 	/**
@@ -334,10 +346,19 @@ class Message {
 	}
 
 	/**
-	 * Delete this message.
+	 * Request the server to delete this message.
 	 */
 	delete() {
 		this.mauirc.conn.send("delete", this.id)
+	}
+
+	/**
+	 * Destroy this message object (remove from UI and remove all pointers).
+	 */
+	destroy() {
+		$(`#msgwrap-${this.id}`).remove()
+		delete this.datastore.messagePointers[this.id]
+		delete this.channel.messages[this.id]
 	}
 
 	/**

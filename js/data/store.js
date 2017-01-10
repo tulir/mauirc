@@ -29,6 +29,7 @@ class DataStore {
 	constructor(mauirc) {
 		this.mauirc = mauirc
 		this.networks = {}
+		this.messagePointers = []
 
 		this.current = {
 			networkCached: "",
@@ -90,6 +91,17 @@ class DataStore {
 				} class='modal-content'/>`)
 			modal.open()
 		})
+	}
+
+	/**
+	 * Get the message with the given ID.
+	 *
+	 * @param {number} id The ID of the message to get.
+	 * @returns {Message} The message object.
+	 */
+	getMessage(id) {
+		const pointer = this.messagePointers[id]
+		return this.getChannel(pointer.network, pointer.channel).messages[id]
 	}
 
 	/**
