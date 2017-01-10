@@ -19,6 +19,12 @@ const ChannelStore = require("./channel")
  * Network data storage.
  */
 class NetworkStore {
+	/**
+	 * Create an instance of NetworkStore.
+	 *
+	 * @param {DataStore} datastore The DataStore object to use.
+	 * @param {string} name The name of the network.
+	 */
 	constructor(datastore, name) {
 		this.mauirc = datastore.mauirc
 		this.datastore = datastore
@@ -34,6 +40,11 @@ class NetworkStore {
 		this.chanlist = []
 	}
 
+	/**
+	 * Get the context menu object for this network.
+	 *
+	 * @returns {ContextMenuData} The contextmenu data.
+	 */
 	get contextmenu() {
 		return {
 			load: {
@@ -64,6 +75,11 @@ class NetworkStore {
 		}
 	}
 
+	/**
+	 * Get the jQuery object for the network entry in the channel list UI.
+	 *
+	 * @returns {JQuery} The object.
+	 */
 	getChanlistEntry() {
 		const chanlist = this.datastore.getChanlist()
 		if (chanlist === undefined) {
@@ -78,6 +94,13 @@ class NetworkStore {
 		return network
 	}
 
+	/**
+	 * Get a channel within this network and create it if it doesn't exist yet.
+	 *
+	 * @param {string} name The name of the channel to get.
+	 * @returns {ChannelStore} The ChannelStore object for the channel, or
+	 *                         undefined if no channel name specified.
+	 */
 	getChannel(name) {
 		if (name === undefined || name.length === 0) {
 			return undefined
@@ -89,6 +112,13 @@ class NetworkStore {
 		return this.channels[name]
 	}
 
+	/**
+	 * Get a channel within this network.
+	 *
+	 * @param {string} name The name of the channel to get.
+	 * @returns {ChannelStore} The ChannelStore object for the channel, or
+	 *                         undefined if the channel doesn't exist.
+	 */
 	tryGetChannel(name) {
 		if (this.channels.hasOwnProperty(name)) {
 			return this.channels[name]
@@ -96,6 +126,11 @@ class NetworkStore {
 		return undefined
 	}
 
+	/**
+	 * Delete a channel from this network.
+	 *
+	 * @param {string} name The name of the channel to delete.
+	 */
 	deleteChannel(name) {
 		if (this.channels.hasOwnProperty(name)) {
 			delete this.channels[name]
@@ -103,6 +138,11 @@ class NetworkStore {
 		this.datastore.updateChanlist()
 	}
 
+	/**
+	 * Add a channel into this network.
+	 *
+	 * @param {ChannelStore} channel The ChannelStore object to add.
+	 */
 	putChannel(channel) {
 		this.channels[channel.name] = channel
 		this.datastore.updateChanlist()

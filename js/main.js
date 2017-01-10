@@ -95,7 +95,7 @@ class mauIRC {
 	 * Verify that a connection to the server has been established.
 	 *
 	 * @param {func} [func] The function to call if connected.
-	 * @returns {boolean} Whether or not the connection is open.
+	 * @returns {bool} Whether or not the connection is open.
 	 */
 	verifyConnection(func) {
 		if (this.conn.ected) {

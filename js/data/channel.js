@@ -16,16 +16,34 @@
 const $ = require("jquery")
 const Message = require("./message")
 
-module.exports = class ChannelStore {
+/**
+ * Channel data storage.
+ *
+ * @property {string} name The name of the channel
+ * @property {string} topic The topic of the channel
+ * @property {number} topicsetat The Unix timestamp when the topic was set
+ * @property {string} topicsetby The user who set the topic
+ * @property {string} messages All fetched messages in this channel
+ */
+class ChannelStore {
+	/**
+	 * Create an instance of ChannelStore.
+	 *
+	 * @param {DataStore} network The NetworkStore object to use.
+	 * @param {string} name The name of the channel.
+	 */
 	constructor(network, name) {
 		this.mauirc = network.mauirc
 		this.datastore = network.datastore
-		this.name = name
 		this.network = network
+		this.name = name
+
 		this.userlist = {}
+
 		this.topic = ""
 		this.topicsetat = 0
 		this.topicsetby = ""
+
 		this.modes = undefined
 
 		this.historyFetched = false
@@ -33,6 +51,10 @@ module.exports = class ChannelStore {
 		this.messages = {}
 	}
 
+	/**
+	 * Add the {@linkplain self} class to the correct entry in the channel
+	 * userlist.
+	 */
 	updateOwnUser() {
 		for (const nick in this.users) {
 			if (nick === this.network.nick) {
@@ -42,6 +64,11 @@ module.exports = class ChannelStore {
 		}
 	}
 
+	/**
+	 * Update the userlist.
+	 *
+	 * @param  {string[]} val The new userlist.
+	 */
 	set users(val) {
 		if (val === null) {
 			return
@@ -59,16 +86,26 @@ module.exports = class ChannelStore {
 		}
 	}
 
+	/**
+	 * Get the userlist.
+	 *
+	 * @returns {Object[]} The userlist.
+	 */
 	get users() {
 		return this.userlist
 	}
 
+	/**
+	 * Get the context menu object for this network.
+	 *
+	 * @returns {ContextMenuData} The contextmenu data.
+	 */
 	get contextmenu() {
 		return {
 			clear: {
 				name: "Clear History",
 				exec: () =>
-					this.clear(),
+					this.clearHistory(),
 			},
 			reload: {
 				name: "Reload History",
@@ -82,6 +119,11 @@ module.exports = class ChannelStore {
 		}
 	}
 
+	/**
+	 * Get the jQuery object for the channel entry in the channel list UI.
+	 *
+	 * @returns {JQuery} The object.
+	 */
 	getChanlistEntry() {
 		const network = this.network.getChanlistEntry()
 		if (network === undefined) {
@@ -103,6 +145,11 @@ module.exports = class ChannelStore {
 		return channel
 	}
 
+	/**
+	 * Get the chat area if the channel is open.
+	 *
+	 * @returns {JQuery} The chat area, or undefined if the channel is not open.
+	 */
 	getChatArea() {
 		const chat = this.datastore.getChatArea()
 		if (chat === undefined) {
@@ -116,6 +163,9 @@ module.exports = class ChannelStore {
 		return undefined
 	}
 
+	/**
+	 * Destroy this channel.
+	 */
 	destroy() {
 		if (this.getChatArea() !== undefined) {
 			this.datastore.closeChatArea()
@@ -124,10 +174,14 @@ module.exports = class ChannelStore {
 		this.networks.delete(this.name)
 	}
 
-	clearHistory() {
-		void ("TODO", this)
-	}
-
+	/**
+	 * Fetch history for this channel.
+	 *
+	 * @param {number} num The number of historical messages to fetch.
+	 * @param {bool} reload Whether or not to re-fetch history if already
+	 *                      fetched.
+	 * @returns {bool} Whether or not history was fetched.
+	 */
 	fetchHistory(num, reload) {
 		if (reload) {
 			this.historyFetched = false
@@ -173,6 +227,9 @@ module.exports = class ChannelStore {
 		return true
 	}
 
+	/**
+	 * Called when the channel is opened by the user.
+	 */
 	onOpen() {
 		const chat = this.datastore.getChatArea()
 		this.datastore.deselectChanlistEntries()
@@ -197,6 +254,9 @@ module.exports = class ChannelStore {
 		this.datastore.scrollDown()
 	}
 
+	/**
+	 * Update the user list UI.
+	 */
 	updateUserlist() {
 		if (this.datastore.current.network !== this.network.name ||
 			this.datastore.current.channel !== this.name) {
@@ -219,6 +279,11 @@ module.exports = class ChannelStore {
 		}, userlist)
 	}
 
+	/**
+	 * Get the ID of the last message in this channel.
+	 *
+	 * @returns {number} The ID of the previous message, or -1 if no messages.
+	 */
 	previousMessageID() {
 		let prevID = -1
 		for (let id in this.messages) {
@@ -233,6 +298,11 @@ module.exports = class ChannelStore {
 		return prevID
 	}
 
+	/**
+	 * Handle an incoming message.
+	 *
+	 * @param {Object} data The server-sent data of the message.
+	 */
 	receiveMessage(data) {
 		const message = new Message(this, data, this.previousMessageID(), true)
 		this.messages[message.id] = message
@@ -251,13 +321,19 @@ module.exports = class ChannelStore {
 		}
 	}
 
-	clear() {
+	/**
+	 * Clear the history of this channel.
+	 */
+	clearHistory() {
 		this.mauirc.conn.send("clear", {
 			network: this.network.name,
 			channel: this.name,
 		})
 	}
 
+	/**
+	 * Leave this channel.
+	 */
 	part() {
 		if (this.name.charAt(0) === "#") {
 			this.mauirc.conn.send("message", {
@@ -275,3 +351,5 @@ module.exports = class ChannelStore {
 		// TODO UI close channel
 	}
 }
+
+module.exports = ChannelStore

@@ -367,7 +367,7 @@ class Message {
 	/**
 	 * Check if this message is selected.
 	 *
-	 * @returns {boolean} Whether or not the message is selected.
+	 * @returns {bool} Whether or not the message is selected.
 	 */
 	get selected() {
 		return $(`#msg-${this.id}`).hasClass("selected")
