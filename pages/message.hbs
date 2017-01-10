@@ -18,9 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div
 	id="msgwrap-{{id}}"
 	class="message-wrapper {{wrapClass}}"
+
+	data-event="message"
+	data-listen="contextmenu"
+
 	data-id="{{id}}"
 	data-timestamp="{{timestamp}}"
 	data-sender="{{sender}}"
+
+	data-network="{{network.name}}"
+	data-channel="{{channel.name}}"
 	>
 	<div id="msg-{{id}}" class="message {{class}}">
 		{{#if isAction}}

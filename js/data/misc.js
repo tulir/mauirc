@@ -19,10 +19,6 @@ module.exports = class MiscFunctions {
 		this.mauirc = mauirc
 	}
 
-	delete(id) {
-		this.mauirc.conn.send("delete", id)
-	}
-
 	clear(network, channel) {
 		this.mauirc.conn.send("clear", { network, channel })
 	}

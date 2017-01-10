@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+const $ = require("jquery")
 const moment = require("moment")
 const linkifyHtml = require("linkifyjs/html")
 
@@ -70,6 +71,9 @@ class Message {
 	 * @param {bool} isNew Whether or not this is not from history.
 	 */
 	constructor(channel, data, prevID, isNew) {
+		this.mauirc = channel.mauirc
+		this.datastore = channel.datastore
+		this.network = channel.network
 		this.channel = channel
 		this.previousID = prevID
 		this.isNew = isNew
@@ -327,6 +331,28 @@ class Message {
 			body: this.plain,
 			icon: "favicon.ico",
 		})
+	}
+
+	/**
+	 * Get the context menu object for this message.
+	 *
+	 * @returns {ContextMenuData} The contextmenu data.
+	 */
+	get contextmenu() {
+		return {
+			delete: {
+				name: "Delete Message",
+				exec: () => this.mauirc.conn.send("delete", this.id),
+			},
+			reply: {
+				name: "Reply to sender",
+				exec: () => {
+					$("#chat-input").val(
+							`${this.sender}: ${$("#chat-input").val()}`)
+					$("#chat-input").focus()
+				},
+			},
+		}
 	}
 }
 
