@@ -16,7 +16,6 @@
 const $ = require("jquery")
 const modal = require("../lib/modal")
 const NetworkStore = require("./network")
-const MiscFunctions = require("./misc")
 
 /**
  * Data storage and processing system
@@ -29,7 +28,6 @@ class DataStore {
 	 */
 	constructor(mauirc) {
 		this.mauirc = mauirc
-		this.func = new MiscFunctions(mauirc)
 		this.networks = {}
 
 		this.current = {

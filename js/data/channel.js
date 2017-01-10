@@ -68,7 +68,7 @@ module.exports = class ChannelStore {
 			clear: {
 				name: "Clear History",
 				exec: () =>
-					this.datastore.func.clear(this.name, this.network.name),
+					this.clear(),
 			},
 			reload: {
 				name: "Reload History",
@@ -77,7 +77,7 @@ module.exports = class ChannelStore {
 			part: {
 				name: "Part Channel",
 				exec: () =>
-					this.datastore.func.part(this.name, this.network.name),
+					this.part(),
 			},
 		}
 	}
@@ -249,5 +249,29 @@ module.exports = class ChannelStore {
 			this.hasNewMessages = true
 			message.notify()
 		}
+	}
+
+	clear() {
+		this.mauirc.conn.send("clear", {
+			network: this.network.name,
+			channel: this.name,
+		})
+	}
+
+	part() {
+		if (this.name.charAt(0) === "#") {
+			this.mauirc.conn.send("message", {
+				message: "Leaving",
+				command: "part",
+				network: this.network.name,
+				channel: this.name,
+			})
+		} else {
+			this.mauirc.conn.send("close", {
+				network: this.network.name,
+				channel: this.name,
+			})
+		}
+		// TODO UI close channel
 	}
 }
