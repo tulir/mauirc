@@ -56,6 +56,8 @@ class DataStore {
 			},
 		}
 
+		mauirc.events.click("message", msg => $(msg).toggleClass("selected"))
+
 		mauirc.events.contextmenu("message", (msg, event) => {
 			const msgwrap = msg.parentElement
 			const message = this.getChannel(
