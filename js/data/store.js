@@ -56,12 +56,13 @@ class DataStore {
 			},
 		}
 
-		mauirc.events.contextmenu("message", (msg, event) =>
+		mauirc.events.contextmenu("message", (msg, event) => {
+			const msgwrap = msg.parentElement
 			this.mauirc.contextmenu.open(this.getChannel(
-				msg.getAttribute("data-network"),
-				msg.getAttribute("data-channel")
-			).messages[+msg.getAttribute("data-id")].contextmenu, event)
-		)
+				msgwrap.getAttribute("data-network"),
+				msgwrap.getAttribute("data-channel")
+			).messages[+msgwrap.getAttribute("data-id")].contextmenu, event)
+		})
 
 		mauirc.events.contextmenu("chanlist.channel", (chan, event) =>
 			this.mauirc.contextmenu.open(this.getChannel(
