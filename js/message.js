@@ -334,6 +334,13 @@ class Message {
 	}
 
 	/**
+	 * Delete this message.
+	 */
+	delete() {
+		this.mauirc.conn.send("delete", this.id)
+	}
+
+	/**
 	 * Get the context menu object for this message.
 	 *
 	 * @returns {ContextMenuData} The contextmenu data.
@@ -342,7 +349,7 @@ class Message {
 		return {
 			delete: {
 				name: "Delete Message",
-				exec: () => this.mauirc.conn.send("delete", this.id),
+				exec: () => this.delete(),
 			},
 			reply: {
 				name: "Reply to sender",
