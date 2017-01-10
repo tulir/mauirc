@@ -108,11 +108,31 @@
 }
 
 .chat > .message-wrapper > .message > .preview {
+	min-width: 20rem;
 	margin-top: .25rem;
 
 	border-top: 1px solid $secondary-content;
 
 	.text {
+		.title {
+			display: inline-block;
+
+			font-weight: bold;
+		}
+
+		.sitename {
+			display: inline-block;
+
+			color: $secondary-text-color;
+
+			&:not(:empty):before {
+				content: " - ";
+			}
+		}
+
+		&:not(.full-size) {
+			max-width: calc(100% - 8rem);
+		}
 	}
 
 	.image {
@@ -127,7 +147,11 @@
 			max-height: 100%;
 		}
 
-		&:not(.full-size) {
+		&:not(.full-size) > img {
+			float: right;
+
+			max-width: 7.5rem;
+			max-height: 7.5rem;
 		}
 	}
 
