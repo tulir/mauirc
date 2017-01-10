@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
-const Message = require("../message")
+const Message = require("./message")
 
 module.exports = class ChannelStore {
 	constructor(network, name) {

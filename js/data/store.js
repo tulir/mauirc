@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
-const Message = require("../message")
 const modal = require("../lib/modal")
 const NetworkStore = require("./network")
+const Message = require("./message")
 
 /**
  * Data storage and processing system
