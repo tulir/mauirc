@@ -362,6 +362,15 @@ class Message {
 	}
 
 	/**
+	 * Check if this message is selected.
+	 *
+	 * @returns {boolean} Whether or not the message is selected.
+	 */
+	get selected() {
+		return $(`#msg-${this.id}`).hasClass("selected")
+	}
+
+	/**
 	 * Select this message object (highlight and action grouping).
 	 */
 	select() {
@@ -403,7 +412,7 @@ class Message {
 
 		const ctxMenu = {}
 
-		if ($(`#msg-${this.id}`).hasClass("selected")) {
+		if (this.selected) {
 			ctxMenu.deselect = {
 				name: "Deselect",
 				exec: () => this.deselect(),
