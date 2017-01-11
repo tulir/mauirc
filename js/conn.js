@@ -112,6 +112,11 @@ class Connection {
 		case "delete":
 			this.mauirc.data.getMessage(data.object).destroy()
 			break
+		case "clear":
+			this.mauirc.data
+					.getChannel(data.object.network, data.object.channel)
+					.destroyHistory()
+			break
 		default:
 			console.log(data)
 		}

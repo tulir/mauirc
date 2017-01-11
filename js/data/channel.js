@@ -365,6 +365,22 @@ class ChannelStore {
 	}
 
 	/**
+	 * Destroy the local history.
+	 */
+	destroyHistory() {
+		for (const id in this.messages) {
+			if (this.messages.hasOwnProperty(id)) {
+				delete this.datastore.messagePointers[id]
+			}
+		}
+		this.messages = []
+		const chat = this.getChatArea()
+		if (chat !== undefined) {
+			chat.empty()
+		}
+	}
+
+	/**
 	 * Leave this channel.
 	 */
 	part() {
