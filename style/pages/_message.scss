@@ -24,10 +24,10 @@
 
 	&.joined {
 		&.next {
-			padding-bottom: .1rem;
+			padding-bottom: 0;
 		}
 		&.prev {
-			padding-top: .1rem;
+			padding-top: 1px;
 		}
 	}
 	&.own {
