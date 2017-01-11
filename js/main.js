@@ -23,8 +23,6 @@ const Connection = require("./conn")
 const RawMessaging = require("./rawio")
 const DataStore = require("./data/store")
 
-global.VERSION = "2.1.0"
-
 // Request notification permission
 Notification.requestPermission()
 
@@ -38,8 +36,12 @@ class mauIRC {
 	constructor() {
 		this.container = $("#container")
 
+		this.VERSION = "2.1.0"
 		this.router = new Hashmux()
-		this.templates = new TemplateSystem(this.container)
+		this.templates = new TemplateSystem(this.container, undefined, args => {
+			args.VERSION = this.VERSION
+			return args
+		})
 		this.events = new EventSystem(this.container)
 		this.contextmenu = new ContextmenuHandler(
 			$("#contextmenu"), this.templates.get("contextmenu"))

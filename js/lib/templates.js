@@ -29,9 +29,10 @@ class TemplateSystem {
 	 *                                undefined, the global Handlebars object
 	 *                                will be used.
 	 */
-	constructor(container, handlebars) {
+	constructor(container, handlebars, globalFunc) {
 		this.container = container
 		this.handlebars = handlebars || Handlebars
+		this.globalFunc = globalFunc
 		this.handlebars.partials = this.handlebars.templates
 	}
 
@@ -56,6 +57,21 @@ class TemplateSystem {
 	}
 
 	/**
+	 * Apply global variables to a template argument object.
+	 *
+	 * @param {Object|array|string|number|boolean} args The data.
+	 * @returns {Object|array|string|number|boolean} The data with globals.
+	 */
+	applyGlobals(args) {
+		if (Array.isArray(args) || typeof args !== "object") {
+			args = {
+				".": args,
+			}
+		}
+		return this.globalFunc ? this.globalFunc(args) : args
+	}
+
+	/**
 	 * Override the contents of the object with a template.
 	 *
 	 * @param {string} name The name of the template to use.
@@ -66,6 +82,7 @@ class TemplateSystem {
 		if (object === undefined) {
 			object = this.container
 		}
+		args = this.applyGlobals(args)
 		object.html(this.handlebars.templates[name](args))
 	}
 
@@ -80,6 +97,7 @@ class TemplateSystem {
 		if (object === undefined) {
 			object = this.container
 		}
+		args = this.applyGlobals(args)
 		object.append(this.handlebars.templates[name](args))
 	}
 
@@ -94,6 +112,7 @@ class TemplateSystem {
 		if (object === undefined) {
 			object = this.container
 		}
+		args = this.applyGlobals(args)
 		object.prepend(this.handlebars.templates[name](args))
 	}
 }
