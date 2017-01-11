@@ -31,6 +31,7 @@ class DataStore {
 		this.mauirc = mauirc
 		this.networks = {}
 		this.messagePointers = []
+		this.newMessagesInt = 0
 
 		this.current = {
 			networkCached: "",
@@ -62,6 +63,21 @@ class DataStore {
 		NetworkStore.registerEvents(mauirc)
 		ChannelStore.registerEvents(mauirc)
 		Message.registerEvents(mauirc)
+	}
+
+	/**
+	 * Called when a new message appears on a unfocused channel.
+	 *
+	 * @param {number} num The number of messages that appeared.
+	 *                     May be negative.
+	 */
+	newMessageAppeared(num) {
+		this.newMessagesInt += num
+		if (this.newMessagesInt > 0) {
+			document.title = `${global.TITLE_BASE} (${this.newMessagesInt})`
+		} else {
+			document.title = global.TITLE_BASE
+		}
 	}
 
 	/**

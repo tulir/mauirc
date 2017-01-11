@@ -25,6 +25,7 @@ const DataStore = require("./data/store")
 
 // Request notification permission
 Notification.requestPermission()
+global.TITLE_BASE = "mauIRC"
 
 /**
  * Main mauIRC class

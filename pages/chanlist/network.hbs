@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</div>
 	<div class="channels">
 		{{#each channels}}
-			{{> chanlist/channel name=this.name network=../name new=this.hasNewMessages}}
+			{{> chanlist/channel name=this.name network=../name new=this.newMessages}}
 		{{/each}}
 
 		<div

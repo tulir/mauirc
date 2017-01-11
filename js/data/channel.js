@@ -47,7 +47,7 @@ class ChannelStore {
 		this.modes = undefined
 
 		this.historyFetched = false
-		this.hasNewMessages = false
+		this.newMessages = 0
 		this.messages = {}
 	}
 
@@ -170,7 +170,7 @@ class ChannelStore {
 			this.mauirc.templates.append("chanlist/channel", {
 				name: this.name,
 				network: this.network.name,
-				new: this.hasNewMessages,
+				new: this.newMessages > 0,
 			}, this.datastore.networks)
 			channel = network.find(
 					`.channels > .channel[data-name='${this.name}']`)
@@ -268,7 +268,8 @@ class ChannelStore {
 		this.network.getChanlistEntry().addClass("active")
 		this.getChanlistEntry().addClass("active")
 
-		this.hasNewMessages = false
+		this.datastore.newMessageAppeared(-this.newMessages)
+		this.newMessages = 0
 
 		this.datastore.current.network = this.network.name
 		this.datastore.current.channel = this.name
@@ -368,11 +369,13 @@ class ChannelStore {
 				this.datastore.current.channel === this.name) {
 				this.mauirc.templates.append("message", message, chat)
 			} else {
-				this.hasNewMessages = true
+				this.datastore.newMessageAppeared(1)
+				this.newMessages++
 				this.getChanlistEntry().addClass("notification")
 			}
 		} else {
-			this.hasNewMessages = true
+			this.datastore.newMessageAppeared(1)
+			this.newMessages++
 			message.notify()
 		}
 	}
