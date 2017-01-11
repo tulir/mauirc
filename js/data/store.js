@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
+const { complete } = require("../lib/autocomplete")
 const NetworkStore = require("./network")
 const ChannelStore = require("./channel")
 const Message = require("./message")
@@ -94,6 +95,45 @@ class DataStore {
 				network: mauirc.data.current.network,
 			})
 			$("#chat-input").val("")
+		})
+
+		mauirc.events.keydown("chat", (obj, evt) => {
+			if (evt.keyCode !== 9) { // Tab
+				return
+			}
+			evt.preventDefault()
+
+			const caretPos = obj.selectionStart
+			obj = $(obj)
+
+			const text = complete({
+				text: obj.val(),
+				wordStart: obj.val().substr(0, caretPos).lastIndexOf(" ") + 1,
+				caretPos,
+				completions: (word, wordStart) => {
+					if (word.charAt(0) === "/") {
+						return {
+							prefix: "/",
+							completions: ["me", "whois", "part", "join"],
+							extra: " ",
+						}
+					}
+					const completions = []
+					const chan = mauirc.data.getChannel(
+							mauirc.data.current.network,
+							mauirc.data.current.channel)
+					for (const user in chan.users) {
+						if (chan.users.hasOwnProperty(user)) {
+							completions.push(user)
+						}
+					}
+					return { completions, extra: wordStart === 0 ? ": " : " " }
+				},
+			})
+
+			if (text) {
+				obj.val(text)
+			}
 		})
 	}
 
