@@ -58,7 +58,7 @@ class NetworkStore {
 				},
 			},
 			reload: {
-				name: "Reload all History",
+				name: "Reload all history",
 				exec: () => {
 					for (const chan in this.channels) {
 						if (this.channels.hasOwnProperty(chan)) {

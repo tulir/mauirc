@@ -103,15 +103,15 @@ class ChannelStore {
 	get contextmenu() {
 		return {
 			clear: {
-				name: "Clear History",
+				name: "Clear history",
 				exec: () => this.clearHistory(),
 			},
 			reload: {
-				name: "Reload History",
+				name: `${this.historyFetched ? "Reload" : "Load"} history`,
 				exec: () => this.fetchHistory(512, true),
 			},
 			part: {
-				name: "Part Channel",
+				name: "Part channel",
 				exec: () => this.part(),
 			},
 		}
