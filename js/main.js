@@ -91,8 +91,8 @@ class mauIRC {
 	 */
 	listen() {
 		this.router.handleError(404, data => {
-			if (this.templates.exists(data.page.substr(1))) {
-				this.templates.apply(data.page.substr(1))
+			if (this.templates.exists(`static/${data.page.substr(1)}`)) {
+				this.templates.apply(`static/${data.page.substr(1)}`)
 			} else {
 				this.templates.apply("error", {
 					error: "Page not found",
