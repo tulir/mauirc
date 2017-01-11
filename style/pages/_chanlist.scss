@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @import "../base/vars";
+@import "../base/responsivity";
 @import "../base/util";
 
 .chanlist {
@@ -57,7 +58,7 @@
 			.channel {
 				box-sizing: border-box;
 				width: 100%;
-				padding: .25rem;
+				padding: .75rem .5rem;
 
 				text-decoration: none;
 
@@ -69,6 +70,9 @@
 				font-size: 1rem;
 				font-weight: normal;
 
+				@include display-up($small) {
+					padding: .5rem;
+				}
 				@include pointerCursor();
 
 				&.notification, &:hover {

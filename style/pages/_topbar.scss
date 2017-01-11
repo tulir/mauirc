@@ -92,6 +92,7 @@
 
 		width: calc(100% - 14rem);
 		height: 100%;
+		margin-left: 7rem;
 
 		color: white;
 
@@ -140,6 +141,7 @@
 			}
 			.topic {
 				width: calc(100% - 7rem);
+				margin-left: 0;
 			}
 		}
 		@include display-up($medium) {
