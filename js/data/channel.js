@@ -52,6 +52,42 @@ class ChannelStore {
 	}
 
 	/**
+	 * Register channel-related events.
+	 *
+	 * @param {mauIRC} mauirc The current mauIRC instance.
+	 */
+	static registerEvents(mauirc) {
+		mauirc.events.contextmenu("chanlist.channel", (chan, event) =>
+			mauirc.contextmenu.open(mauirc.data.getChannel(
+					chan.getAttribute("data-network"),
+					chan.getAttribute("data-name")
+				).contextmenu, event)
+		)
+
+		mauirc.events.doubleclick("topic", obj => $(obj).addClass("editing"))
+		mauirc.events.blur("topic-edit", obj => {
+			obj = $(obj)
+			obj.val(obj.parent().text().trim())
+			obj.parent().removeClass("editing")
+		})
+		mauirc.events.keydown("topic-edit", (obj, evt) => {
+			if (evt.keyCode === 13) { // Enter
+				obj = $(obj)
+				mauirc.data.getChannel(
+						mauirc.data.current.network,
+						mauirc.data.current.channel
+					).setTitle(obj.val())
+				obj.val(obj.parent().text().trim())
+				obj.parent().removeClass("editing")
+			} else if (evt.keyCode === 27) { // Escape
+				obj = $(obj)
+				obj.val(obj.parent().text().trim())
+				obj.parent().removeClass("editing")
+			}
+		})
+	}
+
+	/**
 	 * Add the {@linkplain self} class to the correct entry in the channel
 	 * userlist.
 	 */

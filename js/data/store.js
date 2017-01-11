@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
-const modal = require("../lib/modal")
 const NetworkStore = require("./network")
+const ChannelStore = require("./channel")
 const Message = require("./message")
 
 /**
@@ -57,67 +57,27 @@ class DataStore {
 			},
 		}
 
-		mauirc.events.click("message", msg => $(msg).toggleClass("selected"))
+		// Register all chat-related events
+		DataStore.registerEvents(mauirc)
+		NetworkStore.registerEvents(mauirc)
+		ChannelStore.registerEvents(mauirc)
+		Message.registerEvents(mauirc)
+	}
 
-		mauirc.events.contextmenu("message", (msg, event) => {
-			const msgwrap = msg.parentElement
-			const message = this.getChannel(
-					msgwrap.getAttribute("data-network"),
-					msgwrap.getAttribute("data-channel")
-			).messages[+msgwrap.getAttribute("data-id")]
-			this.mauirc.contextmenu.open(
-					message.selectedContextmenu || message.contextmenu, event)
-		})
-
-		mauirc.events.contextmenu("chanlist.channel", (chan, event) =>
-			this.mauirc.contextmenu.open(this.getChannel(
-					chan.getAttribute("data-network"),
-					chan.getAttribute("data-name")
-				).contextmenu, event)
-		)
-
-		mauirc.events.contextmenu("chanlist.network", (net, event) =>
-			this.mauirc.contextmenu.open(this.getNetwork(
-					$(net).parent().attr("data-name")
-				).contextmenu, event)
-		)
-
+	/**
+	 * Register generic chat (not network/channel/message -related) events.
+	 *
+	 * @param {mauIRC} mauirc The current mauIRC instance.
+	 */
+	static registerEvents(mauirc) {
 		mauirc.events.submit("chat", () => {
-			this.mauirc.conn.send("message", {
+			mauirc.conn.send("message", {
 				message: Message.encodeIRC($("#chat-input").val()),
 				command: "privmsg",
-				channel: this.current.channel,
-				network: this.current.network,
+				channel: mauirc.data.current.channel,
+				network: mauirc.data.current.network,
 			})
 			$("#chat-input").val("")
-		})
-
-		mauirc.events.click("preview.image", obj => {
-			$("<img>")
-				.attr("src", obj.getAttribute("data-src"))
-				.addClass("modal-content")
-				.appendTo($("#modal"))
-			modal.open()
-		})
-
-		mauirc.events.doubleclick("topic", obj => $(obj).addClass("editing"))
-		mauirc.events.blur("topic-edit", obj => {
-			obj = $(obj)
-			obj.val(obj.parent().text().trim())
-			obj.parent().removeClass("editing")
-		})
-		mauirc.events.keydown("topic-edit", (obj, evt) => {
-			if (evt.keyCode === 13) { // Enter
-				obj = $(obj)
-				this.getChannel(this.current.network, this.current.channel)
-						.setTitle(obj.val())
-				obj.val(obj.parent().text().trim())
-				obj.parent().removeClass("editing")
-			} else if (evt.keyCode === 27) { // Escape
-				obj = $(obj)
-				obj.val(obj.parent().text().trim())
-				obj.parent().removeClass("editing")
-			}
 		})
 	}
 

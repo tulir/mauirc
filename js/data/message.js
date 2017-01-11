@@ -16,6 +16,7 @@
 const $ = require("jquery")
 const moment = require("moment")
 const linkifyHtml = require("linkifyjs/html")
+const modal = require("../lib/modal")
 
 const encoders = [
 	{ // Italic
@@ -91,6 +92,33 @@ class Message {
 				this.wrapClassArr.push("own")
 			}
 		}
+	}
+
+	/**
+	 * Register message-related events.
+	 *
+	 * @param {mauIRC} mauirc The current mauIRC instance.
+	 */
+	static registerEvents(mauirc) {
+		mauirc.events.click("message", msg => $(msg).toggleClass("selected"))
+
+		mauirc.events.contextmenu("message", (msg, event) => {
+			const msgwrap = msg.parentElement
+			const message = mauirc.data.getChannel(
+					msgwrap.getAttribute("data-network"),
+					msgwrap.getAttribute("data-channel")
+			).messages[+msgwrap.getAttribute("data-id")]
+			mauirc.contextmenu.open(
+					message.selectedContextmenu || message.contextmenu, event)
+		})
+
+		mauirc.events.click("preview.image", obj => {
+			$("<img>")
+				.attr("src", obj.getAttribute("data-src"))
+				.addClass("modal-content")
+				.appendTo($("#modal"))
+			modal.open()
+		})
 	}
 
 	/**

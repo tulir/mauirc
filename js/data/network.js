@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+const $ = require("jquery")
 const ChannelStore = require("./channel")
 
 /**
@@ -38,6 +39,19 @@ class NetworkStore {
 		this.user = ""
 		this.channels = {}
 		this.chanlist = []
+	}
+
+	/**
+	 * Register network-related events.
+	 *
+	 * @param {mauIRC} mauirc The current mauIRC instance.
+	 */
+	static registerEvents(mauirc) {
+		mauirc.events.contextmenu("chanlist.network", (net, event) =>
+			mauirc.contextmenu.open(mauirc.data.getNetwork(
+					$(net).parent().attr("data-name")
+				).contextmenu, event)
+		)
 	}
 
 	/**
