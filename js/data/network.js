@@ -83,18 +83,24 @@ class NetworkStore {
 			obj.val("")
 		})
 		mauirc.events.keydown("channel-adder", (obj, evt) => {
+			if (evt.keyCode !== 13 && evt.keyCode !== 27) { // Enter or escape
+				return
+			}
 			obj = $(obj)
-			const parent = obj.parent()
-			if (evt.keyCode === 13) { // Enter
+			let parent = obj.parent()
+			if (parent.hasClass("awesomplete")) {
+				obj = obj.appendTo(parent.parent())
+				parent.remove()
+				parent = obj.parent()
+			}
+			obj.addClass("hidden")
+			obj.parent().find(".title").removeClass("hidden")
+
+			if (evt.keyCode === 13) {
 				const net = mauirc.data.getNetwork(parent.attr("data-network"))
 				net.join(obj.val())
-				obj.addClass("hidden")
-				obj.val("")
-				parent.find(".title").removeClass("hidden")
-			} else if (evt.keyCode === 27) { // Escape
-				obj.addClass("hidden")
-				parent.find(".title").removeClass("hidden")
 			}
+			obj.val("")
 		})
 	}
 
@@ -153,6 +159,7 @@ class NetworkStore {
 		} else {
 			this.getChannel(channel)
 		}
+		window.location.href = `#/chat/${this.name}/${channel}`
 	}
 
 	/**

@@ -439,7 +439,11 @@ class ChannelStore {
 				channel: this.name,
 			})
 		}
-		// TODO UI close channel
+		if (this.datastore.current.network === this.network.name &&
+				this.datastore.current.channel === this.name) {
+			window.location.hash = "#/chat"
+		}
+		this.network.deleteChannel(this.name)
 	}
 }
 

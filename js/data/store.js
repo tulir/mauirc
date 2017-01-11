@@ -163,6 +163,11 @@ class DataStore {
 	 * @param {Object} message The data sent by the server.
 	 */
 	receive(message) {
+		if (message.command === "part" && this.tryGetChannel(message.network,
+				message.channel) === undefined) {
+			return
+		}
+
 		const chan = this.getChannel(message.network, message.channel)
 		chan.receiveMessage(message)
 		this.scrollDown()
