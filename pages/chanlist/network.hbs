@@ -23,5 +23,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{{#each channels}}
 			{{> chanlist/channel name=this.name network=../name}}
 		{{/each}}
+		
+		<div
+				class="channel adder"
+				data-network="{{this.name}}"
+				data-event="channel-adder"
+				data-listen="click">
+			<span class="title">
+				Join Channel
+			</span>
+			<input
+					type="text"
+					class="actual-adder hidden"
+					data-event="channel-adder"
+					data-listen="blur keydown"/>
+		</div>
 	</div>
 </div>

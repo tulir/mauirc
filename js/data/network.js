@@ -52,6 +52,31 @@ class NetworkStore {
 					$(net).parent().attr("data-name")
 				).contextmenu, event)
 		)
+
+		mauirc.events.click("channel-adder", obj => {
+			$(obj).find(".title").addClass("hidden")
+			$(obj).find(".actual-adder").removeClass("hidden")
+			$(obj).find(".actual-adder").focus()
+		})
+		mauirc.events.blur("channel-adder", obj => {
+			$(obj).addClass("hidden")
+			$(obj).parent().find(".title").removeClass("hidden")
+			$(obj).val("")
+		})
+		mauirc.events.keydown("channel-adder", (obj, evt) => {
+			obj = $(obj)
+			const parent = obj.parent()
+			if (evt.keyCode === 13) { // Enter
+				const net = mauirc.data.getNetwork(parent.attr("data-network"))
+				net.join(obj.val())
+				obj.addClass("hidden")
+				obj.val("")
+				parent.find(".title").removeClass("hidden")
+			} else if (evt.keyCode === 27) { // Escape
+				obj.addClass("hidden")
+				parent.find(".title").removeClass("hidden")
+			}
+		})
 	}
 
 	/**
@@ -90,6 +115,24 @@ class NetworkStore {
 				exec: () => void (0),
 			},
 			// TODO reconnect?
+		}
+	}
+
+	/**
+	 * Join a channel.
+	 *
+	 * @param {string} channel The name of the channel to join.
+	 */
+	join(channel) {
+		if (channel.charAt(0) === "#") {
+			this.mauirc.conn.send("message", {
+				message: channel,
+				command: "join",
+				network: this.name,
+				channel,
+			})
+		} else {
+			this.getChannel(channel)
 		}
 	}
 
