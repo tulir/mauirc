@@ -42,6 +42,36 @@ class EventSystem {
 	}
 
 	/**
+	 * Register a double-click event listener.
+	 *
+	 * @param {string} evt The name of the event.
+	 * @param {func} func The function to execute when the event is triggered.
+	 */
+	doubleclick(evt, func) {
+		this.on("doubleclick", evt, func)
+	}
+
+	/**
+	 * Register a blur event listener.
+	 *
+	 * @param {string} evt The name of the event.
+	 * @param {func} func The function to execute when the event is triggered.
+	 */
+	blur(evt, func) {
+		this.on("blur", evt, func)
+	}
+
+	/**
+	 * Register a keydown event listener.
+	 *
+	 * @param {string} evt The name of the event.
+	 * @param {func} func The function to execute when the event is triggered.
+	 */
+	keydown(evt, func) {
+		this.on("keydown", evt, func)
+	}
+
+	/**
 	 * Register a submit event listener.
 	 *
 	 * @param {string} evt The name of the event.
@@ -107,6 +137,23 @@ class EventSystem {
 	}
 
 	/**
+	 * Register a jQuery event handler.
+	 *
+	 * @param {string} nativeEvent The name of the native event.
+	 * @param {string} systemEvent The name of the internal event, or undefined
+	 *                             to use the same as nativeEvent.
+	 */
+	registerNativeListener(nativeEvent, systemEvent) {
+		const evsys = this
+		systemEvent = systemEvent || nativeEvent
+		this.container.on(nativeEvent,
+			`*[data-event][data-listen~='${systemEvent}']`,
+			function(event) {
+				evsys.execRaw(systemEvent, this, event)
+			}
+		)
+	}
+	/**
 	 * Register jQuery event handlers.
 	 */
 	activate() {
@@ -118,18 +165,11 @@ class EventSystem {
 				evsys.execRaw("click", this, event)
 			}
 		)
-		this.container.on("submit",
-			"*[data-event][data-listen~='submit']",
-			function(event) {
-				evsys.execRaw("submit", this, event)
-			}
-		)
-		this.container.on("contextmenu",
-			"*[data-event][data-listen~='contextmenu']",
-			function(event) {
-				evsys.execRaw("contextmenu", this, event)
-			}
-		)
+		this.registerNativeListener("dblclick", "doubleclick")
+		this.registerNativeListener("blur")
+		this.registerNativeListener("keydown")
+		this.registerNativeListener("submit")
+		this.registerNativeListener("contextmenu")
 	}
 }
 
