@@ -170,6 +170,7 @@ class ChannelStore {
 			this.mauirc.templates.append("chanlist/channel", {
 				name: this.name,
 				network: this.network.name,
+				new: this.hasNewMessages,
 			}, this.datastore.networks)
 			channel = network.find(
 					`.channels > .channel[data-name='${this.name}']`)
