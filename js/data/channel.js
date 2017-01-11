@@ -280,6 +280,30 @@ class ChannelStore {
 	}
 
 	/**
+	 * Update the topic in the UI.
+	 */
+	updateTopic() {
+		if (this.datastore.current.network !== this.network.name ||
+			this.datastore.current.channel !== this.name) {
+			return
+		}
+
+		const chat = this.datastore.getChatArea()
+		if (chat === undefined) {
+			return
+		}
+
+		const topic = chat.parent().find(".topbar-container > .topbar > .topic")
+		if (topic.length === 0) {
+			console.warn("Failed to update topic: Not found")
+			return
+		}
+
+		topic.find(".text").text(this.topic)
+		topic.find(".edit").val(this.topic)
+	}
+
+	/**
 	 * Get the ID of the last message in this channel.
 	 *
 	 * @returns {number} The ID of the previous message, or -1 if no messages.
@@ -319,6 +343,20 @@ class ChannelStore {
 			this.hasNewMessages = true
 			message.notify()
 		}
+	}
+
+	/**
+	 * Try to set the title for this channel.
+	 *
+	 * @param {string} newTitle The new title.
+	 */
+	setTitle(newTitle) {
+		this.mauirc.conn.send("message", {
+			message: newTitle,
+			command: "topic",
+			network: this.network.name,
+			channel: this.name,
+		})
 	}
 
 	/**

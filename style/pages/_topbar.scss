@@ -78,6 +78,7 @@
 			}
 		}
 	}
+
 	.enter-settings {
 		display: none;
 
@@ -86,10 +87,59 @@
 		}
 	}
 
+	.topic {
+		display: flex;
+
+		width: calc(100% - 14rem);
+		height: 100%;
+
+		color: white;
+
+		align-items: center;
+
+		.text {
+			width: 100%;
+
+			text-align: center;
+			vertical-align: middle;
+
+			font-weight: bold;
+		}
+
+		.edit {
+			display: none;
+
+			box-sizing: border-box;
+			width: calc(100% - 1rem);
+			height: calc(100% - .5rem);
+			margin: .25rem .5rem;
+
+			text-align: center;
+			vertical-align: middle;
+
+			color: white;
+			border: 2px solid white;
+			border-radius: .25rem;
+			background-color: inherit;
+		}
+
+		&.editing {
+			.edit {
+				display: inline-block;
+			}
+			.text {
+				display: none;
+			}
+		}
+	}
+
 	& {
 		@include display-up($small) {
 			.enter-channels {
 				display: none;
+			}
+			.topic {
+				width: calc(100% - 7rem);
 			}
 		}
 		@include display-up($medium) {
@@ -100,10 +150,9 @@
 			.enter-users {
 				display: none;
 			}
+			.topic {
+				width: calc(100% - 3rem);
+			}
 		}
-	}
-
-	.topic-edit {
-		display: none;
 	}
 }

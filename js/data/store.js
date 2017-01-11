@@ -99,6 +99,26 @@ class DataStore {
 				.appendTo($("#modal"))
 			modal.open()
 		})
+
+		mauirc.events.doubleclick("topic", obj => $(obj).addClass("editing"))
+		mauirc.events.blur("topic-edit", obj => {
+			obj = $(obj)
+			obj.val(obj.parent().text().trim())
+			obj.parent().removeClass("editing")
+		})
+		mauirc.events.keydown("topic-edit", (obj, evt) => {
+			if (evt.keyCode === 13) { // Enter
+				obj = $(obj)
+				this.getChannel(this.current.network, this.current.channel)
+						.setTitle(obj.val())
+				obj.val(obj.parent().text().trim())
+				obj.parent().removeClass("editing")
+			} else if (evt.keyCode === 27) { // Escape
+				obj = $(obj)
+				obj.val(obj.parent().text().trim())
+				obj.parent().removeClass("editing")
+			}
+		})
 	}
 
 	/**
@@ -371,6 +391,7 @@ class DataStore {
 			chan.users = data.userlist
 			chan.modes = data.modes
 			chan.updateUserlist()
+			chan.updateTopic()
 			break
 		case "chanlist":
 			this.getNetwork(data.network).chanlist = data.list

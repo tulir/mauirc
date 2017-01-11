@@ -19,8 +19,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="topbar">
 	{{#if chat}}
-		<span id="topic" data-event="topic">{{topic}}</span>
-		<input type="text" class="topic-edit" id="topic-edit" value="{{topic}}"/>
+		<div class="topic" data-event="topic" data-listen="doubleclick">
+			<span class="text">{{topic}}</span>
+			<input
+				type="text"
+				class="edit"
+				data-event="topic-edit"
+				data-listen="blur keydown"
+				value="{{topic}}"/>
+		</div>
 
 		<div class="left arrow enter-channels" data-href="#/channels">
 			<img src="img/left-arrow.svg"/><span>Channels</span>
