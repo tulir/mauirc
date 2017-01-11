@@ -36,7 +36,7 @@ class mauIRC {
 	constructor() {
 		this.container = $("#container")
 
-		this.VERSION = "2.1.0"
+		this.VERSION = "2.1.0-alpha"
 		this.router = new Hashmux()
 		this.templates = new TemplateSystem(this.container, undefined, args => {
 			args.VERSION = this.VERSION
