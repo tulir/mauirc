@@ -21,6 +21,7 @@ const TemplateSystem = require("./lib/templates")
 const Auth = require("./auth")
 const Connection = require("./conn")
 const RawMessaging = require("./rawio")
+const CommandSystem = require("./commands")
 const DataStore = require("./data/store")
 
 // Request notification permission
@@ -50,6 +51,7 @@ class mauIRC {
 		this.auth = new Auth(this)
 		this.conn = new Connection(this)
 		this.raw = new RawMessaging(this)
+		this.commands = new CommandSystem(this)
 		this.data = new DataStore(this)
 
 		this.nextPage = "#/chat"

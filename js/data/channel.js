@@ -422,11 +422,13 @@ class ChannelStore {
 
 	/**
 	 * Leave this channel.
+	 *
+	 * @param {string} message The message to send as the part message.
 	 */
-	part() {
+	part(message) {
 		if (this.name.charAt(0) === "#") {
 			this.mauirc.conn.send("message", {
-				message: "Leaving",
+				message: message || "Leaving",
 				command: "part",
 				network: this.network.name,
 				channel: this.name,

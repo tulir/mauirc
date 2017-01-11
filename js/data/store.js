@@ -88,8 +88,17 @@ class DataStore {
 	 */
 	static registerEvents(mauirc) {
 		mauirc.events.submit("chat", () => {
+			const msg = $("#chat-input").val()
+			if (msg.charAt(0) === "/") {
+				const args = msg.split(" ")
+				if (mauirc.commands.handle(args.shift().substr(1), args)) {
+					$("#chat-input").val("")
+				}
+				return
+			}
+
 			mauirc.conn.send("message", {
-				message: Message.encodeIRC($("#chat-input").val()),
+				message: Message.encodeIRC(msg),
 				command: "privmsg",
 				channel: mauirc.data.current.channel,
 				network: mauirc.data.current.network,
@@ -114,7 +123,7 @@ class DataStore {
 					if (word.charAt(0) === "/") {
 						return {
 							prefix: "/",
-							completions: ["me", "whois", "part", "join"],
+							completions: mauirc.commands.listCache,
 							extra: " ",
 						}
 					}
