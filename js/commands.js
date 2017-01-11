@@ -42,6 +42,9 @@ class CommandSystem {
 			}, {
 				aliases: ["me", "action"],
 				func: this.action,
+			}, {
+				aliases: ["switch", "channel"],
+				func: this.switch,
 			},
 		]
 
@@ -185,6 +188,24 @@ class CommandSystem {
 			channel: this.mauirc.data.current.channel,
 			network: this.mauirc.data.current.network,
 		})
+		return true
+	}
+
+	/**
+	 * A command handler.
+	 *
+	 * @param   {string[]} args The arguments.
+	 * @returns {bool}          Whether or not the arguments were valid.
+	 */
+	switch(args) {
+		if (args.length === 1) {
+			window.location.hash =
+					`#/chat/${this.mauirc.data.current.network}/${args[0]}`
+		} else if (args.length === 2) {
+			window.location.hash = `#/chat/${args[0]}/${args[1]}`
+		} else {
+			return false
+		}
 		return true
 	}
 }
