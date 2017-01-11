@@ -142,6 +142,7 @@ class DataStore {
 			networks: this.mauirc.data.networks,
 			users: chanObj.users,
 			messages: chanObj.messages,
+			topic: chanObj.topic,
 			network: net,
 			channel: chan,
 		})
@@ -364,7 +365,7 @@ class DataStore {
 		switch (type) {
 		case "chandata":
 			chan = this.getChannel(data.network, data.name)
-			chan.topic = data.topic
+			chan.topic = data.topic || data.name
 			chan.topicsetat = data.topicsetat
 			chan.topicsetby = data.topicsetby
 			chan.users = data.userlist
