@@ -152,7 +152,7 @@ class DataStore {
 	openChat(net, chan) {
 		let chanObj = { users: [], messages: [], onOpen: () => void (0) }
 		if (net !== undefined && chan !== undefined &&
-			net.length !== 0 && chan.length !== 0) {
+				net.length !== 0 && chan.length !== 0) {
 			chanObj = this.tryGetChannel(net, chan)
 			if (chanObj === undefined) {
 				chanObj = { users: [], messages: [], onOpen: () => void (0) }
@@ -382,14 +382,25 @@ class DataStore {
 	process(type, data) {
 		let net
 		let chan
+		let first
 		switch (type) {
 		case "chandata":
+			// Whether or not it's the first time the channel data is being
+			// received.
+			first = this.tryGetChannel(data.network, data.name) === undefined
 			chan = this.getChannel(data.network, data.name)
 			chan.topic = data.topic || data.name
 			chan.topicsetat = data.topicsetat
 			chan.topicsetby = data.topicsetby
 			chan.users = data.userlist
 			chan.modes = data.modes
+			// If channel data is being received for the first time and the
+			// same channel is open, re-open it since opening without channel
+			// data fails.
+			if (first && this.current.network === data.network &&
+					this.current.channel === data.name) {
+				this.mauirc.router.update()
+			}
 			chan.updateUserlist()
 			chan.updateTopic()
 			break
@@ -405,6 +416,7 @@ class DataStore {
 			net.realname = data.realname
 			net.ssl = data.ssl
 			net.user = data.user
+
 			for (chan in net.channels) {
 				if (!net.channels.hasOwnProperty(chan)) {
 					continue
