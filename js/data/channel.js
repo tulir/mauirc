@@ -181,7 +181,7 @@ class ChannelStore {
 	fetchHistory(num, reload) {
 		if (reload) {
 			this.historyFetched = false
-			this.messages = {}
+			this.destroyHistory()
 		}
 
 		if (this.historyFetched) {
@@ -373,7 +373,7 @@ class ChannelStore {
 				delete this.datastore.messagePointers[id]
 			}
 		}
-		this.messages = []
+		this.messages = {}
 		const chat = this.getChatArea()
 		if (chat !== undefined) {
 			chat.empty()
