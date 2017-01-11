@@ -25,6 +25,17 @@
 
 	background-color: $green;
 
+	.version {
+		position: absolute;
+		right: .5rem;
+		bottom: .25rem;
+		left: .5rem;
+
+		color: white;
+
+		font-weight: bold;
+	}
+
 	.network {
 		box-sizing: border-box;
 		width: 100%;
