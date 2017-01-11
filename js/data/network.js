@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
+const Awesomplete = require("awesomplete")
 const ChannelStore = require("./channel")
 
 /**
@@ -54,14 +55,32 @@ class NetworkStore {
 		)
 
 		mauirc.events.click("channel-adder", obj => {
-			$(obj).find(".title").addClass("hidden")
-			$(obj).find(".actual-adder").removeClass("hidden")
-			$(obj).find(".actual-adder").focus()
+			const title = $(obj).find(".title")
+			if (title.hasClass("hidden")) {
+				return
+			}
+			title.addClass("hidden")
+
+			const actualAdder = $(obj).find(".actual-adder")
+			actualAdder.removeClass("hidden")
+
+			const net = mauirc.data.getNetwork(
+					$(obj).parent().parent().attr("data-name"))
+			global.currentAutocompleter =
+					new Awesomplete(actualAdder[0], { list: net.chanlist })
+			actualAdder.focus()
 		})
 		mauirc.events.blur("channel-adder", obj => {
-			$(obj).addClass("hidden")
-			$(obj).parent().find(".title").removeClass("hidden")
-			$(obj).val("")
+			obj = $(obj)
+			let parent = obj.parent()
+			if (parent.hasClass("awesomplete")) {
+				obj = obj.appendTo(parent.parent())
+				parent.remove()
+				parent = obj.parent()
+			}
+			obj.addClass("hidden")
+			obj.parent().find(".title").removeClass("hidden")
+			obj.val("")
 		})
 		mauirc.events.keydown("channel-adder", (obj, evt) => {
 			obj = $(obj)

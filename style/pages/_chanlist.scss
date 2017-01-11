@@ -89,7 +89,7 @@
 			.channel.adder {
 				font-weight: normal;
 
-				> .actual-adder {
+				.actual-adder {
 					box-sizing: border-box;
 					width: 100%;
 					height: 100%;
@@ -99,6 +99,10 @@
 					background-color: inherit;
 
 					font-size: 1rem;
+				}
+
+				li {
+					color: $text-color;
 				}
 			}
 		}
