@@ -215,7 +215,7 @@ class DataStore {
 			return
 		}
 
-		this.mauirc.templates.apply("chanlist", {
+		this.mauirc.templates.apply("chanlist/view", {
 			inline,
 			networks: this.networks,
 			network: this.current.network,
@@ -227,7 +227,7 @@ class DataStore {
 	 * Open a standalone channel list.
 	 */
 	openChanlist() {
-		this.mauirc.templates.apply("chanlist", {
+		this.mauirc.templates.apply("chanlist/view", {
 			networks: this.networks,
 			network: this.current.network,
 			channel: this.current.channel,

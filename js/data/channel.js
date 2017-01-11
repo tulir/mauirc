@@ -131,7 +131,7 @@ class ChannelStore {
 		let channel = network.find(
 				`.channels > .channel[data-name='${this.name}']`)
 		if (channel.length === 0) {
-			this.mauirc.templates.append("chanlist-channel", {
+			this.mauirc.templates.append("chanlist/channel", {
 				name: this.name,
 				network: this.network.name,
 			}, this.datastore.networks)
