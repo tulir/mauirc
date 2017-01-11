@@ -28,6 +28,7 @@ class Auth {
 		this.authenticated = false
 		this.checkFailed = false
 		this.checked = false
+		this.mauirc = mauirc
 
 		// TODO mauirc.events.click("auth.register", () => )
 		mauirc.events.click("auth.login", () => this.login())
