@@ -43,8 +43,7 @@ class mauIRC {
 
 		this.router = new Hashmux()
 		this.contextmenu = new ContextmenuHandler(
-			$("#contextmenu"), Handlebars.templates.contextmenu
-		)
+				$("#contextmenu"), Handlebars.templates.contextmenu)
 		this.events = new EventSystem(this.container)
 
 		this.auth = new Auth(this)
@@ -55,7 +54,9 @@ class mauIRC {
 		this.nextPage = "#/chat"
 
 		this.container.on("click", "*[data-href]:not([data-listen~='click'])",
-			function() { window.location.hash = this.getAttribute("data-href") }
+				function() {
+					window.location.hash = this.getAttribute("data-href")
+				}
 		)
 	}
 
@@ -134,35 +135,28 @@ class mauIRC {
 
 		this.router.handle("/", () => this.auth.check())
 		this.router.handle("/login", () =>
-			(this.auth.checked ?
-				this.applyTemplate("login") :
-				window.location.hash = "#/")
-		)
+				(this.auth.checked ?
+					this.applyTemplate("login") :
+					window.location.hash = "#/"))
 		this.router.handle("/connect", () =>
-			(this.conn.ected ?
-				window.location.hash = this.nextPage || "#/chat" :
-				(this.auth.enticated ?
-					this.conn.ect() :
-					window.location.hash = "#/login"))
-		)
+				(this.conn.ected ?
+					window.location.hash = this.nextPage || "#/chat" :
+					(this.auth.enticated ?
+						this.conn.ect() :
+						window.location.hash = "#/login")))
 		this.router.handle("/channels", () =>
-			this.verifyConnection(() => this.data.openChanlist())
-		)
+				this.verifyConnection(() => this.data.openChanlist()))
 		this.router.handle("/chat/{network}/{channel}", data =>
-			this.verifyConnection(() =>
-				this.data.openChat(data.network, data.channel))
-		)
+				this.verifyConnection(() =>
+					this.data.openChat(data.network, data.channel)))
 		this.router.handle("/chat/", () =>
-			this.verifyConnection(() => this.data.openChat())
-		)
+				this.verifyConnection(() => this.data.openChat()))
 		this.router.handle("/users/{network}/{channel}", data =>
-			this.verifyConnection(() =>
-				this.data.openUserlist(data.network, data.channel))
-		)
+				this.verifyConnection(() =>
+					this.data.openUserlist(data.network, data.channel)))
 		this.router.handle("/users//", () => window.location.href = "#/chat")
 		this.router.handle("/raw/{network}", data =>
-			this.verifyConnection(() => this.raw.open(data.network))
-		)
+				this.verifyConnection(() => this.raw.open(data.network)))
 		this.router.handle("/raw/", () => window.location.href = "#/chat")
 		this.router.listen()
 	}

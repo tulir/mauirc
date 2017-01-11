@@ -62,8 +62,8 @@ class DataStore {
 		mauirc.events.contextmenu("message", (msg, event) => {
 			const msgwrap = msg.parentElement
 			const message = this.getChannel(
-				msgwrap.getAttribute("data-network"),
-				msgwrap.getAttribute("data-channel")
+					msgwrap.getAttribute("data-network"),
+					msgwrap.getAttribute("data-channel")
 			).messages[+msgwrap.getAttribute("data-id")]
 			this.mauirc.contextmenu.open(
 					message.selectedContextmenu || message.contextmenu, event)
@@ -71,15 +71,15 @@ class DataStore {
 
 		mauirc.events.contextmenu("chanlist.channel", (chan, event) =>
 			this.mauirc.contextmenu.open(this.getChannel(
-				chan.getAttribute("data-network"),
-				chan.getAttribute("data-name")
-			).contextmenu, event)
+					chan.getAttribute("data-network"),
+					chan.getAttribute("data-name")
+				).contextmenu, event)
 		)
 
 		mauirc.events.contextmenu("chanlist.network", (net, event) =>
 			this.mauirc.contextmenu.open(this.getNetwork(
-				$(net).parent().attr("data-name")
-			).contextmenu, event)
+					$(net).parent().attr("data-name")
+				).contextmenu, event)
 		)
 
 		mauirc.events.submit("chat", () => {

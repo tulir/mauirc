@@ -104,8 +104,7 @@ class ChannelStore {
 		return {
 			clear: {
 				name: "Clear History",
-				exec: () =>
-					this.clearHistory(),
+				exec: () => this.clearHistory(),
 			},
 			reload: {
 				name: "Reload History",
@@ -113,8 +112,7 @@ class ChannelStore {
 			},
 			part: {
 				name: "Part Channel",
-				exec: () =>
-					this.part(),
+				exec: () => this.part(),
 			},
 		}
 	}
@@ -131,16 +129,14 @@ class ChannelStore {
 		}
 
 		let channel = network.find(
-			`.channels > .channel[data-name='${this.name}']`
-		)
+				`.channels > .channel[data-name='${this.name}']`)
 		if (channel.length === 0) {
 			this.mauirc.appendTemplate("chanlist-channel", {
 				name: this.name,
 				network: this.network.name,
 			}, this.datastore.networks)
 			channel = network.find(
-				`.channels > .channel[data-name='${this.name}']`
-			)
+					`.channels > .channel[data-name='${this.name}']`)
 		}
 		return channel
 	}
@@ -157,7 +153,7 @@ class ChannelStore {
 		}
 
 		if (this.datastore.current.network === this.network.name &&
-			this.datastore.current.channel === this.name) {
+				this.datastore.current.channel === this.name) {
 			return chat
 		}
 		return undefined
@@ -197,7 +193,7 @@ class ChannelStore {
 		$.ajax({
 			type: "GET",
 			url: `/history/${this.network.name}/${
-				encodeURIComponent(this.name)}/?n=${num}`,
+					encodeURIComponent(this.name)}/?n=${num}`,
 			dataType: "json",
 		})
 		.done(data => {
@@ -208,8 +204,7 @@ class ChannelStore {
 			const chat = this.getChatArea()
 			for (const msgData of data.reverse()) {
 				const message = new Message(
-					this, msgData, this.previousMessageID(), false
-				)
+						this, msgData, this.previousMessageID(), false)
 				this.messages[message.id] = message
 				if (chat !== undefined) {
 					this.mauirc.appendTemplate("message", message, chat)

@@ -58,8 +58,7 @@ class Auth {
 			type: "GET",
 			url: "/auth/check",
 			dataType: "json",
-		})
-		.done(data => {
+		}).done(data => {
 			this.checkFailed = false
 			this.authenticated = data.authenticated
 			if (data.authenticated) {
@@ -70,15 +69,13 @@ class Auth {
 				this.mauirc.nextPage = "#/chat"
 				window.location.hash = "#/login"
 			}
-		})
-		.fail(info => {
+		}).fail(info => {
 			console.error(`Auth check failed: HTTP ${info.status}`)
 			console.error(info)
 			this.mauirc.nextPage = "#/chat"
 			window.location.hash = "#/login"
 			this.checkFailed = true
-		})
-		.always(() => this.checked = true)
+		}).always(() => this.checked = true)
 	}
 
 	/**
@@ -98,19 +95,16 @@ class Auth {
 				email: email || $("#email").val(),
 				password: password || $("#password").val(),
 			}),
-		})
-		.done(() => {
+		}).done(() => {
 			this.checkFailed = false
 			this.authenticated = true
 			window.location.hash = "#/connect"
-		})
-		.fail(info => {
+		}).fail(info => {
 			this.checkFailed = false
 			this.authenticated = false
 			console.error("Login failed")
 			console.error(info)
-		})
-		.always(() => this.checked = true)
+		}).always(() => this.checked = true)
 	}
 
 	/**

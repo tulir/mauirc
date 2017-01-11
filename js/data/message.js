@@ -189,10 +189,8 @@ class Message {
 		this.highlight = false
 		this.ownMsg = data.ownmsg
 		this.joined = this.tryJoin()
-		this.message = linkifyHtml(
-				Message.decodeIRC(
-					Message.escapeHtml(
-						data.message)))
+		this.message =
+				linkifyHtml(Message.decodeIRC(Message.escapeHtml(data.message)))
 		this.plain = data.message
 		this.isAction = true
 	}
@@ -243,8 +241,7 @@ class Message {
 			if (preview.hasOwnProperty("image") && preview.image !== null) {
 				this.preview.hasImage = true
 				this.preview.image = preview.image.url.replace(
-					/^http:/, "https:"
-				)
+						/^http:/, "https:")
 			}
 			if (preview.hasOwnProperty("text") && preview.text !== null) {
 				this.preview.hasText = true
@@ -297,8 +294,7 @@ class Message {
 			const newMessage = unescapedMessage.substr(index + 1)
 			this.sender = sender
 			this.message = `was kicked by <b>${kicker}</b>: <b>${
-				linkifyHtml(Message.escapeHtml(newMessage))
-			}</b>`
+					linkifyHtml(Message.escapeHtml(newMessage))}</b>`
 			this.plain = `was kicked by ${kicker}: ${newMessage}`
 			return
 		}
@@ -308,7 +304,7 @@ class Message {
 			const parts = unescapedMessage.split(" ")
 			if (parts.length > 1) {
 				this.message = `set mode <b>${parts[0]}</b> for <b>${
-					parts[1]}</b>`
+						parts[1]}</b>`
 				this.plain = `set mode ${parts[0]} for ${parts[1]}"`
 			} else {
 				this.message = `set channel mode <b>${parts[0]}</b>`
@@ -327,7 +323,7 @@ class Message {
 			this.classArr.push("topicchange")
 			this.message = `changed the topic to <b>${unescapedMessage}</b>`
 			this.plain = `${this.sender} changed the topic to ${
-				unescapedMessage}`
+					unescapedMessage}`
 			return
 		default:
 			this.isAction = false
@@ -395,8 +391,8 @@ class Message {
 	forEachSelected(funcName) {
 		const channel = this.channel
 		$(".selected").each(function() {
-			const message =
-				channel.messages[+this.parentElement.getAttribute("data-id")]
+			const id = +this.parentElement.getAttribute("data-id")
+			const message = channel.messages[id]
 			message[funcName]()
 		})
 	}

@@ -71,7 +71,11 @@ class NetworkStore {
 				name: "Raw IO",
 				exec: () => window.location.href = `#/raw/${this.name}`,
 			},
-			// TODO remaining contextmenu entries
+			disconnect: {
+				name: "Disconnect",
+				exec: () => void (0),
+			},
+			// TODO reconnect?
 		}
 	}
 

@@ -14,7 +14,20 @@
 		"import"
 	],
 	"rules": {
-		"indent": ["error", "tab"],
+		"indent": ["error", "tab", {
+			"FunctionDeclaration": {
+				"parameters": 2,
+				"body": 1
+			},
+			"FunctionExpression": {
+				"parameters": 2,
+				"body": 1
+			},
+			"VariableDeclarator": 2,
+			"CallExpression": {
+				"arguments": 2
+			}
+		}],
 		"quotes": ["error", "double"],
 		"semi": ["error", "never"],
 		"comma-dangle": ["error", "always-multiline"],
@@ -38,10 +51,10 @@
 		}],
 
 		"require-jsdoc": ["error", {"require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true
-        }}],
+			"FunctionDeclaration": true,
+			"MethodDefinition": true,
+			"ClassDeclaration": true
+		}}],
 		"valid-jsdoc": ["warn", {
 			"requireReturn": false,
 			"requireParamDescription": true,

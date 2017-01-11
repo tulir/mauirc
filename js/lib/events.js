@@ -147,11 +147,8 @@ class EventSystem {
 		const evsys = this
 		systemEvent = systemEvent || nativeEvent
 		this.container.on(nativeEvent,
-			`*[data-event][data-listen~='${systemEvent}']`,
-			function(event) {
-				evsys.execRaw(systemEvent, this, event)
-			}
-		)
+				`*[data-event][data-listen~='${systemEvent}']`,
+				function(event) { evsys.execRaw(systemEvent, this, event) })
 	}
 	/**
 	 * Register jQuery event handlers.
@@ -159,11 +156,11 @@ class EventSystem {
 	activate() {
 		const evsys = this
 		this.container.on("click",
-			"*[data-event][data-listen~='click']," +
+				"*[data-event][data-listen~='click']," +
 			"*[data-event]:not([data-listen])",
-			function(event) {
-				evsys.execRaw("click", this, event)
-			}
+				function(event) {
+					evsys.execRaw("click", this, event)
+				}
 		)
 		this.registerNativeListener("dblclick", "doubleclick")
 		this.registerNativeListener("blur")
