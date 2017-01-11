@@ -158,7 +158,7 @@ class DataStore {
 				chanObj = { users: [], messages: [], onOpen: () => void (0) }
 			}
 		}
-		this.mauirc.applyTemplate("chat", {
+		this.mauirc.templates.apply("chat", {
 			networks: this.mauirc.data.networks,
 			users: chanObj.users,
 			messages: chanObj.messages,
@@ -189,7 +189,7 @@ class DataStore {
 	 * @param {string} chan The channel to open.
 	 */
 	openUserlist(net, chan) {
-		this.mauirc.applyTemplate("userlist", {
+		this.mauirc.templates.apply("userlist", {
 			users: this.tryGetChannel(net, chan).users,
 			network: this.current.network,
 			channel: this.current.channel,
@@ -215,7 +215,7 @@ class DataStore {
 			return
 		}
 
-		this.mauirc.applyTemplate("chanlist", {
+		this.mauirc.templates.apply("chanlist", {
 			inline,
 			networks: this.networks,
 			network: this.current.network,
@@ -227,7 +227,7 @@ class DataStore {
 	 * Open a standalone channel list.
 	 */
 	openChanlist() {
-		this.mauirc.applyTemplate("chanlist", {
+		this.mauirc.templates.apply("chanlist", {
 			networks: this.networks,
 			network: this.current.network,
 			channel: this.current.channel,

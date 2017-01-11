@@ -92,7 +92,7 @@ class NetworkStore {
 
 		let network = chanlist.find(`.network[data-name='${this.name}']`)
 		if (network.length === 0) {
-			this.mauirc.appendTemplate("chanlist-network", this, chanlist)
+			this.mauirc.templates.append("chanlist-network", this, chanlist)
 			network = chanlist.find(`.network[data-name='${this.name}']`)
 		}
 		return network

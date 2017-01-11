@@ -43,7 +43,7 @@ class RawMessaging {
 			this.data[network] = []
 		}
 
-		this.mauirc.applyTemplate("rawio", {
+		this.mauirc.templates.apply("rawio", {
 			network,
 			data: this.data[network],
 		})

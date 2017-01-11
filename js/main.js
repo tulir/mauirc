@@ -17,16 +17,13 @@ const { Hashmux } = require("hashmux")
 const $ = require("jquery")
 const ContextmenuHandler = require("./lib/contextmenu")
 const EventSystem = require("./lib/events")
+const TemplateSystem = require("./lib/templates")
 const Auth = require("./auth")
 const Connection = require("./conn")
 const RawMessaging = require("./rawio")
 const DataStore = require("./data/store")
-/* global Handlebars */
 
 global.VERSION = "2.1.0"
-
-// Fixes to Handlebars
-Handlebars.partials = Handlebars.templates
 
 // Request notification permission
 Notification.requestPermission()
@@ -42,9 +39,10 @@ class mauIRC {
 		this.container = $("#container")
 
 		this.router = new Hashmux()
-		this.contextmenu = new ContextmenuHandler(
-				$("#contextmenu"), Handlebars.templates.contextmenu)
+		this.templates = new TemplateSystem(this.container)
 		this.events = new EventSystem(this.container)
+		this.contextmenu = new ContextmenuHandler(
+			$("#contextmenu"), this.templates.get("contextmenu"))
 
 		this.auth = new Auth(this)
 		this.conn = new Connection(this)
@@ -58,38 +56,6 @@ class mauIRC {
 					window.location.hash = this.getAttribute("data-href")
 				}
 		)
-	}
-
-	/**
-	 * Override the contents of the object with a template.
-	 *
-	 * @param {string} name The name of the template to use.
-	 * @param {Object} [args] The arguments to give to the template.
-	 * @param {JQuery} [object] The object to apply the template to.
-	 *                          If undefined, {@linkcode div#container}
-	 *                          will be used.
-	 */
-	applyTemplate(name, args, object) {
-		if (object === undefined) {
-			object = this.container
-		}
-		object.html(Handlebars.templates[name](args))
-	}
-
-	/**
-	 * Append the contents of a template to the object.
-	 *
-	 * @param {string} name The name of the template to use.
-	 * @param {Object} [args] The arguments to give to the template.
-	 * @param {JQuery} [object] The object to append the template to.
-	 *                          If undefined, {@linkcode div#container}
-	 *                          will be used.
-	 */
-	appendTemplate(name, args, object) {
-		if (object === undefined) {
-			object = this.container
-		}
-		object.append(Handlebars.templates[name](args))
 	}
 
 	/**
@@ -123,10 +89,10 @@ class mauIRC {
 	 */
 	listen() {
 		this.router.handleError(404, data => {
-			if (Handlebars.templates.hasOwnProperty(data.page.substr(1))) {
-				this.applyTemplate(data.page.substr(1))
+			if (this.templates.exists(data.page.substr(1))) {
+				this.templates.apply(data.page.substr(1))
 			} else {
-				this.applyTemplate("error", {
+				this.templates.apply("error", {
 					error: "Page not found",
 					data: data.data,
 				})
@@ -136,7 +102,7 @@ class mauIRC {
 		this.router.handle("/", () => this.auth.check())
 		this.router.handle("/login", () =>
 				(this.auth.checked ?
-					this.applyTemplate("login") :
+					this.templates.apply("login") :
 					window.location.hash = "#/"))
 		this.router.handle("/connect", () =>
 				(this.conn.ected ?

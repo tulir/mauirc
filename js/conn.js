@@ -121,7 +121,7 @@ class Connection {
 	 * Try to connect to the server.
 	 */
 	connect() {
-		this.mauirc.applyTemplate("connecting")
+		this.mauirc.templates.apply("connecting")
 		this.socket = new WebSocket(Connection.socketAddr)
 		this.socket.onmessage = event => this.onMessage(JSON.parse(event.data))
 		this.socket.onopen = () => this.onConnect()

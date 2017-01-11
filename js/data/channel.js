@@ -131,7 +131,7 @@ class ChannelStore {
 		let channel = network.find(
 				`.channels > .channel[data-name='${this.name}']`)
 		if (channel.length === 0) {
-			this.mauirc.appendTemplate("chanlist-channel", {
+			this.mauirc.templates.append("chanlist-channel", {
 				name: this.name,
 				network: this.network.name,
 			}, this.datastore.networks)
@@ -207,7 +207,7 @@ class ChannelStore {
 						this, msgData, this.previousMessageID(), false)
 				this.messages[message.id] = message
 				if (chat !== undefined) {
-					this.mauirc.appendTemplate("message", message, chat)
+					this.mauirc.templates.append("message", message, chat)
 				}
 			}
 			this.datastore.scrollDown()
@@ -242,7 +242,7 @@ class ChannelStore {
 				if (!this.messages.hasOwnProperty(id)) {
 					continue
 				}
-				this.mauirc.appendTemplate("message", this.messages[id], chat)
+				this.mauirc.templates.append("message", this.messages[id], chat)
 			}
 		}
 		this.updateUserlist()
@@ -268,7 +268,7 @@ class ChannelStore {
 			return
 		}
 
-		this.mauirc.applyTemplate("userlist", {
+		this.mauirc.templates.apply("userlist", {
 			users: this.users,
 			inline: true,
 		}, userlist)
@@ -329,7 +329,7 @@ class ChannelStore {
 		if (chat !== undefined) {
 			if (this.datastore.current.network === this.network.name &&
 				this.datastore.current.channel === this.name) {
-				this.mauirc.appendTemplate("message", message, chat)
+				this.mauirc.templates.append("message", message, chat)
 			} else {
 				this.hasNewMessages = true
 				this.getChanlistEntry().addClass("notification")
