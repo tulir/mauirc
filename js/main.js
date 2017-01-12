@@ -28,6 +28,7 @@ const DataStore = require("./data/store")
 Notification.requestPermission()
 global.TITLE_BASE = "mauIRC"
 global.VERSION = "2.1.0-alpha"
+global.$ = $
 
 /**
  * Main mauIRC class
