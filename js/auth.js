@@ -81,8 +81,8 @@ class Auth {
 	/**
 	 * Try to log in.
 	 *
-	 * @param {string} [email] The email to log in using. If not given, the
-	 *                         value of {@linkcode div#email} will be used.
+	 * @param {string} [email]    The email to log in using. If not given, the
+	 *                            value of {@linkcode div#email} will be used.
 	 * @param {string} [password] The password to log in using. If not given,
 	 *                            the value of {@linkcode div#email} will be
 	 *                            used.

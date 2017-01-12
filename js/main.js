@@ -46,7 +46,7 @@ class mauIRC {
 		})
 		this.events = new EventSystem(this.container)
 		this.contextmenu = new ContextmenuHandler(
-			$("#contextmenu"), this.templates.get("contextmenu"))
+				$("#contextmenu"), this.templates.get("contextmenu"))
 
 		this.auth = new Auth(this)
 		this.conn = new Connection(this)
@@ -59,15 +59,14 @@ class mauIRC {
 		this.container.on("click", "*[data-href]:not([data-listen~='click'])",
 				function() {
 					window.location.hash = this.getAttribute("data-href")
-				}
-		)
+				})
 	}
 
 	/**
 	 * Verify that a connection to the server has been established.
 	 *
-	 * @param {func} [func] The function to call if connected.
-	 * @returns {bool} Whether or not the connection is open.
+	 * @param   {func} [func] The function to call if connected.
+	 * @returns {bool}        Whether or not the connection is open.
 	 */
 	verifyConnection(func) {
 		if (this.conn.ected) {

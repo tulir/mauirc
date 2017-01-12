@@ -63,7 +63,7 @@ class Connection {
 	/**
 	 * Send a message through the socket.
 	 *
-	 * @param {string} type The type of the message.
+	 * @param {string} type     The type of the message.
 	 * @param {string} [object] The data of the message.
 	 */
 	send(type, object) {

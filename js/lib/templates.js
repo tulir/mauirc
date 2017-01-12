@@ -24,10 +24,11 @@ class TemplateSystem {
 	/**
 	 * Create a template system.
 	 *
-	 * @param {JQuery} container The container to put templates in by default.
+	 * @param {JQuery}     container  The container to put templates in by default.
 	 * @param {Handlebars} handlebars The Handlebars instance to use. If
 	 *                                undefined, the global Handlebars object
 	 *                                will be used.
+	 * @param {function}   globalFunc A function.
 	 */
 	constructor(container, handlebars, globalFunc) {
 		this.container = container
@@ -39,8 +40,8 @@ class TemplateSystem {
 	/**
 	 * Check if a template exists.
 	 *
-	 * @param {string} name The name of the template to check.
-	 * @returns {bool} Whether or not the template exists.
+	 * @param   {string} name The name of the template to check.
+	 * @returns {bool}        Whether or not the template exists.
 	 */
 	exists(name) {
 		return this.handlebars.templates.hasOwnProperty(name)
@@ -49,8 +50,8 @@ class TemplateSystem {
 	/**
 	 * Get a certain template.
 	 *
-	 * @param {string} name The name of the template to get.
-	 * @returns {Template} The template function.
+	 * @param   {string} name The name of the template to get.
+	 * @returns {Template}    The template function.
 	 */
 	get(name) {
 		return this.handlebars.templates[name]
@@ -60,7 +61,7 @@ class TemplateSystem {
 	 * Apply global variables to a template argument object.
 	 *
 	 * @param {Object|array|string|number|boolean} args The data.
-	 * @returns {Object|array|string|number|boolean} The data with globals.
+	 * @returns {Object|array|string|number|boolean}    The data with globals.
 	 */
 	applyGlobals(args) {
 		if (Array.isArray(args) || typeof args !== "object") {
@@ -74,8 +75,8 @@ class TemplateSystem {
 	/**
 	 * Override the contents of the object with a template.
 	 *
-	 * @param {string} name The name of the template to use.
-	 * @param {Object} [args] The arguments to give to the template.
+	 * @param {string} name     The name of the template to use.
+	 * @param {Object} [args]   The arguments to give to the template.
 	 * @param {JQuery} [object] The object to apply the template to.
 	 */
 	apply(name, args, object) {
@@ -89,8 +90,8 @@ class TemplateSystem {
 	/**
 	 * Append the contents of a template to the object.
 	 *
-	 * @param {string} name The name of the template to use.
-	 * @param {Object} [args] The arguments to give to the template.
+	 * @param {string} name     The name of the template to use.
+	 * @param {Object} [args]   The arguments to give to the template.
 	 * @param {JQuery} [object] The object to append the template to.
 	 */
 	append(name, args, object) {
@@ -104,8 +105,8 @@ class TemplateSystem {
 	/**
 	 * Prepend the contents of a template to the object.
 	 *
-	 * @param {string} name The name of the template to use.
-	 * @param {Object} [args] The arguments to give to the template.
+	 * @param {string} name     The name of the template to use.
+	 * @param {Object} [args]   The arguments to give to the template.
 	 * @param {JQuery} [object] The object to prepend the template to.
 	 */
 	prepend(name, args, object) {

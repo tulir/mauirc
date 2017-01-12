@@ -24,9 +24,9 @@ class ContextmenuHandler {
 	/**
 	 * Create a context menu handler.
 	 *
-	 * @param {JQuery} div The container to use for the context menus.
-	 * @param {func} template The function to generate the HTML of context menu
-	 *                        entries.
+	 * @param {JQuery} div      The container to use for the context menus.
+	 * @param {func}   template The function to generate the HTML of context
+	 *                          menu entries.
 	 */
 	constructor(div, template) {
 		this.container = div
@@ -43,10 +43,10 @@ class ContextmenuHandler {
 	/**
 	 * Open a context menu.
 	 *
-	 * @param {Object} data The context menu specification.
-	 * @param {Event} event The DOM event, or optionally an object with the
-	 *                      fields {@linkplain pageX} and {@linkplain pageY}
-	 *                      indicating where the user clicked.
+	 * @param {Object} data  The context menu specification.
+	 * @param {Event}  event The DOM event, or optionally an object with the
+	 *                       fields {@linkplain pageX} and {@linkplain pageY}
+	 *                       indicating where the user clicked.
 	 */
 	open(data, event) {
 		const templateData = []
@@ -90,8 +90,8 @@ class ContextmenuHandler {
 	 * An internal contextmenu click handler.
 	 *
 	 * @private
-	 * @param {Event} event The DOM click event.
-	 * @param {DOM} object The DOM object clicked.
+	 * @param {Event} event  The DOM click event.
+	 * @param {DOM}   object The DOM object clicked.
 	 */
 	click(event, object) {
 		const id = object.getAttribute("data-context-id")

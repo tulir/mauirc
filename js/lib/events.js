@@ -34,8 +34,8 @@ class EventSystem {
 	/**
 	 * Register a click event listener.
 	 *
-	 * @param {string} evt The name of the event.
-	 * @param {func} func The function to execute when the event is triggered.
+	 * @param {string} evt  The name of the event.
+	 * @param {func}   func The function to execute when the event is triggered.
 	 */
 	click(evt, func) {
 		this.on("click", evt, func)
@@ -44,8 +44,8 @@ class EventSystem {
 	/**
 	 * Register a double-click event listener.
 	 *
-	 * @param {string} evt The name of the event.
-	 * @param {func} func The function to execute when the event is triggered.
+	 * @param {string} evt  The name of the event.
+	 * @param {func}   func The function to execute when the event is triggered.
 	 */
 	doubleclick(evt, func) {
 		this.on("doubleclick", evt, func)
@@ -54,8 +54,8 @@ class EventSystem {
 	/**
 	 * Register a blur event listener.
 	 *
-	 * @param {string} evt The name of the event.
-	 * @param {func} func The function to execute when the event is triggered.
+	 * @param {string} evt  The name of the event.
+	 * @param {func}   func The function to execute when the event is triggered.
 	 */
 	blur(evt, func) {
 		this.on("blur", evt, func)
@@ -64,8 +64,8 @@ class EventSystem {
 	/**
 	 * Register a keydown event listener.
 	 *
-	 * @param {string} evt The name of the event.
-	 * @param {func} func The function to execute when the event is triggered.
+	 * @param {string} evt  The name of the event.
+	 * @param {func}   func The function to execute when the event is triggered.
 	 */
 	keydown(evt, func) {
 		this.on("keydown", evt, func)
@@ -74,8 +74,8 @@ class EventSystem {
 	/**
 	 * Register a submit event listener.
 	 *
-	 * @param {string} evt The name of the event.
-	 * @param {func} func The function to execute when the event is triggered.
+	 * @param {string} evt  The name of the event.
+	 * @param {func}   func The function to execute when the event is triggered.
 	 */
 	submit(evt, func) {
 		this.on("submit", evt, func)
@@ -84,8 +84,8 @@ class EventSystem {
 	/**
 	 * Register a contextmenu event listener.
 	 *
-	 * @param {string} evt The name of the event.
-	 * @param {func} func The function to execute when the event is triggered.
+	 * @param {string} evt  The name of the event.
+	 * @param {func}   func The function to execute when the event is triggered.
 	 */
 	contextmenu(evt, func) {
 		this.on("contextmenu", evt, func)
@@ -95,8 +95,8 @@ class EventSystem {
 	 * Register an event listener.
 	 *
 	 * @param {string} type The type of the event.
-	 * @param {string} evt The name of the event.
-	 * @param {func} func The function to execute when the event is triggered.
+	 * @param {string} evt  The name of the event.
+	 * @param {func}   func The function to execute when the event is triggered.
 	 */
 	on(type, evt, func) {
 		evt = `${evt}:${type}`
@@ -109,9 +109,9 @@ class EventSystem {
 	/**
 	 * Trigger an event.
 	 *
-	 * @param {string} evt The name and type of the event (name:type).
-	 * @param {Event} source The source DOM event that caused this event.
-	 * @param {DOM} obj The DOM object that this event happened on.
+	 * @param {string} evt    The name and type of the event (name:type).
+	 * @param {Event}  source The source DOM event that caused this event.
+	 * @param {DOM}    obj    The DOM object that this event happened on.
 	 */
 	exec(evt, source, obj) {
 		if (!this.handlers.hasOwnProperty(evt)) {
@@ -129,8 +129,8 @@ class EventSystem {
 	 * Fetch the name of the event from the DOM object and trigger the event.
 	 *
 	 * @param {string} evtType The type of the event.
-	 * @param {DOM} obj The DOM object that this event happened on.
-	 * @param {Event} source The source DOM event that caused this event.
+	 * @param {DOM}    obj     The DOM object that this event happened on.
+	 * @param {Event}  source  The source DOM event that caused this event.
 	 */
 	execRaw(evtType, obj, source) {
 		this.exec(`${obj.getAttribute("data-event")}:${evtType}`, source, obj)
@@ -157,11 +157,10 @@ class EventSystem {
 		const evsys = this
 		this.container.on("click",
 				"*[data-event][data-listen~='click']," +
-			"*[data-event]:not([data-listen])",
+				"*[data-event]:not([data-listen])",
 				function(event) {
 					evsys.execRaw("click", this, event)
-				}
-		)
+				})
 		this.registerNativeListener("dblclick", "doubleclick")
 		this.registerNativeListener("blur")
 		this.registerNativeListener("keydown")

@@ -18,6 +18,7 @@
  * Return the new object if it exists and the old one if the new one doesn't
  * exist.
  *
+ * @private
  * @param   {Object} neww The new object.
  * @param   {Object} old  The old object.
  * @returns {Object}      Basically {@linkplain neww ? neww : old}.
@@ -130,4 +131,4 @@ function findPartialCompletion(completions) {
 	return chars
 }
 
-module.exports = { complete, findPartialCompletion }
+module.exports = { complete, spliceCompletions, findPartialCompletion }
