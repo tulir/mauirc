@@ -364,6 +364,11 @@ class ChannelStore {
 		const message = new Message(this, data, this.previousMessageID(), true)
 		this.messages[message.id] = message
 		const chat = this.network.datastore.getChatArea()
+
+		if (!document.hasFocus()) {
+			message.notify()
+		}
+
 		if (chat !== undefined) {
 			if (this.datastore.current.network === this.network.name &&
 				this.datastore.current.channel === this.name) {
@@ -376,7 +381,6 @@ class ChannelStore {
 		} else {
 			this.datastore.newMessageAppeared(1)
 			this.newMessages++
-			message.notify()
 		}
 	}
 
