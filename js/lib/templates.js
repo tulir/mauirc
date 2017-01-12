@@ -24,11 +24,12 @@ class TemplateSystem {
 	/**
 	 * Create a template system.
 	 *
-	 * @param {JQuery}     container  The container to put templates in by default.
+	 * @param {JQuery}     container  The container to put templates in by
+	 *                                default.
 	 * @param {Handlebars} handlebars The Handlebars instance to use. If
 	 *                                undefined, the global Handlebars object
 	 *                                will be used.
-	 * @param {function}   globalFunc A function.
+	 * @param {func}       globalFunc A function.
 	 */
 	constructor(container, handlebars, globalFunc) {
 		this.container = container
