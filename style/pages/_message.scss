@@ -78,10 +78,6 @@
 
 				font-weight: bold;
 			}
-
-			.text {
-				display: inline;
-			}
 		}
 
 		.sender {
@@ -89,7 +85,9 @@
 		}
 
 		.text {
-			display: inline-block;
+			display: inline;
+
+			overflow-wrap: break-word;
 		}
 
 		.date-wrap {
