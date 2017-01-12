@@ -27,6 +27,7 @@ const DataStore = require("./data/store")
 // Request notification permission
 Notification.requestPermission()
 global.TITLE_BASE = "mauIRC"
+global.VERSION = "2.1.0-alpha"
 
 /**
  * Main mauIRC class
@@ -38,7 +39,7 @@ class mauIRC {
 	constructor() {
 		this.container = $("#container")
 
-		this.VERSION = "2.1.0-alpha"
+		this.VERSION = global.VERSION
 		this.router = new Hashmux()
 		this.templates = new TemplateSystem(this.container, undefined, args => {
 			args.VERSION = this.VERSION
