@@ -29,8 +29,13 @@
 	background-color: white;
 
 	.user {
+		overflow: hidden;
+
 		margin: .25rem;
 		padding: calc(.25rem + 1px);
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
 
 		border: 1px solid $green;
 		border-radius: .25rem;
