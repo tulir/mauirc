@@ -140,7 +140,43 @@ class ChannelStore {
 					name: "Copy nick",
 					exec: () => alert("Not yet implemented"),
 				},
+				// TODO op, deop, kick, ban
 			}, event)
+		})
+
+		mauirc.events.click("invite-user", obj => {
+			const title = $(obj).find(".title")
+			if (title.hasClass("hidden")) {
+				return
+			}
+			title.addClass("hidden")
+
+			const actualInviter = $(obj).find(".actual-inviter")
+			actualInviter.removeClass("hidden")
+			actualInviter.focus()
+		})
+		mauirc.events.blur("invite-user", obj => {
+			obj = $(obj)
+			obj.addClass("hidden")
+			obj.parent().find(".title").removeClass("hidden")
+			obj.val("")
+		})
+		mauirc.events.keydown("invite-user", (obj, evt) => {
+			if (evt.keyCode !== 13 && evt.keyCode !== 27) { // Enter or escape
+				return
+			}
+			obj = $(obj)
+			const parent = obj.parent()
+			obj.addClass("hidden")
+			parent.find(".title").removeClass("hidden")
+
+			if (evt.keyCode === 13) {
+				const chan = mauirc.data.getChannel(
+						parent.attr("data-network"),
+						parent.attr("data-channel"))
+				chan.invite(obj.val())
+			}
+			obj.val("")
 		})
 	}
 
@@ -367,6 +403,7 @@ class ChannelStore {
 			users: this.users,
 			inline: true,
 			network: this.network.name,
+			channel: this.name,
 		}, userlist)
 	}
 
@@ -451,6 +488,20 @@ class ChannelStore {
 		this.mauirc.conn.send("message", {
 			message: newTitle,
 			command: "topic",
+			network: this.network.name,
+			channel: this.name,
+		})
+	}
+
+	/**
+	 * Invite a user to this channel.
+	 *
+	 * @param {string} user The user to invite.
+	 */
+	invite(user) {
+		this.mauirc.conn.send("message", {
+			message: user,
+			command: "invite",
 			network: this.network.name,
 			channel: this.name,
 		})

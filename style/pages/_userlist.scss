@@ -50,4 +50,24 @@
 			border: 2px solid $blue;
 		}
 	}
+
+	.user.invite {
+		color: $secondary-text-color;
+
+		.actual-inviter {
+			box-sizing: border-box;
+			width: 100%;
+			height: 100%;
+
+			color: $text-color;
+			border: none;
+			background-color: inherit;
+
+			font-size: 1rem;
+		}
+
+		li {
+			color: $text-color;
+		}
+	}
 }

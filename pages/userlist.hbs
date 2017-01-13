@@ -30,4 +30,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			{{~this.listName~}}
 		</div>
 	{{/each}}
+
+	<div
+			class="user invite"
+			data-event="invite-user"
+			data-listen="click"
+			data-network="{{network}}"
+			data-channel="{{channel}}">
+		<span class="title">Invite User...</span>
+		<input
+				type="text"
+				class="actual-inviter hidden"
+				data-event="invite-user"
+				data-listen="blur keydown"/>
+	</div>
 </div>
