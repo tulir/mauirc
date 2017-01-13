@@ -34,6 +34,8 @@ class DataStore {
 		this.messagePointers = []
 		this.newMessagesInt = 0
 
+		this.previousNotification = 0
+
 		this.current = {
 			networkCached: "",
 			channelCached: "",

@@ -363,13 +363,19 @@ class Message {
 	 * Does nothing if {@#isNew} is false.
 	 */
 	notify() {
+		console.log("Mui", this.isNew, Notification.permission)
 		if (!this.isNew || !Notification.permission === "granted") {
 			return
 		}
-		new Notification(`${this.sender} @ ${this.channel.name}`, {
-			body: this.plain,
-			icon: "favicon.ico",
-		})
+		const timeNow = Date.now()
+		if (this.datastore.previousNotification + 3000 < timeNow) {
+			new Notification(`${this.sender} @ ${this.channel.name}`, {
+				body: this.plain,
+				icon: "favicon.ico",
+			})
+
+			this.datastore.previousNotification = timeNow
+		}
 	}
 
 	/**
