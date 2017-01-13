@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{{> chanlist/view inline=true networks=networks network=network channel=channel}}
 	</div>
 	<div class="userlist-container">
-		{{> userlist inline=true users=users}}
+		{{> userlist inline=true users=users network=network}}
 	</div>
 	<div class="chat" data-network="{{network}}" data-channel="{{channel}}">
 		{{#each messages}}

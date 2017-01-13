@@ -89,6 +89,11 @@ class ChannelStore {
 				obj.parent().removeClass("editing")
 			}
 		})
+
+		mauirc.events.click("user", obj => {
+			mauirc.data.getNetwork($(obj).attr("data-network"))
+					.join($(obj).attr("data-name"))
+		})
 	}
 
 	/**
@@ -313,6 +318,7 @@ class ChannelStore {
 		this.mauirc.templates.apply("userlist", {
 			users: this.users,
 			inline: true,
+			network: this.network.name,
 		}, userlist)
 	}
 
