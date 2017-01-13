@@ -363,7 +363,6 @@ class Message {
 	 * Does nothing if {@#isNew} is false.
 	 */
 	notify() {
-		console.log("Mui", this.isNew, Notification.permission)
 		if (!this.isNew || !Notification.permission === "granted") {
 			return
 		}

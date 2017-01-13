@@ -225,7 +225,7 @@ class ChannelStore {
 			return false
 		}
 
-		console.log(`Fetching history for ${this.name}@${this.network.name}`)
+		console.log("Fetching history for", this.name, "@", this.network.name)
 
 		$.ajax({
 			type: "GET",
