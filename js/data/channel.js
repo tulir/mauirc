@@ -64,7 +64,11 @@ class ChannelStore {
 				).contextmenu, event)
 		)
 
-		mauirc.events.doubleclick("topic", obj => $(obj).addClass("editing"))
+		mauirc.events.doubleclick("topic", obj => {
+			obj = $(obj)
+			obj.addClass("editing")
+			obj.find(".edit").focus()
+		})
 		mauirc.events.blur("topic-edit", obj => {
 			obj = $(obj)
 			obj.val(obj.parent().text().trim())
