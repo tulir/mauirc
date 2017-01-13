@@ -41,6 +41,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<img src="img/left-arrow.svg"/><span>Chat</span>
 		</div>
 		<div class="enter-settings right"><img src="img/settings.svg"/></div>
+	{{else if rawio}}
+		<div class="left arrow enter-chat" data-href="#/chat">
+			<img src="img/left-arrow.svg"/><span>Chat</span>
+		</div>
+		<div class="enter-settings right"><img src="img/settings.svg"/></div>
 	{{else if channels}}
 		<div class="right arrow enter-chat" data-href="#/chat/{{network}}/{{channel}}">
 			<span>Chat</span><img src="img/right-arrow.svg"/>
