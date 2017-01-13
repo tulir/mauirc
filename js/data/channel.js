@@ -27,6 +27,39 @@ const Message = require("./message")
  */
 class ChannelStore {
 	/**
+	 * @returns {string[]} The possible channel prefixes.
+	 */
+	static get prefixes() {
+		return ["&", "#", "!", ".", "~", "§"]
+	}
+	/**
+	 * @returns {string[]} The possible actual channel prefixes.
+	 */
+	static get joinablePrefixes() {
+		return ["&", "#", "!", ".", "~"]
+	}
+
+	/**
+	 * Check if the given name is the name of a channel.
+	 *
+	 * @param   {string} name The name of the channel.
+	 * @returns {bool}        Whether or not it's a channel.
+	 */
+	static isChannel(name) {
+		return ChannelStore.prefixes.includes(name.charAt(0))
+	}
+
+	/**
+	 * Check if the given name is the name of a channel that you can join.
+	 *
+	 * @param   {string} name The name of the channel.
+	 * @returns {bool}        Whether or not it's a channel you can join.
+	 */
+	static isJoinableChannel(name) {
+		return ChannelStore.joinablePrefixes.includes(name.charAt(0))
+	}
+
+	/**
 	 * Create an instance of ChannelStore.
 	 *
 	 * @param {DataStore} network The NetworkStore object to use.
@@ -40,7 +73,8 @@ class ChannelStore {
 
 		this.userlist = {}
 
-		this.topic = ""
+		this.topic = ChannelStore.isChannel(name) ? name :
+				`Private chat with ${name}`
 		this.topicsetat = 0
 		this.topicsetby = ""
 
@@ -93,6 +127,20 @@ class ChannelStore {
 		mauirc.events.click("user", obj => {
 			mauirc.data.getNetwork($(obj).attr("data-network"))
 					.join($(obj).attr("data-name"))
+		})
+		mauirc.events.contextmenu("user", (obj, event) => {
+			const net = mauirc.data.getNetwork($(obj).attr("data-network"))
+			const name = $(obj).attr("data-name")
+			mauirc.contextmenu.open({
+				pm: {
+					name: "Private message",
+					exec: () => net.join(name),
+				},
+				copyName: {
+					name: "Copy nick",
+					exec: () => alert("Not yet implemented"),
+				},
+			}, event)
 		})
 	}
 
@@ -440,7 +488,7 @@ class ChannelStore {
 	 * @param {string} message The message to send as the part message.
 	 */
 	part(message) {
-		if (this.name.charAt(0) === "#") {
+		if (ChannelStore.isJoinableChannel(this.name)) {
 			this.mauirc.conn.send("message", {
 				message: message || "Leaving",
 				command: "part",
