@@ -16,49 +16,9 @@
 const $ = require("jquery")
 const moment = require("moment")
 const linkifyHtml = require("linkifyjs/html")
-const modal = require("../lib/modal")
-
-const encoders = [
-	{ // Italic
-		regex: new RegExp("(_|/)([^_]*)(_|/)", "g"),
-		replacement: "\x1D$1\x1D",
-	}, { // Bold
-		regex: new RegExp("\\*([^*]*)\\*", "g"),
-		replacement: "\x02$1\x02",
-	}, { // Underline
-		regex: new RegExp("__([^~]*)__", "g"),
-		replacement: "\x1F$1\x1F",
-	}, { // Background & Foreground color
-		regex: new RegExp("c(1[0-5]|[0-9])>([^<]*)<", "g"),
-		replacement: "\x03$1$2",
-	}, { // Foreground color only
-		regex: new RegExp("c(1[0-5]|[0-9]),(1[0-5]|[0-9])>([^<]*)<", "g"),
-		replacement: "\x03$1,$2$3",
-	},
-]
-
-const decoders = [
-	{ // Italic
-		regex: new RegExp("\x1D([^\x1D]*)?\x1D?", "g"),
-		replacement: "<i>$1</i>",
-	}, { // Bold
-		regex: new RegExp("\x02([^\x02]*)?\x02?", "g"),
-		replacement: "<b>$1</b>",
-	}, { // Underline
-		regex: new RegExp("\x1F([^\x1F]*)?\x1F?", "g"),
-		replacement: "<u>$1</u>",
-	}, { // Monospace
-		regex: new RegExp("`([^`]*)`", "g"),
-		replacement: "<tt>$1</tt>",
-	}, { // Background & Foreground color
-		regex: new RegExp(
-				"\x03(1[0-5]|[0-9]),(1[0-5]|[0-9])([^\x03]*)?\x03?", "g"),
-		replacement: "<span style='color: $1; background-color: $2;'>$3</span>",
-	}, { // Foreground color only
-		regex: new RegExp("\x03(1[0-5]|[0-9])([^\x03]*)?\x03?", "g"),
-		replacement: "<span style='color: $1;'>$2</span>",
-	},
-]
+const modal = require("../../lib/modal")
+const { decodeIRC, escapeHtml } = require("./encoding")
+const actionParsers = require("./actions")
 
 /**
  * A message object.
@@ -122,47 +82,6 @@ class Message {
 	}
 
 	/**
-	 * Escape HTML special characters.
-	 *
-	 * @param {string} str The string to escape.
-	 * @returns {string} A escaped string.
-	 */
-	static escapeHtml(str) {
-		return str
-			.replace(/&/g, "&amp;")
-			.replace(/</g, "&lt;")
-			.replace(/>/g, "&gt;")
-			.replace(/"/g, "&quot;")
-			.replace(/'/g, "&apos;")
-	}
-
-	/**
-	 * Encode human-writable formatting into IRC format.
-	 *
-	 * @param {string} str The string to encode.
-	 * @returns {string} A string with the same formattings in IRC encoding.
-	 */
-	static encodeIRC(str) {
-		for (const enc of encoders) {
-			str = str.replace(enc.regex, enc.replacement)
-		}
-		return str
-	}
-
-	/**
-	 * Decode IRC-encoded formattings into HTML.
-	 *
-	 * @param {string} str The string to decode.
-	 * @returns {string} A string with the same formattings as HTML.
-	 */
-	static decodeIRC(str) {
-		for (const dec of decoders) {
-			str = str.replace(dec.regex, dec.replacement)
-		}
-		return str
-	}
-
-	/**
 	 * Get the classes for this message object.
 	 *
 	 * @returns {string} The HTML class attribute value.
@@ -218,7 +137,7 @@ class Message {
 		this.ownMsg = data.ownmsg
 		this.joined = this.tryJoin()
 		this.message =
-				linkifyHtml(Message.decodeIRC(Message.escapeHtml(data.message)))
+				linkifyHtml(decodeIRC(escapeHtml(data.message)))
 		this.plain = data.message
 		this.isAction = true
 	}
@@ -296,76 +215,9 @@ class Message {
 	 * @param {string} unescapedMessage The unescaped/linkified message.
 	 */
 	parseMessageType(command, unescapedMessage) {
-		switch (command.toLowerCase()) {
-		case "action":
-			this.classArr.push("user-action")
-			this.plain = `* ${this.sender} ${this.message}`
-			return
-		case "join":
-			this.classArr.push("secondary-action")
-			this.classArr.push("joinpart")
-			this.message = `joined ${this.message}`
-			this.plain = `${this.sender} ${this.message}`
-			return
-		case "part":
-		case "quit":
-			this.classArr.push("secondary-action")
-			this.classArr.push("joinpart")
-			this.message = `left: ${this.message}`
-			this.plain = `${this.sender} ${this.message}`
-			return
-		case "kick": {
-			this.classArr = this.classArr.concat(["secondary-action", "kick"])
-			const index = unescapedMessage.indexOf(":")
-			const kicker = this.sender
-			const sender = unescapedMessage.substr(0, index)
-			const newMessage = unescapedMessage.substr(index + 1)
-			this.sender = sender
-			this.message = `was kicked by <b>${kicker}</b>: <b>${
-					linkifyHtml(Message.escapeHtml(newMessage))}</b>`
-			this.plain = `was kicked by ${kicker}: ${newMessage}`
-			return
-		}
-		case "mode": {
-			this.classArr.push("secondary-action")
-			this.classArr.push("modechange")
-			const parts = unescapedMessage.split(" ")
-			if (parts.length > 1) {
-				this.message = `set mode <b>${parts[0]}</b> for <b>${
-						parts[1]}</b>`
-				this.plain = `set mode ${parts[0]} for ${parts[1]}"`
-			} else {
-				this.message = `set channel mode <b>${parts[0]}</b>`
-				this.plain = `set channel mode ${parts[0]}`
-			}
-			return
-		}
-		case "nick":
-			this.classArr.push("secondary-action")
-			this.classArr.push("nickchange")
-			this.message = `is now known as <b>${unescapedMessage}</b>`
-			this.plain = `${this.sender} is now known as ${unescapedMessage}`
-			return
-		case "topic":
-			this.classArr.push("secondary-action")
-			this.classArr.push("topicchange")
-			this.message = `changed the topic to <b>${unescapedMessage}</b>`
-			this.plain = `${this.sender} changed the topic to ${
-					unescapedMessage}`
-			return
-		case "invited":
-			this.classArr.push("secondary-action")
-			this.classArr.push("invite")
-			this.message = `Invited <b>${this.message}</b> to the channel`
-			this.plain = `Invited ${this.message} to the channel`
-			return
-		case "invitefail":
-			this.classArr.push("secondary-action")
-			this.classArr.push("invite")
-			this.message = `<b>${this.message}</b> is already on the channel`
-			this.plain = `${this.message} is already on the channel`
-			return
-		default:
+		if (actionParsers.hasOwnProperty(command)) {
+			actionParsers[command](this, unescapedMessage)
+		} else {
 			this.isAction = false
 		}
 	}

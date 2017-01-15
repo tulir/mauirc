@@ -17,7 +17,8 @@ const $ = require("jquery")
 const { complete } = require("../lib/autocomplete")
 const NetworkStore = require("./network")
 const ChannelStore = require("./channel")
-const Message = require("./message")
+const Message = require("./message/message")
+const { encodeIRC } = require("./message/encoding")
 
 /**
  * Data storage and processing system
@@ -100,7 +101,7 @@ class DataStore {
 			}
 
 			mauirc.conn.send("message", {
-				message: Message.encodeIRC(msg),
+				message: encodeIRC(msg),
 				command: "privmsg",
 				channel: mauirc.data.current.channel,
 				network: mauirc.data.current.network,

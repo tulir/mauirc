@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-const Message = require("./data/message")
+const { encodeIRC } = require("./data/message/encoding")
 
 /**
  * Command system.
@@ -90,7 +90,7 @@ class CommandSystem {
 			return false
 		}
 		this.mauirc.conn.send("message", {
-			message: Message.encodeIRC(args.slice(1).join(" ")),
+			message: encodeIRC(args.slice(1).join(" ")),
 			command: "privmsg",
 			channel: args[0],
 			network: this.mauirc.data.current.network,
@@ -109,7 +109,7 @@ class CommandSystem {
 			this.getChannel(this.mauirc.data.current.network, args[0])
 		} else if (args.length !== 1) {
 			this.mauirc.conn.send("message", {
-				message: Message.encodeIRC(args.slice(1).join(" ")),
+				message: encodeIRC(args.slice(1).join(" ")),
 				command: "privmsg",
 				channel: args[0],
 				network: this.mauirc.data.current.network,
@@ -183,7 +183,7 @@ class CommandSystem {
 	 */
 	action(args) {
 		this.mauirc.conn.send("message", {
-			message: Message.encodeIRC(args.join(" ")),
+			message: encodeIRC(args.join(" ")),
 			command: "action",
 			channel: this.mauirc.data.current.channel,
 			network: this.mauirc.data.current.network,
