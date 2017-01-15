@@ -353,6 +353,18 @@ class Message {
 			this.plain = `${this.sender} changed the topic to ${
 					unescapedMessage}`
 			return
+		case "invited":
+			this.classArr.push("secondary-action")
+			this.classArr.push("invite")
+			this.message = `Invited <b>${this.message}</b> to the channel`
+			this.plain = `Invited ${this.message} to the channel`
+			return
+		case "invitefail":
+			this.classArr.push("secondary-action")
+			this.classArr.push("invite")
+			this.message = `<b>${this.message}</b> is already on the channel`
+			this.plain = `${this.message} is already on the channel`
+			return
 		default:
 			this.isAction = false
 		}

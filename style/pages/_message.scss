@@ -62,6 +62,10 @@
 			border: 1px dashed $green;
 		}
 
+		&.invite > .action > .sender {
+			display: none;
+		}
+
 		&.user-action > .action > .sender {
 			color: $text-color;
 
