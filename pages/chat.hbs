@@ -26,9 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{{> userlist inline=true users=users network=network channel=channel}}
 	</div>
 	<div class="chat" data-network="{{network}}" data-channel="{{channel}}">
-		{{#each messages}}
+		{{#eachMap messages}}
 			{{> message this}}
-		{{/each}}
+		{{/eachMap}}
 	</div>
 	<form class="input-container" data-event="chat" data-listen="submit">
 		<input

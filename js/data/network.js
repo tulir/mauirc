@@ -38,7 +38,7 @@ class NetworkStore {
 		this.nick = ""
 		this.realname = ""
 		this.user = ""
-		this.channels = {}
+		this.channels = new Map()
 		this.chanlist = []
 	}
 
@@ -114,20 +114,16 @@ class NetworkStore {
 			load: {
 				name: "Load all history",
 				exec: () => {
-					for (const chan in this.channels) {
-						if (this.channels.hasOwnProperty(chan)) {
-							this.channels[chan].fetchHistory(512, false)
-						}
+					for (const chan of this.channels.values()) {
+						this.channels.get(chan).fetchHistory(512, false)
 					}
 				},
 			},
 			reload: {
 				name: "Reload all history",
 				exec: () => {
-					for (const chan in this.channels) {
-						if (this.channels.hasOwnProperty(chan)) {
-							this.channels[chan].fetchHistory(512, true)
-						}
+					for (const chan of this.channels.values()) {
+						this.channels.get(chan).fetchHistory(512, true)
 					}
 				},
 			},
@@ -193,10 +189,10 @@ class NetworkStore {
 			return undefined
 		}
 
-		if (!this.channels.hasOwnProperty(name)) {
+		if (!this.channels.has(name)) {
 			this.putChannel(new ChannelStore(this, name))
 		}
-		return this.channels[name]
+		return this.channels.get(name)
 	}
 
 	/**
@@ -207,8 +203,8 @@ class NetworkStore {
 	 *                         undefined if the channel doesn't exist.
 	 */
 	tryGetChannel(name) {
-		if (this.channels.hasOwnProperty(name)) {
-			return this.channels[name]
+		if (this.channels.has(name)) {
+			return this.channels.get(name)
 		}
 		return undefined
 	}
@@ -219,8 +215,8 @@ class NetworkStore {
 	 * @param {string} name The name of the channel to delete.
 	 */
 	deleteChannel(name) {
-		if (this.channels.hasOwnProperty(name)) {
-			delete this.channels[name]
+		if (this.channels.has(name)) {
+			this.channels.delete(name)
 		}
 		this.datastore.updateChanlist()
 	}
@@ -231,8 +227,16 @@ class NetworkStore {
 	 * @param {ChannelStore} channel The ChannelStore object to add.
 	 */
 	putChannel(channel) {
-		this.channels[channel.name] = channel
+		this.channels.set(channel.name, channel)
+		this.sortChannels()
 		this.datastore.updateChanlist()
+	}
+
+	/**
+	 * Alphabetically sort the channels in this network.
+	 */
+	sortChannels() {
+		this.channels = new Map([...this.channels.entries()].sort())
 	}
 }
 

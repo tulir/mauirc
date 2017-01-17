@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {{/unless}}
 
 <div class="chanlist" id="networks">
-	{{#each networks}}
+	{{#eachMap networks}}
 		{{> chanlist/network name=this.name channels=this.channels}}
-	{{/each}}
+	{{/eachMap}}
 
 	<div class="version">mauIRC {{VERSION}}</div>
 </div>

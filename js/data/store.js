@@ -31,8 +31,8 @@ class DataStore {
 	 */
 	constructor(mauirc) {
 		this.mauirc = mauirc
-		this.networks = {}
-		this.messagePointers = []
+		this.networks = new Map()
+		this.messagePointers = new Map()
 		this.newMessagesInt = 0
 
 		this.previousNotification = 0
@@ -156,8 +156,8 @@ class DataStore {
 	 * @returns {Message} The message object.
 	 */
 	getMessage(id) {
-		const pointer = this.messagePointers[id]
-		return this.getChannel(pointer.network, pointer.channel).messages[id]
+		const pointer = this.messagePointers.get(id)
+		return this.getChannel(pointer.network, pointer.channel).messages.get(id)
 	}
 
 	/**
@@ -183,12 +183,14 @@ class DataStore {
 	 * @param {string} chan The channel to open.
 	 */
 	openChat(net, chan) {
-		let chanObj = { users: [], messages: [], onOpen: () => void (0) }
+		let chanObj = { users: [], messages: new Map(), onOpen: () => void (0) }
 		if (net !== undefined && chan !== undefined &&
 				net.length !== 0 && chan.length !== 0) {
 			chanObj = this.tryGetChannel(net, chan)
 			if (chanObj === undefined) {
-				chanObj = { users: [], messages: [], onOpen: () => void (0) }
+				chanObj = {
+					users: [], messages: new Map(), onOpen: () => void (0),
+				}
 			}
 		}
 		this.mauirc.templates.apply("chat", {
@@ -280,10 +282,10 @@ class DataStore {
 			return undefined
 		}
 
-		if (!this.networks.hasOwnProperty(name)) {
+		if (!this.networks.has(name)) {
 			this.putNetwork(new NetworkStore(this, name))
 		}
-		return this.networks[name]
+		return this.networks.get(name)
 	}
 
 	/**
@@ -295,8 +297,8 @@ class DataStore {
 	 *                         {@linkcode undefined}.
 	 */
 	tryGetNetwork(name) {
-		if (this.networks.hasOwnProperty(name)) {
-			return this.networks[name]
+		if (this.networks.has(name)) {
+			return this.get(name)
 		}
 		return undefined
 	}
@@ -307,7 +309,7 @@ class DataStore {
 	 * @param {NetworkStore} network The network object.
 	 */
 	putNetwork(network) {
-		this.networks[network.name] = network
+		this.networks.set(network.name, network)
 	}
 
 	/**
@@ -339,8 +341,8 @@ class DataStore {
 	 *                         {@linkcode undefined}.
 	 */
 	tryGetChannel(net, name) {
-		if (this.networks.hasOwnProperty(net)) {
-			return this.networks[net].tryGetChannel(name)
+		if (this.networks.has(net)) {
+			return this.networks.get(net).tryGetChannel(name)
 		}
 		return undefined
 	}
@@ -450,11 +452,8 @@ class DataStore {
 			net.ssl = data.ssl
 			net.user = data.user
 
-			for (chan in net.channels) {
-				if (!net.channels.hasOwnProperty(chan)) {
-					continue
-				}
-				net.channels[chan].updateOwnUser()
+			for (chan of net.channels.values()) {
+				chan.updateOwnUser()
 			}
 			break
 		}

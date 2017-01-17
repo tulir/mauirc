@@ -67,7 +67,7 @@ class Message {
 			const message = mauirc.data.getChannel(
 					msgwrap.getAttribute("data-network"),
 					msgwrap.getAttribute("data-channel")
-			).messages[+msgwrap.getAttribute("data-id")]
+			).messages.get(+msgwrap.getAttribute("data-id"))
 			mauirc.contextmenu.open(
 					message.selectedContextmenu || message.contextmenu, event)
 		})
@@ -146,10 +146,10 @@ class Message {
 	 * Register this message into the data store messagePointers array.
 	 */
 	register() {
-		this.datastore.messagePointers[this.id] = {
+		this.datastore.messagePointers.set(this.id, {
 			network: this.network.name,
 			channel: this.channel.name,
-		}
+		})
 	}
 
 	/**
@@ -159,7 +159,7 @@ class Message {
 	 * @returns {bool} Whether or not joining was successful.
 	 */
 	tryJoin() {
-		const prevMsg = this.channel.messages[this.previousID]
+		const prevMsg = this.channel.messages.get(this.previousID)
 		if (prevMsg !== undefined && prevMsg.sender === this.sender) {
 			if (!prevMsg.wrapClass.includes("joined")) {
 				prevMsg.wrapClassArr.push("joined")
@@ -253,8 +253,8 @@ class Message {
 	 */
 	destroy() {
 		$(`#msgwrap-${this.id}`).remove()
-		delete this.datastore.messagePointers[this.id]
-		delete this.channel.messages[this.id]
+		this.datastore.messagesPointers.delete(this.id)
+		this.channel.messages.delete(this.id)
 	}
 
 	/**
@@ -289,7 +289,7 @@ class Message {
 		const channel = this.channel
 		$(".selected").each(function() {
 			const id = +this.parentElement.getAttribute("data-id")
-			const message = channel.messages[id]
+			const message = channel.messages.get(id)
 			message[funcName]()
 		})
 	}

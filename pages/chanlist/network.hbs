@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{{name}}
 	</div>
 	<div class="channels">
-		{{#each channels}}
+		{{#eachMap channels}}
 			{{> chanlist/channel name=this.name network=../name new=this.newMessages}}
-		{{/each}}
+		{{/eachMap}}
 
 		<div
 				class="channel adder"

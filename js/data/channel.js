@@ -82,7 +82,7 @@ class ChannelStore {
 
 		this.historyFetched = false
 		this.newMessages = 0
-		this.messages = {}
+		this.messages = new Map()
 	}
 
 	/**
@@ -264,7 +264,10 @@ class ChannelStore {
 				name: this.name,
 				network: this.network.name,
 				new: this.newMessages > 0,
-			}, this.datastore.networks)
+				// This used to be
+				//   this.datastore.networks
+				// but I assumed it was wrong.
+			}, network.find(".channels"))
 			channel = network.find(
 					`.channels > .channel[data-name='${this.name}']`)
 		}
@@ -297,7 +300,11 @@ class ChannelStore {
 			this.datastore.closeChatArea()
 		}
 
-		this.networks.delete(this.name)
+		// This used to be
+		// 	 this.networks.delete(this.name)
+		// but I assumed it was
+		// wrong.
+		this.network.deleteChannel(this.name)
 	}
 
 	/**
@@ -335,7 +342,7 @@ class ChannelStore {
 			for (const msgData of data.reverse()) {
 				const message = new Message(
 						this, msgData, this.previousMessageID(), false)
-				this.messages[message.id] = message
+				this.messages.set(message.id, message)
 				if (chat !== undefined) {
 					this.mauirc.templates.append("message", message, chat)
 				}
@@ -369,11 +376,8 @@ class ChannelStore {
 		chat.empty()
 
 		if (!this.fetchHistory(512)) {
-			for (const id in this.messages) {
-				if (!this.messages.hasOwnProperty(id)) {
-					continue
-				}
-				this.mauirc.templates.append("message", this.messages[id], chat)
+			for (const message of this.messages.values()) {
+				this.mauirc.templates.append("message", message, chat)
 			}
 		}
 		this.updateUserlist()
@@ -438,11 +442,7 @@ class ChannelStore {
 	 */
 	previousMessageID() {
 		let prevID = -1
-		for (let id in this.messages) {
-			if (!this.messages.hasOwnProperty(id)) {
-				continue
-			}
-			id = +id
+		for (const id of this.messages.keys()) {
 			if (prevID < id) {
 				prevID = id
 			}
@@ -457,7 +457,7 @@ class ChannelStore {
 	 */
 	receiveMessage(data) {
 		const message = new Message(this, data, this.previousMessageID(), true)
-		this.messages[message.id] = message
+		this.messages.set(message.id, message)
 		const chat = this.network.datastore.getChatArea()
 
 		if (!document.hasFocus()) {
@@ -521,12 +521,10 @@ class ChannelStore {
 	 * Destroy the local history.
 	 */
 	destroyHistory() {
-		for (const id in this.messages) {
-			if (this.messages.hasOwnProperty(id)) {
-				delete this.datastore.messagePointers[id]
-			}
+		for (const id of this.messages.keys()) {
+			delete this.datastore.messagePointers[id]
 		}
-		this.messages = {}
+		this.messages = new Map()
 		const chat = this.getChatArea()
 		if (chat !== undefined) {
 			chat.empty()
