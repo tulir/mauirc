@@ -115,7 +115,7 @@ class NetworkStore {
 				name: "Load all history",
 				exec: () => {
 					for (const chan of this.channels.values()) {
-						this.channels.get(chan).fetchHistory(512, false)
+						chan.fetchHistory(512, false)
 					}
 				},
 			},
@@ -123,7 +123,7 @@ class NetworkStore {
 				name: "Reload all history",
 				exec: () => {
 					for (const chan of this.channels.values()) {
-						this.channels.get(chan).fetchHistory(512, true)
+						chan.fetchHistory(512, true)
 					}
 				},
 			},
