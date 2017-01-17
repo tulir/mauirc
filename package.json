@@ -23,7 +23,7 @@
 		"linkifyjs": "2.1.4",
 		"awesomplete": "1.1.1",
 
-		"node-sass": "4.2.0",
+		"node-sass": "4.3.0",
 		"html-minifier": "3.2.3",
 
 		"postcss-cli-simple": "1.0.3",
