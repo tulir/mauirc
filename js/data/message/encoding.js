@@ -15,10 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 const encoders = [
+	/* TODO Fix italic formatting breaking URLs.
 	{ // Italic
 		regex: new RegExp("(_|/)([^_]*)(_|/)", "g"),
 		replacement: "\x1D$1\x1D",
-	}, { // Bold
+	},*/ { // Bold
 		regex: new RegExp("\\*([^*]*)\\*", "g"),
 		replacement: "\x02$1\x02",
 	}, { // Underline
