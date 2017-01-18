@@ -29,26 +29,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					value="{{topic}}"/>
 		</div>
 
-		<div class="left arrow enter-channels" data-href="#/channels">
-			<img src="img/left-arrow.svg"/><span>Channels</span>
+		<div class="left button enter-channels" data-href="#/channels">
+			<img src="img/left-button.svg"/><span>Channels</span>
 		</div>
-		<div class="right arrow enter-users" data-href="#/users/{{network}}/{{channel}}">
-			<span>Users</span><img src="img/right-arrow.svg"/>
+		<div class="right button enter-users" data-href="#/users/{{network}}/{{channel}}">
+			<span>Users</span><img src="img/right-button.svg"/>
 		</div>
-		<div class="enter-settings right"><img src="img/settings.svg"/></div>
+		<div class="enter-settings button right" data-href="#/settings">
+			<img src="img/settings.svg"/>
+		</div>
 	{{else if users}}
-		<div class="left arrow enter-chat" data-href="#/chat/{{network}}/{{channel}}">
-			<img src="img/left-arrow.svg"/><span>Chat</span>
+		<div class="left button enter-chat" data-href="#/chat/{{network}}/{{channel}}">
+			<img src="img/left-button.svg"/><span>Chat</span>
 		</div>
-		<div class="enter-settings right"><img src="img/settings.svg"/></div>
+		<div class="enter-settings button right" data-href="#/settings">
+			<img src="img/settings.svg"/>
+		</div>
 	{{else if rawio}}
-		<div class="left arrow enter-chat" data-href="#/chat">
-			<img src="img/left-arrow.svg"/><span>Chat</span>
+		<div class="left button enter-chat" data-href="#/chat">
+			<img src="img/left-button.svg"/><span>Chat</span>
 		</div>
-		<div class="enter-settings right"><img src="img/settings.svg"/></div>
+		<div class="enter-settings button right" data-href="#/settings">
+			<img src="img/settings.svg"/>
+		</div>
 	{{else if channels}}
-		<div class="right arrow enter-chat" data-href="#/chat/{{network}}/{{channel}}">
-			<span>Chat</span><img src="img/right-arrow.svg"/>
+		<div class="right button enter-chat" data-href="#/chat/{{network}}/{{channel}}">
+			<span>Chat</span><img src="img/right-button.svg"/>
+		</div>
+	{{else if settings}}
+		<div class="left button enter-chat" data-href="#/chat/{{network}}/{{channel}}">
+			<img src="img/left-button.svg"/><span>Chat</span>
+		</div>
+
+		<div class="right button" data-event="settings.clear">
+			<span>Clear history</span>
+		</div>
+		<div class="right button" data-event="settings.reload">
+			<span>Reload history</span>
+		</div>
+		<div class="right button" data-event="settings.part">
+			<span>Part</span>
 		</div>
 	{{/if}}
 </div>

@@ -130,6 +130,8 @@ class mauIRC {
 		this.router.handle("/raw/{network}", data =>
 				this.verifyConnection(() => this.raw.open(data.network)))
 		this.router.handle("/raw/", () => window.location.href = "#/chat")
+		this.router.handle("/settings", () =>
+				this.templates.apply("settings/main"))
 		this.router.listen()
 	}
 }
