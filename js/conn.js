@@ -104,6 +104,9 @@ class Connection {
 		case "raw":
 			this.mauirc.raw.receive(data.object)
 			break
+		case "whois":
+			this.mauirc.data.viewWHOIS(data.object)
+			break
 		case "chandata":
 		case "chanlist":
 		case "netdata":

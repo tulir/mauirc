@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const $ = require("jquery")
 const { complete } = require("../lib/autocomplete")
+const modal = require("../lib/modal")
 const NetworkStore = require("./network")
 const ChannelStore = require("./channel")
 const Message = require("./message/message")
@@ -406,6 +407,20 @@ class DataStore {
 		const chanlist = this.getChanlist()
 		chanlist.find(".network.active").removeClass("active")
 		chanlist.find(".network .channel.active").removeClass("active")
+	}
+
+	/**
+	 * View WHOIS data.
+	 *
+	 * @param {Object} data The server-sent WHOIS data object.
+	 */
+	viewWHOIS(data) {
+		void (this)
+		$("<pre>")
+				.css({ "text-align": "left" })
+				.text(JSON.stringify(data, null, 2))
+				.appendTo($("#modal"))
+		modal.open()
 	}
 
 	/**

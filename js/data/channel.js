@@ -140,6 +140,10 @@ class ChannelStore {
 					name: "Copy nick",
 					exec: () => alert("Not yet implemented"),
 				},
+				whois: {
+					name: "WHOIS",
+					exec: () => net.whois(name),
+				},
 				// TODO op, deop, kick, ban
 			}, event)
 		})

@@ -159,6 +159,20 @@ class NetworkStore {
 	}
 
 	/**
+	 * Run a WHOIS query.
+	 *
+	 * @param {string} user The user to run the query on.
+	 */
+	whois(user) {
+		this.mauirc.conn.send("message", {
+			message: user,
+			command: "whois",
+			network: this.name,
+			channel: user,
+		})
+	}
+
+	/**
 	 * Get the jQuery object for the network entry in the channel list UI.
 	 *
 	 * @returns {JQuery} The object.
