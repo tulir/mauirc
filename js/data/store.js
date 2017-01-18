@@ -156,8 +156,8 @@ class DataStore {
 	 * @returns {Message} The message object.
 	 */
 	getMessage(id) {
-		const pointer = this.messagePointers.get(id)
-		return this.getChannel(pointer.network, pointer.channel).messages.get(id)
+		const ptr = this.messagePointers.get(id)
+		return this.getChannel(ptr.network, ptr.channel).messages.get(id)
 	}
 
 	/**
