@@ -5,6 +5,11 @@
 
 A web-based UI-focused IRC client. Written in Go ([GopherJS](https://github.com/gopherjs/gopherjs)).
 
+## No longer maintained!
+I've stopped using IRC in favor of [Matrix](https://matrix.org).
+
+The master branch contains the older GopherJS version. There's a JavaScript version in the [rewrite-2](/tulir/mauirc/tree/rewrite-2) branch which is much faster and works fine, but doesn't have some mauIRC-specific things (e.g. settings menu).
+
 ## Setup
 ### Packages
 You can find the basic minified sources from the [Release section](https://github.com/tulir293/mauirc/releases).
